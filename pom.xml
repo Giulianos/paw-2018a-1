@@ -10,7 +10,10 @@
     <maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
     <org.springframework.version>4.2.5.RELEASE</org.springframework.version>
     <servlet-api.version>2.5</servlet-api.version>
+    <org.postgresql.version>9.3-1102-jdbc41</org.postgresql.version>
     <jstl.version>1.2</jstl.version>
+	<org.hibernate.validator>4.3.1.Final</org.hibernate.validator>
+	<javax.validation-api.version>1.0.0.GA</javax.validation-api.version>
   </properties>
   <modules>
     <module>webapp</module>
@@ -34,6 +37,26 @@
   </build>
   <dependencyManagement>
     <dependencies>
+    <dependency>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-jdbc</artifactId>
+	<version>${org.springframework.version}</version>
+	</dependency>
+	<dependency>
+	<groupId>org.postgresql</groupId>
+	<artifactId>postgresql</artifactId>
+	<version>${org.postgresql.version}</version>
+	</dependency>
+	<dependency>
+	<groupId>javax.validation</groupId>
+	<artifactId>validation-api</artifactId>
+	<version>${javax.validation-api.version}</version>
+	</dependency>
+	<dependency>
+	<groupId>org.hibernate</groupId>
+	<artifactId>hibernate-validator</artifactId>
+	<version>${org.hibernate.validator}</version>
+	</dependency>
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-webmvc</artifactId>
