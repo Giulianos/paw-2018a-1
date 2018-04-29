@@ -19,10 +19,10 @@ public class UsersImpl implements Users {
 			return null;
 		}
 		if(id == 1){
-			return new User(1, "user1");
+			return new User("user1", 1);
 		}
 		if(id == 2){
-			return new User(2, "user2");
+			return new User("user2", 2);
 		}
 		return null;
 	}

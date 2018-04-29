@@ -15,10 +15,10 @@ public class AnotherUsersImpl implements Users {
 			return null;
 		}
 		if(id == 1){
-			return new User(1, "another user1");
+			return new User("another user1", 1);
 		}
 		if(id == 2){
-			return new User(2, "another user2");
+			return new User("another user2", 2);
 		}
 		return null;
 	}
