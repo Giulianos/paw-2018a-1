@@ -9,6 +9,7 @@
   <properties>
     <maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
     <org.springframework.version>4.2.5.RELEASE</org.springframework.version>
+    <spring-security.version>4.0.4.RELEASE</spring-security.version>
     <servlet-api.version>2.5</servlet-api.version>
     <org.postgresql.version>9.3-1102-jdbc41</org.postgresql.version>
     <jstl.version>1.2</jstl.version>
@@ -91,6 +92,21 @@
         <version>${jstl.version}</version>
         <scope>provided</scope>
       </dependency>
+	<dependency>
+		<groupId>org.springframework.security</groupId>
+		<artifactId>spring-security-core</artifactId>
+		<version>${spring-security.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework.security</groupId>
+		<artifactId>spring-security-web</artifactId>
+		<version>${spring-security.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework.security</groupId>
+		<artifactId>spring-security-config</artifactId>
+		<version>${spring-security.version}</version>
+	</dependency>
     </dependencies>
   </dependencyManagement>
 </project>
