@@ -20,6 +20,11 @@ public class UsersImpl implements Users {
 	}
 	
 	@Override
+	public User findByUsername(String username) {
+		return userDao.findByUsername(username);
+	}
+	
+	@Override
 	public User create(final String username, final String email, final String password) {
 		return userDao.create(username, email, password);
 	}

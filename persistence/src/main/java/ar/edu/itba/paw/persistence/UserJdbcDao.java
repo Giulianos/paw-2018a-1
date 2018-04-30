@@ -30,7 +30,7 @@ public class UserJdbcDao implements UserDao {
 	}
 	
 	private final static RowMapper<User> ROW_MAPPER =
-			(ResultSet rs, int rowNum) -> new User(rs.getLong("user_id"), rs.getString("username"), rs.getString("email"));
+			(ResultSet rs, int rowNum) -> new User(rs.getLong("user_id"), rs.getString("username"), rs.getString("email"), rs.getString("password"));
 
 	@Override
 	public User findById(final long id) {
@@ -40,18 +40,26 @@ public class UserJdbcDao implements UserDao {
 		}
 		return	list.get(0);
 	}
+	
+	@Override
+	public User findByUsername(final String username) {
+		final List<User> list = jdbcTemplate.query("SELECT * FROM users WHERE username = ?;", ROW_MAPPER, username);
+		if	(list.isEmpty()) {
+			return	null;
+		}
+		return	list.get(0);
+	}
 
 	@Override
 	public User create(String username, String email, String password) {
 		final Map<String, Object> args = new HashMap<>();
-		final String hashedPassword = DigestUtils.md5DigestAsHex(password.getBytes());
 		
 		args.put("username", username);
-		args.put("password", hashedPassword);
+		args.put("password", password);
 		args.put("email", email);
 		
 		final Number userId = jdbcInsert.executeAndReturnKey(args);
 		
-		return new User(userId.longValue(), username, email);
+		return new User(userId.longValue(), username, email, password);
 	}
 }

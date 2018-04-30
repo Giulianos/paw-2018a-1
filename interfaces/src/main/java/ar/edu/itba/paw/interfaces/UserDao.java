@@ -12,6 +12,15 @@ public interface UserDao {
 	
 	public User findById(final long id);
 	
+	/**
+	 * Finds the user with the provided username.
+	 * 
+	 * @param username The username of the user
+	 * @return The user with the provided username.
+	 */
+	
+	public User findByUsername(final String username);
+	
 	
 	/**
 	 * Create a new user.
