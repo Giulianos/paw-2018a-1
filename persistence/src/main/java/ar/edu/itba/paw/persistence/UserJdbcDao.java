@@ -25,7 +25,7 @@ public class UserJdbcDao implements UserDao {
 	public UserJdbcDao(final DataSource ds) {
 		jdbcTemplate = new	JdbcTemplate(ds);
 		jdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
-						.withTableName("_user")
+						.withTableName("users")
 						.usingGeneratedKeyColumns("user_id");
 	}
 	
@@ -34,7 +34,7 @@ public class UserJdbcDao implements UserDao {
 
 	@Override
 	public User findById(final long id) {
-		final List<User> list = jdbcTemplate.query("SELECT * FROM _user WHERE user_id = ?;", ROW_MAPPER, id);
+		final List<User> list = jdbcTemplate.query("SELECT * FROM users WHERE user_id = ?;", ROW_MAPPER, id);
 		if	(list.isEmpty()) {
 			return	null;
 		}
