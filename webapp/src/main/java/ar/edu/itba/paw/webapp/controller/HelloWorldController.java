@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.paw.interfaces.Users;
-import ar.edu.itba.paw.services.UsersImpl;
+import ar.edu.itba.paw.model.User;
 
 @Controller
 public class HelloWorldController {
@@ -23,6 +23,17 @@ public class HelloWorldController {
 		return mav;
 	}
 	
+	@RequestMapping("/create")
+	public ModelAndView create(
+								@RequestParam(value="username", required = true) final String username,
+								@RequestParam(value="email", required = true) final String email,
+								@RequestParam(value="password", required = true) final String password
+							  ) {
+		final User u = us.create(username, email, password);
+		
+		return new ModelAndView("redirect:/user/" + u.getId());
+	}
+	
 	// Request example: http://localhost:8080/?id=9
 	//
 	//@RequestMapping("/")
@@ -33,13 +44,12 @@ public class HelloWorldController {
 	//	return mav;
 	//}
 	
-	// Request example: http://localhost:8080/user/9
-	//
-	//@RequestMapping("/user/{id}")
-	//public ModelAndView helloWorld(@PathVariable("id") int id) {
-	//	final ModelAndView mav = new ModelAndView("index");
-	//	mav.addObject("greeting", us.findById(1).getUsername() + " " + id);
-	//	return mav;
-	//}
+	 
+	@RequestMapping("/user/{id}")
+	public ModelAndView helloWorld(@PathVariable("id") int id) {
+		final ModelAndView mav = new ModelAndView("index");
+		mav.addObject("greeting", us.findById(id).getUsername() + " " + id);
+		return mav;
+	}
 	
 }

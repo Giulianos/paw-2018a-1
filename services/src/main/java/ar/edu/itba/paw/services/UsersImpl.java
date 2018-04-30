@@ -13,18 +13,15 @@ import ar.edu.itba.paw.model.User;
 public class UsersImpl implements Users {
 	@Autowired
 	private UserDao userDao;
+	
 	@Override
-	public User findById(Integer id) {
-		if(id == null) {
-			return null;
-		}
-		if(id == 1){
-			return new User("user1", 1);
-		}
-		if(id == 2){
-			return new User("user2", 2);
-		}
-		return null;
+	public User findById(long id) {
+		return userDao.findById(id);
+	}
+	
+	@Override
+	public User create(final String username, final String email, final String password) {
+		return userDao.create(username, email, password);
 	}
 
 }
