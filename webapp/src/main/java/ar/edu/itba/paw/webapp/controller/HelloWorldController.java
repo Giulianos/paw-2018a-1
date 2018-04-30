@@ -42,4 +42,17 @@ public class HelloWorldController {
 		final User u = us.create(form.getUsername(), form.getEmail(), form.getPassword());
 		return new ModelAndView("redirect:/user/"+ u.getId());
 	}
+	
+	@RequestMapping("/login")
+	public ModelAndView login() {
+		return new ModelAndView("login");
+	}
+	
+	@RequestMapping("/admin")
+	@Controller
+	public class AdminController {@RequestMapping("/")
+		public ModelAndView index() {
+			return new ModelAndView("admin/index");
+		}
+	}
 }
