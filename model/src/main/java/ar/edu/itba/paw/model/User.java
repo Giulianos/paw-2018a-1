@@ -7,19 +7,22 @@ public class User {
 	private final String email;
 	private final String regdate;
 	private final int transactions;
+	private final String password;
 	
-	public User(final long id , final String username, final String email) {
+	public User(final long id , final String username, final String email, final String password) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
+		this.password = password;
 		this.regdate = "";
 		this.transactions = 0;
 	}
 	
-	public User(final long id , final String username, final String email, final String regdate, final int transactions) {
+	public User(final long id , final String username, final String email, final String password, final String regdate, final int transactions) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
+		this.password = password;
 		this.regdate = regdate;
 		this.transactions = transactions;
 	}
@@ -34,6 +37,10 @@ public class User {
 	
 	public String getEmail() {
 		return this.email;
+	}
+	
+	public String getPassword() {
+		return this.password;
 	}
 	
 	public String getRegdate() {

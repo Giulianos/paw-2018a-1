@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.paw.interfaces.Users;
@@ -39,7 +38,33 @@ public class HelloWorldController {
 		if (errors.hasErrors()) {
 			return index(form);
 		}
+		if (!uniqueUser(form)) {
+			return index(form);
+		}
+		if (!uniqueEmail(form)) {
+			return index(form);
+		}
+		if (!passwordCheck(form)) {
+			return index(form);
+		}
 		final User u = us.create(form.getUsername(), form.getEmail(), form.getPassword());
 		return new ModelAndView("redirect:/user/"+ u.getId());
+	}
+
+	@RequestMapping("/login")
+	public ModelAndView login() {
+		return new ModelAndView("login");
+	}
+
+
+	private boolean uniqueEmail(UserForm form) {
+		return true;
+	}
+
+	private boolean uniqueUser(UserForm form) {
+		return true;
+	}
+	private boolean passwordCheck(UserForm form) {
+		return form.getPassword().equals(form.getRepeatPassword());
 	}
 }
