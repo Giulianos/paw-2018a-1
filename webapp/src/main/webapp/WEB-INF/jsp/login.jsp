@@ -3,7 +3,7 @@
 <html>
   <body>
     <c:url value="/login" var="loginUrl" />
-    <form action="${loginUrl}" method="post" enctype="applica tion/x-www-form-urlencoded">
+    <form action="${loginUrl}" method="post" enctype="application/x-www-form-urlencoded">
       <div>
         <label for="username">Username: </label>
         <input id="username" name="j_username" type="text"/>

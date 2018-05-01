@@ -12,7 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @Configuration
 @EnableWebSecurity
-@ComponentScan("ar.edu.itba.paw.webapp.auth")
+@ComponentScan("ar.edu.itba.paw.webapp.config")
 public class WebAuthConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private PawUserDetailsService userDetailsService;
@@ -25,7 +25,6 @@ public class WebAuthConfig extends WebSecurityConfigurerAdapter {
 			.and().authorizeRequests()
 				.antMatchers("/login").anonymous()
 				.antMatchers("/admin/**").hasRole("ADMIN")
-				.antMatchers("/**").authenticated()
 			.and().formLogin()
 				.usernameParameter("j_username")
 				.passwordParameter("j_password")
@@ -46,6 +45,7 @@ public class WebAuthConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	public void configure(final WebSecurity web) throws Exception {
+		/* Here we indicate which pages we are allowed to see */
 		web.ignoring()
 			.antMatchers("/css/**", "/js/**", "/img/**", "/favicon.ico", "/403");
 	}
