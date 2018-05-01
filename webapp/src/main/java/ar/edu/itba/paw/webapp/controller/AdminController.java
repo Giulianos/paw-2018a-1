@@ -7,6 +7,11 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class AdminController {
 	
+	public AdminController() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	@RequestMapping("/admin")
 	public ModelAndView index() {
 		return new ModelAndView("admin/index");
