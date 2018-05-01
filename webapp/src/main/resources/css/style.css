@@ -1,0 +1,40 @@
+BODY { background-color: #0DA5D6 }
+
+.footer {
+	margin-top: 30px;
+	padding-top: 5px;
+	font-size: 10px;
+	text-align: center;
+	border-top: 1px solid;
+}
+
+.error {
+	color: red;
+	margin-bottom: 20px;
+}
+
+
+/* form styling */
+form {
+	overflow: auto;
+}
+
+form .form-field {
+	overflow: auto;
+	margin-bottom: 5px;
+}
+
+form .form-field label {
+	float: left;
+	width: 150px;
+	margin-right:10px;
+}
+
+form input, form textarea {
+	float: left;
+}
+
+form .form-buttons {
+	margin-top: 20px;
+	margin-left: 160px;
+}
