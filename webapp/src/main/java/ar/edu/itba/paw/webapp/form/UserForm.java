@@ -6,18 +6,18 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 
 public class UserForm {
-	@Size(min = 6, max = 100)
-	@Pattern(regexp = "[a-zA-Z0-9]+")
+	@Size(min = 6, max = 15)
+	@Pattern(regexp = "[a-zA-Z][a-zA-Z0-9]+")
 	private String username;
 
-	@Size(min = 6, max = 100)
+	@Size(min = 6, max = 40)
 	@Email
 	private String email;
 
-	@Size(min = 6, max = 100)
+	@Size(min = 6, max = 30)
 	private String password;
 
-	@Size(min = 6, max = 100)
+	@Size(min = 6, max = 30)
 	private String repeatPassword;
 
 	public String getUsername() {

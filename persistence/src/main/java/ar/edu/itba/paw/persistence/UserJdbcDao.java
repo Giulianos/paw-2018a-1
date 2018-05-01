@@ -26,11 +26,13 @@ public class UserJdbcDao implements UserDao {
 		jdbcTemplate = new	JdbcTemplate(ds);
 		jdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
 						.withTableName("users")
+						.usingColumns("username", "email", "password")
 						.usingGeneratedKeyColumns("user_id");
 	}
 	
 	private final static RowMapper<User> ROW_MAPPER =
-			(ResultSet rs, int rowNum) -> new User(rs.getLong("user_id"), rs.getString("username"), rs.getString("email"));
+			(ResultSet rs, int rowNum) ->
+				new User(rs.getLong("user_id"), rs.getString("username"), rs.getString("email"));
 
 	@Override
 	public User findById(final long id) {
