@@ -17,7 +17,6 @@ public class UserForm {
 	@Size(min = 6, max = 30)
 	private String password;
 
-	@Size(min = 6, max = 30)
 	private String repeatPassword;
 
 	public String getUsername() {
@@ -48,8 +47,11 @@ public class UserForm {
 		return repeatPassword;
 	}
 	
-	public void setRepeatPassword(String repeatPassword)
-	{
+	public void setRepeatPassword(String repeatPassword) {
 		this.repeatPassword = repeatPassword;
+	}
+	
+	public boolean passwordCheck() {
+		return getPassword().equals(getRepeatPassword());
 	}
 }

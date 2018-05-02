@@ -23,6 +23,15 @@ public interface Users {
 	public User findByUsername(final String username);
 	
 	/**
+	 * Finds the user with the provided email.
+	 * 
+	 * @param email The Email of the user
+	 * @return The user with the provided email.
+	 */
+	
+	public User findByEmail(final String email);
+	
+	/**
 	 * Create a new user.
 	 * 
 	 * @param username The name of the user.

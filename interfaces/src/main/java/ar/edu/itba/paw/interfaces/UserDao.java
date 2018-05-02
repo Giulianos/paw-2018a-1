@@ -21,6 +21,14 @@ public interface UserDao {
 	
 	public User findByUsername(final String username);
 	
+	/**
+	 * Finds the user with the provided email.
+	 * 
+	 * @param email The Email of the user
+	 * @return The user with the provided email.
+	 */
+	
+	public User findByEmail(final String email);
 	
 	/**
 	 * Create a new user.
@@ -31,5 +39,5 @@ public interface UserDao {
 	 * 
 	 * @return The created user.
 	 */
-	User create(String username, String email, String password);
+	User create(final String username, final String email, final String password);
 }

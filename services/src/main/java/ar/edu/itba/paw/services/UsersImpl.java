@@ -15,18 +15,22 @@ public class UsersImpl implements Users {
 	private UserDao userDao;
 	
 	@Override
-	public User findById(long id) {
+	public User findById(final long id) {
 		return userDao.findById(id);
 	}
 	
 	@Override
-	public User findByUsername(String username) {
+	public User findByUsername(final String username) {
 		return userDao.findByUsername(username);
+	}
+
+	@Override
+	public User findByEmail(final String email) {
+		return userDao.findByEmail(email);
 	}
 	
 	@Override
 	public User create(final String username, final String email, final String password) {
 		return userDao.create(username, email, password);
 	}
-
 }

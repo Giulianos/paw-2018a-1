@@ -20,10 +20,16 @@
 				<form:input type="text" path="username" placeholder="${username}"/>
 				<form:errors path="username" cssClass="formError" element="p"/>
 			</div>
+			<c:if test="${not empty invalidUser}">
+				<spring:message code="register.invalid.user"/>  
+			</c:if>
 			<div>
 				<form:input type="text" path="email" placeholder="${email}"/>
 				<form:errors path="email" cssClass="formError" element="p"/>
 			</div>
+			<c:if test="${not empty invalidEmail}">
+				<spring:message code="register.invalid.email"/>
+			</c:if>
 			<div>
 				<form:input type="password" path="password" placeholder="${password}"/>
 				<form:errors path="password" cssClass="formError" element="p"/>
@@ -32,6 +38,9 @@
 				<form:input type="password" path="repeatPassword" placeholder="${repassword}"/>
 				<form:errors path="repeatPassword" cssClass="formError" element="p"/>
 			</div>
+			<c:if test="${not empty invalidPassword}">
+				<spring:message code="register.invalid.password"/>
+			</c:if>
 			<div>
 				<input type="submit" value="${register_submit}"/>
 			</div>

@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,17 +35,10 @@ public class HelloWorldController {
 	}
 	
 	@RequestMapping(value = "/create", method = { RequestMethod.POST })
-	public ModelAndView create(@Valid @ModelAttribute("registerForm") final UserForm form, final BindingResult errors) {
-		if (errors.hasErrors()) {
-			return index(form);
-		}
-		if (!uniqueUser(form)) {
-			return index(form);
-		}
-		if (!uniqueEmail(form)) {
-			return index(form);
-		}
-		if (!passwordCheck(form)) {
+	public ModelAndView create(@Valid @ModelAttribute("registerForm") final UserForm form, final BindingResult errors, ModelMap model) {
+		boolean isValid = validUser(form,model);
+
+		if (errors.hasErrors() || !isValid) {
 			return index(form);
 		}
 		final User u = us.create(form.getUsername(), form.getEmail(), form.getPassword());
@@ -55,16 +49,32 @@ public class HelloWorldController {
 	public ModelAndView login() {
 		return new ModelAndView("login");
 	}
-
-
-	private boolean uniqueEmail(UserForm form) {
-		return true;
+	
+	private boolean validUser(UserForm form, ModelMap model) {
+		boolean isValid = true;
+		// attribute is not found in jsp if value is null.
+		Object modelObject = new Object();
+		
+		if (!uniqueUser(form)) {
+			isValid = false;
+			model.addAttribute("invalidUser", modelObject);
+		}
+		if (!uniqueEmail(form)) {
+			isValid = false;
+			model.addAttribute("invalidEmail", modelObject);
+		}
+		if (!form.passwordCheck()) {
+			isValid = false;
+			model.addAttribute("invalidPassword", modelObject);
+		}
+		return isValid;
 	}
 
 	private boolean uniqueUser(UserForm form) {
-		return true;
+		return us.findByUsername(form.getUsername()) == null;
 	}
-	private boolean passwordCheck(UserForm form) {
-		return form.getPassword().equals(form.getRepeatPassword());
+
+	private boolean uniqueEmail(UserForm form) {
+		return us.findByEmail(form.getEmail()) == null;
 	}
 }

@@ -51,7 +51,16 @@ public class UserJdbcDao implements UserDao {
 	}
 
 	@Override
-	public User create(String username, String email, String password) {
+	public User findByEmail(final String email) {
+		final List<User> list = jdbcTemplate.query("SELECT * FROM users WHERE email = ?;", ROW_MAPPER, email);
+		if	(list.isEmpty()) {
+			return	null;
+		}
+		return	list.get(0);
+	}
+
+	@Override
+	public User create(final String username, final String email, final String password) {
 		final Map<String, Object> args = new HashMap<>();
 		
 		args.put("username", username);
