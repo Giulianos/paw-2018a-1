@@ -10,13 +10,13 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 CREATE TABLE IF NOT EXISTS publications (
-	id INT PRIMARY KEY,
+	publication_id SERIAL PRIMARY KEY,
 	supervisor VARCHAR(15),
 	description VARCHAR(30),
 	price REAL,
 	quantity INT,
-	image VARCHAR(50),
-	is_confirmed BOOLEAN,
+	image VARCHAR(50) DEFAULT '',
+	is_confirmed BOOLEAN DEFAULT FALSE,
 	FOREIGN KEY(supervisor) REFERENCES users (username) ON DELETE SET NULL
 );
 
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS subscriptions (
 	quantity INT,
 	is_confirmed BOOLEAN,
 	FOREIGN KEY(subscriber) REFERENCES users (username) ON DELETE CASCADE,
-	FOREIGN KEY(publication_id) REFERENCES publications (id) ON DELETE CASCADE,
+	FOREIGN KEY(publication_id) REFERENCES publications (publication_id) ON DELETE CASCADE,
 	PRIMARY KEY (subscriber, publication_id)
 );
 
@@ -37,6 +37,6 @@ CREATE TABLE IF NOT EXISTS buyers (
 	is_paid BOOLEAN,
 	is_received BOOLEAN,
 	FOREIGN KEY(buyer) REFERENCES users (username) ON DELETE CASCADE,
-	FOREIGN KEY(publication_id) REFERENCES publications (id) ON DELETE CASCADE,
+	FOREIGN KEY(publication_id) REFERENCES publications (publication_id) ON DELETE CASCADE,
 	PRIMARY KEY (buyer, publication_id)
 );

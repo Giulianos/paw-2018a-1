@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.itba.paw.interfaces.Publications;
 import ar.edu.itba.paw.interfaces.Users;
+import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.model.User;
+import ar.edu.itba.paw.webapp.form.PublicationForm;
 import ar.edu.itba.paw.webapp.form.UserForm;
 
 @Controller
@@ -21,6 +24,8 @@ public class HelloWorldController {
 	
 	@Autowired
 	private Users us;
+	@Autowired
+	private Publications pu;
 	 
 	@RequestMapping("/user/{id}")
 	public ModelAndView helloWorld(@PathVariable("id") int id) {
@@ -44,6 +49,13 @@ public class HelloWorldController {
 		final User u = us.create(form.getUsername(), form.getEmail(), form.getPassword());
 		return new ModelAndView("redirect:/user/"+ u.getId());
 	}
+	
+	@RequestMapping(value = "/create", method = { RequestMethod.POST })
+	public ModelAndView create(@Valid @ModelAttribute("publicationForm") final PublicationForm form, final BindingResult errors, ModelMap model) {
+
+		final Publication p = pu.create("test", form.getDescription(), Float.parseFloat(form.getPrice()), Integer.parseInt(form.getQuantity()));
+		return new ModelAndView("redirect:/user/"+ p.getId());
+	}
 
 	@RequestMapping("/login")
 	public ModelAndView login() {
@@ -55,11 +67,11 @@ public class HelloWorldController {
 		// attribute is not found in jsp if value is null.
 		Object modelObject = new Object();
 		
-		if (!uniqueUser(form)) {
+		if (!us.uniqueUser(form.getUsername())) {
 			isValid = false;
 			model.addAttribute("invalidUser", modelObject);
 		}
-		if (!uniqueEmail(form)) {
+		if (!us.uniqueEmail(form.getEmail())) {
 			isValid = false;
 			model.addAttribute("invalidEmail", modelObject);
 		}
@@ -68,13 +80,5 @@ public class HelloWorldController {
 			model.addAttribute("invalidPassword", modelObject);
 		}
 		return isValid;
-	}
-
-	private boolean uniqueUser(UserForm form) {
-		return us.findByUsername(form.getUsername()) == null;
-	}
-
-	private boolean uniqueEmail(UserForm form) {
-		return us.findByEmail(form.getEmail()) == null;
 	}
 }

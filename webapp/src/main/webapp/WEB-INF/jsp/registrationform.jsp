@@ -3,7 +3,7 @@
             <h2 class="mb-3"><spring:message code="register.title"/></h2>
             <div class="border bg-light rounded p-3">
               <c:url value="/create" var="postPath"/>
-          		<form:form modelAttribute="registerForm" action="${postPath}" method="post">
+          	  <form:form modelAttribute="registerForm" action="${postPath}" method="post">
                 <div class="form-group">
                   <label for="username">${username}</label>
                   <form:input type="text" path="username" class="form-control" id="username" aria-describedby="username" placeholder="${username}"/>

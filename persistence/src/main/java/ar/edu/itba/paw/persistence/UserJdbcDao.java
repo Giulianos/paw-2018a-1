@@ -69,6 +69,6 @@ public class UserJdbcDao implements UserDao {
 		
 		final Number userId = jdbcInsert.executeAndReturnKey(args);
 		
-		return new User(userId.longValue(), username, email, password);
+		return new User(userId.longValue(),username,email,password);
 	}
 }

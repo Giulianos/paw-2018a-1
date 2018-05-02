@@ -9,22 +9,17 @@ public class User {
 	private final int transactions;
 	private final String password;
 	
-	public User(final long id , final String username, final String email, final String password) {
-		this.id = id;
-		this.username = username;
-		this.email = email;
-		this.password = password;
-		this.regdate = "";
-		this.transactions = 0;
-	}
-	
-	public User(final long id , final String username, final String email, final String password, final String regdate, final int transactions) {
+	public User(final long id, final String username, final String email, final String password, final String regdate, final int transactions) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.regdate = regdate;
 		this.transactions = transactions;
+	}
+	
+	public User(final long id, final String username, final String email, final String password) {
+		this(id,username,email,password,"",0);
 	}
 
 	public long getId() {

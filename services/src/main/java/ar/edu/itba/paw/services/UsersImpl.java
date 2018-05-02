@@ -33,4 +33,12 @@ public class UsersImpl implements Users {
 	public User create(final String username, final String email, final String password) {
 		return userDao.create(username, email, password);
 	}
+
+	public boolean uniqueUser(final String username) {
+		return findByUsername(username) == null;
+	}
+
+	public boolean uniqueEmail(final String email) {
+		return findByEmail(email) == null;
+	}
 }

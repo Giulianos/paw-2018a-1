@@ -41,4 +41,22 @@ public interface Users {
 	 * @return The created user.
 	 */
 	User create(String username, String email, String password);
+
+	/**
+	 * Check if the user is valid.
+	 * 
+	 * @param username user to be checked.
+	 * 
+	 * @return True if the user is unique.
+	 */
+	public boolean uniqueUser(final String username);
+
+	/**
+	 * Check if the email is valid.
+	 * 
+	 * @param email email to be checked.
+	 * 
+	 * @return True if the email is unique.
+	 */
+	public boolean uniqueEmail(final String email);
 }
