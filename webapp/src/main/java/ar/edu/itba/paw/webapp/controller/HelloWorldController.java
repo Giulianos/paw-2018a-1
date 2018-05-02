@@ -50,12 +50,12 @@ public class HelloWorldController {
 		return new ModelAndView("redirect:/user/"+ u.getId());
 	}
 	
-	@RequestMapping(value = "/create", method = { RequestMethod.POST })
-	public ModelAndView create(@Valid @ModelAttribute("publicationForm") final PublicationForm form, final BindingResult errors, ModelMap model) {
-
-		final Publication p = pu.create("test", form.getDescription(), Float.parseFloat(form.getPrice()), Integer.parseInt(form.getQuantity()));
-		return new ModelAndView("redirect:/user/"+ p.getId());
-	}
+//	@RequestMapping(value = "/create", method = { RequestMethod.POST })
+//	public ModelAndView create(@Valid @ModelAttribute("publicationForm") final PublicationForm form, final BindingResult errors, ModelMap model) {
+//
+//		final Publication p = pu.create("test", form.getDescription(), Float.parseFloat(form.getPrice()), Integer.parseInt(form.getQuantity()));
+//		return new ModelAndView("redirect:/user/"+ p.getId());
+//	}
 
 	@RequestMapping("/login")
 	public ModelAndView login() {
