@@ -3,7 +3,7 @@
 	<div>Add list</div>
 	<div><spring:message code="subscriptions.pay"/></div>
 	<div>Add list</div>
-	
+
 	<button class="btn my-2 my-sm-0" data-toggle="modal" data-target="#publicationModal" type="button"><spring:message code="publication.create"/></button>
     <div class="modal fade" id="publicationModal" tabindex="-1" role="dialog" aria-labelledby="Publication" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -14,26 +14,33 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <!--          Create publication form          -->
+					<!--          Create publication form          -->
           <div class="modal-body">
-            <form id="publicationForm" action="/login" method="post" >
+						<c:url value="/createPublication" var="postPathPublication"/>
+             <form:form modelAttribute="publicationForm" action="${postPathPublication}" method="post">
               <div class="form-group">
                 <label><spring:message code="description"/></label>
-                <input type="text" class="form-control" aria-describedby="description" placeholder="Enter description" />
+                <form:input type="text" class="form-control" aria-describedby="description" placeholder="Enter description"
+								path="description" id="description"/>
+								<form:errors path="description" role="alert" cssClass="alert alert-danger mt-2" element="div"/>
               </div>
-              
+
               <div class="form-group">
                 <label><spring:message code="price"/></label>
-                <input type="text" class="form-control" aria-describedby="price" placeholder="Enter price" />
+                <form:input type="text" class="form-control" aria-describedby="price" placeholder="Enter price"
+								path="price" id="price"/>
+							  <form:errors path="price" role="alert" cssClass="alert alert-danger mt-2" element="div"/>
               </div>
-              
+
               <div class="form-group">
                 <label><spring:message code="quantity"/></label>
-                <input type="text" class="form-control" aria-describedby="quantity" placeholder="Enter quantity" />
+                <form:input type="text" class="form-control" aria-describedby="quantity" placeholder="Enter quantity"
+								path="quantity" id="quantity"/>
+								<form:errors path="quantity" role="alert" cssClass="alert alert-danger mt-2" element="div"/>
               </div>
-              
+
               <button type="submit" class="btn btn-primary"><spring:message code="create"/></button>
-            </form>
+            </form:form>
           </div>
         </div>
       </div>

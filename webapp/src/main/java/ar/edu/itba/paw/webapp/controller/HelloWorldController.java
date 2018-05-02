@@ -16,6 +16,7 @@ import ar.edu.itba.paw.interfaces.Publications;
 import ar.edu.itba.paw.interfaces.Users;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.model.User;
+import ar.edu.itba.paw.webapp.auth.IAuthenticationFacade;
 import ar.edu.itba.paw.webapp.form.PublicationForm;
 import ar.edu.itba.paw.webapp.form.UserForm;
 
@@ -26,6 +27,8 @@ public class HelloWorldController {
 	private Users us;
 	@Autowired
 	private Publications pu;
+	@Autowired
+	private IAuthenticationFacade auth;
 	 
 	@RequestMapping("/user/{id}")
 	public ModelAndView helloWorld(@PathVariable("id") int id) {
@@ -35,7 +38,7 @@ public class HelloWorldController {
 	}
 	
 	@RequestMapping("/")
-	public ModelAndView index(@ModelAttribute("registerForm") final UserForm form) {
+	public ModelAndView index(@ModelAttribute("registerForm") final UserForm form, @ModelAttribute("publicationForm") final PublicationForm form2) {
 		return new ModelAndView("index");
 	}
 	
@@ -44,18 +47,20 @@ public class HelloWorldController {
 		boolean isValid = validUser(form,model);
 
 		if (errors.hasErrors() || !isValid) {
-			return index(form);
+			return index(form, null);
 		}
 		final User u = us.create(form.getUsername(), form.getEmail(), form.getPassword());
 		return new ModelAndView("redirect:/user/"+ u.getId());
 	}
 	
-//	@RequestMapping(value = "/create", method = { RequestMethod.POST })
-//	public ModelAndView create(@Valid @ModelAttribute("publicationForm") final PublicationForm form, final BindingResult errors, ModelMap model) {
-//
-//		final Publication p = pu.create("test", form.getDescription(), Float.parseFloat(form.getPrice()), Integer.parseInt(form.getQuantity()));
-//		return new ModelAndView("redirect:/user/"+ p.getId());
-//	}
+	@RequestMapping(value = "/createPublication", method = { RequestMethod.POST })
+	public ModelAndView createPublication(@Valid @ModelAttribute("publicationForm") final PublicationForm form, final BindingResult errors, ModelMap model) {
+		if (errors.hasErrors()) {
+			return index(null, form);
+		}
+		final Publication p = pu.create(auth.getAuthentication().getName(), form.getDescription(), Float.parseFloat(form.getPrice()), Integer.parseInt(form.getQuantity()));
+		return new ModelAndView("redirect:/user/"+ p.getId());
+	}
 
 	@RequestMapping("/login")
 	public ModelAndView login() {
