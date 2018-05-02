@@ -52,7 +52,7 @@
         </form>
       </div>
     </nav>
-		<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -61,24 +61,9 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
-						<!--          Login form          -->
-            <form id="login-form" action="/login" method="post" >
-              <div class="form-group">
-                <label for="j_username">Username</label>
-                <input type="text" name="j_username" class="form-control" id="j_username" aria-describedby="username" placeholder="Enter Username" />
-              </div>
-              <div class="form-group">
-                <label for="j_password">Password</label>
-                <input type="password" name="j_password" class="form-control" id="j_password" placeholder="Password" />
-              </div>
-              <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="j_rememberme" name="j_rememberme" />
-                <label class="form-check-label" for="loginInputRememberMe"><spring:message code="remember_me"/></label>
-              </div>
-              <button type="submit" class="btn btn-primary">Login</button>
-            </form>
-          </div>
+          <!--          Login form          -->
+		  <%@ include file="loginform.jsp" %>
+		  
           <div class="modal-footer">
             <a href="/register" role="button" class="btn btn-outline-primary">Signup</a>
           </div>
@@ -88,55 +73,12 @@
 
     <div class="container">
 
-
       <security:authorize access="!isAuthenticated()">
 
         <!--      Signup form     -->
-        <div class="row align-items-center justify-content-center">
-          <div class="col">
-            <h2 class="mb-3"><spring:message code="register.title"/></h2>
-            <div class="border bg-light rounded p-3">
-              <c:url value="/create" var="postPath"/>
-          		<form:form modelAttribute="registerForm" action="${postPath}" method="post">
-                <div class="form-group">
-                  <label for="username">${username}</label>
-                  <form:input type="text" path="username" class="form-control" id="username" aria-describedby="username" placeholder="${username}"/>
-                  <form:errors path="username" role="alert" cssClass="alert alert-danger" element="div"/>
-                  <c:if test="${not empty invalidUser}">
-            				<spring:message code="register.invalid.user"/>
-            			</c:if>
-                </div>
-                <div class="form-group">
-                  <label for="email">${email}</label>
-                  <form:input type="email" path="email" class="form-control" id="email" aria-describedby="email" placeholder="${email}"/>
-                  <form:errors path="email" role="alert" cssClass="alert alert-danger" element="div"/>
-                  <c:if test="${not empty invalidEmail}">
-            				<spring:message code="register.invalid.email"/>
-            			</c:if>
-                </div>
-
-                <div class="form-group">
-                  <label for="password">${password}</label>
-                  <form:input type="password" path="password" class="form-control" id="password" aria-describedby="password" placeholder="${password}"/>
-                  <form:errors path="password" role="alert" cssClass="alert alert-danger" element="div"/>
-                </div>
-
-                <div class="form-group">
-                  <form:input type="password" path="repeatPassword" class="form-control" id="repeatPassword" aria-describedby="repeatpassword" placeholder="${repassword}"/>
-                  <form:errors path="repeatPassword" role="alert" cssClass="alert alert-danger" element="div"/>
-
-                  <c:if test="${not empty invalidPassword}">
-            				<spring:message code="register.invalid.password"/>
-            			</c:if>
-                </div>
-                <button value="${register_submit}" type="submit" class="btn btn-primary">${register_submit}</button>
-              </form:form>
-            </div>
-          </div>
-        </div>
+		<%@ include file="registrationform.jsp" %>
 
       </security:authorize>
-
 
     </div>
 
