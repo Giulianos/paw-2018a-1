@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <c:set var="username"><spring:message code="username"/></c:set>
 <c:set var="email"><spring:message code="email"/></c:set>
@@ -40,7 +41,14 @@
           </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
-          <button class="btn btn-outline-light my-2 my-sm-0" data-toggle="modal" data-target="#loginModal" type="button">Login / Signup</button>
+          <security:authorize access="!isAuthenticated()">
+              <button class="btn btn-outline-light my-2 my-sm-0" data-toggle="modal" data-target="#loginModal" type="button">Login / Signup</button>
+          </security:authorize>
+          <security:authorize access="isAuthenticated()">
+            <a class="btn btn-info my-2 my-sm-0" href="" type="button">
+              <security:authentication property="principal.username" />
+            </a>
+          </security:authorize>
         </form>
       </div>
     </nav>
