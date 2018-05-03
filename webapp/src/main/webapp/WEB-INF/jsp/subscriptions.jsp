@@ -1,4 +1,11 @@
 <div>
+	<c:if test="${not empty publicationCreated}">
+		<div class="alert alert-success" role="alert">
+		  Creado correctamente!
+		</div>
+	</c:if>
+
+
 	<div><spring:message code="subscriptions.open"/></div>
 	<div>Add list</div>
 	<div><spring:message code="subscriptions.pay"/></div>
@@ -14,6 +21,16 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
+
+					<!-- Open modal automatically -->
+					<c:if test="${not empty publicationErrors}">
+						<script type="text/javascript">
+			        $(window).on('load',function(){
+			            $('#publicationModal').modal('show');
+			        });
+			    	</script>
+					</c:if>
+
 					<!--          Create publication form          -->
           <div class="modal-body">
 						<c:url value="/createPublication" var="postPathPublication"/>

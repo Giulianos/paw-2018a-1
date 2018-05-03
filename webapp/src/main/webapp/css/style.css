@@ -1,4 +1,4 @@
-BODY { background-color: #0DA5D6 }
+/* BODY { background-color: #0DA5D6 }
 
 .footer {
 	margin-top: 30px;
@@ -11,11 +11,15 @@ BODY { background-color: #0DA5D6 }
 .error {
 	color: red;
 	margin-bottom: 20px;
+} */
+
+body {
+	padding-top: 70px;
 }
 
 
 /* form styling */
-form {
+/* form {
 	overflow: auto;
 }
 
@@ -37,4 +41,4 @@ form input, form textarea {
 form .form-buttons {
 	margin-top: 20px;
 	margin-left: 160px;
-}
+} */

@@ -56,10 +56,12 @@ public class HelloWorldController {
 	@RequestMapping(value = "/createPublication", method = { RequestMethod.POST })
 	public ModelAndView createPublication(@Valid @ModelAttribute("publicationForm") final PublicationForm form, final BindingResult errors, ModelMap model) {
 		if (errors.hasErrors()) {
+			model.addAttribute("publicationErrors", true);
 			return index(null, form);
 		}
+		model.addAttribute("publicationCreated", true);
 		final Publication p = pu.create(auth.getAuthentication().getName(), form.getDescription(), Float.parseFloat(form.getPrice()), Integer.parseInt(form.getQuantity()));
-		return new ModelAndView("redirect:/user/"+ p.getId());
+		return index(null, null);
 	}
 
 	@RequestMapping("/login")
@@ -69,20 +71,18 @@ public class HelloWorldController {
 	
 	private boolean validUser(UserForm form, ModelMap model) {
 		boolean isValid = true;
-		// attribute is not found in jsp if value is null.
-		Object modelObject = new Object();
 		
 		if (!us.uniqueUser(form.getUsername())) {
 			isValid = false;
-			model.addAttribute("invalidUser", modelObject);
+			model.addAttribute("invalidUser", true);
 		}
 		if (!us.uniqueEmail(form.getEmail())) {
 			isValid = false;
-			model.addAttribute("invalidEmail", modelObject);
+			model.addAttribute("invalidEmail", true);
 		}
 		if (!form.passwordCheck()) {
 			isValid = false;
-			model.addAttribute("invalidPassword", modelObject);
+			model.addAttribute("invalidPassword", true);
 		}
 		return isValid;
 	}

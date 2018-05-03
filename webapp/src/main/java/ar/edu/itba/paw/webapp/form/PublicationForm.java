@@ -5,11 +5,11 @@ import javax.validation.constraints.Size;
 
 public class PublicationForm {
 	@Size(min = 6, max = 30)
-	@Pattern(regexp = "[a-zA-Z][ a-zA-Z0-9]+")
+	@Pattern(regexp = "[a-zA-Z][ a-zA-Z0-9]+", message="{myProp}")
 	private String description;
 
 	@Size(min = 1, max = 10)
-	@Pattern(regexp = "[1-9][0-9]*.?[0-9]{0,3}")
+	@Pattern(regexp = "[1-9][0-9]*.?[0-9]{0,3}", message="{myProp}")
 	private String price;
 
 	@Size(min = 1, max = 6)
@@ -17,7 +17,7 @@ public class PublicationForm {
 	private String quantity;
 
 	@Size(min = 10, max = 50)
-	@Pattern(regexp = "[a-zA-Z][a-zA-Z0-9]+")
+	@Pattern(regexp = "[a-zA-Z][a-zA-Z0-9]+", message="{myProp}")
 	private String image;
 
 	public String getDescription() {
