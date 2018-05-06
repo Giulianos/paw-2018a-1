@@ -57,21 +57,26 @@ public class HelloWorldController {
 		boolean isValid = validUser(form,model);
 
 		if (errors.hasErrors() || !isValid) {
-			return index(form, null, null);
+			return index(form, null, model);
 		}
+
+		includeUserTransactions(model);
+		
 		final User u = us.create(form.getUsername(), form.getEmail(), form.getPassword());
 		return new ModelAndView("redirect:/user/"+ u.getId());
 	}
 	
 	@RequestMapping(value = "/createPublication", method = { RequestMethod.POST })
 	public ModelAndView createPublication(@Valid @ModelAttribute("publicationForm") final PublicationForm form, final BindingResult errors, ModelMap model) {
+		includeUserTransactions(model);
+		
 		if (errors.hasErrors()) {
 			model.addAttribute("publicationErrors", true);
-			return index(null, form, null);
+			return index(null, form, model);
 		}
 		model.addAttribute("publicationCreated", true);
 		pu.create(auth.getAuthentication().getName(), form.getDescription(), Float.parseFloat(form.getPrice()), Integer.parseInt(form.getQuantity()));
-		return index(null, null, null);
+		return index(null, null, model);
 	}
 
 	@RequestMapping("/login")
