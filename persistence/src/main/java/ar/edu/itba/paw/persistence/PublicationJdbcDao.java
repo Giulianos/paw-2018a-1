@@ -47,11 +47,7 @@ public class PublicationJdbcDao implements PublicationDao {
 
 	@Override
 	public List<Publication> findBySupervisor(String username) {
-		final List<Publication> list = jdbcTemplate.query("SELECT * FROM publications WHERE supervisor = ?;", ROW_MAPPER, username);
-		if	(list.isEmpty()) {
-			return	null;
-		}
-		return	list;
+		return	jdbcTemplate.query("SELECT * FROM publications WHERE supervisor = ?;", ROW_MAPPER, username);
 	}
 
 	@Override

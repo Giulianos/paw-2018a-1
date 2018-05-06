@@ -1,11 +1,47 @@
 <div>
 	<c:if test="${not empty publicationCreated}">
 		<div class="alert alert-success" role="alert">
-		  Creado correctamente!
+		  <spring:message code="publication.create.success"/>
 		</div>
 	</c:if>
 
-
+	<div><spring:message code="publication.own"/></div>
+	<div class="container" style="border:1px solid black;">
+	  <div class="row">
+	    <div class="col-5">
+	      <spring:message code="description"/>
+	    </div>
+	    <div class="col">
+	      <spring:message code="price"/>
+	    </div>
+	    <div class="col-2">
+	      <spring:message code="total.quantity"/>
+	    </div>
+	    <div class="col-2">
+	      <spring:message code="remaining.quantity"/>
+	    </div>
+	    <div class="col">
+	      <spring:message code="image"/>
+	    </div>
+	  </div>
+	  <c:forEach var="publications" items="${publications}">
+	    <div class="row">
+	      <div class="col-5">
+             <c:out value="${publications.description}" />
+	      </div>
+	      <div class="col">
+             <c:out value="${publications.price}" />
+	      </div>
+	      <div class="col-2">
+             <c:out value="${publications.quantity}" />
+	      </div>
+	      <div class="col-2">
+	      </div>
+	      <div class="col">
+	      </div>
+	    </div>
+	  </c:forEach>
+	</div>
 	<div><spring:message code="subscriptions.open"/></div>
 	<div>Add list</div>
 	<div><spring:message code="subscriptions.pay"/></div>
@@ -22,18 +58,18 @@
             </button>
           </div>
 
-					<!-- Open modal automatically -->
-					<c:if test="${not empty publicationErrors}">
-						<script type="text/javascript">
-			        $(window).on('load',function(){
-			            $('#publicationModal').modal('show');
-			        });
-			    	</script>
-					</c:if>
+          <!--          Open modal automatically         -->
+          <c:if test="${not empty publicationErrors}">
+             <script type="text/javascript">
+              $(window).on('load',function(){
+                $('#publicationModal').modal('show');
+              });
+             </script>
+          </c:if>
 
-					<!--          Create publication form          -->
+          <!--          Create publication form          -->
           <div class="modal-body">
-						<c:url value="/createPublication" var="postPathPublication"/>
+             <c:url value="/createPublication" var="postPathPublication"/>
              <form:form modelAttribute="publicationForm" action="${postPathPublication}" method="post">
               <div class="form-group">
                 <label><spring:message code="description"/></label>

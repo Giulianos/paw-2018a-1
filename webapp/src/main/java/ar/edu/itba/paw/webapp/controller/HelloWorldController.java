@@ -47,16 +47,17 @@ public class HelloWorldController {
 	}
 	
 	@RequestMapping("/")
-	public ModelAndView index(@ModelAttribute("registerForm") final UserForm form, @ModelAttribute("publicationForm") final PublicationForm form2) {
+	public ModelAndView index(@ModelAttribute("registerForm") final UserForm form, @ModelAttribute("publicationForm") final PublicationForm form2, ModelMap model) {
+		includeUserTransactions(model);
 		return new ModelAndView("index");
 	}
-	
+
 	@RequestMapping(value = "/create", method = { RequestMethod.POST })
 	public ModelAndView create(@Valid @ModelAttribute("registerForm") final UserForm form, final BindingResult errors, ModelMap model) {
 		boolean isValid = validUser(form,model);
 
 		if (errors.hasErrors() || !isValid) {
-			return index(form, null);
+			return index(form, null, null);
 		}
 		final User u = us.create(form.getUsername(), form.getEmail(), form.getPassword());
 		return new ModelAndView("redirect:/user/"+ u.getId());
@@ -66,11 +67,11 @@ public class HelloWorldController {
 	public ModelAndView createPublication(@Valid @ModelAttribute("publicationForm") final PublicationForm form, final BindingResult errors, ModelMap model) {
 		if (errors.hasErrors()) {
 			model.addAttribute("publicationErrors", true);
-			return index(null, form);
+			return index(null, form, null);
 		}
 		model.addAttribute("publicationCreated", true);
 		pu.create(auth.getAuthentication().getName(), form.getDescription(), Float.parseFloat(form.getPrice()), Integer.parseInt(form.getQuantity()));
-		return index(null, null);
+		return index(null, null, null);
 	}
 
 	@RequestMapping("/login")
@@ -95,4 +96,25 @@ public class HelloWorldController {
 		}
 		return isValid;
 	}
+	
+	private void includeUserTransactions(ModelMap model) {
+		String testName = auth.getAuthentication().getName();
+		
+		// Is there a better alternative to check if user is logged in?
+		if (!testName.equals("anonymousUser")) {
+			model.addAttribute("publications", pu.findBySupervisor(testName));
+		}
+	}
+
+//   Source: https://www.mkyong.com/spring-security/spring-security-check-if-user-is-from-remember-me-cookie/
+//	 private boolean isRememberMeAuthenticated() {
+//
+//			Authentication authentication = 
+//				SecurityContextHolder.getContext().getAuthentication();
+//			if (authentication == null) {
+//				return false;
+//			}
+//
+//		    return RememberMeAuthenticationToken.class.isAssignableFrom(authentication.getClass());
+//	 }
 }
