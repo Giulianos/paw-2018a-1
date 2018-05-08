@@ -7,29 +7,32 @@ public interface Users {
 	/**
 	 * Finds the user with the provided id.
 	 * 
-	 * @param id The id of the user
+	 * @param id The id of the user.
+	 * 
 	 * @return The user with the provided id.
 	 */
 	
-	public User findById(final long id);
+	User findById(final long id);
 	
 	/**
 	 * Finds the user with the provided username.
 	 * 
-	 * @param username The username of the user
+	 * @param username The username of the user.
+	 * 
 	 * @return The user with the provided username.
 	 */
 	
-	public User findByUsername(final String username);
+	User findByUsername(final String username);
 	
 	/**
 	 * Finds the user with the provided email.
 	 * 
-	 * @param email The Email of the user
+	 * @param email The Email of the user.
+	 * 
 	 * @return The user with the provided email.
 	 */
 	
-	public User findByEmail(final String email);
+	User findByEmail(final String email);
 	
 	/**
 	 * Create a new user.
@@ -40,6 +43,7 @@ public interface Users {
 	 * 
 	 * @return The created user.
 	 */
+	
 	User create(String username, String email, String password);
 
 	/**
@@ -49,7 +53,8 @@ public interface Users {
 	 * 
 	 * @return True if the user is unique.
 	 */
-	public boolean uniqueUser(final String username);
+	
+	boolean uniqueUser(final String username);
 
 	/**
 	 * Check if the email is valid.
@@ -58,5 +63,6 @@ public interface Users {
 	 * 
 	 * @return True if the email is unique.
 	 */
-	public boolean uniqueEmail(final String email);
+	
+	boolean uniqueEmail(final String email);
 }

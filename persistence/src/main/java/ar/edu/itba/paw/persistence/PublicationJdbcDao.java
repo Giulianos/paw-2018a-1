@@ -16,7 +16,6 @@ import org.springframework.stereotype.Repository;
 
 import ar.edu.itba.paw.interfaces.PublicationDao;
 import ar.edu.itba.paw.model.Publication;
-import ar.edu.itba.paw.model.User;
 
 @Primary
 @Repository

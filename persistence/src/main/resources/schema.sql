@@ -20,22 +20,22 @@ CREATE TABLE IF NOT EXISTS publications (
 	FOREIGN KEY(supervisor) REFERENCES users (username) ON DELETE SET NULL
 );
 
-CREATE TABLE IF NOT EXISTS subscriptions (
+CREATE TABLE IF NOT EXISTS orders (
 	subscriber VARCHAR(15),
 	publication_id INT,
 	quantity INT,
-	is_confirmed BOOLEAN,
+	is_confirmed BOOLEAN DEFAULT FALSE,
 	FOREIGN KEY(subscriber) REFERENCES users (username) ON DELETE CASCADE,
 	FOREIGN KEY(publication_id) REFERENCES publications (publication_id) ON DELETE CASCADE,
 	PRIMARY KEY (subscriber, publication_id)
 );
 
-CREATE TABLE IF NOT EXISTS buyers (
+CREATE TABLE IF NOT EXISTS confirmedOrders (
 	buyer VARCHAR(15),
 	publication_id INT,
 	quantity INT,
-	is_paid BOOLEAN,
-	is_received BOOLEAN,
+	is_paid BOOLEAN DEFAULT FALSE,
+	is_received BOOLEAN DEFAULT FALSE,
 	FOREIGN KEY(buyer) REFERENCES users (username) ON DELETE CASCADE,
 	FOREIGN KEY(publication_id) REFERENCES publications (publication_id) ON DELETE CASCADE,
 	PRIMARY KEY (buyer, publication_id)

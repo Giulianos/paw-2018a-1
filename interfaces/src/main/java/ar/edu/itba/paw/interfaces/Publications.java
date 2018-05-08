@@ -9,7 +9,7 @@ public interface Publications {
 	/**
 	 * Finds the publication with the provided id.
 	 * 
-	 * @param id The id of the publication
+	 * @param id The id of the publication.
 	 * @return The publication with the provided id.
 	 */
 	
@@ -18,7 +18,7 @@ public interface Publications {
 	/**
 	 * Finds publications with the provided supervisor.
 	 * 
-	 * @param username The username of the supervisor
+	 * @param username The username of the supervisor.
 	 * @return The publications with the provided supervisor.
 	 */
 	
@@ -70,7 +70,8 @@ public interface Publications {
 	 * @param price The price of the publication.
 	 * @param quantity The quantity of the publication.
 	 * 
-	 * @return The created user.
+	 * @return The created publication.
 	 */
+	
 	Publication create(final String supervisor, final String description, final float price, final int quantity);
 }
