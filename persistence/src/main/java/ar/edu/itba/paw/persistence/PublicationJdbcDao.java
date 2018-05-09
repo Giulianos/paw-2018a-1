@@ -51,26 +51,22 @@ public class PublicationJdbcDao implements PublicationDao {
 
 	@Override
 	public List<Publication> findByDescription(String description) {
-		// TODO Auto-generated method stub
-		return null;
+		return	jdbcTemplate.query("SELECT * FROM publications WHERE description like '%?%';", ROW_MAPPER, description);
 	}
 
 	@Override
 	public List<Publication> findByPrice(float minPrice, float maxPrice) {
-		// TODO Auto-generated method stub
-		return null;
+		return	jdbcTemplate.query("SELECT * FROM publications WHERE price between ? and ?;", ROW_MAPPER, minPrice, maxPrice);
 	}
 
 	@Override
 	public List<Publication> findByQuantity(int quantity) {
-		// TODO Auto-generated method stub
-		return null;
+		return	jdbcTemplate.query("SELECT * FROM publications WHERE quantity = ?;", ROW_MAPPER, quantity);
 	}
 
 	@Override
 	public List<Publication> findByQuantity(int minQuantity, int maxQuantity) {
-		// TODO Auto-generated method stub
-		return null;
+		return	jdbcTemplate.query("SELECT * FROM publications WHERE price between ? and ?;", ROW_MAPPER, minQuantity, maxQuantity);
 	}
 
 	@Override
