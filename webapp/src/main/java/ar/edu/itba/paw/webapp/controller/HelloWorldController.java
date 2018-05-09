@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.itba.paw.interfaces.Orders;
 import ar.edu.itba.paw.interfaces.Publications;
 import ar.edu.itba.paw.interfaces.Users;
+import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.model.User;
 import ar.edu.itba.paw.webapp.auth.IAuthenticationFacade;
 import ar.edu.itba.paw.webapp.form.PublicationForm;
@@ -29,6 +31,8 @@ public class HelloWorldController {
 	private Users us;
 	@Autowired
 	private Publications pu;
+	@Autowired
+	private Orders ord;
 	@Autowired
 	private IAuthenticationFacade auth;
 	@Autowired
@@ -68,14 +72,21 @@ public class HelloWorldController {
 	
 	@RequestMapping(value = "/createPublication", method = { RequestMethod.POST })
 	public ModelAndView createPublication(@Valid @ModelAttribute("publicationForm") final PublicationForm form, final BindingResult errors, ModelMap model) {
+		boolean isValid = validPublicationQuantity(errors,form,model);
+
 		includeUserTransactions(model);
-		
-		if (errors.hasErrors()) {
+
+		if (errors.hasErrors() || !isValid) {
+			// Add attribute to model to keep pop up form persistent
 			model.addAttribute("publicationErrors", true);
 			return index(null, form, model);
 		}
+		// Add attribute to model to show success notification
 		model.addAttribute("publicationCreated", true);
-		pu.create(auth.getAuthentication().getName(), form.getDescription(), Float.parseFloat(form.getPrice()), Integer.parseInt(form.getQuantity()));
+		
+		final Publication p = pu.create(auth.getAuthentication().getName(), form.getDescription(), Float.parseFloat(form.getPrice()), Integer.parseInt(form.getQuantity()));
+
+		ord.create(p.getId(), p.getSupervisor(), Integer.parseInt(form.getOwnerQuantity()));
 		return index(null, null, model);
 	}
 
@@ -101,7 +112,20 @@ public class HelloWorldController {
 		}
 		return isValid;
 	}
-	
+
+	private boolean validPublicationQuantity(final BindingResult errors, PublicationForm form, ModelMap model) {
+		// If one of the quantities is not a number (form regular expression).
+		if (errors.getFieldError("quantity") != null || errors.getFieldError("ownerQuantity") != null) {
+			return false;
+		}
+		
+		if (!form.quantityCheck()) {
+			model.addAttribute("invalidQuantity", true);
+			return false;
+		}
+		return true;
+	}
+
 	private void includeUserTransactions(ModelMap model) {
 		String testName = auth.getAuthentication().getName();
 		

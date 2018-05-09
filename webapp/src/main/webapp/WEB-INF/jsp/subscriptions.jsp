@@ -92,6 +92,16 @@
 								<form:errors path="quantity" role="alert" cssClass="alert alert-danger mt-2" element="div"/>
               </div>
 
+              <div class="form-group">
+                <label><spring:message code="own.quantity"/></label>
+                <form:input type="text" class="form-control" aria-describedby="ownerQuantity" placeholder="Enter quantity"
+								path="ownerQuantity" id="ownerQuantity"/>
+								<form:errors path="ownerQuantity" role="alert" cssClass="alert alert-danger mt-2" element="div"/>
+								<c:if test="${not empty invalidQuantity}">
+								  <div role="alert" class="alert alert-danger mt-2"><spring:message code="publication.invalid.quantity"/></div>
+								</c:if>
+              </div>
+
               <button type="submit" class="btn btn-primary"><spring:message code="create"/></button>
             </form:form>
           </div>

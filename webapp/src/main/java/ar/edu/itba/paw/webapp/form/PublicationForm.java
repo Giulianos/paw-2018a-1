@@ -16,6 +16,10 @@ public class PublicationForm {
 	@Pattern(regexp = "[1-9][0-9]*", message="{publication.quantity.pattern}")
 	private String quantity;
 
+	@Size(min = 1, max = 6, message="{quantity.size}")
+	@Pattern(regexp = "[1-9][0-9]*", message="{publication.quantity.pattern}")
+	private String ownerQuantity;
+
 //	@Size(min = 10, max = 50)
 //	@Pattern(regexp = "[a-zA-Z][a-zA-Z0-9]+")
 //	private String image;
@@ -42,6 +46,18 @@ public class PublicationForm {
 
 	public void setQuantity(String quantity) {
 		this.quantity = quantity;
+	}
+
+	public String getOwnerQuantity() {
+		return ownerQuantity;
+	}
+
+	public void setOwnerQuantity(String ownerQuantity) {
+		this.ownerQuantity = ownerQuantity;
+	}
+	
+	public boolean quantityCheck() {
+		return Integer.parseInt(getOwnerQuantity()) < Integer.parseInt(getQuantity());
 	}
 	
 //	public String getImage() {
