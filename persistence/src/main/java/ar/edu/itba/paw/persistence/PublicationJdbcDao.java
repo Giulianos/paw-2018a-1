@@ -51,7 +51,7 @@ public class PublicationJdbcDao implements PublicationDao {
 
 	@Override
 	public List<Publication> findByDescription(String description) {
-		return	jdbcTemplate.query("SELECT * FROM publications WHERE description like '%?%';", ROW_MAPPER, description);
+		return	jdbcTemplate.query("SELECT * FROM publications WHERE LOWER(description) like LOWER(?);", ROW_MAPPER, "%"+description+"%");
 	}
 
 	@Override

@@ -62,23 +62,27 @@
       <div class="row align-items-center justify-content-center mt-3">
         <div class="col">
           <div class="border bg-light rounded p-3">
-            <!-- Publication -->
-            <div class="row bg-white border border-secondary rounded ml-2 mr-2 mb-2">
-              <div class="column">
-                <img height="180" width="286" src="img.png" />
-              </div>
-              <div class="column py-2 px-3">
-                <h3>Yerba playadito</h3>
-                <span class="mt-3"><img height="18" src="svg/map-marker.svg" alt="icon name" /> Argentina</span></br>
-                <span class="mt-3">Cantidad disponible: </span><span class="badge badge-pill badge-success">120</span></br>
-                <div class="input-group input-group-sm mt-3">
-                  <input type="number" class="form-control" placeholder="Cantidad">
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button">Ordenar</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            
+            <c:forEach var="publication" items="${resultList}">
+            	<!-- Publication -->
+            
+	            <div class="row bg-white border border-secondary rounded ml-2 mr-2 mb-2">
+	              <div class="column">
+	                <img height="180" width="286" src="img.png" />
+	              </div>
+	              <div class="column py-2 px-3">
+	                <h3><c:out value="${publication.description}" /></h3>
+	                <span class="mt-3"><img height="18" src="svg/map-marker.svg" alt="icon name" /> Argentina</span></br>
+	                <span class="mt-3">Cantidad disponible: </span><span class="badge badge-pill badge-success">120</span></br>
+	                <div class="input-group input-group-sm mt-3">
+	                  <input type="number" class="form-control" placeholder="Cantidad">
+	                  <div class="input-group-append">
+	                    <button class="btn btn-outline-secondary" type="button">Ordenar</button>
+	                  </div>
+	                </div>
+	              </div>
+	            </div>
+          	</c:forEach>
           </div>
         </div>
       </div>
