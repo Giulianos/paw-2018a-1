@@ -33,8 +33,8 @@ public class PublicationJdbcDao implements PublicationDao {
 	}
 
 	private final static RowMapper<Publication> ROW_MAPPER =
-			(ResultSet rs, int rowNum) -> new Publication(rs.getLong("publication_id"),rs.getString("supervisor"),rs.getString("description"),rs.getFloat("price"),rs.getInt("quantity"));
-
+			(ResultSet rs, int rowNum) -> new Publication(rs.getLong("publication_id"),rs.getString("supervisor"),rs.getString("description"),rs.getFloat("price"),rs.getInt("quantity"),rs.getString("image"));
+			
 	@Override
 	public Publication findById(long id) {
 		final List<Publication> list = jdbcTemplate.query("SELECT * FROM publications WHERE publication_id = ?;", ROW_MAPPER, id);

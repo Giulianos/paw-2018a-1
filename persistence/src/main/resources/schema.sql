@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS publications (
 	description VARCHAR(30),
 	price REAL,
 	quantity INT,
-	image VARCHAR(50) DEFAULT '',
+	image TEXT DEFAULT '',
 	is_confirmed BOOLEAN DEFAULT FALSE,
 	FOREIGN KEY(supervisor) REFERENCES users (username) ON DELETE SET NULL
 );
