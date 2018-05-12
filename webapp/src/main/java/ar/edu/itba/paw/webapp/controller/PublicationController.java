@@ -45,10 +45,7 @@ public class PublicationController {
 	}
 	
 	public boolean validOrder(OrderForm form, ModelMap model) {
-		if(!form.quantityCheck()) {
-			model.addAttribute("invalidQuantity", true);
-			return false;
-		}
+
 		return true;
 	}
 	
@@ -60,10 +57,12 @@ public class PublicationController {
 	}
 	
 	@RequestMapping(value = "/search/{keywords}")
-	public ModelAndView search(@PathVariable("keywords") String keywords) {
+	public ModelAndView search(@Valid @ModelAttribute("orderForm") final OrderForm form, @PathVariable("keywords") String keywords) {
 		List<Publication> results = ps.findByDescription(keywords);
 		final ModelAndView mav = new ModelAndView("publications");
-		
+		for(Publication publication : results) {
+			publication.setRemainingQuantity(ps.remainingQuantity(publication.getId()));
+		}
 		mav.addObject("resultList", results);
 		
 		return mav;

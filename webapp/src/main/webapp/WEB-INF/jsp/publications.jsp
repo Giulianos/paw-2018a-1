@@ -73,13 +73,16 @@
 	              <div class="column py-2 px-3">
 	                <h3><c:out value="${publication.description}" /></h3>
 	                <span class="mt-3"><img height="18" src="svg/map-marker.svg" alt="icon name" /> Argentina</span></br>
-	                <span class="mt-3">Cantidad disponible: </span><span class="badge badge-pill badge-success">120</span></br>
-	                <div class="input-group input-group-sm mt-3">
-	                  <input type="number" class="form-control" placeholder="Cantidad">
-	                  <div class="input-group-append">
-	                    <button class="btn btn-outline-secondary" type="button">Ordenar</button>
-	                  </div>
-	                </div>
+	                <span class="mt-3">Cantidad disponible: </span><span class="badge badge-pill badge-success"><c:out value="${publication.remainingQuantity}" /></span></br>
+	                <form:form modelAttribute="orderForm" action="/order" method="post">
+	             		<form:input type="hidden" value="${publication.id}" path="publicationId" id="publicationId"/>
+		                <div class="input-group input-group-sm mt-3">
+		                  <form:input type="number" class="form-control" placeholder="Cantidad" path="quantity" id="quantity" />
+		                  <div class="input-group-append">
+		                    <button class="btn btn-outline-secondary" type="submit">Ordenar</button>
+		                  </div>
+		                </div>
+		            </form:form>
 	              </div>
 	            </div>
           	</c:forEach>
