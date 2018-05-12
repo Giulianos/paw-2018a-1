@@ -37,4 +37,25 @@ public interface OrderDao {
 	 */
 	
 	Order create(final long publication_id, final String subscriber, final int quantity);
+	
+	/**
+	 * Sets the is_confirmed attribute for the provided publication id and subscriber.
+	 * 
+	 * @param publication_id The id of the publication.
+	 * @param subscriber The username of the subscriber.
+	 * 
+	 * @return True if it the confirmation update was successful.
+	 */
+	
+	boolean confirm(final long publication_id, final String subscriber);
+	
+	/**
+	 * Delete all orders for the corresponding publication id.
+	 * 
+	 * @param publication_id The id of the publication.
+	 * 
+	 * @return True if the deletion was successful.
+	 */
+	
+	boolean delete(final long publication_id);
 }

@@ -80,4 +80,24 @@ public interface PublicationDao {
 	 */
 	
 	Publication create(final String supervisor, final String description, final float price, final int quantity);
+	
+	/**
+	 * Sets the is_confirmed attribute for the provided id.
+	 * 
+	 * @param id The id of the publication.
+	 * 
+	 * @return True if it the confirmation update was successful.
+	 */
+	
+	boolean confirm(final long id);
+	
+	/**
+	 * Delete publication for the corresponding id.
+	 * 
+	 * @param id The id of the publication to be deleted.
+	 * 
+	 * @return True if the deletion was successful.
+	 */
+	
+	boolean delete(final long id);
 }

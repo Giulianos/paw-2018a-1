@@ -37,16 +37,16 @@ public interface Orders {
 	 */
 	
 	Order create(final long publication_id, final String subscriber, final int quantity);
-	
 	/**
-	 * Finds the quantity ordered for the provided publication id.
+	 * Sets the is_confirmed attribute for the provided publication id and subscriber.
 	 * 
 	 * @param publication_id The id of the publication.
+	 * @param subscriber The username of the subscriber.
 	 * 
-	 * @return The quantity ordered for the provided publication id.
+	 * @return True if it the confirmation update was successful.
 	 */
 	
-	int quantity(final long publication_id);
+	boolean confirm(final long publication_id, final String subscriber);
 	
 	/**
 	 * Verifies if all orders for the provided publication id are confirmed.
@@ -57,4 +57,14 @@ public interface Orders {
 	 */
 	
 	boolean areConfirmed(final long publication_id);
+	
+	/**
+	 * Delete all orders for the corresponding publication id.
+	 * 
+	 * @param publication_id The id of the publication.
+	 * 
+	 * @return True if the deletion was successful.
+	 */
+	
+	boolean delete(final long publication_id);
 }

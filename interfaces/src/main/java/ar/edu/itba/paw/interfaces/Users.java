@@ -45,6 +45,16 @@ public interface Users {
 	 */
 	
 	User create(String username, String email, String password);
+	
+	/**
+	 * Increase the transactions attribute for the provided user by 1.
+	 * 
+	 * @param username The name of the user.
+	 * 
+	 * @return True if it the count update was successful.
+	 */
+	
+	boolean addTransaction(final String username);
 
 	/**
 	 * Check if the user is valid.

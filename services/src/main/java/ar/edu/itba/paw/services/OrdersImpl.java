@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import ar.edu.itba.paw.interfaces.OrderDao;
 import ar.edu.itba.paw.interfaces.Orders;
-import ar.edu.itba.paw.interfaces.PublicationDao;
 import ar.edu.itba.paw.model.Order;
 
 @Primary
@@ -16,8 +15,6 @@ import ar.edu.itba.paw.model.Order;
 public class OrdersImpl implements Orders {
 	@Autowired
 	private OrderDao orderDao;
-	@Autowired
-	private PublicationDao publicationDao;
 
 	@Override
 	public List<Order> findBySubscriber(String username) {
@@ -35,15 +32,8 @@ public class OrdersImpl implements Orders {
 	}
 
 	@Override
-	public int quantity(long publication_id) {
-		int remainingQuantity = publicationDao.findById(publication_id).getQuantity();
-		List<Order> orders = findByPublicationId(publication_id);
-
-		for (Order order : orders) {
-			remainingQuantity -= order.getQuantity();
-		}
-
-		return remainingQuantity;
+	public boolean confirm(long publication_id, String subscriber) {
+		return orderDao.confirm(publication_id,subscriber);
 	}
 
 	@Override
@@ -56,5 +46,10 @@ public class OrdersImpl implements Orders {
 			}
 		}		
 		return true;
+	}
+
+	@Override
+	public boolean delete(long publication_id) {
+		return orderDao.delete(publication_id);
 	}
 }

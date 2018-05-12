@@ -71,4 +71,9 @@ public class UserJdbcDao implements UserDao {
 		
 		return new User(userId.longValue(),username,email,password);
 	}
+
+	@Override
+	public boolean addTransaction(String username) {
+		return jdbcTemplate.update("UPDATE users SET transactions = transactions + 1 WHERE username = ?",username) > 0;
+	}
 }

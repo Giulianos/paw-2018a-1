@@ -56,4 +56,14 @@ public class OrderJdbcDao implements OrderDao {
 		
 		return new Order(publication_id,subscriber,quantity);
 	}
+
+	@Override
+	public boolean confirm(long publication_id, String subscriber) {
+		return jdbcTemplate.update("UPDATE orders SET is_confirmed = ? WHERE publication_id = ? and subscriber = ?",true,publication_id,subscriber) > 0;
+	}
+
+	@Override
+	public boolean delete(long publication_id) {
+		return jdbcTemplate.update("DELETE FROM orders WHERE publication_id = ?",publication_id) > 0;
+	}
 }

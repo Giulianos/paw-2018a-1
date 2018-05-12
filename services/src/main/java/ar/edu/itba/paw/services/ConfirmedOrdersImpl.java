@@ -32,11 +32,21 @@ public class ConfirmedOrdersImpl implements ConfirmedOrders {
 	}
 
 	@Override
-	public boolean arePaid(long publication_id) {
+	public boolean confirmPayment(long publication_id, String buyer) {
+		return confirmedOrderDao.confirmPayment(publication_id,buyer);
+	}
+
+	@Override
+	public boolean confirmDelivery(long publication_id, String buyer) {
+		return confirmedOrderDao.confirmDelivery(publication_id,buyer);
+	}
+
+	@Override
+	public boolean areFulfilled(long publication_id) {
 		List<ConfirmedOrder> orders = findByPublicationId(publication_id);
 
 		for (ConfirmedOrder order : orders) {
-			if (!order.getPaid()) {
+			if (!order.getPaid() || !order.getReceived()) {
 				return false;
 			}
 		}		
@@ -44,14 +54,7 @@ public class ConfirmedOrdersImpl implements ConfirmedOrders {
 	}
 
 	@Override
-	public boolean areReceived(long publication_id) {
-		List<ConfirmedOrder> orders = findByPublicationId(publication_id);
-
-		for (ConfirmedOrder order : orders) {
-			if (!order.getReceived()) {
-				return false;
-			}
-		}		
-		return true;
+	public boolean delete(long publication_id) {
+		return confirmedOrderDao.delete(publication_id);
 	}
 }

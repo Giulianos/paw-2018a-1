@@ -41,4 +41,9 @@ public class UsersImpl implements Users {
 	public boolean uniqueEmail(final String email) {
 		return findByEmail(email) == null;
 	}
+
+	@Override
+	public boolean addTransaction(String username) {
+		return userDao.addTransaction(username);
+	}
 }

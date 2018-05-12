@@ -74,4 +74,47 @@ public interface Publications {
 	 */
 	
 	Publication create(final String supervisor, final String description, final float price, final int quantity);
+	
+	/**
+	 * Finds the quantity ordered for the provided publication id.
+	 * 
+	 * @param id The id of the publication.
+	 * 
+	 * @return The quantity ordered for the provided publication id.
+	 */
+	
+	int remainingQuantity(final long id);
+	
+	/**
+	 * Verifies if the total quantity for the provided publication_id has been reached.
+	 * If true, the database is updated accordingly.
+	 * 
+	 * @param id The id of the publication.
+	 * 
+	 * @return True if the total quantity for the provided id has been reached.
+	 */
+	
+	boolean confirm(final long id);
+	
+	/**
+	 * Verifies if all orders have been confirmed.
+	 * If true, orders are moved to the confirmedOrders database.
+	 * 
+	 * @param id The id of the publication.
+	 * 
+	 * @return True if all orders have been confirmed.
+	 */
+	
+	boolean confirmOrders(final long id);
+	
+	/**
+	 * Verifies if all confirmed orders have been paid and received.
+	 * If true, publication is complete and orders are removed.
+	 * 
+	 * @param id The id of the publication.
+	 * 
+	 * @return True if all orders have been paid and delivered.
+	 */
+
+	boolean confirmFulfillment(long id);
 }

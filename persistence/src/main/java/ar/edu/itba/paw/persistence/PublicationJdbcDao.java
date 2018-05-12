@@ -83,4 +83,13 @@ public class PublicationJdbcDao implements PublicationDao {
 		return new Publication(publicationId.longValue(),supervisor,description,price,quantity);
 	}
 
+	@Override
+	public boolean confirm(long id) {
+		return jdbcTemplate.update("UPDATE publications SET is_confirmed = ? WHERE publication_id = ?",true,id) > 0;
+	}
+
+	@Override
+	public boolean delete(long id) {
+		return jdbcTemplate.update("DELETE FROM publications WHERE publication_id = ?",id) > 0;
+	}
 }

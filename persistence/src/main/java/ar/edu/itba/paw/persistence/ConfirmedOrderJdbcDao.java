@@ -56,4 +56,19 @@ public class ConfirmedOrderJdbcDao implements ConfirmedOrderDao {
 		
 		return new ConfirmedOrder(publication_id,buyer,quantity);
 	}
+
+	@Override
+	public boolean confirmPayment(long publication_id, String buyer) {
+		return jdbcTemplate.update("UPDATE confirmedOrders SET is_paid = ? WHERE publication_id = ? and buyer = ?",true,publication_id,buyer) > 0;
+	}
+
+	@Override
+	public boolean confirmDelivery(long publication_id, String buyer) {
+		return jdbcTemplate.update("UPDATE confirmedOrders SET is_received = ? WHERE publication_id = ? and buyer = ?",true,publication_id,buyer) > 0;
+	}
+
+	@Override
+	public boolean delete(long publication_id) {
+		return jdbcTemplate.update("DELETE FROM confirmedOrders WHERE publication_id = ?",publication_id) > 0;
+	}
 }
