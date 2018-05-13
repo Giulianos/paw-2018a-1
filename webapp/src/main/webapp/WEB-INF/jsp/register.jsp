@@ -3,6 +3,12 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+<c:set var="username"><spring:message code="username"/></c:set>
+<c:set var="email"><spring:message code="email"/></c:set>
+<c:set var="password"><spring:message code="register.password"/></c:set>
+<c:set var="repassword"><spring:message code="register.repassword"/></c:set>
+<c:set var="register_submit"><spring:message code="register.submit"/></c:set>
+
 <!doctype html>
 <html>
   <head>
@@ -22,25 +28,26 @@
 
     <title>{PAW_PROJECT}</title>
   </head>
-  <body class="index-body">
+  <body>
     <%@ include file="navbar.jsp" %>
           <!--          Login form          -->
 		<%@ include file="login-modal.jsp" %>
 
-    <div class="container" style="display:flex;justify-content:center;align-items:center;">
-      <div>
-        <h1 class="logo-title">Gumpu</h1>
-        <p class="lead slogan px-3 bg-dark">Donde ahorras comprando en grupo</p>
+    <div class="container">
 
-        <form method="get" action="/search">
-          <div class="input-group mb-3 input-group-lg">
-            <input type="text" class="form-control" name="keywords" placeholder="Qué estás buscando?">
-              <div class="input-group-append">
-                <button class="btn btn-secondary" type="submit">Buscar</button>
-              </div>
-            </div>
-          </form>
-      </div>
+      <security:authorize access="!isAuthenticated()">
+
+        <!--      Signup form     -->
+		<%@ include file="registrationform.jsp" %>
+
+      </security:authorize>
+
+      <security:authorize access="isAuthenticated()">
+
+		<%@ include file="subscriptions.jsp" %>
+
+      </security:authorize>
+
     </div>
   </body>
 </html>

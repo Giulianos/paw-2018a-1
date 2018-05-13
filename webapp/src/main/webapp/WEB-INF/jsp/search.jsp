@@ -38,14 +38,14 @@
     <%@ include file="navbar.jsp" %>
 		<%@ include file="login-modal.jsp" %>
 
-    <div class="container">
+    <div class="container pt-3">
       <div class="row align-items-center justify-content-center">
         <div class="col">
           <h2 class="mb-3">Buscar...</h2>
           <div class="border bg-light rounded p-3">
             <form method="get" action="/search">
               <div class="input-group mb-3">
-                <input type="text" class="form-control" name="keywords" placeholder="Qué estás buscando?">
+                    <input type="text" value='<c:out value="${searchedKeyword}" />' class="form-control" name="keywords" placeholder="Qué estás buscando?" />
                 <div class="input-group-append">
                   <button class="btn btn-primary" type="submit">Buscar</button>
                 </div>

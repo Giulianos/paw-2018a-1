@@ -74,6 +74,7 @@ public class PublicationController {
 			publication.setRemainingQuantity(ps.remainingQuantity(publication.getId()));
 		}
 		mav.addObject("resultList", results);
+		mav.addObject("searchedKeyword", keywords);
 		
 		return mav;
 	}
