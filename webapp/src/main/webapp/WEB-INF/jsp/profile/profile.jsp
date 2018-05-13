@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/style.css">
 
-    <title>{PAW_PROJECT}</title>
+    <title>Gumpu</title>
   </head>
   <body>
     <%@ include file="../navbar.jsp" %>
@@ -21,32 +21,32 @@
 
     <div class="container">
       <h1 style="text-transform: capitalize"><security:authentication property="principal.username" /></h1><hr>
-      <h2 class="text-secondary">Resumen</h2>
+      <h2 class="text-secondary"><spring:message code="summary"/></h2>
       <div class="card my-3">
         <div class="card-header">
-          Publicaciones
+          <spring:message code="publications"/>
         </div>
         <div class="card-body">
-          <h5 class="card-title"> <span class="badge badge-secondary px-2"><c:out value="${publicationsQuantity}" /></span> Publicaciones realizadas</h5>
-          <a href="/profile/publications" class="btn btn-outline-primary mt-3">Ver mis publicaciones</a>
+          <h5 class="card-title"> <span class="badge badge-secondary px-2"><c:out value="${publicationsQuantity}" /></span> <spring:message code="my.publications"/></h5>
+          <a href="/profile/publications" class="btn btn-outline-primary mt-3"><spring:message code="see.my.publications"/></a>
         </div>
       </div>
       <div class="card my-3">
         <div class="card-header">
-          Suscripciones
+          <spring:message code="subscriptions"/>
         </div>
         <div class="card-body">
-          <h5 class="card-title"> <span class="badge badge-secondary px-2"><c:out value="${subscriptionsQuantity}" /></span> Suscripciones realizadas</h5>
-          <a href="/profile/subscriptions" class="btn btn-outline-primary mt-3">Ver mis suscripciones</a>
+          <h5 class="card-title"> <span class="badge badge-secondary px-2"><c:out value="${subscriptionsQuantity}" /></span> <spring:message code="my.subscriptions"/></h5>
+          <a href="/profile/subscriptions" class="btn btn-outline-primary mt-3"><spring:message code="see.my.subscriptions"/></a>
         </div>
       </div>
       <div class="card my-3">
         <div class="card-header">
-          Suscripciones finalizadas
+          <spring:message code="finalized.subscriptions"/>
         </div>
         <div class="card-body">
-          <h5 class="card-title"> <span class="badge badge-secondary px-2"><c:out value="${finalizedSubscriptionsQuantity}" /></span> Suscripciones pendientes de pago</h5>
-          <a href="/profile/subscriptions" class="btn btn-outline-primary mt-3">Ver mis suscripciones finalizadas</a>
+          <h5 class="card-title"> <span class="badge badge-secondary px-2"><c:out value="${finalizedSubscriptionsQuantity}" /></span> <spring:message code="pay.subscriptions"/></h5>
+          <a href="/profile/subscriptions" class="btn btn-outline-primary mt-3"><spring:message code="see.my.pay.subscriptions"/></a>
         </div>
       </div>
 

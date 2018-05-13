@@ -3,6 +3,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+<c:set var="enterUsername"><spring:message code="enter.username"/></c:set>
+<c:set var="enterPassword"><spring:message code="enter.password"/></c:set>
+
 <!doctype html>
 <html>
   <head>
@@ -32,7 +35,7 @@
       }
     </script>
 
-    <title>{PAW_PROJECT}</title>
+    <title>Gumpu</title>
   </head>
   <body>
     <%@ include file="navbar.jsp" %>
@@ -42,24 +45,24 @@
       <!-- Login form -->
       <div class="card my-3">
         <div class="card-header">
-          Login
+          <spring:message code="login"/>
         </div>
         <div class="card-body">
           <c:url value="/login" var="loginUrl" />
           <form action="${loginUrl}" method="post" enctype="application/x-www-form-urlencoded">
             <div class="form-group">
-              <label for="username">Username</label>
-              <input class="form-control" id="username" name="j_username" type="text" placeholder="Enter username"/>
+              <label for="username"><spring:message code="username"/></label>
+              <input class="form-control" id="username" name="j_username" type="text" placeholder="${enterUsername}"/>
             </div>
             <div  class="form-group">
-              <label for="password">Password</label>
-              <input class="form-control" id="password" name="j_password" type="password" placeholder="Password"/>
+              <label for="password"><spring:message code="password"/></label>
+              <input class="form-control" id="password" name="j_password" type="password" placeholder="${enterPassword}"/>
             </div>
             <div class="form-group form-check">
               <input class="form-check-input" name="j_rememberme" type="checkbox">
               <label class="form-check-label" for="exampleCheck1"><spring:message code="remember_me"/></label>
             </div>
-            <button type="submit" class="btn btn-primary">Login</button>
+            <button type="submit" class="btn btn-primary"><spring:message code="login"/></button>
           </form>
         </div>
       </div>

@@ -26,7 +26,7 @@
 		<!-- Custom styles -->
     <link rel="stylesheet" href="css/style.css">
 
-    <title>{PAW_PROJECT}</title>
+    <title>Gumpu</title>
   </head>
   <body>
     <%@ include file="navbar.jsp" %>
@@ -42,11 +42,6 @@
 
       </security:authorize>
 
-      <security:authorize access="isAuthenticated()">
-
-		<%@ include file="subscriptions.jsp" %>
-
-      </security:authorize>
 
     </div>
   </body>

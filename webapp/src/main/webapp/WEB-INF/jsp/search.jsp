@@ -3,6 +3,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+<c:set var="searchPlaceholder"><spring:message code="search.what"/></c:set>
+
 <!doctype html>
 <html>
   <head>
@@ -32,7 +34,7 @@
       }
     </script>
 
-    <title>{PAW_PROJECT}</title>
+    <title>Gumpu</title>
   </head>
   <body>
     <%@ include file="navbar.jsp" %>
@@ -41,13 +43,13 @@
     <div class="container pt-3">
       <div class="row align-items-center justify-content-center">
         <div class="col">
-          <h2 class="mb-3">Buscar...</h2>
+          <h2 class="mb-3"><spring:message code="search"/></h2>
           <div class="border bg-light rounded p-3">
             <form method="get" action="/search">
               <div class="input-group mb-3">
-                    <input type="text" value='<c:out value="${searchedKeyword}" />' class="form-control" name="keywords" placeholder="Qué estás buscando?" />
+                    <input type="text" value='<c:out value="${searchedKeyword}" />' class="form-control" name="keywords" placeholder="${searchPlaceholder}"/>
                 <div class="input-group-append">
-                  <button class="btn btn-primary" type="submit">Buscar</button>
+                  <button class="btn btn-primary" type="submit"><spring:message code="search.button"/></button>
                 </div>
               </div>
             </form>
@@ -68,13 +70,13 @@
 	              <div class="column py-2 px-3">
 	                <h3><c:out value="${publication.description}" /></h3>
 	                <span class="mt-3"><img height="18" src="svg/map-marker.svg" alt="icon name" /> Argentina</span></br>
-	                <span class="mt-3">Cantidad disponible: </span><span class="badge badge-pill badge-success"><c:out value="${publication.remainingQuantity}" /></span></br>
+	                <span class="mt-3"><spring:message code="quantity"/></span><span class="badge badge-pill badge-success"><c:out value="${publication.remainingQuantity}" /></span></br>
 	                <form:form modelAttribute="orderForm" action="/order" method="post">
 	             		<form:input type="hidden" value="${publication.id}" path="publicationId" id="publicationId-${publication.id}"/>
 		                <div class="input-group input-group-sm mt-3">
 		                  <form:input onChange="checkOrderQuantity(this.value, '${publication.id}', ${publication.remainingQuantity});" type="number" class="form-control" placeholder="Cantidad" path="quantity" id="quantity-${publication.id}" />
 		                  <div class="input-group-append">
-		                    <button id="button-${publication.id}" disabled="true" class="btn btn-outline-secondary" type="submit">Ordenar</button>
+		                    <button id="button-${publication.id}" disabled="true" class="btn btn-outline-secondary" type="submit"><spring:message code="order"/></button>
 		                  </div>
 		                </div>
 		            </form:form>

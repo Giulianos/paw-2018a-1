@@ -18,7 +18,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
-    <title>{PAW_PROJECT}</title>
+    <title>Gumpu</title>
   </head>
   <body>
     <%@ include file="../navbar.jsp" %>
@@ -32,7 +32,7 @@
       </c:if>
       <div class="row">
         <div class="col-sm">
-          <h2 class="text-secondary mb-4">Publicaciones Realizadas</h2>
+          <h2 class="text-secondary mb-4"><spring:message code="my.publications"/></h2>
         </div>
         <div class="col-sm">
           <button class="btn btn-outline-primary ml-5 float-right" data-toggle="modal" data-target="#publicationModal" type="button"><spring:message code="publication.create"/></button>
@@ -41,10 +41,10 @@
       <table class="table table-striped table-bordered">
         <thead>
           <tr>
-            <th scope="col">Descripcion</th>
-            <th scope="col">Cantidad Necesaria</th>
-            <th scope="col">Cantidad Restante</th>
-            <th scope="col">Precio por unidad</th>
+            <th scope="col"><spring:message code="description"/></th>
+            <th scope="col"><spring:message code="needed.quantity"/></th>
+            <th scope="col"><spring:message code="remaining.quantity"/></th>
+            <th scope="col"><spring:message code="unit.price"/></th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -55,7 +55,7 @@
               <td><c:out value="${publ.quantity}"/></td>
               <td><c:out value="${publ.remainingQuantity}"/></td>
               <td><c:out value="${publ.price}"/></td>
-              <td>Borrar</td>
+              <td><spring:message code="erase"/></td>
             </tr>
           </c:forEach>
         </tbody>

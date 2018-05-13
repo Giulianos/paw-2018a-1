@@ -18,20 +18,20 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/style.css">
 
-    <title>{PAW_PROJECT}</title>
+    <title>Gumpu</title>
   </head>
   <body>
     <%@ include file="../navbar.jsp" %>
 		<%@ include file="../login-modal.jsp" %>
     <div class="container">
-      <h2 class="text-secondary mb-4">Suscripciones Realizadas</h2>
+      <h2 class="text-secondary mb-4"><spring:message code="my.subscriptions"/></h2>
       <table class="table table-striped table-bordered">
         <thead>
           <tr>
-            <th scope="col">Descripcion</th>
-            <th scope="col">Cantidad Ordenada</th>
-            <th scope="col">Cantidad Restante</th>
-            <th scope="col">Precio por unidad</th>
+            <th scope="col"><spring:message code="description"/></th>
+            <th scope="col"><spring:message code="ordered.quantity"/></th>
+            <th scope="col"><spring:message code="remaining.quantity"/></th>
+            <th scope="col"><spring:message code="unit.price"/></th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -42,7 +42,7 @@
               <td><c:out value="${subs.quantity}"/></td> <!-- quantity ordered -->
               <td><c:out value="${subs.publication.remainingQuantity}"/></td> <!-- remaning quantity -->
               <td><c:out value="${subs.publication.price}"/></td>
-              <td>Borrar</td>
+              <td><spring:message code="erase"/></td>
             </tr>
           </c:forEach>
         </tbody>

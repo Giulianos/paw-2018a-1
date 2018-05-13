@@ -3,6 +3,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+<c:set var="searchPlaceholder"><spring:message code="search.what"/></c:set>
+
 <!doctype html>
 <html>
   <head>
@@ -20,7 +22,7 @@
 		<!-- Custom styles -->
     <link rel="stylesheet" href="css/style.css">
 
-    <title>{PAW_PROJECT}</title>
+    <title>Gumpu</title>
   </head>
   <body class="index-body">
     <%@ include file="navbar.jsp" %>
@@ -30,13 +32,13 @@
     <div class="container" style="display:flex;justify-content:center;align-items:center;">
       <div>
         <h1 class="logo-title">Gumpu</h1>
-        <p class="lead slogan px-3 bg-dark">Donde ahorras comprando en grupo</p>
+        <p class="lead slogan px-3 bg-dark"><spring:message code="slogan"/></p>
 
         <form method="get" action="/search">
           <div class="input-group mb-3 input-group-lg">
-            <input type="text" class="form-control" name="keywords" placeholder="Qué estás buscando?">
+            <input type="text" class="form-control" name="keywords" placeholder="${searchPlaceholder}">
               <div class="input-group-append">
-                <button class="btn btn-secondary" type="submit">Buscar</button>
+                <button class="btn btn-secondary" type="submit"><spring:message code="search"/></button>
               </div>
             </div>
           </form>

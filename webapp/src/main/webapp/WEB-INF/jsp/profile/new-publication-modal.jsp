@@ -1,3 +1,7 @@
+<c:set var="enterDescription"><spring:message code="enter.description"/></c:set>
+<c:set var="enterPrice"><spring:message code="enter.price"/></c:set>
+<c:set var="enterQuantity"><spring:message code="enter.quantity"/></c:set>
+
 <div class="modal fade" id="publicationModal" tabindex="-1" role="dialog" aria-labelledby="Publication" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -23,28 +27,28 @@
          <form:form modelAttribute="publicationForm" action="${postPathPublication}" method="post">
           <div class="form-group">
             <label><spring:message code="description"/></label>
-            <form:input type="text" class="form-control" aria-describedby="description" placeholder="Enter description"
+            <form:input type="text" class="form-control" aria-describedby="description" placeholder="${enterDescription}"
             path="description" id="description"/>
             <form:errors path="description" role="alert" cssClass="alert alert-danger mt-2" element="div"/>
           </div>
 
           <div class="form-group">
             <label><spring:message code="price"/></label>
-            <form:input type="text" class="form-control" aria-describedby="price" placeholder="Enter price"
+            <form:input type="text" class="form-control" aria-describedby="price" placeholder="${enterPrice}"
             path="price" id="price"/>
             <form:errors path="price" role="alert" cssClass="alert alert-danger mt-2" element="div"/>
           </div>
 
           <div class="form-group">
             <label><spring:message code="quantity"/></label>
-            <form:input type="text" class="form-control" aria-describedby="quantity" placeholder="Enter quantity"
+            <form:input type="text" class="form-control" aria-describedby="quantity" placeholder="${enterQuantity}"
             path="quantity" id="quantity"/>
             <form:errors path="quantity" role="alert" cssClass="alert alert-danger mt-2" element="div"/>
           </div>
 
           <div class="form-group">
             <label><spring:message code="own.quantity"/></label>
-            <form:input type="text" class="form-control" aria-describedby="ownerQuantity" placeholder="Enter quantity"
+            <form:input type="text" class="form-control" aria-describedby="ownerQuantity" placeholder="${enterQuantity}"
             path="ownerQuantity" id="ownerQuantity"/>
             <form:errors path="ownerQuantity" role="alert" cssClass="alert alert-danger mt-2" element="div"/>
             <c:if test="${not empty invalidQuantity}">
