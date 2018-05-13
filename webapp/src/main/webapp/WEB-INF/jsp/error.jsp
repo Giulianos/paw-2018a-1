@@ -40,7 +40,7 @@
             </button>
           </div>
           <!--          Login form          -->
-		  <%@ include file="loginform.jsp" %>
+		  <%@ include file="login-modal.jsp" %>
 
           <div class="modal-footer">
             <a href="/register" role="button" class="btn btn-outline-primary">Signup</a>

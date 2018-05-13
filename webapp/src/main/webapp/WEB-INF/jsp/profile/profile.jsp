@@ -16,8 +16,8 @@
     <title>{PAW_PROJECT}</title>
   </head>
   <body>
-    <%@ include file="navbar.jsp" %>
-		<%@ include file="loginform.jsp" %>
+    <%@ include file="../navbar.jsp" %>
+		<%@ include file="../login-modal.jsp" %>
 
     <div class="container">
       <h1 style="text-transform: capitalize"><security:authentication property="principal.username" /></h1><hr>

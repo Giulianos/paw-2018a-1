@@ -31,7 +31,7 @@
   <body>
     <%@ include file="navbar.jsp" %>
           <!--          Login form          -->
-		<%@ include file="loginform.jsp" %>
+		<%@ include file="login-modal.jsp" %>
 
     <div class="container">
 

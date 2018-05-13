@@ -42,13 +42,6 @@ public class HelloWorldController {
 	protected void initBinder(WebDataBinder binder) {
 	  binder.setValidator(validator);
 	}
-
-	@RequestMapping("/user/{id}")
-	public ModelAndView helloWorld(@PathVariable("id") int id) {
-		final ModelAndView mav = new ModelAndView("user");
-		mav.addObject("user", us.findById(id));
-		return mav;
-	}
 	
 	@RequestMapping("/")
 	public ModelAndView index(@ModelAttribute("registerForm") final UserForm form, @ModelAttribute("publicationForm") final PublicationForm form2, ModelMap model) {
@@ -67,6 +60,7 @@ public class HelloWorldController {
 		includeUserTransactions(model);
 		
 		final User u = us.create(form.getUsername(), form.getEmail(), form.getPassword());
+		
 		return new ModelAndView("redirect:/user/"+ u.getId());
 	}
 	

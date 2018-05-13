@@ -56,7 +56,7 @@ public class PublicationController {
 	@RequestMapping(value = "/search/{keywords}")
 	public ModelAndView search(@Valid @ModelAttribute("orderForm") final OrderForm form, @PathVariable("keywords") String keywords) {
 		List<Publication> results = ps.findByDescription(keywords);
-		final ModelAndView mav = new ModelAndView("publications");
+		final ModelAndView mav = new ModelAndView("search");
 		for(Publication publication : results) {
 			publication.setRemainingQuantity(ps.remainingQuantity(publication.getId()));
 		}
@@ -69,7 +69,7 @@ public class PublicationController {
 	public ModelAndView search(@RequestParam(value="keywords", required=false) String keywords, @Valid @ModelAttribute("orderForm") final OrderForm form) {
 		if(keywords==null) {
 			List<Publication> results = ps.findByDescription("");
-			final ModelAndView mav = new ModelAndView("publications");
+			final ModelAndView mav = new ModelAndView("search");
 			for(Publication publication : results) {
 				publication.setRemainingQuantity(ps.remainingQuantity(publication.getId()));
 			}

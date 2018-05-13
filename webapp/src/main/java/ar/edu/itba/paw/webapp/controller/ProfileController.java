@@ -36,7 +36,7 @@ public class ProfileController {
 	
 	@RequestMapping(value = "/profile")
 	public ModelAndView profile() {
-		ModelAndView mav = new ModelAndView("profile");
+		ModelAndView mav = new ModelAndView("profile/profile");
 		
 		String username = auth.getAuthentication().getName();
 		
