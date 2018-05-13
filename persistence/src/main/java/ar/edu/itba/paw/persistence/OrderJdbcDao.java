@@ -44,6 +44,10 @@ public class OrderJdbcDao implements OrderDao {
 	public List<Order> findBySubscriber(String username) {
 		return	jdbcTemplate.query("SELECT * FROM orders WHERE subscriber = ?;", ROW_MAPPER, username);
 	}
+	
+	public List<Order> findFinalizedBySubscriber(String username) {
+		return	jdbcTemplate.query("SELECT * FROM orders WHERE subscriber = ? AND is_confirmed=true;", ROW_MAPPER, username);
+	}
 
 	@Override
 	public List<Order> findByPublicationId(long publication_id) {

@@ -48,8 +48,9 @@ public class PublicationController {
 	}
 	
 	public boolean validOrder(OrderForm form, ModelMap model) {
-
-		return false;
+		if(Long.parseLong(form.getQuantity()) > ps.remainingQuantity(Long.parseLong(form.getPublicationId())))
+			return false;
+		return true;
 	}
 	
 	@RequestMapping(value = "/search/{keywords}")

@@ -52,4 +52,9 @@ public class OrdersImpl implements Orders {
 	public boolean delete(long publication_id) {
 		return orderDao.delete(publication_id);
 	}
+
+	@Override
+	public List<Order> findFinalizedBySubscriber(String username) {
+		return orderDao.findFinalizedBySubscriber(username);
+	}
 }
