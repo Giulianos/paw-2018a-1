@@ -14,6 +14,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
+import com.sun.org.apache.bcel.internal.generic.RETURN;
+
 import ar.edu.itba.paw.interfaces.OrderDao;
 import ar.edu.itba.paw.model.Order;
 
@@ -34,9 +36,17 @@ public class OrderJdbcDao implements OrderDao {
 	private final static RowMapper<Order> ROW_MAPPER =
 			(ResultSet rs, int rowNum) -> new Order(rs.getLong("publication_id"),rs.getString("subscriber"),rs.getInt("quantity"),rs.getBoolean("is_confirmed"));
 
+	private final static RowMapper<Integer> ORDER_QUANTITY_MAPPER =
+			(ResultSet rs, int rowNum) -> rs.getInt("ordersQuantity");
+
+			
 	@Override
 	public List<Order> findBySubscriber(String username) {
 		return	jdbcTemplate.query("SELECT * FROM orders WHERE subscriber = ?;", ROW_MAPPER, username);
+	}
+	
+	public List<Order> findFinalizedBySubscriber(String username) {
+		return	jdbcTemplate.query("SELECT * FROM orders WHERE subscriber = ? AND is_confirmed=true;", ROW_MAPPER, username);
 	}
 
 	@Override
@@ -46,6 +56,12 @@ public class OrderJdbcDao implements OrderDao {
 
 	@Override
 	public Order create(long publication_id, String subscriber, int quantity) {
+		int ordersQuantity =jdbcTemplate.query("SELECT COALESCE(sum(quantity),0) as ordersQuantity FROM orders WHERE publication_id = ? and subscriber = ?;", ORDER_QUANTITY_MAPPER, publication_id,subscriber).get(0);
+		if(ordersQuantity > 0) {
+			jdbcTemplate.update("UPDATE orders SET quantity = ? WHERE publication_id = ? and subscriber = ?",ordersQuantity+quantity ,publication_id,subscriber);
+			return new Order(publication_id, subscriber, ordersQuantity+quantity);
+		}
+		
 		final Map<String, Object> args = new HashMap<>();
 		
 		args.put("publication_id", publication_id);

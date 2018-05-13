@@ -9,7 +9,7 @@
             <a class="nav-link" href="/"><spring:message code="nav.home"/> <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="/publications"><spring:message code="nav.publications"/></a>
+            <a class="nav-link" href="/search"><spring:message code="nav.publications"/></a>
           </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
@@ -17,8 +17,11 @@
               <button class="btn btn-outline-light my-2 my-sm-0" data-toggle="modal" data-target="#loginModal" type="button">Login / Signup</button>
           </security:authorize>
           <security:authorize access="isAuthenticated()">
-            <a class="btn btn-info my-2 my-sm-0" href="" type="button">
+            <a style="text-transform: capitalize" class="btn btn-info my-2 my-sm-0 mx-2" href="/profile" type="button">
               <security:authentication property="principal.username" />
+            </a>
+            <a style="text-transform: capitalize" class="btn btn-danger my-2 my-sm-0 mx-2" href="/logout" type="button">
+              Logout
             </a>
           </security:authorize>
         </form>

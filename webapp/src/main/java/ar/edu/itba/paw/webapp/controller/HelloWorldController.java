@@ -1,8 +1,17 @@
 package ar.edu.itba.paw.webapp.controller;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -42,13 +51,6 @@ public class HelloWorldController {
 	protected void initBinder(WebDataBinder binder) {
 	  binder.setValidator(validator);
 	}
-
-	@RequestMapping("/user/{id}")
-	public ModelAndView helloWorld(@PathVariable("id") int id) {
-		final ModelAndView mav = new ModelAndView("user");
-		mav.addObject("user", us.findById(id));
-		return mav;
-	}
 	
 	@RequestMapping("/")
 	public ModelAndView index(@ModelAttribute("registerForm") final UserForm form, @ModelAttribute("publicationForm") final PublicationForm form2, ModelMap model) {
@@ -67,27 +69,20 @@ public class HelloWorldController {
 		includeUserTransactions(model);
 		
 		final User u = us.create(form.getUsername(), form.getEmail(), form.getPassword());
-		return new ModelAndView("redirect:/user/"+ u.getId());
+		authWithoutPassword(u);
+		return new ModelAndView("redirect:/profile");
 	}
 	
-	@RequestMapping(value = "/createPublication", method = { RequestMethod.POST })
-	public ModelAndView createPublication(@Valid @ModelAttribute("publicationForm") final PublicationForm form, final BindingResult errors, ModelMap model) {
-		boolean isValid = validPublicationQuantity(errors,form,model);
-
-		includeUserTransactions(model);
-
-		if (errors.hasErrors() || !isValid) {
-			// Add attribute to model to keep pop up form persistent
-			model.addAttribute("publicationErrors", true);
-			return index(null, form, model);
+	private void authWithoutPassword(User user){
+		final Collection<? extends GrantedAuthority> authorities;
+		if(user.getUsername().equals("administrator")) {
+			authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"), new SimpleGrantedAuthority("ROLE_ADMIN"));
+		} else {
+			authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
 		}
-		// Add attribute to model to show success notification
-		model.addAttribute("publicationCreated", true);
-		
-		final Publication p = pu.create(auth.getAuthentication().getName(), form.getDescription(), Float.parseFloat(form.getPrice()), Integer.parseInt(form.getQuantity()));
-
-		ord.create(p.getId(), p.getSupervisor(), Integer.parseInt(form.getOwnerQuantity()));
-		return index(null, null, model);
+		org.springframework.security.core.userdetails.User springUser = new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
+	    Authentication authentication = new UsernamePasswordAuthenticationToken(springUser, null, authorities);
+	    SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
 
 	@RequestMapping("/login")
@@ -113,25 +108,10 @@ public class HelloWorldController {
 		return isValid;
 	}
 
-	private boolean validPublicationQuantity(final BindingResult errors, PublicationForm form, ModelMap model) {
-		// If one of the quantities is not a number (form regular expression).
-		if (errors.getFieldError("quantity") != null || errors.getFieldError("ownerQuantity") != null) {
-			return false;
-		}
-		
-		if (!form.quantityCheck()) {
-			model.addAttribute("invalidQuantity", true);
-			return false;
-		}
-		return true;
-	}
-
-	private void includeUserTransactions(ModelMap model) {
-		String testName = auth.getAuthentication().getName();
-		
-		// Is there a better alternative to check if user is logged in?
-		if (!testName.equals("anonymousUser")) {
-			model.addAttribute("publications", pu.findBySupervisor(testName));
+	private void includeUserTransactions(ModelMap model) {	
+		if (auth.getAuthentication().isAuthenticated()) {
+			String user = auth.getAuthentication().getName();
+			model.addAttribute("publications", pu.findBySupervisor(user));
 		}
 	}
 

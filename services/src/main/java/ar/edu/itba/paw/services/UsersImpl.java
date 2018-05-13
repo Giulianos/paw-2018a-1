@@ -2,6 +2,7 @@ package ar.edu.itba.paw.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ar.edu.itba.paw.interfaces.UserDao;
@@ -13,6 +14,8 @@ import ar.edu.itba.paw.model.User;
 public class UsersImpl implements Users {
 	@Autowired
 	private UserDao userDao;
+	@Autowired
+	private PasswordEncoder passEncoder;
 	
 	@Override
 	public User findById(final long id) {
@@ -31,7 +34,7 @@ public class UsersImpl implements Users {
 	
 	@Override
 	public User create(final String username, final String email, final String password) {
-		return userDao.create(username, email, password);
+		return userDao.create(username, email, passEncoder.encode(password));
 	}
 
 	public boolean uniqueUser(final String username) {

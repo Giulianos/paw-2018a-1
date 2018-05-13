@@ -8,6 +8,7 @@ public class Publication {
 	private final float price;
 	private final int quantity;
 	private final String image;
+	private int remainingQuantity;
 	
 	public Publication(final long id, final String supervisor, final String description, final float price, final int quantity, final String image) {
 		this.id = id;
@@ -16,6 +17,7 @@ public class Publication {
 		this.price = price;
 		this.quantity = quantity;
 		this.image = image;
+		this.remainingQuantity = quantity;
 	}
 	
 	public Publication(final long id, final String supervisor, final String description, final float price, final int quantity) {
@@ -44,5 +46,13 @@ public class Publication {
 	
 	public String getImage() {
 		return this.image;
+	}
+	
+	public int getRemainingQuantity() {
+		return remainingQuantity;
+	}
+	
+	public void setRemainingQuantity(final int remainingQuantity) {
+		this.remainingQuantity = remainingQuantity;
 	}
 }
