@@ -9,7 +9,7 @@
             <a class="nav-link" href="/"><spring:message code="nav.home"/> <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="/publications"><spring:message code="nav.publications"/></a>
+            <a class="nav-link" href="/search"><spring:message code="nav.publications"/></a>
           </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">

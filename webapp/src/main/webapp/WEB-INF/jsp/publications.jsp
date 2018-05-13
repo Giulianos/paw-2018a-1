@@ -20,6 +20,18 @@
 		<!-- Custom styles -->
     <link rel="stylesheet" href="css/style.css">
 
+    <script>
+      function checkOrderQuantity(value, id, max) {
+        if (0 < value && value <= max) {
+          document.getElementById("button-"+id).disabled = false;
+          document.getElementById("quantity-"+id).classList.remove("is-invalid");
+        } else {
+          document.getElementById("button-"+id).disabled = true;
+          document.getElementById("quantity-"+id).classList.add("is-invalid");
+        }
+      }
+    </script>
+
     <title>{PAW_PROJECT}</title>
   </head>
   <body>
@@ -48,11 +60,11 @@
         <div class="col">
           <h2 class="mb-3">Buscar...</h2>
           <div class="border bg-light rounded p-3">
-            <form>
+            <form method="get" action="/search">
               <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Qué estás buscando?">
+                <input type="text" class="form-control" name="keywords" placeholder="Qué estás buscando?">
                 <div class="input-group-append">
-                  <button class="btn btn-primary" type="button">Buscar</button>
+                  <button class="btn btn-primary" type="submit">Buscar</button>
                 </div>
               </div>
             </form>
@@ -75,11 +87,11 @@
 	                <span class="mt-3"><img height="18" src="svg/map-marker.svg" alt="icon name" /> Argentina</span></br>
 	                <span class="mt-3">Cantidad disponible: </span><span class="badge badge-pill badge-success"><c:out value="${publication.remainingQuantity}" /></span></br>
 	                <form:form modelAttribute="orderForm" action="/order" method="post">
-	             		<form:input type="hidden" value="${publication.id}" path="publicationId" id="publicationId"/>
+	             		<form:input type="hidden" value="${publication.id}" path="publicationId" id="publicationId-${publication.id}"/>
 		                <div class="input-group input-group-sm mt-3">
-		                  <form:input type="number" class="form-control" placeholder="Cantidad" path="quantity" id="quantity" />
+		                  <form:input onChange="checkOrderQuantity(this.value, '${publication.id}', ${publication.remainingQuantity});" type="number" class="form-control" placeholder="Cantidad" path="quantity" id="quantity-${publication.id}" />
 		                  <div class="input-group-append">
-		                    <button class="btn btn-outline-secondary" type="submit">Ordenar</button>
+		                    <button id="button-${publication.id}" disabled="true" class="btn btn-outline-secondary" type="submit">Ordenar</button>
 		                  </div>
 		                </div>
 		            </form:form>
