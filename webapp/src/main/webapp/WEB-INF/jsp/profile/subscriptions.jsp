@@ -21,24 +21,24 @@
 
 
     <div class="container">
-      <h2 class="text-secondary mb-4">Publicaciones Realizadas</h2>
+      <h2 class="text-secondary mb-4">Suscripciones Realizadas</h2>
       <table class="table table-striped table-bordered">
         <thead>
           <tr>
             <th scope="col">Descripcion</th>
-            <th scope="col">Cantidad Necesaria</th>
+            <th scope="col">Cantidad Ordenada</th>
             <th scope="col">Cantidad Restante</th>
             <th scope="col">Precio por unidad</th>
             <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
-          <c:forEach var="publ" items="${publications}">
+          <c:forEach var="subs" items="${subscriptions}">
             <tr>
-              <th scope="row"><c:out value="${publ.description}"/></th>
-              <td><c:out value="${publ.quantity}"/></td>
-              <td><c:out value="${publ.remainingQuantity}"/></td>
-              <td><c:out value="${publ.price}"/></td>
+              <th scope="row"><c:out value="${subs.publication.description}"/></th>
+              <td><c:out value="${subs.quantity}"/></td> <!-- quantity ordered -->
+              <td><c:out value="${subs.publication.remainingQuantity}"/></td> <!-- remaning quantity -->
+              <td><c:out value="${subs.publication.price}"/></td>
               <td>Borrar</td>
             </tr>
           </c:forEach>

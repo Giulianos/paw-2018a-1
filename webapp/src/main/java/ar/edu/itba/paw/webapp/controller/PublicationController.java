@@ -43,8 +43,10 @@ public class PublicationController {
 			return modelAndView;
 		}
 
-		final Order order = ord.create(Long.parseLong(form.getPublicationId()), auth.getAuthentication().getName(), Integer.parseInt(form.getQuantity()));
-		return new ModelAndView("redirect:/");
+		String user = auth.getAuthentication().getName();
+		
+		ord.create(Long.parseLong(form.getPublicationId()), user, Integer.parseInt(form.getQuantity()));
+		return new ModelAndView("redirect:/profile/subscriptions");
 	}
 	
 	public boolean validOrder(OrderForm form, ModelMap model) {

@@ -38,11 +38,11 @@ public class ProfileController {
 	public ModelAndView profile() {
 		ModelAndView mav = new ModelAndView("profile/profile");
 		
-		String username = auth.getAuthentication().getName();
+		String user = auth.getAuthentication().getName();
 		
-		mav.addObject("publicationsQuantity", ps.findBySupervisor(username).size());
-		mav.addObject("subscriptionsQuantity", ord.findBySubscriber(username).size());
-		mav.addObject("finalizedSubscriptionsQuantity", ord.findFinalizedBySubscriber(username).size());
+		mav.addObject("publicationsQuantity", ps.findBySupervisor(user).size());
+		mav.addObject("subscriptionsQuantity", ord.findBySubscriber(user).size());
+		mav.addObject("finalizedSubscriptionsQuantity", ord.findFinalizedBySubscriber(user).size());
 		
 		return mav;
 	}
@@ -51,9 +51,9 @@ public class ProfileController {
 	public ModelAndView publications() {
 		ModelAndView mav = new ModelAndView("profile/publications");
 		
-		String username = auth.getAuthentication().getName();
+		String user = auth.getAuthentication().getName();
 		
-		List<Publication> publications = ps.findBySupervisor(username);
+		List<Publication> publications = ps.findBySupervisor(user);
 		for (Publication publication : publications) {
 			publication.setRemainingQuantity(ps.remainingQuantity(publication.getId()));
 		}
@@ -65,8 +65,18 @@ public class ProfileController {
 
 	@RequestMapping(value = "/profile/subscriptions")
 	public ModelAndView subscriptions() {
+		ModelAndView mav = new ModelAndView("profile/subscriptions");
 		
-		return new ModelAndView("redirect:/");
-	}
+		String user = auth.getAuthentication().getName();
+		
+		List<Order> subscriptions = ord.findBySubscriber(user);
+		for (Order order : subscriptions) {
+			order.setPublication(ps.findById(order.getPublication_id()));
+			order.getPublication().setRemainingQuantity(ps.remainingQuantity(order.getPublication_id()));
+		}
+		
+		mav.addObject("subscriptions", subscriptions);
+		
+		return mav;	}
 	
 }

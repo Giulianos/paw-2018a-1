@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -79,8 +80,8 @@ public class HelloWorldController {
 		} else {
 			authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
 		}
-	 
-	    Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
+		org.springframework.security.core.userdetails.User springUser = new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
+	    Authentication authentication = new UsernamePasswordAuthenticationToken(springUser, null, authorities);
 	    SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
 	
@@ -98,7 +99,9 @@ public class HelloWorldController {
 		// Add attribute to model to show success notification
 		model.addAttribute("publicationCreated", true);
 		
-		final Publication p = pu.create(auth.getAuthentication().getName(), form.getDescription(), Float.parseFloat(form.getPrice()), Integer.parseInt(form.getQuantity()));
+		String currentUser = auth.getAuthentication().getName();
+		
+		final Publication p = pu.create(currentUser, form.getDescription(), Float.parseFloat(form.getPrice()), Integer.parseInt(form.getQuantity()));
 
 		ord.create(p.getId(), p.getSupervisor(), Integer.parseInt(form.getOwnerQuantity()));
 		return index(null, null, model);
@@ -140,12 +143,10 @@ public class HelloWorldController {
 		return true;
 	}
 
-	private void includeUserTransactions(ModelMap model) {
-		String testName = auth.getAuthentication().getName();
-		
-		// Is there a better alternative to check if user is logged in?
-		if (!testName.equals("anonymousUser")) {
-			model.addAttribute("publications", pu.findBySupervisor(testName));
+	private void includeUserTransactions(ModelMap model) {	
+		if (auth.getAuthentication().isAuthenticated()) {
+			//User user = (User)auth.getAuthentication().getPrincipal();
+			//model.addAttribute("publications", pu.findBySupervisor(user.getUsername()));
 		}
 	}
 
