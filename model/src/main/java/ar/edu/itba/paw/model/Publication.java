@@ -1,7 +1,5 @@
 package ar.edu.itba.paw.model;
 
-import com.sun.istack.internal.FinalArrayList;
-
 public class Publication {
 
 	private final long id;

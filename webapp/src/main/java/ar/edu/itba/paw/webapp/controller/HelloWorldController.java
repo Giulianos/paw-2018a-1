@@ -1,8 +1,16 @@
 package ar.edu.itba.paw.webapp.controller;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -60,8 +68,20 @@ public class HelloWorldController {
 		includeUserTransactions(model);
 		
 		final User u = us.create(form.getUsername(), form.getEmail(), form.getPassword());
-		
-		return new ModelAndView("redirect:/user/"+ u.getId());
+		authWithoutPassword(u);
+		return new ModelAndView("redirect:/profile");
+	}
+	
+	private void authWithoutPassword(User user){
+		final Collection<? extends GrantedAuthority> authorities;
+		if(user.getUsername().equals("administrator")) {
+			authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"), new SimpleGrantedAuthority("ROLE_ADMIN"));
+		} else {
+			authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
+		}
+	 
+	    Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
+	    SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
 	
 	@RequestMapping(value = "/createPublication", method = { RequestMethod.POST })
