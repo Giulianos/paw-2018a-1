@@ -49,8 +49,18 @@ public class ProfileController {
 	
 	@RequestMapping(value = "/profile/publications")
 	public ModelAndView publications() {
+		ModelAndView mav = new ModelAndView("profile/publications");
 		
-		return new ModelAndView("redirect:/");
+		String username = auth.getAuthentication().getName();
+		
+		List<Publication> publications = ps.findBySupervisor(username);
+		for (Publication publication : publications) {
+			publication.setRemainingQuantity(ps.remainingQuantity(publication.getId()));
+		}
+		
+		mav.addObject("publications", publications);
+		
+		return mav;
 	}
 
 	@RequestMapping(value = "/profile/subscriptions")

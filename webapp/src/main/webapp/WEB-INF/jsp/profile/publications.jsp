@@ -19,40 +19,33 @@
     <%@ include file="../navbar.jsp" %>
 		<%@ include file="../login-modal.jsp" %>
 
+
     <div class="container">
-      <h1 style="text-transform: capitalize"><security:authentication property="principal.username" /></h1><hr>
-      <h2 class="text-secondary">Resumen</h2>
-      <div class="card my-3">
-        <div class="card-header">
-          Publicaciones
-        </div>
-        <div class="card-body">
-          <h5 class="card-title"> <span class="badge badge-secondary px-2"><c:out value="${publicationsQuantity}" /></span> Publicaciones realizadas</h5>
-          <a href="/profile/publications" class="btn btn-outline-primary mt-3">Ver mis publicaciones</a>
-        </div>
-      </div>
-      <div class="card my-3">
-        <div class="card-header">
-          Suscripciones
-        </div>
-        <div class="card-body">
-          <h5 class="card-title"> <span class="badge badge-secondary px-2"><c:out value="${subscriptionsQuantity}" /></span> Suscripciones realizadas</h5>
-          <a href="/profile/subscriptions" class="btn btn-outline-primary mt-3">Ver mis suscripciones</a>
-        </div>
-      </div>
-      <div class="card my-3">
-        <div class="card-header">
-          Suscripciones finalizadas
-        </div>
-        <div class="card-body">
-          <h5 class="card-title"> <span class="badge badge-secondary px-2"><c:out value="${finalizedSubscriptionsQuantity}" /></span> Suscripciones pendientes de pago</h5>
-          <a href="/profile/subscriptions" class="btn btn-outline-primary mt-3">Ver mis suscripciones finalizadas</a>
-        </div>
-      </div>
-
-
-
+      <h2 class="text-secondary mb-4">Publicaciones Realizadas</h2>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Cantidad Necesaria</th>
+            <th scope="col">Cantidad Restante</th>
+            <th scope="col">Precio por unidad</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <c:forEach var="publ" items="${publications}">
+            <tr>
+              <th scope="row"><c:out value="${publ.description}"/></th>
+              <td><c:out value="${publ.quantity}"/></td>
+              <td><c:out value="${publ.remainingQuantity}"/></td>
+              <td><c:out value="${publ.price}"/></td>
+              <td>Borrar</td>
+            </tr>
+          </c:forEach>
+        </tbody>
+      </table>
     </div>
+
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
