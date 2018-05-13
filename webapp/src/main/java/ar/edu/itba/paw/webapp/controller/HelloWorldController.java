@@ -84,28 +84,6 @@ public class HelloWorldController {
 	    Authentication authentication = new UsernamePasswordAuthenticationToken(springUser, null, authorities);
 	    SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
-	
-	@RequestMapping(value = "/createPublication", method = { RequestMethod.POST })
-	public ModelAndView createPublication(@Valid @ModelAttribute("publicationForm") final PublicationForm form, final BindingResult errors, ModelMap model) {
-		boolean isValid = validPublicationQuantity(errors,form,model);
-
-		includeUserTransactions(model);
-
-		if (errors.hasErrors() || !isValid) {
-			// Add attribute to model to keep pop up form persistent
-			model.addAttribute("publicationErrors", true);
-			return index(null, form, model);
-		}
-		// Add attribute to model to show success notification
-		model.addAttribute("publicationCreated", true);
-		
-		String currentUser = auth.getAuthentication().getName();
-		
-		final Publication p = pu.create(currentUser, form.getDescription(), Float.parseFloat(form.getPrice()), Integer.parseInt(form.getQuantity()));
-
-		ord.create(p.getId(), p.getSupervisor(), Integer.parseInt(form.getOwnerQuantity()));
-		return index(null, null, model);
-	}
 
 	@RequestMapping("/login")
 	public ModelAndView login() {
@@ -130,23 +108,10 @@ public class HelloWorldController {
 		return isValid;
 	}
 
-	private boolean validPublicationQuantity(final BindingResult errors, PublicationForm form, ModelMap model) {
-		// If one of the quantities is not a number (form regular expression).
-		if (errors.getFieldError("quantity") != null || errors.getFieldError("ownerQuantity") != null) {
-			return false;
-		}
-		
-		if (!form.quantityCheck()) {
-			model.addAttribute("invalidQuantity", true);
-			return false;
-		}
-		return true;
-	}
-
 	private void includeUserTransactions(ModelMap model) {	
 		if (auth.getAuthentication().isAuthenticated()) {
-			//User user = (User)auth.getAuthentication().getPrincipal();
-			//model.addAttribute("publications", pu.findBySupervisor(user.getUsername()));
+			String user = auth.getAuthentication().getName();
+			model.addAttribute("publications", pu.findBySupervisor(user));
 		}
 	}
 

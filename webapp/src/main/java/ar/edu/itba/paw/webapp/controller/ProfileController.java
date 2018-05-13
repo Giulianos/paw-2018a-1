@@ -23,6 +23,7 @@ import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.model.User;
 import ar.edu.itba.paw.webapp.auth.IAuthenticationFacade;
 import ar.edu.itba.paw.webapp.form.OrderForm;
+import ar.edu.itba.paw.webapp.form.PublicationForm;
 import ar.edu.itba.paw.webapp.form.UserForm;
 
 @Controller
@@ -48,7 +49,7 @@ public class ProfileController {
 	}
 	
 	@RequestMapping(value = "/profile/publications")
-	public ModelAndView publications() {
+	public ModelAndView publications(@ModelAttribute("publicationForm") final PublicationForm form, ModelMap model) {
 		ModelAndView mav = new ModelAndView("profile/publications");
 		
 		String user = auth.getAuthentication().getName();
@@ -77,6 +78,41 @@ public class ProfileController {
 		
 		mav.addObject("subscriptions", subscriptions);
 		
-		return mav;	}
+		return mav;
+	}
+	
+	@RequestMapping(value = "/createPublication", method = { RequestMethod.POST })
+	public ModelAndView createPublication(@Valid @ModelAttribute("publicationForm") final PublicationForm form, final BindingResult errors, ModelMap model) {
+		boolean isValid = validPublicationQuantity(errors,form,model);
+		
+		if (errors.hasErrors() || !isValid) {
+			// Add attribute to model to keep pop up form persistent
+			model.addAttribute("publicationErrors", true);
+			return publications(form, model);
+		}
+		// Add attribute to model to show success notification
+		model.addAttribute("publicationCreated", true);
+		
+		String currentUser = auth.getAuthentication().getName();
+		
+		final Publication p = ps.create(currentUser, form.getDescription(), Float.parseFloat(form.getPrice()), Integer.parseInt(form.getQuantity()));
+
+		ord.create(p.getId(), p.getSupervisor(), Integer.parseInt(form.getOwnerQuantity()));
+		
+		return publications(null, model);
+	}
+	
+	private boolean validPublicationQuantity(final BindingResult errors, PublicationForm form, ModelMap model) {
+		// If one of the quantities is not a number (form regular expression).
+		if (errors.getFieldError("quantity") != null || errors.getFieldError("ownerQuantity") != null) {
+			return false;
+		}
+		
+		if (!form.quantityCheck()) {
+			model.addAttribute("invalidQuantity", true);
+			return false;
+		}
+		return true;
+	}
 	
 }
