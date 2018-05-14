@@ -13,9 +13,10 @@ body {
 .logo-title {
 	font-family: Helvetica;
 	font-weight: bold;
-	color: white;
+	color: #61c2b5;
 	text-shadow: 2px 2px 0px rgba(0,0,0,0.6);
-	font-size: 20vw;
+	font-size: 15vw;
+	text-align: center;
 }
 
 .slogan {

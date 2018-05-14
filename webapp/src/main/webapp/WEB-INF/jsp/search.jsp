@@ -50,7 +50,7 @@
               <h2 class="mb-3"><spring:message code="search"/></h2>
             </div>
             <div class="col-sm">
-              <a class="btn btn-outline-primary ml-5 float-right" href="/profile/publications?newModal=true"><spring:message code="publication.create"/></a>
+              <a class="btn btn-outline-primary ml-5 float-right" href="${siteRootDir}/profile/publications?newModal=true"><spring:message code="publication.create"/></a>
             </div>
           </div>
           <div class="border bg-light rounded p-3">
