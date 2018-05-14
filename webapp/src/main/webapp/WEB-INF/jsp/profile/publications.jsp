@@ -60,7 +60,7 @@
               <td>
                 <form method="POST" action="publications/erase">
                   <input type="hidden" name="publication_id" value="${publ.id}" />
-                  <input type="image" src="../../img/trash.svg" height="18" border="0" alt="Submit" />
+                  <input type="image" src="${siteRootDir}/img/trash.svg" height="18" border="0" alt="Submit" />
                 </form>
               </td>
             </tr>

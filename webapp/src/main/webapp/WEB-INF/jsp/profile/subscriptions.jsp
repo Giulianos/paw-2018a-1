@@ -47,7 +47,7 @@
               <td>
                 <form method="POST" action="subscriptions/erase">
                   <input type="hidden" name="publication_id" value="${subs.publication.id}" />
-                  <input type="image" src="../../img/trash.svg" height="18" border="0" alt="Submit" />
+                  <input type="image" src="${siteRootDir}/img/trash.svg" height="18" border="0" alt="Submit" />
                 </form>
               </td>
             </tr>

@@ -24,7 +24,7 @@
       <!--          Create publication form          -->
       <div class="modal-body">
          <c:url value="/createPublication" var="postPathPublication"/>
-         <form:form modelAttribute="publicationForm" action="${siteRootDir}${postPathPublication}" method="post">
+         <form:form modelAttribute="publicationForm" action="${postPathPublication}" method="post">
           <div class="form-group">
             <label><spring:message code="description"/></label>
             <form:input type="text" class="form-control" aria-describedby="description" placeholder="${enterDescription}"
