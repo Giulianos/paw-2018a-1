@@ -110,4 +110,9 @@ public class PublicationsImpl implements Publications {
 		}
 		return false;
 	}
+	
+	@Override
+	public boolean delete(long publication_id) {
+		return publicationDao.delete(publication_id);
+	}
 }

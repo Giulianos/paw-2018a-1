@@ -97,4 +97,24 @@ public class PublicationController {
 		}
 		return new ModelAndView("redirect:/search/" + keywords);
 	}
+	
+	@RequestMapping(value = "/profile/subscriptions/erase", method = { RequestMethod.POST })
+	public ModelAndView eraseSubscription(@RequestParam(value="publication_id") Integer publication_id) {
+		
+		if(!ord.areConfirmed(publication_id)) {
+			ord.delete(publication_id);
+		}
+		
+		return new ModelAndView("redirect:/profile/subscriptions");
+	}
+	
+	@RequestMapping(value = "/profile/publications/erase", method = { RequestMethod.POST })
+	public ModelAndView erasePublication(@RequestParam(value="publication_id") Integer publication_id) {
+		
+		if(ps.remainingQuantity(publication_id) != 0) {
+			ps.delete(publication_id);
+		}
+		
+		return new ModelAndView("redirect:/profile/publications");
+	}
 }

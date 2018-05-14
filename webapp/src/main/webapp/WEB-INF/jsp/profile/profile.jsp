@@ -49,9 +49,6 @@
           <a href="/profile/subscriptions-finalized" class="btn btn-outline-primary mt-3"><spring:message code="see.my.pay.subscriptions"/></a>
         </div>
       </div>
-
-
-
     </div>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

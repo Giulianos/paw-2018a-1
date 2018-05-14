@@ -117,4 +117,14 @@ public interface Publications {
 	 */
 
 	boolean confirmFulfillment(long id);
+	
+	/**
+	 * Delete publication for the corresponding id.
+	 * 
+	 * @param id The id of the publication to be deleted.
+	 * 
+	 * @return True if the deletion was successful.
+	 */
+	
+	boolean delete(final long id);
 }

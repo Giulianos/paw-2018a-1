@@ -42,7 +42,12 @@
               <td><c:out value="${subs.quantity}"/></td> <!-- quantity ordered -->
               <td><c:out value="${subs.publication.remainingQuantity}"/></td> <!-- remaning quantity -->
               <td><c:out value="${subs.publication.price}"/></td>
-              <td><spring:message code="erase"/></td>
+              <td>
+                <form method="POST" action="subscriptions/erase">
+                  <input type="hidden" name="publication_id" value="${subs.publication.id}" />
+                  <input type="image" src="../../img/trash.svg" height="18" border="0" alt="Submit" />
+                </form>
+              </td>
             </tr>
           </c:forEach>
         </tbody>
