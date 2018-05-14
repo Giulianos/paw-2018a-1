@@ -1,7 +1,9 @@
 package ar.edu.itba.paw.persistence;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -21,7 +23,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.jdbc.JdbcTestUtils;
 
 import ar.edu.itba.paw.model.Order;
-import ar.edu.itba.paw.model.Publication;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfig.class)
@@ -40,6 +41,8 @@ public class OrderJdbcDaoTest {
 	private static final int SUB_QUANTITY = 1;
 	private static final String IMAGE = "";
 	
+	private static int test = 0;
+	
 	@Autowired
 	private DataSource ds;
 	@Autowired
@@ -54,13 +57,26 @@ public class OrderJdbcDaoTest {
 	@Before
 	public void setUp() {
 		jdbcTemplate = new JdbcTemplate(ds);
-		
-		// Create users prior to publications in accordance to foreign key restrictions.
-		for (int i = 0; i < USERNAME.length; i++) {
-			userDao.create(USERNAME[i], EMAIL[i], PASSWORD);
+		test++;
+		if (test == 1) { // Test 1 - Create
+			
+			// Create users prior to publications in accordance to foreign key restrictions.
+			for (int i = 0; i < USERNAME.length; i++) {
+				userDao.create(USERNAME[i], EMAIL[i], PASSWORD);
+			}
+			// Create publication prior to orders
+			publicationDao.create(SUPERVISOR, DESCRIPTION, PRICE, QUANTITY, IMAGE);
+			
+		} else {
+			// For test 2 or higher I reset what I did in the create test
+			// and create the table entries that I will use in the remaining tests.
+			JdbcTestUtils.deleteFromTables(jdbcTemplate, "orders");
+			long publication_id = publicationDao.findBySupervisor(SUPERVISOR).get(0).getId();
+			
+			for (int i = 0; i < USERNAME.length; i++) {
+				orderDao.create(publication_id, USERNAME[i], SUB_QUANTITY);
+			}
 		}
-		// Create publication prior to orders
-		publicationDao.create(SUPERVISOR, DESCRIPTION, PRICE, QUANTITY, IMAGE);
 	}
 	
 	@Test
@@ -79,8 +95,68 @@ public class OrderJdbcDaoTest {
 	
 	@Test
 	public void test2_findBySubscriber() {
-		//List<Order> orders = orderDao.findBySubscriber(USERNAME[0]);
-		//assertFalse(publications.isEmpty());
-		//assertEquals(SUPERVISOR[0], publications.get(0));
+		List<Order> orders;
+		
+		for (int i = 0; i < USERNAME.length; i++) {
+			orders = orderDao.findBySubscriber(USERNAME[i]);
+			assertFalse(orders.isEmpty());
+			
+			for (int j = 0; j < orders.size(); j++) {
+				assertEquals(USERNAME[i], orders.get(j).getSubscriber());
+			}
+		}
+	}
+	
+	@Test
+	public void test3_findById() {
+		List<Order> orders = orderDao.findBySubscriber(USERNAME[0]);
+		assertFalse(orders.isEmpty());
+		long id = orders.get(0).getPublication_id();
+		
+		orders = orderDao.findByPublicationId(id);
+		assertFalse(orders.isEmpty());
+		
+		assertEquals(id, orders.get(0).getPublication_id());
+	}
+	
+	@Test
+	public void test4_confirm() {
+		List<Order> orders = orderDao.findBySubscriber(USERNAME[0]);
+		assertFalse(orders.isEmpty());
+		long id = orders.get(0).getPublication_id();
+		
+		assertFalse(orders.get(0).getConfirmed());
+		orderDao.confirm(id, USERNAME[0]);
+		
+		orders = orderDao.findBySubscriber(USERNAME[0]);
+		
+		for (Order order : orders) {
+			if (id == order.getPublication_id()) {
+				assertTrue(order.getConfirmed());
+			}
+		}
+	}
+	
+	@Test
+	public void test5_findFinalizedBySubscriber() {
+		List<Order> orders = orderDao.findFinalizedBySubscriber(USERNAME[0]);
+		assertTrue(orders.isEmpty());
+		
+		orders = orderDao.findBySubscriber(USERNAME[0]);
+		orderDao.confirm(orders.get(0).getPublication_id(), USERNAME[0]);
+		
+		orders = orderDao.findFinalizedBySubscriber(USERNAME[0]);
+		assertFalse(orders.isEmpty());
+	}
+	
+	@Test
+	public void test6_delete() {
+		List<Order> orders = orderDao.findBySubscriber(USERNAME[0]);
+		assertFalse(orders.isEmpty());
+		long id = orders.get(0).getPublication_id();
+		
+		assertFalse(orderDao.findByPublicationId(id).isEmpty());
+		orderDao.delete(id);
+		assertTrue(orderDao.findByPublicationId(id).isEmpty());
 	}
 }

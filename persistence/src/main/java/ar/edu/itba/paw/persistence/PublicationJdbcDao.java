@@ -33,7 +33,7 @@ public class PublicationJdbcDao implements PublicationDao {
 	}
 
 	private final static RowMapper<Publication> ROW_MAPPER =
-			(ResultSet rs, int rowNum) -> new Publication(rs.getLong("publication_id"),rs.getString("supervisor"),rs.getString("description"),rs.getFloat("price"),rs.getInt("quantity"),rs.getString("image"));
+			(ResultSet rs, int rowNum) -> new Publication(rs.getLong("publication_id"),rs.getString("supervisor"),rs.getString("description"),rs.getFloat("price"),rs.getInt("quantity"),rs.getString("image"),rs.getBoolean("is_confirmed"));
 			
 	@Override
 	public Publication findById(long id) {
@@ -66,7 +66,7 @@ public class PublicationJdbcDao implements PublicationDao {
 
 	@Override
 	public List<Publication> findByQuantity(int minQuantity, int maxQuantity) {
-		return	jdbcTemplate.query("SELECT * FROM publications WHERE price between ? and ?;", ROW_MAPPER, minQuantity, maxQuantity);
+		return	jdbcTemplate.query("SELECT * FROM publications WHERE quantity between ? and ?;", ROW_MAPPER, minQuantity, maxQuantity);
 	}
 
 	@Override

@@ -8,16 +8,22 @@ public class Publication {
 	private final float price;
 	private final int quantity;
 	private final String image;
+	private final boolean confirmed;
 	private int remainingQuantity;
 	
-	public Publication(final long id, final String supervisor, final String description, final float price, final int quantity, final String image) {
+	public Publication(final long id, final String supervisor, final String description, final float price, final int quantity, final String image, final boolean confirmed) {
 		this.id = id;
 		this.supervisor = supervisor;
 		this.description = description;
 		this.price = price;
 		this.quantity = quantity;
 		this.image = image;
+		this.confirmed = confirmed;
 		this.remainingQuantity = quantity;
+	}
+	
+	public Publication(final long id, final String supervisor, final String description, final float price, final int quantity, final String image) {
+		this(id,supervisor,description,price,quantity,image,false);
 	}
 	
 	public Publication(final long id, final String supervisor, final String description, final float price, final int quantity) {
@@ -48,6 +54,10 @@ public class Publication {
 		if(image.equals(""))
 			return defaultImage;
 		return this.image;
+	}
+
+	public boolean getConfirmed() {
+		return confirmed;
 	}
 	
 	public int getRemainingQuantity() {

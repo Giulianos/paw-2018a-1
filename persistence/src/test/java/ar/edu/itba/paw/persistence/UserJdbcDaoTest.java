@@ -34,6 +34,8 @@ public class UserJdbcDaoTest {
 	private static final String USERNAME_UNKNOWN = "userx";
 	private static final String EMAIL_UNKNOWN = "userx@example.com";
 	
+	private static int test = 0;
+	
 	@Autowired
 	private DataSource ds;
 	@Autowired
@@ -44,6 +46,15 @@ public class UserJdbcDaoTest {
 	@Before
 	public void setUp() {
 		jdbcTemplate = new JdbcTemplate(ds);
+		test++;
+		if (test >= 2) {
+			// For test 2 or higher I reset what I did in the create test
+			// and create the table entries that I will use in the remaining tests.
+			JdbcTestUtils.deleteFromTables(jdbcTemplate, "users");
+			for (int i = 0; i < USERNAME.length; i++) {
+				userDao.create(USERNAME[i], EMAIL[i], PASSWORD);
+			}
+		}
 	}
 	
 	@Test
@@ -88,6 +99,7 @@ public class UserJdbcDaoTest {
 		User [] users = {null, null};
 		
 		for (int i = 0; i < users.length; i++) {
+			// Search 1st by username to get the id.
 			long id = userDao.findByUsername(USERNAME[i]).getId();
 			users[i] = userDao.findById(id);
 			assertNotNull(users[i]);
@@ -99,11 +111,9 @@ public class UserJdbcDaoTest {
 	
 	@Test
 	public void test5_addTransaction() {
-		for (int i = 0; i < USERNAME.length; i++) {
-			int transactionBefore = userDao.findByUsername(USERNAME[i]).getTransactions();
-			assertTrue(userDao.addTransaction(USERNAME[i]));
-			int transactionAfter = userDao.findByUsername(USERNAME[i]).getTransactions();
-			assertEquals(transactionBefore + 1, transactionAfter);
-		}
+		int transactionBefore = userDao.findByUsername(USERNAME[0]).getTransactions();
+		assertTrue(userDao.addTransaction(USERNAME[0]));
+		int transactionAfter = userDao.findByUsername(USERNAME[0]).getTransactions();
+		assertEquals(transactionBefore + 1, transactionAfter);
 	}
 }
