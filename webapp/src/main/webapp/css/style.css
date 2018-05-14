@@ -79,4 +79,5 @@ body {
 .publication-canvas {
 	height: 180px;
 	width: 286px;
+	border: dashed grey 1px;
 }

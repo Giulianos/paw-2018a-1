@@ -40,7 +40,7 @@
           </div>
 
           <div class="form-group">
-            <label><spring:message code="quantity"/></label>
+            <label><spring:message code="publication.total.quantity"/></label>
             <form:input type="text" class="form-control" aria-describedby="quantity" placeholder="${enterQuantity}"
             path="quantity" id="quantity"/>
             <form:errors path="quantity" role="alert" cssClass="alert alert-danger mt-2" element="div"/>
@@ -55,12 +55,15 @@
               <div role="alert" class="alert alert-danger mt-2"><spring:message code="publication.invalid.quantity"/></div>
             </c:if>
           </div>
-
+          <label><spring:message code="publication.image"/></label>
+          <div class="input-group mb-3">
+            <div class="custom-file">
+              <input type="file" onchange="loadImage();" class="custom-file-input" id="imgfile">
+              <label class="custom-file-label" for="inputGroupFile04"><spring:message code="publication.image.choose"/></label>
+            </div>
+          </div>
           <div class="form-group">
-            <label><spring:message code="own.quantity"/></label>
             <div class="form-control" style="text-align: center;">
-              <input type='file' id='imgfile' />
-              <input type='button' id='btnLoad' value='Load' onclick='loadImage();' />
               <canvas id="pub-image-canvas" class="publication-canvas bg-light rounded m-2"></canvas>
             </div>
           </div>
