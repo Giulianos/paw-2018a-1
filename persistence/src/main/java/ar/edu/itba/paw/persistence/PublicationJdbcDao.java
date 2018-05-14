@@ -85,7 +85,11 @@ public class PublicationJdbcDao implements PublicationDao {
 
 	@Override
 	public boolean confirm(long id) {
-		return jdbcTemplate.update("UPDATE publications SET is_confirmed = ? WHERE publication_id = ?",true,id) > 0;
+		boolean update1 = jdbcTemplate.update("UPDATE publications SET is_confirmed = ? WHERE publication_id = ?",true,id) > 0;
+		
+		boolean update2 = jdbcTemplate.update("UPDATE orders SET is_confirmed = ? WHERE publication_id = ?",true,id) > 0;
+		
+		return update1 && update2;
 	}
 
 	@Override

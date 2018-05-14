@@ -46,7 +46,7 @@
         </div>
         <div class="card-body">
           <h5 class="card-title"> <span class="badge badge-secondary px-2"><c:out value="${finalizedSubscriptionsQuantity}" /></span> <spring:message code="pay.subscriptions"/></h5>
-          <a href="/profile/subscriptions" class="btn btn-outline-primary mt-3"><spring:message code="see.my.pay.subscriptions"/></a>
+          <a href="/profile/subscriptions-finalized" class="btn btn-outline-primary mt-3"><spring:message code="see.my.pay.subscriptions"/></a>
         </div>
       </div>
 

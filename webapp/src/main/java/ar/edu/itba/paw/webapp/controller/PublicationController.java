@@ -53,16 +53,21 @@ public class PublicationController {
 			ModelAndView modelAndView = new ModelAndView("error");
 			return modelAndView;
 		}
-
+		
+		
 		String user = auth.getAuthentication().getName();
 		
 		ord.create(Long.parseLong(form.getPublicationId()), user, Integer.parseInt(form.getQuantity()));
+		
+		ps.confirm(Long.parseLong(form.getPublicationId()));
+		
 		return new ModelAndView("redirect:/profile/subscriptions");
 	}
 	
 	public boolean validOrder(OrderForm form, ModelMap model) {
 		if(Long.parseLong(form.getQuantity()) > ps.remainingQuantity(Long.parseLong(form.getPublicationId())))
 			return false;
+		
 		return true;
 	}
 	

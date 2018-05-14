@@ -81,6 +81,22 @@ public class ProfileController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/profile/subscriptions-finalized")
+	public ModelAndView subscriptionsFinalized() {
+		ModelAndView mav = new ModelAndView("profile/subscriptions-finalized");
+		
+		String user = auth.getAuthentication().getName();
+		
+		List<Order> subscriptions = ord.findFinalizedBySubscriber(user);
+		for (Order order : subscriptions) {
+			order.setPublication(ps.findById(order.getPublication_id()));
+		}
+		
+		mav.addObject("subscriptions", subscriptions);
+		
+		return mav;
+	}
+	
 	@RequestMapping(value = "/createPublication", method = { RequestMethod.POST })
 	public ModelAndView createPublication(@Valid @ModelAttribute("publicationForm") final PublicationForm form, final BindingResult errors, ModelMap model) {
 		boolean isValid = validPublicationQuantity(errors,form,model);
