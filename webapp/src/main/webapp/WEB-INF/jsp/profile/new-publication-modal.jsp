@@ -56,7 +56,7 @@
             </c:if>
           </div>
 
-          <button type="submit" class="btn btn-primary"><spring:message code="create"/></button>
+          <button type="submit" class="btn btn-gumpu"><spring:message code="create"/></button>
         </form:form>
       </div>
     </div>

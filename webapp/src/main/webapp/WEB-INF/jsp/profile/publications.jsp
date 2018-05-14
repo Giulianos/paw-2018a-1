@@ -37,7 +37,7 @@
           <h2 class="text-secondary mb-4"><spring:message code="my.publications"/></h2>
         </div>
         <div class="col-sm">
-          <button class="btn btn-outline-primary ml-5 float-right" data-toggle="modal" data-target="#publicationModal" type="button"><spring:message code="publication.create"/></button>
+          <button class="btn btn-outline-gumpu ml-5 float-right" data-toggle="modal" data-target="#publicationModal" type="button"><spring:message code="publication.create"/></button>
         </div>
       </div>
       <table class="table table-striped table-bordered">
@@ -57,7 +57,7 @@
               <td><c:out value="${publ.quantity}"/></td>
               <td><c:out value="${publ.remainingQuantity}"/></td>
               <td><c:out value="${publ.price}"/></td>
-              <td>
+              <td style="text-align:center;">
                 <form method="POST" action="publications/erase">
                   <input type="hidden" name="publication_id" value="${publ.id}" />
                   <input type="image" src="${siteRootDir}/img/trash.svg" height="18" border="0" alt="Submit" />

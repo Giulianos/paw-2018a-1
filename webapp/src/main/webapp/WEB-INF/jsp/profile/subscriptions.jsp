@@ -44,7 +44,7 @@
               <td><c:out value="${subs.quantity}"/></td> <!-- quantity ordered -->
               <td><c:out value="${subs.publication.remainingQuantity}"/></td> <!-- remaning quantity -->
               <td><c:out value="${subs.publication.price}"/></td>
-              <td>
+              <td style="text-align:center;">
                 <form method="POST" action="subscriptions/erase">
                   <input type="hidden" name="publication_id" value="${subs.publication.id}" />
                   <input type="image" src="${siteRootDir}/img/trash.svg" height="18" border="0" alt="Submit" />

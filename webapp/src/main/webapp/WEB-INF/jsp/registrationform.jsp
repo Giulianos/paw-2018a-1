@@ -35,7 +35,7 @@
                     <div role="alert" class="alert alert-danger mt-2"><spring:message code="register.invalid.password"/></div>
                   </c:if>
                 </div>
-                <button value="${register_submit}" type="submit" class="btn btn-primary">${register_submit}</button>
+                <button value="${register_submit}" type="submit" class="btn btn-gumpu">${register_submit}</button>
               </form:form>
             </div>
           </div>

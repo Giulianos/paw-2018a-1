@@ -30,7 +30,7 @@
         </div>
         <div class="card-body">
           <h5 class="card-title"> <span class="badge badge-secondary px-2"><c:out value="${publicationsQuantity}" /></span> <spring:message code="my.publications"/></h5>
-          <a href="${siteRootDir}/profile/publications" class="btn btn-outline-primary mt-3"><spring:message code="see.my.publications"/></a>
+          <a href="${siteRootDir}/profile/publications" class="btn btn-outline-gumpu mt-3"><spring:message code="see.my.publications"/></a>
         </div>
       </div>
       <div class="card my-3">
@@ -39,7 +39,7 @@
         </div>
         <div class="card-body">
           <h5 class="card-title"> <span class="badge badge-secondary px-2"><c:out value="${subscriptionsQuantity}" /></span> <spring:message code="my.subscriptions"/></h5>
-          <a href="${siteRootDir}/profile/subscriptions" class="btn btn-outline-primary mt-3"><spring:message code="see.my.subscriptions"/></a>
+          <a href="${siteRootDir}/profile/subscriptions" class="btn btn-outline-gumpu mt-3"><spring:message code="see.my.subscriptions"/></a>
         </div>
       </div>
       <div class="card my-3">
@@ -48,7 +48,7 @@
         </div>
         <div class="card-body">
           <h5 class="card-title"> <span class="badge badge-secondary px-2"><c:out value="${finalizedSubscriptionsQuantity}" /></span> <spring:message code="pay.subscriptions"/></h5>
-          <a href="${siteRootDir}/profile/subscriptions-finalized" class="btn btn-outline-primary mt-3"><spring:message code="see.my.pay.subscriptions"/></a>
+          <a href="${siteRootDir}/profile/subscriptions-finalized" class="btn btn-outline-gumpu mt-3"><spring:message code="see.my.pay.subscriptions"/></a>
         </div>
       </div>
     </div>

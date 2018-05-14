@@ -25,11 +25,11 @@
                 <input type="checkbox" class="form-check-input" id="j_rememberme" name="j_rememberme" />
                 <label class="form-check-label" for="loginInputRememberMe"><spring:message code="remember_me"/></label>
               </div>
-              <button type="submit" class="btn btn-primary"><spring:message code="login"/></button>
+              <button type="submit" class="btn btn-gumpu"><spring:message code="login"/></button>
             </form>
           </div>
           <div class="modal-footer">
-            <a href="${siteRootDir}/register" role="button" class="btn btn-outline-primary"><spring:message code="signup"/></a>
+            <a href="${siteRootDir}/register" role="button" class="btn btn-outline-gumpu"><spring:message code="signup"/></a>
           </div>
           </div>
           </div>

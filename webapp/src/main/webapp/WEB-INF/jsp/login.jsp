@@ -64,7 +64,7 @@
               <input class="form-check-input" name="j_rememberme" type="checkbox">
               <label class="form-check-label" for="exampleCheck1"><spring:message code="remember_me"/></label>
             </div>
-            <button type="submit" class="btn btn-primary"><spring:message code="login"/></button>
+            <button type="submit" class="btn btn-gumpu"><spring:message code="login"/></button>
           </form>
         </div>
       </div>

@@ -45,7 +45,7 @@
 		  <%@ include file="login-modal.jsp" %>
 
           <div class="modal-footer">
-            <a href="${siteRootDir}/register" role="button" class="btn btn-outline-primary">Signup</a>
+            <a href="${siteRootDir}/register" role="button" class="btn btn-outline-gumpu">Signup</a>
           </div>
         </div>
       </div>

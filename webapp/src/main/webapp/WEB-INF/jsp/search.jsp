@@ -50,7 +50,7 @@
               <h2 class="mb-3"><spring:message code="search"/></h2>
             </div>
             <div class="col-sm">
-              <a class="btn btn-outline-primary ml-5 float-right" href="${siteRootDir}/profile/publications?newModal=true"><spring:message code="publication.create"/></a>
+              <a class="btn btn-outline-gumpu ml-5 float-right" href="${siteRootDir}/profile/publications?newModal=true"><spring:message code="publication.create"/></a>
             </div>
           </div>
           <div class="border bg-light rounded p-3">
@@ -58,7 +58,7 @@
               <div class="input-group mb-3">
                     <input type="text" value='<c:out value="${searchedKeyword}" />' class="form-control" name="keywords" placeholder="${searchPlaceholder}"/>
                 <div class="input-group-append">
-                  <button class="btn btn-primary" type="submit"><spring:message code="search.button"/></button>
+                  <button class="btn btn-gumpu" type="submit"><spring:message code="search.button"/></button>
                 </div>
               </div>
             </form>
