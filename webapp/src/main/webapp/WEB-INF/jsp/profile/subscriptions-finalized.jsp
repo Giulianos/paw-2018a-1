@@ -31,7 +31,6 @@
             <th scope="col"><spring:message code="description"/></th>
             <th scope="col"><spring:message code="ordered.quantity"/></th>
             <th scope="col"><spring:message code="unit.price"/></th>
-            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
@@ -40,7 +39,6 @@
               <th scope="row"><c:out value="${subs.publication.description}"/></th>
               <td><c:out value="${subs.quantity}"/></td> <!-- quantity ordered -->
               <td><c:out value="${subs.publication.price}"/></td>
-              <td><spring:message code="erase"/></td>
             </tr>
           </c:forEach>
         </tbody>

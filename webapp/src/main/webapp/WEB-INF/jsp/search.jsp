@@ -43,7 +43,14 @@
     <div class="container pt-3">
       <div class="row align-items-center justify-content-center">
         <div class="col">
-          <h2 class="mb-3"><spring:message code="search"/></h2>
+          <div class="row">
+            <div class="col-sm">
+              <h2 class="mb-3"><spring:message code="search"/></h2>
+            </div>
+            <div class="col-sm">
+              <a class="btn btn-outline-primary ml-5 float-right" href="/profile/publications?newModal=true"><spring:message code="publication.create"/></a>
+            </div>
+          </div>
           <div class="border bg-light rounded p-3">
             <form method="get" action="/search">
               <div class="input-group mb-3">
@@ -87,6 +94,5 @@
         </div>
       </div>
     </div>
-
   </body>
 </html>

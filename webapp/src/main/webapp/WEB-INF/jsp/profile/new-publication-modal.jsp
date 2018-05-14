@@ -13,7 +13,7 @@
       </div>
 
       <!--          Open modal automatically         -->
-      <c:if test="${not empty publicationErrors}">
+      <c:if test="${not empty publicationErrors or not empty shouldShowModal}">
          <script type="text/javascript">
           $(window).on('load',function(){
             $('#publicationModal').modal('show');

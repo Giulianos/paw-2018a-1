@@ -48,8 +48,8 @@ public class ProfileController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/profile/publications")
-	public ModelAndView publications(@ModelAttribute("publicationForm") final PublicationForm form, ModelMap model) {
+	@RequestMapping(value = "/profile/publications", method = { RequestMethod.GET })
+	public ModelAndView publications(@RequestParam(value="newModal", defaultValue="false") Boolean newModal, @ModelAttribute("publicationForm") final PublicationForm form, ModelMap model) {
 		ModelAndView mav = new ModelAndView("profile/publications");
 		
 		String user = auth.getAuthentication().getName();
@@ -59,6 +59,9 @@ public class ProfileController {
 			publication.setRemainingQuantity(ps.remainingQuantity(publication.getId()));
 		}
 		
+		if(newModal) {
+			model.addAttribute("shouldShowModal", true);
+		}
 		mav.addObject("publications", publications);
 		
 		return mav;
@@ -104,7 +107,7 @@ public class ProfileController {
 		if (errors.hasErrors() || !isValid) {
 			// Add attribute to model to keep pop up form persistent
 			model.addAttribute("publicationErrors", true);
-			return publications(form, model);
+			return publications(false, form, model);
 		}
 		// Add attribute to model to show success notification
 		model.addAttribute("publicationCreated", true);
@@ -115,7 +118,7 @@ public class ProfileController {
 
 		ord.create(p.getId(), p.getSupervisor(), Integer.parseInt(form.getOwnerQuantity()));
 		
-		return publications(null, model);
+		return publications(false, null, model);
 	}
 	
 	private boolean validPublicationQuantity(final BindingResult errors, PublicationForm form, ModelMap model) {
