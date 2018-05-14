@@ -11,10 +11,8 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.junit.Before;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.Rollback;
@@ -29,7 +27,6 @@ import ar.edu.itba.paw.model.Publication;
 @ContextConfiguration(classes = TestConfig.class)
 @Sql("classpath:schema.sql")
 @Rollback
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class PublicationJdbcDaoTest {
 	private static final String PASSWORD = "pass";
 	private static final String [] EMAIL = {"user1@example.com","user2@example.com"};
@@ -41,8 +38,6 @@ public class PublicationJdbcDaoTest {
 	private static final String IMAGE = "";
 	private static final float [] PRICE = {10.1f,13};
 	private static final int [] QUANTITY = {10,14};
-	
-	private static int test = 0;
 	
 	@Autowired
 	private DataSource ds;
@@ -56,37 +51,19 @@ public class PublicationJdbcDaoTest {
 	@Before
 	public void setUp() {
 		jdbcTemplate = new JdbcTemplate(ds);
-		test++;
-		if (test == 1) { // Test 1 - Create
-			// Create users prior to publications in accordance to foreign key restrictions.
-			for (int i = 0; i < SUPERVISOR.length; i++) {
-				userDao.create(SUPERVISOR[i], EMAIL[i], PASSWORD);
-			}
-		} else {
-			// For test 2 or higher I reset what I did in the create test
-			// and create the table entries that I will use in the remaining tests.
-			JdbcTestUtils.deleteFromTables(jdbcTemplate, "publications");
-			for (int i = 0; i < SUPERVISOR.length; i++) {
-				publicationDao.create(SUPERVISOR[i], DESCRIPTION[i], PRICE[i], QUANTITY[i], IMAGE);
-			}
+		JdbcTestUtils.deleteFromTables(jdbcTemplate, "users");
+		JdbcTestUtils.deleteFromTables(jdbcTemplate, "publications");
+		// Create users prior to publications in accordance to foreign key restrictions.
+		for (int i = 0; i < SUPERVISOR.length; i++) {
+			userDao.create(SUPERVISOR[i], EMAIL[i], PASSWORD);
+		}
+		for (int i = 0; i < SUPERVISOR.length; i++) {
+			publicationDao.create(SUPERVISOR[i], DESCRIPTION[i], PRICE[i], QUANTITY[i], IMAGE);
 		}
 	}
 	
 	@Test
-	public void test1_create() {
-		Publication [] publications = {null, null};
-		
-		for (int i = 0; i < publications.length; i++) {
-			publications[i] = publicationDao.create(SUPERVISOR[i], DESCRIPTION[i], PRICE[i], QUANTITY[i], IMAGE);
-			assertNotNull(publications[i]);
-			assertEquals(SUPERVISOR[i], publications[i].getSupervisor());
-			assertEquals(DESCRIPTION[i], publications[i].getDescription());
-		}
-		assertEquals(publications.length, JdbcTestUtils.countRowsInTable(jdbcTemplate, "publications"));
-	}
-	
-	@Test
-	public void test2_findBySupervisor() {
+	public void test_findBySupervisor() {
 		List<Publication> publications;
 		
 		for (int i = 0; i < SUPERVISOR.length; i++) {
@@ -100,7 +77,7 @@ public class PublicationJdbcDaoTest {
 	}
 	
 	@Test
-	public void test3_findById() {
+	public void test_findById() {
 		List<Publication> publications = publicationDao.findBySupervisor(SUPERVISOR[0]);
 		assertFalse(publications.isEmpty());
 		long id = publications.get(0).getId();
@@ -111,7 +88,7 @@ public class PublicationJdbcDaoTest {
 	}
 	
 	@Test
-	public void test4_findByDescription() {
+	public void test_findByDescription() {
 		List<Publication> publications;
 		// Sub descriptions used for test were selected
 		// so they would match every description.
@@ -134,7 +111,7 @@ public class PublicationJdbcDaoTest {
 	}
 	
 	@Test
-	public void test5_findByPriceRange() {
+	public void test_findByPriceRange() {
 		// PRICE is ordered from lower to higher so if I search by the min and max
 		// values, the original list should be obtained.
 		List<Publication> publications = publicationDao.findByPrice(PRICE[0], PRICE[PRICE.length-1]);
@@ -162,7 +139,7 @@ public class PublicationJdbcDaoTest {
 	}
 	
 	@Test
-	public void test6_findByQuantityRange() {
+	public void test_findByQuantityRange() {
 		// QUANTITY is ordered from lower to higher so if I search by the min and max
 		// values, the original list should be obtained.
 		List<Publication> publications = publicationDao.findByQuantity(QUANTITY[0], QUANTITY[QUANTITY.length-1]);
@@ -191,7 +168,7 @@ public class PublicationJdbcDaoTest {
 	}
 	
 	@Test
-	public void test7_findByQuantity() {
+	public void test_findByQuantity() {
 		List<Publication> publications;
 		
 		for (int i = 0; i < QUANTITY.length; i++) {
@@ -207,7 +184,7 @@ public class PublicationJdbcDaoTest {
 	}
 	
 	@Test
-	public void test8_confirm() {
+	public void test_confirm() {
 		List<Publication> publications = publicationDao.findBySupervisor(SUPERVISOR[0]);
 		assertFalse(publications.isEmpty());
 		long id = publications.get(0).getId();
@@ -217,7 +194,7 @@ public class PublicationJdbcDaoTest {
 	}
 	
 	@Test
-	public void test9_delete() {
+	public void test_delete() {
 		List<Publication> publications = publicationDao.findBySupervisor(SUPERVISOR[0]);
 		assertFalse(publications.isEmpty());
 		long id = publications.get(0).getId();
