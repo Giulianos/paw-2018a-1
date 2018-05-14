@@ -39,9 +39,15 @@ body {
 	border-color: #41a295;
 }
 
-
-
-
+.badge-gumpu {
+	color:#fff;
+	background-color:#61c2b5
+}
+.badge-gumpu[href]:focus,.badge-gumpu[href]:hover {
+	color:#fff;
+	text-decoration:none;
+	background-color:#41a295
+}
 
 .btn-outline-gumpu {
 	color:#61c2b5;
