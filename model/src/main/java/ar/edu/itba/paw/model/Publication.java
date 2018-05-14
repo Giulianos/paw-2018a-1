@@ -58,7 +58,7 @@ public class Publication {
 		this.remainingQuantity = remainingQuantity;
 	}
 	
-	static final String defaultImage = "iVBORw0KGgoAAAANSUhEUgAAAfQAAAE6BAMAAAASGr19AAAAG1BMVEX09PTh4eHl5eXo6Ojy8vLq\n" + 
+	static final String defaultImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAAE6BAMAAAASGr19AAAAG1BMVEX09PTh4eHl5eXo6Ojy8vLq\n" + 
 			"6urs7Ozw8PDu7u5TsDcvAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4gUOBRcV0fJK/AAA\n" + 
 			"B51JREFUeNrtnU1PHEcQQDd4GOboXmDhikO0ObJeK3BckI04hoCcHOk4Ij4umEQcGcty8rNjKbK0\n" + 
 			"s57p6emp6qqarvoByxZvX09/VE2PRhoaGhoaGhoaGhoaGhoaw4js8Wr+gmXM3z6gZn7x0vCN8ckC\n" + 

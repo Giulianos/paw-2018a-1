@@ -35,6 +35,10 @@
     	<servlet-name>default</servlet-name>
     	<url-pattern>/img/*</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+    	<servlet-name>default</servlet-name>
+    	<url-pattern>/js/*</url-pattern>
+    </servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>dispatcher</servlet-name>
 		<url-pattern>/</url-pattern>

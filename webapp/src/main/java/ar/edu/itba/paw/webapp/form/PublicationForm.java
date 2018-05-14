@@ -20,9 +20,7 @@ public class PublicationForm {
 	@Pattern(regexp = "[1-9][0-9]*", message="{publication.quantity.pattern}")
 	private String ownerQuantity;
 
-//	@Size(min = 10, max = 50)
-//	@Pattern(regexp = "[a-zA-Z][a-zA-Z0-9]+")
-//	private String image;
+	private String image;
 
 	public String getDescription() {
 		return description;
@@ -60,11 +58,11 @@ public class PublicationForm {
 		return Integer.parseInt(getOwnerQuantity()) < Integer.parseInt(getQuantity());
 	}
 	
-//	public String getImage() {
-//		return image;
-//	}
-//	
-//	public void setImage(String image) {
-//		this.image = image;
-//	}
+	public String getImage() {
+		return image;
+	}
+	
+	public void setImage(String image) {
+		this.image = image;
+	}
 }

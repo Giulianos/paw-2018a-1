@@ -56,6 +56,15 @@
             </c:if>
           </div>
 
+          <div class="form-group">
+            <label><spring:message code="own.quantity"/></label>
+            <div class="form-control" style="text-align: center;">
+              <input type='file' id='imgfile' />
+              <input type='button' id='btnLoad' value='Load' onclick='loadImage();' />
+              <canvas id="pub-image-canvas" class="publication-canvas bg-light rounded m-2"></canvas>
+            </div>
+          </div>
+          <form:input type="hidden" path="image" id="image-field" />
           <button type="submit" class="btn btn-gumpu"><spring:message code="create"/></button>
         </form:form>
       </div>

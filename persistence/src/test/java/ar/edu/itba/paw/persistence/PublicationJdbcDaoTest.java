@@ -31,6 +31,7 @@ public class PublicationJdbcDaoTest {
 	
 	private static final String [] SUPERVISOR = {"user1","user2"};
 	private static final String [] DESCRIPTION = {"desc1","desc2"};
+	private static final String IMAGE = "";
 	private static final int INT_VALUE = 10;
 	private static final float FLOAT_VALUE = 10.1f;
 	
@@ -58,7 +59,7 @@ public class PublicationJdbcDaoTest {
 		Publication [] publications = {null, null};
 		
 		for (int i = 0; i < publications.length; i++) {
-			publications[i] = publicationDao.create(SUPERVISOR[i], DESCRIPTION[i], FLOAT_VALUE, INT_VALUE);
+			publications[i] = publicationDao.create(SUPERVISOR[i], DESCRIPTION[i], FLOAT_VALUE, INT_VALUE, IMAGE);
 			assertNotNull(publications[i]);
 			assertEquals(SUPERVISOR[i], publications[i].getSupervisor());
 			assertEquals(DESCRIPTION[i], publications[i].getDescription());

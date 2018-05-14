@@ -38,6 +38,7 @@ public class OrderJdbcDaoTest {
 	private static final int QUANTITY = 10;
 	private static final int PRICE = 10;
 	private static final int SUB_QUANTITY = 1;
+	private static final String IMAGE = "";
 	
 	@Autowired
 	private DataSource ds;
@@ -59,7 +60,7 @@ public class OrderJdbcDaoTest {
 			userDao.create(USERNAME[i], EMAIL[i], PASSWORD);
 		}
 		// Create publication prior to orders
-		publicationDao.create(SUPERVISOR, DESCRIPTION, PRICE, QUANTITY);
+		publicationDao.create(SUPERVISOR, DESCRIPTION, PRICE, QUANTITY, IMAGE);
 	}
 	
 	@Test

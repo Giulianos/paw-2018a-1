@@ -28,7 +28,7 @@ public class PublicationJdbcDao implements PublicationDao {
 		jdbcTemplate = new	JdbcTemplate(ds);
 		jdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
 						.withTableName("publications")
-						.usingColumns("supervisor", "description", "price", "quantity")
+						.usingColumns("supervisor", "description", "price", "quantity", "image")
 						.usingGeneratedKeyColumns("publication_id");
 	}
 
@@ -70,17 +70,18 @@ public class PublicationJdbcDao implements PublicationDao {
 	}
 
 	@Override
-	public Publication create(String supervisor, String description, float price, int quantity) {
+	public Publication create(String supervisor, String description, float price, int quantity, final String image) {
 		final Map<String, Object> args = new HashMap<>();
 		
 		args.put("supervisor", supervisor);
 		args.put("description", description);
 		args.put("price", price);
 		args.put("quantity", quantity);
+		args.put("image", image);
 		
 		final Number publicationId = jdbcInsert.executeAndReturnKey(args);
 		
-		return new Publication(publicationId.longValue(),supervisor,description,price,quantity);
+		return new Publication(publicationId.longValue(),supervisor,description,price,quantity,image);
 	}
 
 	@Override

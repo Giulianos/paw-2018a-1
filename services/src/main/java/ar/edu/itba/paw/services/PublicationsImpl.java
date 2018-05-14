@@ -58,8 +58,8 @@ public class PublicationsImpl implements Publications {
 	}
 
 	@Override
-	public Publication create(String supervisor, String description, float price, int quantity) {
-		return publicationDao.create(supervisor,description,price,quantity);
+	public Publication create(String supervisor, String description, float price, int quantity, final String image) {
+		return publicationDao.create(supervisor,description,price,quantity,image);
 	}
 
 	@Override
