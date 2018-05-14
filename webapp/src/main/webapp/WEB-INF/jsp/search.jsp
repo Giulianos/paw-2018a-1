@@ -3,6 +3,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+<%@ include file="globals.jsp" %>
+
 <c:set var="searchPlaceholder"><spring:message code="search.what"/></c:set>
 
 <!doctype html>
@@ -20,7 +22,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
 		<!-- Custom styles -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="${siteRootDir}/css/style.css">
 
     <script>
       function checkOrderQuantity(value, id, max) {
@@ -52,7 +54,7 @@
             </div>
           </div>
           <div class="border bg-light rounded p-3">
-            <form method="get" action="/search">
+            <form method="get" action="${siteRootDir}/search">
               <div class="input-group mb-3">
                     <input type="text" value='<c:out value="${searchedKeyword}" />' class="form-control" name="keywords" placeholder="${searchPlaceholder}"/>
                 <div class="input-group-append">
@@ -78,7 +80,7 @@
 	                <h3><c:out value="${publication.description}" /></h3>
 	                <span class="mt-3"><img height="18" src="svg/map-marker.svg" alt="icon name" /> Argentina</span></br>
 	                <span class="mt-3"><spring:message code="quantity"/></span><span class="badge badge-pill badge-success"><c:out value="${publication.remainingQuantity}" /></span></br>
-	                <form:form modelAttribute="orderForm" action="/order" method="post">
+	                <form:form modelAttribute="orderForm" action="${siteRootDir}/order" method="post">
 	             		<form:input type="hidden" value="${publication.id}" path="publicationId" id="publicationId-${publication.id}"/>
 		                <div class="input-group input-group-sm mt-3">
 		                  <form:input onChange="checkOrderQuantity(this.value, '${publication.id}', ${publication.remainingQuantity});" type="number" class="form-control" placeholder="Cantidad" path="quantity" id="quantity-${publication.id}" />

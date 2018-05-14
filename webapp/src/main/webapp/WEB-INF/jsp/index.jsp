@@ -3,6 +3,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+<%@ include file="globals.jsp" %>
+
 <c:set var="searchPlaceholder"><spring:message code="search.what"/></c:set>
 
 <!doctype html>
@@ -20,7 +22,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
 		<!-- Custom styles -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="${siteRootDir}/css/style.css">
 
     <title>Gumpu</title>
   </head>
@@ -34,7 +36,7 @@
         <h1 class="logo-title">Gumpu</h1>
         <p class="lead slogan px-3 bg-dark"><spring:message code="slogan"/></p>
 
-        <form method="get" action="/search">
+        <form method="get" action="${siteRootDir}/search">
           <div class="input-group mb-3 input-group-lg">
             <input type="text" class="form-control" name="keywords" placeholder="${searchPlaceholder}">
               <div class="input-group-append">

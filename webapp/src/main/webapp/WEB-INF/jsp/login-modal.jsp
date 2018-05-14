@@ -12,7 +12,7 @@
         </button>
       </div>
           <div class="modal-body">
-            <form id="login-form" action="/login" method="post" >
+            <form id="login-form" action="${siteRootDir}/login" method="post" >
               <div class="form-group">
                 <label for="j_username"><spring:message code="username"/></label>
                 <input type="text" name="j_username" class="form-control" id="j_username" aria-describedby="username" placeholder="${enterUsername}" />
@@ -29,7 +29,7 @@
             </form>
           </div>
           <div class="modal-footer">
-            <a href="/register" role="button" class="btn btn-outline-primary"><spring:message code="signup"/></a>
+            <a href="${siteRootDir}/register" role="button" class="btn btn-outline-primary"><spring:message code="signup"/></a>
           </div>
           </div>
           </div>

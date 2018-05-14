@@ -3,6 +3,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+<%@ include file="../globals.jsp" %>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -11,7 +13,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="${siteRootDir}/css/style.css">
 
     <title>Gumpu</title>
   </head>
@@ -28,7 +30,7 @@
         </div>
         <div class="card-body">
           <h5 class="card-title"> <span class="badge badge-secondary px-2"><c:out value="${publicationsQuantity}" /></span> <spring:message code="my.publications"/></h5>
-          <a href="/profile/publications" class="btn btn-outline-primary mt-3"><spring:message code="see.my.publications"/></a>
+          <a href="${siteRootDir}/profile/publications" class="btn btn-outline-primary mt-3"><spring:message code="see.my.publications"/></a>
         </div>
       </div>
       <div class="card my-3">
@@ -37,7 +39,7 @@
         </div>
         <div class="card-body">
           <h5 class="card-title"> <span class="badge badge-secondary px-2"><c:out value="${subscriptionsQuantity}" /></span> <spring:message code="my.subscriptions"/></h5>
-          <a href="/profile/subscriptions" class="btn btn-outline-primary mt-3"><spring:message code="see.my.subscriptions"/></a>
+          <a href="${siteRootDir}/profile/subscriptions" class="btn btn-outline-primary mt-3"><spring:message code="see.my.subscriptions"/></a>
         </div>
       </div>
       <div class="card my-3">
@@ -46,7 +48,7 @@
         </div>
         <div class="card-body">
           <h5 class="card-title"> <span class="badge badge-secondary px-2"><c:out value="${finalizedSubscriptionsQuantity}" /></span> <spring:message code="pay.subscriptions"/></h5>
-          <a href="/profile/subscriptions-finalized" class="btn btn-outline-primary mt-3"><spring:message code="see.my.pay.subscriptions"/></a>
+          <a href="${siteRootDir}/profile/subscriptions-finalized" class="btn btn-outline-primary mt-3"><spring:message code="see.my.pay.subscriptions"/></a>
         </div>
       </div>
     </div>

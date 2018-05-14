@@ -15,7 +15,7 @@ body {
 	font-weight: bold;
 	color: white;
 	text-shadow: 2px 2px 0px rgba(0,0,0,0.6);
-	font-size: 200pt;
+	font-size: 20vw;
 }
 
 .slogan {
@@ -24,5 +24,5 @@ body {
 	color: rgb(220,220,220);
 	text-shadow: 2px 2px 0px rgba(0,0,0,0.6);
 	text-align: center;
-	font-size: 40pt;
+	font-size: 3.7vw;
 }

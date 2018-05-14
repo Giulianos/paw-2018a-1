@@ -4,7 +4,7 @@
             <div class="border bg-light rounded p-3">
               <!--  Register Form  -->
               <c:url value="/register" var="postPath"/>
-          	  <form:form modelAttribute="registerForm" action="${postPath}" method="post">
+          	  <form:form modelAttribute="registerForm" action="${siteRootDir}${postPath}" method="post">
                 <div class="form-group">
                   <label for="username">${username}</label>
                   <form:input type="text" path="username" class="form-control" id="username" aria-describedby="username" placeholder="${username}"/>
