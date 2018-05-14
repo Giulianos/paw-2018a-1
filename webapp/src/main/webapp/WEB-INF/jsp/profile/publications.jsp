@@ -61,7 +61,7 @@
               <td><c:out value="${publ.remainingQuantity}"/></td>
               <td><c:out value="${publ.price}"/></td>
               <td style="text-align:center;">
-                <form method="POST" action="publications/erase">
+                <form method="POST" action="${siteRootDir}/profile/publications/erase">
                   <input type="hidden" name="publication_id" value="${publ.id}" />
                   <input type="image" src="${siteRootDir}/img/trash.svg" height="18" border="0" alt="Submit" />
                 </form>

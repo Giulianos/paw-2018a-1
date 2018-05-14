@@ -52,6 +52,11 @@ public class OrdersImpl implements Orders {
 	public boolean delete(long publication_id) {
 		return orderDao.delete(publication_id);
 	}
+	
+	@Override
+	public boolean delete(long publication_id, String subscriptor) {
+		return orderDao.delete(publication_id, subscriptor);
+	}
 
 	@Override
 	public List<Order> findFinalizedBySubscriber(String username) {

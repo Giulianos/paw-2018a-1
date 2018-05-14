@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -74,11 +75,16 @@ public class ProfileController {
 		String user = auth.getAuthentication().getName();
 		
 		List<Order> subscriptions = ord.findBySubscriber(user);
+		Boolean anyHasNoSupervisor = false;
 		for (Order order : subscriptions) {
 			order.setPublication(ps.findById(order.getPublication_id()));
 			order.getPublication().setRemainingQuantity(ps.remainingQuantity(order.getPublication_id()));
+			if(!anyHasNoSupervisor && !ps.hasSupervisor(order.getPublication_id())) {
+				anyHasNoSupervisor = true;
+			}
 		}
 		
+		mav.addObject("anyHasNoSupervisor", anyHasNoSupervisor);
 		mav.addObject("subscriptions", subscriptions);
 		
 		return mav;

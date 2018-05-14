@@ -41,6 +41,11 @@ public class PublicationsImpl implements Publications {
 	public List<Publication> findByDescription(String description) {
 		return publicationDao.findByDescription(description);
 	}
+	
+	@Override
+	public List<Publication> findByDescription(String description, boolean checkSupervisor) {
+		return publicationDao.findByDescription(description, checkSupervisor);
+	}
 
 	@Override
 	public List<Publication> findByPrice(float minPrice, float maxPrice) {
@@ -115,4 +120,15 @@ public class PublicationsImpl implements Publications {
 	public boolean delete(long publication_id) {
 		return publicationDao.delete(publication_id);
 	}
+
+	@Override
+	public boolean setNewSupervisor(String user, long id) {
+		return publicationDao.setNewSupervisor(user, id);
+	}
+
+	@Override
+	public boolean hasSupervisor(long id) {
+		return publicationDao.hasSupervisor(id);
+	}
+
 }

@@ -73,7 +73,7 @@ public class PublicationController {
 	
 	@RequestMapping(value = "/search/{keywords}")
 	public ModelAndView search(@Valid @ModelAttribute("orderForm") final OrderForm form, @PathVariable("keywords") String keywords) {
-		List<Publication> results = ps.findByDescription(keywords);
+		List<Publication> results = ps.findByDescription(keywords, true);
 		final ModelAndView mav = new ModelAndView("search");
 		for(Publication publication : results) {
 			publication.setRemainingQuantity(ps.remainingQuantity(publication.getId()));
@@ -87,7 +87,7 @@ public class PublicationController {
 	@RequestMapping(value = "/search", method = { RequestMethod.GET })
 	public ModelAndView search(@RequestParam(value="keywords", required=false) String keywords, @Valid @ModelAttribute("orderForm") final OrderForm form) {
 		if(keywords==null) {
-			List<Publication> results = ps.findByDescription("");
+			List<Publication> results = ps.findByDescription("", true);
 			final ModelAndView mav = new ModelAndView("search");
 			for(Publication publication : results) {
 				publication.setRemainingQuantity(ps.remainingQuantity(publication.getId()));
@@ -98,11 +98,20 @@ public class PublicationController {
 		return new ModelAndView("redirect:/search/" + keywords);
 	}
 	
+	@RequestMapping(value = "/profile/subscriptions/supervise", method = { RequestMethod.POST })
+	public ModelAndView superviseSubscription(@RequestParam(value="publication_id") Integer publication_id) {
+		String user = auth.getAuthentication().getName();
+		
+		ps.setNewSupervisor(user, publication_id);
+		
+		return new ModelAndView("redirect:/profile/subscriptions");
+	}
+	
 	@RequestMapping(value = "/profile/subscriptions/erase", method = { RequestMethod.POST })
 	public ModelAndView eraseSubscription(@RequestParam(value="publication_id") Integer publication_id) {
 		
 		if(!ord.areConfirmed(publication_id)) {
-			ord.delete(publication_id);
+			ord.delete(publication_id, auth.getAuthentication().getName());
 		}
 		
 		return new ModelAndView("redirect:/profile/subscriptions");
@@ -111,8 +120,19 @@ public class PublicationController {
 	@RequestMapping(value = "/profile/publications/erase", method = { RequestMethod.POST })
 	public ModelAndView erasePublication(@RequestParam(value="publication_id") Integer publication_id) {
 		
-		if(ps.remainingQuantity(publication_id) != 0) {
+		List<Order> list = ord.findByPublicationId(publication_id);
+		if(list.size() == 0) {
 			ps.delete(publication_id);
+		} else if(list.size() == 1) {
+			Order order = list.get(0);
+			if(order.getSubscriber().equals(auth.getAuthentication().getName())) {
+				if(ps.remainingQuantity(publication_id) != 0) {
+					ps.delete(publication_id);
+				}
+			}
+		} else {
+			ps.setNewSupervisor(null, publication_id);
+			ord.delete(publication_id, auth.getAuthentication().getName());
 		}
 		
 		return new ModelAndView("redirect:/profile/publications");

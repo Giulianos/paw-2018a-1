@@ -68,4 +68,15 @@ public interface OrderDao {
 	 */
 	
 	boolean delete(final long publication_id);
+
+	/**
+	 * Delete all orders for the corresponding publication id and subscriber.
+	 * 
+	 * @param publication_id The id of the publication.
+	 * @param subscriber The subscriber of the publication.
+	 * 
+	 * @return True if the deletion was successful.
+	 */
+	
+	boolean delete(long publication_id, String subscriber);
 }

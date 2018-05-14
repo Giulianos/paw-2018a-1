@@ -5,6 +5,8 @@
 
 <%@ include file="../globals.jsp" %>
 
+<c:set var="person"><img src="${siteRootDir}/img/person.svg" height="15" border="0"/></c:set>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -27,6 +29,11 @@
 		<%@ include file="../login-modal.jsp" %>
     <div class="container">
       <h2 class="text-secondary mb-4"><spring:message code="my.subscriptions"/></h2>
+      <c:if test="${anyHasNoSupervisor}">
+        <div class="alert alert-warning" role="alert">
+          <spring:message code="no.supervisor.warning" arguments="${person}"/>
+        </div>
+      </c:if>
       <table class="table table-striped table-bordered">
         <thead>
           <tr>
@@ -39,18 +46,46 @@
         </thead>
         <tbody>
           <c:forEach var="subs" items="${subscriptions}">
-            <tr>
-              <th scope="row"><c:out value="${subs.publication.description}"/></th>
-              <td><c:out value="${subs.quantity}"/></td> <!-- quantity ordered -->
-              <td><c:out value="${subs.publication.remainingQuantity}"/></td> <!-- remaning quantity -->
-              <td><c:out value="${subs.publication.price}"/></td>
-              <td style="text-align:center;">
-                <form method="POST" action="subscriptions/erase">
-                  <input type="hidden" name="publication_id" value="${subs.publication.id}" />
-                  <input type="image" src="${siteRootDir}/img/trash.svg" height="18" border="0" alt="Submit" />
-                </form>
-              </td>
-            </tr>
+            <c:choose>
+              <c:when test="${not empty subs.publication.supervisor}">
+                <tr>
+                  <th scope="row"><c:out value="${subs.publication.description}"/></th>
+                  <td><c:out value="${subs.quantity}"/></td> <!-- quantity ordered -->
+                  <td><c:out value="${subs.publication.remainingQuantity}"/></td> <!-- remaning quantity -->
+                  <td><c:out value="${subs.publication.price}"/></td>
+                  <td>
+                    <form method="POST" action="subscriptions/erase">
+                      <input type="hidden" name="publication_id" value="${subs.publication.id}" />
+                      <input type="image" src="${siteRootDir}/img/trash.svg" height="18" border="0" alt="Submit" />
+                    </form>
+                  </td>
+                </tr>
+              </c:when>
+              <c:otherwise>
+                <tr class="table-warning">
+                  <th scope="row"><c:out value="${subs.publication.description}"/></th>
+                  <td><c:out value="${subs.quantity}"/></td> <!-- quantity ordered -->
+                  <td><c:out value="${subs.publication.remainingQuantity}"/></td> <!-- remaning quantity -->
+                  <td><c:out value="${subs.publication.price}"/></td>
+                  <td>
+                    <div class="row">
+                      <div class="col-sm">
+                        <form method="POST" action="subscriptions/erase">
+                          <input type="hidden" name="publication_id" value="${subs.publication.id}" />
+                          <input type="image" src="${siteRootDir}/img/trash.svg" height="18" border="0" alt="Submit" />
+                        </form>
+                      </div>
+                      <div class="col-sm">
+                        <form method="POST" action="subscriptions/supervise">
+                          <input type="hidden" name="publication_id" value="${subs.publication.id}" />
+                          <input type="image" src="${siteRootDir}/img/person.svg" height="18" border="0" alt="Submit" />
+                        </form>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </c:otherwise>
+            </c:choose>
           </c:forEach>
         </tbody>
       </table>

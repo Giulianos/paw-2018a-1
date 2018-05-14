@@ -34,6 +34,18 @@ public interface Publications {
 	public List<Publication> findByDescription(final String description);
 	
 	/**
+	 * Finds publications that contain or have the exact provided description.
+	 * 
+	 * Only returns the publications in which supervisor is not null
+	 * 
+	 * @param description The description to match.
+	 * 
+	 * @return The publications with the provided description.
+	 */
+	
+	List<Publication> findByDescription(String description, boolean checkSupervisor);
+	
+	/**
 	 * Finds publications that are between the specified price range.
 	 * 
 	 * @param minPrice The minimum price to look for.
@@ -128,4 +140,27 @@ public interface Publications {
 	 */
 	
 	boolean delete(final long id);
+	
+	/**
+	 * Sets a new supervisor for the corresponding id.
+	 * 
+	 * @param user The user is the new supervisor
+	 * 
+	 * @param id The id of the publication to be deleted.
+	 * 
+	 * @return True if the set was successful.
+	 */
+	
+	boolean setNewSupervisor (final String user, final long id);
+	
+	/**
+	 * Checks if supervisor is null for the corresponding id.
+	 * 
+	 * @param id The id of the publication to be deleted.
+	 * 
+	 * @return True if the set was successful.
+	 */
+	
+	boolean hasSupervisor (final long id);
+	
 }

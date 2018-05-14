@@ -51,7 +51,15 @@ public class PublicationJdbcDao implements PublicationDao {
 
 	@Override
 	public List<Publication> findByDescription(String description) {
-		return	jdbcTemplate.query("SELECT * FROM publications WHERE LOWER(description) like LOWER(?);", ROW_MAPPER, "%"+description+"%");
+		return findByDescription(description, false);
+	}
+	
+	@Override
+	public List<Publication> findByDescription(String description, boolean checkSupervisor) {
+		if(checkSupervisor)
+			return	jdbcTemplate.query("SELECT * FROM publications WHERE supervisor is not NULL and LOWER(description) like LOWER(?);", ROW_MAPPER, "%"+description+"%");
+		else
+			return	jdbcTemplate.query("SELECT * FROM publications WHERE LOWER(description) like LOWER(?);", ROW_MAPPER, "%"+description+"%");
 	}
 
 	@Override
@@ -96,5 +104,18 @@ public class PublicationJdbcDao implements PublicationDao {
 	@Override
 	public boolean delete(long id) {
 		return jdbcTemplate.update("DELETE FROM publications WHERE publication_id = ?",id) > 0;
+	}
+
+	@Override
+	public boolean setNewSupervisor(String user, long id) {
+		return jdbcTemplate.update("UPDATE publications SET supervisor = ? WHERE publication_id = ?",user,id) > 0;
+	}
+
+	@Override
+	public boolean hasSupervisor(long id) {
+		final List<Publication> list = jdbcTemplate.query("SELECT * FROM publications WHERE publication_id = ?;", ROW_MAPPER, id);
+		if(list.get(0).getSupervisor() == null)
+			return false;
+		return true;
 	}
 }

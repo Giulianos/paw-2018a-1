@@ -82,4 +82,9 @@ public class OrderJdbcDao implements OrderDao {
 	public boolean delete(long publication_id) {
 		return jdbcTemplate.update("DELETE FROM orders WHERE publication_id = ?",publication_id) > 0;
 	}
+	
+	@Override
+	public boolean delete(long publication_id, String subscriber) {
+		return jdbcTemplate.update("DELETE FROM orders WHERE publication_id = ? and subscriber = ?",publication_id, subscriber) > 0;
+	}
 }
