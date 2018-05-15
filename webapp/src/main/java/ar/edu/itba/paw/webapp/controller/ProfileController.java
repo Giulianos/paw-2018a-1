@@ -1,6 +1,7 @@
 package ar.edu.itba.paw.webapp.controller;
 
 import java.lang.ProcessBuilder.Redirect;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -46,7 +47,7 @@ public class ProfileController {
 		String user = auth.getAuthentication().getName();
 		
 		mav.addObject("publicationsQuantity", ps.findBySupervisor(user).size());
-		mav.addObject("subscriptionsQuantity", ord.findBySubscriber(user).size());
+		mav.addObject("subscriptionsQuantity", ord.findBySubscriber(user).size()-ord.findFinalizedBySubscriber(user).size());
 		mav.addObject("finalizedSubscriptionsQuantity", ord.findFinalizedBySubscriber(user).size());
 		
 		return mav;
@@ -76,9 +77,11 @@ public class ProfileController {
 		ModelAndView mav = new ModelAndView("profile/subscriptions");
 		
 		String user = auth.getAuthentication().getName();
-		
 		List<Order> subscriptions = ord.findBySubscriber(user);
+		List<Order> subscriptionsFinalized = ord.findFinalizedBySubscriber(user);
+		subscriptions.removeAll(subscriptionsFinalized);
 		Boolean anyHasNoSupervisor = false;
+		
 		for (Order order : subscriptions) {
 			order.setPublication(ps.findById(order.getPublication_id()));
 			order.getPublication().setRemainingQuantity(ps.remainingQuantity(order.getPublication_id()));

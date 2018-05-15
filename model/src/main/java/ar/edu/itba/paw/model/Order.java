@@ -47,5 +47,35 @@ public class Order {
 	public void setSubscriberUser(User user) {
 		this.subscriberUser = user;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (publication_id ^ (publication_id >>> 32));
+		result = prime * result + ((subscriber == null) ? 0 : subscriber.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Order other = (Order) obj;
+		if (publication_id != other.publication_id)
+			return false;
+		if (subscriber == null) {
+			if (other.subscriber != null)
+				return false;
+		} else if (!subscriber.equals(other.subscriber))
+			return false;
+		return true;
+	}
+	
+	
 	
 }

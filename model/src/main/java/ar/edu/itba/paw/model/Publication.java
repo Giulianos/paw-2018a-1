@@ -77,6 +77,32 @@ public class Publication {
 		return supervisorUser;
 	}
 	
+	
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Publication other = (Publication) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
+
+
 	static final String defaultImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAAE6BAMAAAASGr19AAAAG1BMVEX09PTh4eHl5eXo6Ojy8vLq\n" + 
 			"6urs7Ozw8PDu7u5TsDcvAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4gUOBRcV0fJK/AAA\n" + 
 			"B51JREFUeNrtnU1PHEcQQDd4GOboXmDhikO0ObJeK3BckI04hoCcHOk4Ij4umEQcGcty8rNjKbK0\n" + 
