@@ -1,6 +1,7 @@
 package ar.edu.itba.paw.interfaces;
 
 import java.util.List;
+import java.util.Optional;
 
 import ar.edu.itba.paw.model.Publication;
 
@@ -13,7 +14,7 @@ public interface Publications {
 	 * @return The publication with the provided id.
 	 */
 	
-	public Publication findById(final long id);
+	Optional<Publication> findById(final long id);
 	
 	/**
 	 * Finds publications with the provided supervisor.
@@ -22,7 +23,7 @@ public interface Publications {
 	 * @return The publications with the provided supervisor.
 	 */
 	
-	public List<Publication> findBySupervisor(final String username);
+	List<Publication> findBySupervisor(final String username);
 	
 	/**
 	 * Finds publications that contain or have the exact provided description.
@@ -31,7 +32,7 @@ public interface Publications {
 	 * @return The publications with the provided description.
 	 */
 	
-	public List<Publication> findByDescription(final String description);
+	List<Publication> findByDescription(final String description);
 	
 	/**
 	 * Finds publications that contain or have the exact provided description.
@@ -53,7 +54,7 @@ public interface Publications {
 	 * @return The publications with the specified price range.
 	 */
 	
-	public List<Publication> findByPrice(final float minPrice, final float maxPrice);
+	List<Publication> findByPrice(final float minPrice, final float maxPrice);
 	
 	/**
 	 * Finds publications with the specified quantity.
@@ -62,7 +63,7 @@ public interface Publications {
 	 * @return The publications with the specified quantity.
 	 */
 	
-	public List<Publication> findByQuantity(final int quantity);
+	List<Publication> findByQuantity(final int quantity);
 	
 	/**
 	 * Finds publications with the specified quantity range.
@@ -72,7 +73,7 @@ public interface Publications {
 	 * @return The publications with the specified quantity range.
 	 */
 	
-	public List<Publication> findByQuantity(final int minQuantity, final int maxQuantity);
+	List<Publication> findByQuantity(final int minQuantity, final int maxQuantity);
 	
 	/**
 	 * Create a new publication.

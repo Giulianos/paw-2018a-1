@@ -7,6 +7,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.sql.DataSource;
 
@@ -82,9 +83,9 @@ public class PublicationJdbcDaoTest {
 		assertFalse(publications.isEmpty());
 		long id = publications.get(0).getId();
 		
-		Publication publication = publicationDao.findById(id);
-		assertNotNull(publication);
-		assertEquals(id, publication.getId());
+		Optional<Publication> publication = publicationDao.findById(id);
+		assertTrue(publication.isPresent());
+		assertEquals(id, publication.get().getId());
 	}
 	
 	@Test
@@ -190,7 +191,7 @@ public class PublicationJdbcDaoTest {
 		long id = publications.get(0).getId();
 		assertFalse(publications.get(0).getConfirmed());
 		publicationDao.confirm(id);
-		assertTrue(publicationDao.findById(id).getConfirmed());
+		assertTrue(publicationDao.findById(id).get().getConfirmed());
 	}
 	
 	@Test
@@ -199,8 +200,8 @@ public class PublicationJdbcDaoTest {
 		assertFalse(publications.isEmpty());
 		long id = publications.get(0).getId();
 		
-		assertNotNull(publicationDao.findById(id));
+		assertTrue(publicationDao.findById(id).isPresent());
 		publicationDao.delete(id);
-		assertNull(publicationDao.findById(id));
+		assertFalse(publicationDao.findById(id).isPresent());
 	}
 }

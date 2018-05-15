@@ -1,5 +1,7 @@
 package ar.edu.itba.paw.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,17 +20,17 @@ public class UsersImpl implements Users {
 	private PasswordEncoder passEncoder;
 	
 	@Override
-	public User findById(final long id) {
+	public Optional<User> findById(final long id) {
 		return userDao.findById(id);
 	}
 	
 	@Override
-	public User findByUsername(final String username) {
+	public Optional<User> findByUsername(final String username) {
 		return userDao.findByUsername(username);
 	}
 
 	@Override
-	public User findByEmail(final String email) {
+	public Optional<User> findByEmail(final String email) {
 		return userDao.findByEmail(email);
 	}
 	

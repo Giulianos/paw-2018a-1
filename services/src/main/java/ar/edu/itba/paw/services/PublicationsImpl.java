@@ -1,6 +1,7 @@
 package ar.edu.itba.paw.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -28,7 +29,7 @@ public class PublicationsImpl implements Publications {
 	private Users users;
 
 	@Override
-	public Publication findById(long id) {
+	public Optional<Publication> findById(long id) {
 		return publicationDao.findById(id);
 	}
 
@@ -69,7 +70,7 @@ public class PublicationsImpl implements Publications {
 
 	@Override
 	public int remainingQuantity(long id) {
-		int remainingQuantity = findById(id).getQuantity();
+		int remainingQuantity = findById(id).get().getQuantity();
 		List<Order> currentOrders = orders.findByPublicationId(id);
 
 		for (Order order : currentOrders) {

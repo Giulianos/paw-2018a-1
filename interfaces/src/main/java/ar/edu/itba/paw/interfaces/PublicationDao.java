@@ -1,6 +1,7 @@
 package ar.edu.itba.paw.interfaces;
 
 import java.util.List;
+import java.util.Optional;
 
 import ar.edu.itba.paw.model.Publication;
 
@@ -14,7 +15,7 @@ public interface PublicationDao {
 	 * @return The publication with the provided id.
 	 */
 	
-	Publication findById(final long id);
+	Optional<Publication> findById(final long id);
 	
 	/**
 	 * Finds publications with the provided supervisor.

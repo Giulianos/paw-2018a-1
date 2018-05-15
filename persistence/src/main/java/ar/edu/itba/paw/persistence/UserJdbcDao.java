@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -33,30 +35,21 @@ public class UserJdbcDao implements UserDao {
 			(ResultSet rs, int rowNum) -> new User(rs.getLong("user_id"), rs.getString("username"), rs.getString("email"), rs.getString("password"));
 
 	@Override
-	public User findById(final long id) {
+	public Optional<User> findById(final long id) {
 		final List<User> list = jdbcTemplate.query("SELECT * FROM users WHERE user_id = ?;", ROW_MAPPER, id);
-		if	(list.isEmpty()) {
-			return	null;
-		}
-		return	list.get(0);
+		return	list.isEmpty() ? Optional.empty() : Optional.of(list.get(0));
 	}
 	
 	@Override
-	public User findByUsername(final String username) {
+	public Optional<User> findByUsername(final String username) {
 		final List<User> list = jdbcTemplate.query("SELECT * FROM users WHERE username = ?;", ROW_MAPPER, username);
-		if	(list.isEmpty()) {
-			return	null;
-		}
-		return	list.get(0);
+		return	list.isEmpty() ? Optional.empty() : Optional.of(list.get(0));
 	}
 
 	@Override
-	public User findByEmail(final String email) {
+	public Optional<User> findByEmail(final String email) {
 		final List<User> list = jdbcTemplate.query("SELECT * FROM users WHERE email = ?;", ROW_MAPPER, email);
-		if	(list.isEmpty()) {
-			return	null;
-		}
-		return	list.get(0);
+		return	list.isEmpty() ? Optional.empty() : Optional.of(list.get(0));
 	}
 
 	@Override

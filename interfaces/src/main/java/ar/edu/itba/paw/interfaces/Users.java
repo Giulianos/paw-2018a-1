@@ -1,5 +1,7 @@
 package ar.edu.itba.paw.interfaces;
 
+import java.util.Optional;
+
 import ar.edu.itba.paw.model.User;
 
 public interface Users {
@@ -12,7 +14,7 @@ public interface Users {
 	 * @return The user with the provided id.
 	 */
 	
-	User findById(final long id);
+	Optional<User> findById(final long id);
 	
 	/**
 	 * Finds the user with the provided username.
@@ -22,7 +24,7 @@ public interface Users {
 	 * @return The user with the provided username.
 	 */
 	
-	User findByUsername(final String username);
+	Optional<User> findByUsername(final String username);
 	
 	/**
 	 * Finds the user with the provided email.
@@ -32,7 +34,7 @@ public interface Users {
 	 * @return The user with the provided email.
 	 */
 	
-	User findByEmail(final String email);
+	Optional<User> findByEmail(final String email);
 	
 	/**
 	 * Create a new user.

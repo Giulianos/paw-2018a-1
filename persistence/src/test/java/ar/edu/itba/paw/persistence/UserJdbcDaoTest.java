@@ -1,9 +1,12 @@
 package ar.edu.itba.paw.persistence;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+
+import java.util.Optional;
 
 import javax.sql.DataSource;
 
@@ -49,38 +52,32 @@ public class UserJdbcDaoTest {
 	
 	@Test
 	public void test_findByUsername() {
-		User [] users = {null, null};
-		
-		for (int i = 0; i < users.length; i++) {
-			users[i] = userDao.findByUsername(USERNAME[i]);
-			assertNotNull(users[i]);
-			assertEquals(USERNAME[i], users[i].getUsername());
+		for (int i = 0; i < USERNAME.length; i++) {
+		    Optional<User> user = userDao.findByUsername(USERNAME[i]);
+		    assertTrue(user.isPresent());
+			assertEquals(USERNAME[i], user.get().getUsername());
 		}
-		assertNull(userDao.findByUsername(USERNAME_UNKNOWN));
+		assertFalse(userDao.findByUsername(USERNAME_UNKNOWN).isPresent());
 	}
 	
 	@Test
 	public void test_findByEmail() {
-		User [] users = {null, null};
-		
-		for (int i = 0; i < users.length; i++) {
-			users[i] = userDao.findByEmail(EMAIL[i]);
-			assertNotNull(users[i]);
-			assertEquals(EMAIL[i], users[i].getEmail());
+		for (int i = 0; i < EMAIL.length; i++) {
+			Optional<User> user = userDao.findByEmail(EMAIL[i]);
+		    assertTrue(user.isPresent());
+			assertEquals(EMAIL[i], user.get().getEmail());
 		}
-		assertNull(userDao.findByUsername(EMAIL_UNKNOWN));
+		assertFalse(userDao.findByUsername(EMAIL_UNKNOWN).isPresent());
 	}
 	
 	@Test
 	public void test_findById() {
-		User [] users = {null, null};
-		
-		for (int i = 0; i < users.length; i++) {
+		for (int i = 0; i <USERNAME.length; i++) {
 			// Search 1st by username to get the id.
-			long id = userDao.findByUsername(USERNAME[i]).getId();
-			users[i] = userDao.findById(id);
-			assertNotNull(users[i]);
-			assertEquals(id, users[i].getId());
+			long id = userDao.findByUsername(USERNAME[i]).get().getId();
+			Optional<User> user = userDao.findById(id);
+		    assertTrue(user.isPresent());
+			assertEquals(id, user.get().getId());
 		}
 	}
 	
@@ -88,9 +85,9 @@ public class UserJdbcDaoTest {
 	
 	@Test
 	public void test_addTransaction() {
-//		int transactionBefore = userDao.findByUsername(USERNAME[0]).getTransactions();
+//		int transactionBefore = userDao.findByUsername(USERNAME[0]).get().getTransactions();
 //		assertTrue(userDao.addTransaction(USERNAME[0]));
-//		int transactionAfter = userDao.findByUsername(USERNAME[0]).getTransactions();
+//		int transactionAfter = userDao.findByUsername(USERNAME[0]).get().getTransactions();
 //		assertEquals(transactionBefore + 1, transactionAfter);
 	}
 }

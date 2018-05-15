@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.sql.DataSource;
 
@@ -36,12 +37,9 @@ public class PublicationJdbcDao implements PublicationDao {
 			(ResultSet rs, int rowNum) -> new Publication(rs.getLong("publication_id"),rs.getString("supervisor"),rs.getString("description"),rs.getFloat("price"),rs.getInt("quantity"),rs.getString("image"),rs.getBoolean("is_confirmed"));
 			
 	@Override
-	public Publication findById(long id) {
+	public Optional<Publication> findById(long id) {
 		final List<Publication> list = jdbcTemplate.query("SELECT * FROM publications WHERE publication_id = ?;", ROW_MAPPER, id);
-		if	(list.isEmpty()) {
-			return	null;
-		}
-		return	list.get(0);
+		return	list.isEmpty() ? Optional.empty() : Optional.of(list.get(0));
 	}
 
 	@Override
