@@ -43,12 +43,14 @@
               <td><c:out value="${subs.quantity}"/></td> <!-- quantity ordered -->
               <td><c:out value="${subs.publication.price*subs.quantity}"/></td>
               <td style="text-align:center;">
-                <a data-toggle="modal" data-target="#contactModal" param="subs"><input type="image" src="${siteRootDir}/img/people.svg" height="18" border="0" alt="Submit" /></a>
+                <a data-toggle="modal" data-target="#contactModal-${subs.publication_id}" param="subs"><input type="image" src="${siteRootDir}/img/people.svg" height="18" border="0" alt="Submit" /></a>
             </tr>
           </c:forEach>
         </tbody>
       </table>
+      <c:forEach var="subs" items="${subscriptions}">
+        <%@ include file="contact-modal.jsp" %>
+      </c:forEach>
     </div>
-    <%@ include file="contact-modal.jsp" %>
   </body>
 </html>

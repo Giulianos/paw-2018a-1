@@ -1,8 +1,4 @@
-<c:set var="enterUsername"><spring:message code="enter.username"/></c:set>
-<c:set var="password"><spring:message code="password"/></c:set>
-<c:set var="enterPassword"><spring:message code="enter.password"/></c:set>
-
-<div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="Contact" aria-hidden="true">
+<div class="modal fade" id="contactModal-${subs.publication_id}" tabindex="-1" role="dialog" aria-labelledby="Contact" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -13,13 +9,15 @@
       </div>
       <div class="modal-body">
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">Deberia mostrar los mails. Soy la linea 16 de contact-modal<c:out value="${subsFor.subscriberUser.email}"/></li>
           <c:choose>
-            <c:when test="${subs.publication.supervisor == subs.subscriptor}">
+            <c:when test="${subs.publication.supervisor == subs.subscriber}">
               <!-- show all emails -->
               <c:forEach var="subsFor" items="${subscriptions}">
                 <c:if test="${subs.publication_id == subsFor.publication_id}">
-                  <li class="list-group-item"><c:out value="${subsFor.subscriberUser.email}"/></li>
+                  <li class="list-group-item">
+                    <span class="bold capitalized"><c:out value="${subsFor.subscriberUser.username}"/>:</span> 
+                    <c:out value="${subsFor.subscriberUser.email}"/>
+                  </li>
                 </c:if>
               </c:forEach>
             </c:when>

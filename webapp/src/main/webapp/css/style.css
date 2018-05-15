@@ -81,3 +81,11 @@ body {
 	width: 286px;
 	border: dashed grey 1px;
 }
+
+.capitalized {
+	text-transform: capitalize;
+}
+
+.bold {
+	font-weight: bold;
+}
