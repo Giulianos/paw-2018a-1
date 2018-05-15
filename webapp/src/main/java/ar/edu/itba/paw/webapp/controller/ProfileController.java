@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.paw.interfaces.Orders;
 import ar.edu.itba.paw.interfaces.Publications;
+import ar.edu.itba.paw.interfaces.Users;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.model.User;
@@ -31,6 +32,8 @@ import ar.edu.itba.paw.webapp.form.UserForm;
 public class ProfileController {
 	@Autowired
 	private Publications ps;
+	@Autowired
+	private Users us;
 	@Autowired
 	private Orders ord;
 	@Autowired
@@ -99,6 +102,8 @@ public class ProfileController {
 		List<Order> subscriptions = ord.findFinalizedBySubscriber(user);
 		for (Order order : subscriptions) {
 			order.setPublication(ps.findById(order.getPublication_id()));
+			order.setSubscriberUser(us.findByUsername(order.getSubscriber()));
+			order.getPublication().setSupervisorUser(us.findByUsername(order.getPublication().getSupervisor()));
 		}
 		
 		mav.addObject("subscriptions", subscriptions);

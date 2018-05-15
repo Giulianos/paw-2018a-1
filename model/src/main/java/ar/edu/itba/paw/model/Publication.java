@@ -10,6 +10,7 @@ public class Publication {
 	private final String image;
 	private final boolean confirmed;
 	private int remainingQuantity;
+	private User supervisorUser;
 	
 	public Publication(final long id, final String supervisor, final String description, final float price, final int quantity, final String image, final boolean confirmed) {
 		this.id = id;
@@ -66,6 +67,14 @@ public class Publication {
 	
 	public void setRemainingQuantity(final int remainingQuantity) {
 		this.remainingQuantity = remainingQuantity;
+	}
+	
+	public void setSupervisorUser(User user) {
+		this.supervisorUser = user;
+	}
+	
+	public User getSupervisorUser() {
+		return supervisorUser;
 	}
 	
 	static final String defaultImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAAE6BAMAAAASGr19AAAAG1BMVEX09PTh4eHl5eXo6Ojy8vLq\n" + 

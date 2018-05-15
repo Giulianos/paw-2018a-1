@@ -7,6 +7,7 @@ public class Order {
 	private final int quantity;
 	private final boolean confirmed;
 	private Publication publication;
+	private User subscriberUser;
 
 	public Order(final long publication_id, final String subscriber, final int quantity, final boolean confirmed) {
 		this.publication_id = publication_id;
@@ -41,6 +42,10 @@ public class Order {
 	
 	public Publication getPublication() {
 		return publication;
+	}
+	
+	public void setSubscriberUser(User user) {
+		this.subscriberUser = user;
 	}
 	
 }
