@@ -71,6 +71,7 @@ public class ProfileController {
 		
 		return mav;
 	}
+	
 
 	@RequestMapping(value = "/profile/subscriptions")
 	public ModelAndView subscriptions() {

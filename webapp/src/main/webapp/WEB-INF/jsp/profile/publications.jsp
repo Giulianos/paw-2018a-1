@@ -61,10 +61,21 @@
               <td><c:out value="${publ.remainingQuantity}"/></td>
               <td><c:out value="${publ.price}"/></td>
               <td style="text-align:center;">
-                <form method="POST" action="${siteRootDir}/profile/publications/erase">
-                  <input type="hidden" name="publication_id" value="${publ.id}" />
-                  <input type="image" src="${siteRootDir}/img/trash.svg" height="18" border="0" alt="Submit" />
-                </form>
+                <c:choose>
+                  <c:when test="${publ.remainingQuantity == 0}">
+                    <form method="POST" action="${siteRootDir}/profile/publications/check">
+                      <input type="hidden" name="publication_id" value="${publ.id}" />
+                      <input type="image" src="${siteRootDir}/img/circle-check.svg" height="18" border="0" alt="Submit" />
+                    </form>
+                  </c:when>
+                  <c:otherwise>
+                    <form method="POST" action="${siteRootDir}/profile/publications/erase">
+                      <input type="hidden" name="publication_id" value="${publ.id}" />
+                      <input type="image" src="${siteRootDir}/img/trash.svg" height="18" border="0" alt="Submit" />
+                    </form>
+                  </c:otherwise>
+                </c:choose>
+
               </td>
             </tr>
           </c:forEach>

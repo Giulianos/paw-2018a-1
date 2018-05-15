@@ -147,4 +147,14 @@ public class PublicationController {
 		
 		return new ModelAndView("redirect:/profile/publications");
 	}
+	
+	@RequestMapping(value = "/profile/publications/check", method = { RequestMethod.POST })
+	public ModelAndView checkPublication(@RequestParam(value="publication_id") Integer publication_id) {
+		
+		//need to erase publication and subscriptions
+		ord.delete(publication_id);
+		ps.delete(publication_id);
+		
+		return new ModelAndView("redirect:/profile/publications");
+	}
 }
