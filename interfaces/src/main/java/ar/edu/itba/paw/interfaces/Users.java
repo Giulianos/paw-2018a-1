@@ -49,6 +49,16 @@ public interface Users {
 	User create(String username, String email, String password);
 	
 	/**
+	 * Finds the number of transactions made by a user.
+	 * 
+	 * @param username The name of the user.
+	 * 
+	 * @return Number of transactions made by the user.
+	 */
+	
+	int transaction(final String username);
+	
+	/**
 	 * Increase the transactions attribute for the provided user by 1.
 	 * 
 	 * @param username The name of the user.

@@ -32,7 +32,7 @@ public class UserJdbcDao implements UserDao {
 	}
 	
 	private final static RowMapper<User> ROW_MAPPER =
-			(ResultSet rs, int rowNum) -> new User(rs.getLong("user_id"), rs.getString("username"), rs.getString("email"), rs.getString("password"));
+			(ResultSet rs, int rowNum) -> new User(rs.getLong("user_id"), rs.getString("username"), rs.getString("email"), rs.getString("password"), rs.getInt("transactions"));
 
 	@Override
 	public Optional<User> findById(final long id) {

@@ -39,16 +39,22 @@ public class UsersImpl implements Users {
 		return userDao.create(username, email, passEncoder.encode(password));
 	}
 
-	public boolean uniqueUser(final String username) {
-		return findByUsername(username) == null;
-	}
-
-	public boolean uniqueEmail(final String email) {
-		return findByEmail(email) == null;
+	@Override
+	public int transaction(String username) {
+		Optional<User> user = userDao.findByUsername(username);
+		return user.isPresent() ? user.get().getTransactions() : 0;
 	}
 
 	@Override
 	public boolean addTransaction(String username) {
 		return userDao.addTransaction(username);
+	}
+
+	public boolean uniqueUser(final String username) {
+		return !findByUsername(username).isPresent();
+	}
+
+	public boolean uniqueEmail(final String email) {
+		return !findByEmail(email).isPresent();
 	}
 }
