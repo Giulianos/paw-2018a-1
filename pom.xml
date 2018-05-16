@@ -20,6 +20,7 @@
 	<javax.validation-api.version>1.0.0.GA</javax.validation-api.version>
 	<org.hsqldb.version>2.3.1</org.hsqldb.version>
 	<javax.mail.version>1.5.0-b01</javax.mail.version>
+  <maven-war-plugin.version>2.6</maven-war-plugin.version>
   </properties>
   <modules>
     <module>webapp</module>
@@ -30,6 +31,13 @@
   </modules>
   <build>
     <plugins>
+      <plugin><groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>${maven-war-plugin.version}</version>
+        <configuration>
+        <packagingExcludes>**/logback-test.xml</packagingExcludes>
+        </configuration>
+        </plugin>
       <plugin>
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-compiler-plugin</artifactId>
@@ -134,7 +142,7 @@
 		<groupId>org.springframework.security</groupId>
 		<artifactId>spring-security-taglibs</artifactId>
 		<version>${spring-security.version}</version>
-	</dependency>  
+	</dependency>
 	<dependency>
 		<groupId>org.slf4j</groupId>
 		<artifactId>slf4j-api</artifactId>
