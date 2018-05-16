@@ -2,28 +2,21 @@ package ar.edu.itba.paw.services;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import ar.edu.itba.paw.interfaces.UserDao;
 import ar.edu.itba.paw.model.User;
-import ar.edu.itba.paw.persistence.TestConfig;
 import ar.edu.itba.paw.services.UsersImpl;
 
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration(classes = TestConfig.class)
 public class UsersImplTest {
 	private static final String PASSWORD = "pass";
 	private static final int [] ID = {1,2};
@@ -35,14 +28,8 @@ public class UsersImplTest {
 	@Mock
 	private UserDao userDao;
 
-	// Unable to autowire. Context problem. To check.
-	
 	@InjectMocks
-	//@Autowired
 	private UsersImpl users;
-	
-//	@Autowired
-//	private PasswordEncoder passEncoder;
 	
 	@Before
 	public void setUp() {
@@ -98,19 +85,6 @@ public class UsersImplTest {
 		assertEquals(EMAIL[0],user.get().getEmail());
 		assertEquals(PASSWORD,user.get().getPassword());
 	}
-	
-//	@Test
-//	public void test_create() {
-//		Mockito.when(userDao.create(USERNAME[0],EMAIL[0],passEncoder.encode(PASSWORD)))
-//			.thenReturn(new User(ID[0],USERNAME[0],EMAIL[0],passEncoder.encode(PASSWORD)));
-//		
-//		User user = users.create(USERNAME[0],EMAIL[0],PASSWORD);
-//		assertNotNull(user);
-//		assertEquals(ID[0],user.getId());
-//		assertEquals(USERNAME[0],user.getUsername());
-//		assertEquals(EMAIL[0],user.getEmail());
-//		assertEquals(passEncoder.encode(PASSWORD),user.getPassword());
-//	}
 	
 	@Test
 	public void test_transaction() {

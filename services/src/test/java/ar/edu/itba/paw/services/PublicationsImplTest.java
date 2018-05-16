@@ -23,8 +23,6 @@ import ar.edu.itba.paw.model.ConfirmedOrder;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
 
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration(classes = TestConfig.class)
 public class PublicationsImplTest {
 	private static final int [] ID = {1,2};
 	private static final String [] SUPERVISOR = {"user1","user2"};
@@ -44,11 +42,8 @@ public class PublicationsImplTest {
 
 	@Mock
 	private ConfirmedOrders confirmedOrders;
-
-	// Unable to autowire. Context problem. To check.
 	
 	@InjectMocks
-	//@Autowired
 	private PublicationsImpl publications;
 	
 	@Before
