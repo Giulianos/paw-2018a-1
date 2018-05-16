@@ -163,4 +163,14 @@ public interface Publications {
 	
 	boolean hasSupervisor (final long id);
 	
+	/**
+	 * Loads subscribers into a publication.
+	 * 
+	 * @param pub The publication to load the subscribers into.
+	 * 
+	 * @return True if the load was successful.
+	 */
+	
+	boolean loadPublicationSubscribers(Publication pub);
+	
 }

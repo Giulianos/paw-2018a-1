@@ -10,6 +10,7 @@ import ar.edu.itba.paw.interfaces.ConfirmedOrders;
 import ar.edu.itba.paw.interfaces.Orders;
 import ar.edu.itba.paw.interfaces.PublicationDao;
 import ar.edu.itba.paw.interfaces.Publications;
+import ar.edu.itba.paw.interfaces.UserDao;
 import ar.edu.itba.paw.interfaces.Users;
 import ar.edu.itba.paw.model.ConfirmedOrder;
 import ar.edu.itba.paw.model.Order;
@@ -26,7 +27,9 @@ public class PublicationsImpl implements Publications {
 	private ConfirmedOrders confirmedOrders;
 	@Autowired
 	private Users users;
-
+	@Autowired
+	private UserDao userDao;
+	
 	@Override
 	public Publication findById(long id) {
 		return publicationDao.findById(id);
@@ -129,6 +132,12 @@ public class PublicationsImpl implements Publications {
 	@Override
 	public boolean hasSupervisor(long id) {
 		return publicationDao.hasSupervisor(id);
+	}
+
+	@Override
+	public boolean loadPublicationSubscribers(Publication pub) {
+		pub.setSubscribers(userDao.getSubscribersOfPublication(pub.getId()));
+		return false;
 	}
 
 }

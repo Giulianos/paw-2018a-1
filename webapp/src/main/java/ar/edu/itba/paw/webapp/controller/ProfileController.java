@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +31,7 @@ import ar.edu.itba.paw.webapp.auth.IAuthenticationFacade;
 import ar.edu.itba.paw.webapp.form.OrderForm;
 import ar.edu.itba.paw.webapp.form.PublicationForm;
 import ar.edu.itba.paw.webapp.form.UserForm;
+import sun.util.xml.PlatformXmlPropertiesProvider;
 
 @Controller
 public class ProfileController {
@@ -39,6 +43,14 @@ public class ProfileController {
 	private Orders ord;
 	@Autowired
 	private IAuthenticationFacade auth;
+	@Autowired
+	private Validator validator;
+	
+	@InitBinder
+	protected void initBinder(WebDataBinder binder) {
+	  binder.setValidator(validator);
+	}
+	
 	
 	@RequestMapping(value = "/profile")
 	public ModelAndView profile() {
@@ -107,6 +119,7 @@ public class ProfileController {
 			order.setPublication(ps.findById(order.getPublication_id()));
 			order.setSubscriberUser(us.findByUsername(order.getSubscriber()));
 			order.getPublication().setSupervisorUser(us.findByUsername(order.getPublication().getSupervisor()));
+			ps.loadPublicationSubscribers(order.getPublication());
 		}
 		
 		mav.addObject("subscriptions", subscriptions);

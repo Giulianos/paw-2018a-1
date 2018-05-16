@@ -12,18 +12,24 @@
           <c:choose>
             <c:when test="${subs.publication.supervisor == subs.subscriber}">
               <!-- show all emails -->
-              <c:forEach var="subsFor" items="${subscriptions}">
-                <c:if test="${subs.publication_id == subsFor.publication_id}">
-                  <li class="list-group-item">
-                    <span class="bold capitalized"><c:out value="${subsFor.subscriberUser.username}"/>:</span> 
-                    <c:out value="${subsFor.subscriberUser.email}"/>
-                  </li>
-                </c:if>
+              <c:forEach var="subscriber" items="${subs.publication.subscribers}">
+                <li class="list-group-item">
+                  <span class="bold capitalized"><c:out value="${subscriber.username}"/>:</span>
+                  <c:out value="${subscriber.email}"/>
+                </li>
               </c:forEach>
+              <li class="list-group-item">
+                <span class="bold capitalized"><spring:message code="me"/></span>
+              </li>
             </c:when>
             <c:otherwise>
               <!-- show supervisors email -->
-              <li class="list-group-item"><c:out value="${subs.publication.supervisorUser.email}"/></li>
+              <li class="list-group-item">
+                <span class="bold capitalized">
+                  <c:out value="${subs.publication.supervisorUser.username}"/>
+                </span>
+                <c:out value="${subs.publication.supervisorUser.email}"/>
+              </li>
             </c:otherwise>
           </c:choose>
         </ul>

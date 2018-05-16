@@ -1,5 +1,7 @@
 package ar.edu.itba.paw.model;
 
+import java.util.List;
+
 public class Publication {
 
 	private final long id;
@@ -11,6 +13,7 @@ public class Publication {
 	private final boolean confirmed;
 	private int remainingQuantity;
 	private User supervisorUser;
+	private List<User> subscribers;
 	
 	public Publication(final long id, final String supervisor, final String description, final float price, final int quantity, final String image, final boolean confirmed) {
 		this.id = id;
@@ -77,7 +80,13 @@ public class Publication {
 		return supervisorUser;
 	}
 	
+	public void setSubscribers(List<User> subscribers) {
+		this.subscribers = subscribers;
+	}
 	
+	public List<User> getSubscribers() {
+		return subscribers;
+	}
 	
 	@Override
 	public int hashCode() {
