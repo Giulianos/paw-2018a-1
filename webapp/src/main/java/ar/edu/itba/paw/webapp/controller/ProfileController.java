@@ -27,7 +27,6 @@ import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.webapp.auth.IAuthenticationFacade;
 import ar.edu.itba.paw.webapp.form.PublicationForm;
 import ar.edu.itba.paw.webapp.form.UserForm;
-import sun.util.xml.PlatformXmlPropertiesProvider;
 
 @Controller
 public class ProfileController {
