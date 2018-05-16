@@ -1,5 +1,7 @@
 package ar.edu.itba.paw.webapp.controller;
 
+import java.lang.ProcessBuilder.Redirect;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -8,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,19 +21,32 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.paw.interfaces.Orders;
 import ar.edu.itba.paw.interfaces.Publications;
+import ar.edu.itba.paw.interfaces.Users;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.webapp.auth.IAuthenticationFacade;
 import ar.edu.itba.paw.webapp.form.PublicationForm;
+import ar.edu.itba.paw.webapp.form.UserForm;
+import sun.util.xml.PlatformXmlPropertiesProvider;
 
 @Controller
 public class ProfileController {
 	@Autowired
 	private Publications ps;
 	@Autowired
+	private Users us;
+	@Autowired
 	private Orders ord;
 	@Autowired
 	private IAuthenticationFacade auth;
+	@Autowired
+	private Validator validator;
+	
+	@InitBinder
+	protected void initBinder(WebDataBinder binder) {
+	  binder.setValidator(validator);
+	}
+	
 	
 	@RequestMapping(value = "/profile")
 	public ModelAndView profile() {
@@ -37,7 +55,7 @@ public class ProfileController {
 		String user = auth.getAuthentication().getName();
 		
 		mav.addObject("publicationsQuantity", ps.findBySupervisor(user).size());
-		mav.addObject("subscriptionsQuantity", ord.findBySubscriber(user).size());
+		mav.addObject("subscriptionsQuantity", ord.findBySubscriber(user).size()-ord.findFinalizedBySubscriber(user).size());
 		mav.addObject("finalizedSubscriptionsQuantity", ord.findFinalizedBySubscriber(user).size());
 		
 		return mav;
@@ -61,15 +79,18 @@ public class ProfileController {
 		
 		return mav;
 	}
+	
 
 	@RequestMapping(value = "/profile/subscriptions")
 	public ModelAndView subscriptions() {
 		ModelAndView mav = new ModelAndView("profile/subscriptions");
 		
 		String user = auth.getAuthentication().getName();
-		
 		List<Order> subscriptions = ord.findBySubscriber(user);
+		List<Order> subscriptionsFinalized = ord.findFinalizedBySubscriber(user);
+		subscriptions.removeAll(subscriptionsFinalized);
 		Boolean anyHasNoSupervisor = false;
+		
 		for (Order order : subscriptions) {
 			order.setPublication(ps.findById(order.getPublication_id()).get());
 			order.getPublication().setRemainingQuantity(ps.remainingQuantity(order.getPublication_id()));
@@ -92,7 +113,10 @@ public class ProfileController {
 		
 		List<Order> subscriptions = ord.findFinalizedBySubscriber(user);
 		for (Order order : subscriptions) {
-			order.setPublication(ps.findById(order.getPublication_id()).get());
+			order.setPublication(ps.findById(order.getPublication_id()));
+			order.setSubscriberUser(us.findByUsername(order.getSubscriber()));
+			order.getPublication().setSupervisorUser(us.findByUsername(order.getPublication().getSupervisor()));
+			ps.loadPublicationSubscribers(order.getPublication());
 		}
 		
 		mav.addObject("subscriptions", subscriptions);

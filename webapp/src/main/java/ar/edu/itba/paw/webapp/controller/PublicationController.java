@@ -1,5 +1,7 @@
 package ar.edu.itba.paw.webapp.controller;
 
+import java.lang.ProcessBuilder.Redirect;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -68,10 +70,14 @@ public class PublicationController {
 	@RequestMapping(value = "/search/{keywords}")
 	public ModelAndView search(@Valid @ModelAttribute("orderForm") final OrderForm form, @PathVariable("keywords") String keywords) {
 		List<Publication> results = ps.findByDescription(keywords, true);
+		List<Publication> needToRemove = new LinkedList<>();
 		final ModelAndView mav = new ModelAndView("search");
 		for(Publication publication : results) {
+			if(ps.remainingQuantity(publication.getId()) == 0)
+				needToRemove.add(publication);
 			publication.setRemainingQuantity(ps.remainingQuantity(publication.getId()));
 		}
+		results.removeAll(needToRemove);
 		mav.addObject("resultList", results);
 		mav.addObject("searchedKeyword", keywords);
 		
@@ -82,10 +88,15 @@ public class PublicationController {
 	public ModelAndView search(@RequestParam(value="keywords", required=false) String keywords, @Valid @ModelAttribute("orderForm") final OrderForm form) {
 		if(keywords==null) {
 			List<Publication> results = ps.findByDescription("", true);
+			List<Publication> needToRemove = new LinkedList<>();
 			final ModelAndView mav = new ModelAndView("search");
 			for(Publication publication : results) {
+				if(ps.remainingQuantity(publication.getId()) == 0)
+					needToRemove.add(publication);
 				publication.setRemainingQuantity(ps.remainingQuantity(publication.getId()));
 			}
+			
+			results.removeAll(needToRemove);
 			mav.addObject("resultList", results);
 			return mav;
 		}
@@ -128,6 +139,16 @@ public class PublicationController {
 			ps.setNewSupervisor(null, publication_id);
 			ord.delete(publication_id, auth.getAuthentication().getName());
 		}
+		
+		return new ModelAndView("redirect:/profile/publications");
+	}
+	
+	@RequestMapping(value = "/profile/publications/check", method = { RequestMethod.POST })
+	public ModelAndView checkPublication(@RequestParam(value="publication_id") Integer publication_id) {
+		
+		//need to erase publication and subscriptions
+		ord.delete(publication_id);
+		ps.delete(publication_id);
 		
 		return new ModelAndView("redirect:/profile/publications");
 	}

@@ -69,4 +69,17 @@ public class UserJdbcDao implements UserDao {
 	public boolean addTransaction(String username) {
 		return jdbcTemplate.update("UPDATE users SET transactions = transactions + 1 WHERE username = ?",username) > 0;
 	}
+	
+	@Override
+	public List<User> getSubscribersOfPublication(long publications_id) {
+		final List<User> subscribers = jdbcTemplate.query("select * from users "
+														+ "where username in "
+															+ "(select subscriber from orders as o "
+																+ "where publication_id = ? and subscriber not in "
+																	+ "(select supervisor from publications as p "
+																	+ "where p.publication_id=o.publication_id));",
+															
+															ROW_MAPPER, publications_id);
+		return subscribers;
+	}
 }

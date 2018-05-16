@@ -2,6 +2,8 @@ package ar.edu.itba.paw.interfaces;
 
 import java.util.Optional;
 
+import java.util.List;
+
 import ar.edu.itba.paw.model.User;
 
 public interface UserDao {
@@ -35,6 +37,16 @@ public interface UserDao {
 	 */
 	
 	Optional<User> findByEmail(final String email);
+	
+	/**
+	 * Return users subscribed to a provided publication
+	 * 
+	 * @param publication_id The id of the publication to get the subscribers from
+	 * 
+	 * @return A list with the subscribers
+	 */
+	
+	List<User> getSubscribersOfPublication(final long publications_id);
 	
 	/**
 	 * Creates a new user.

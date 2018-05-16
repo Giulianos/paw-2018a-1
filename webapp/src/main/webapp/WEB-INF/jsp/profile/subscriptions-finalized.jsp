@@ -26,13 +26,14 @@
     <%@ include file="../navbar.jsp" %>
 		<%@ include file="../login-modal.jsp" %>
     <div class="container">
-      <h2 class="text-secondary mb-4"><spring:message code="my.subscriptions"/></h2>
+      <h2 class="text-secondary mb-4"><spring:message code="pay.subscriptions"/></h2>
       <table class="table table-striped table-bordered">
         <thead>
           <tr>
             <th scope="col"><spring:message code="description"/></th>
             <th scope="col"><spring:message code="ordered.quantity"/></th>
-            <th scope="col"><spring:message code="unit.price"/></th>
+            <th scope="col"><spring:message code="final.price"/></th>
+            <th scope="col"><spring:message code="get.contacts"/></th>
           </tr>
         </thead>
         <tbody>
@@ -40,11 +41,16 @@
             <tr>
               <th scope="row"><c:out value="${subs.publication.description}"/></th>
               <td><c:out value="${subs.quantity}"/></td> <!-- quantity ordered -->
-              <td><c:out value="${subs.publication.price}"/></td>
+              <td><c:out value="${subs.publication.price*subs.quantity}"/></td>
+              <td style="text-align:center;">
+                <a data-toggle="modal" data-target="#contactModal-${subs.publication_id}" param="subs"><input type="image" src="${siteRootDir}/img/people.svg" height="18" border="0" alt="Submit" /></a>
             </tr>
           </c:forEach>
         </tbody>
       </table>
+      <c:forEach var="subs" items="${subscriptions}">
+        <%@ include file="contact-modal.jsp" %>
+      </c:forEach>
     </div>
   </body>
 </html>
