@@ -17,10 +17,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.itba.paw.interfaces.Emails;
 import ar.edu.itba.paw.interfaces.Orders;
 import ar.edu.itba.paw.interfaces.Publications;
+import ar.edu.itba.paw.interfaces.Users;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
+import ar.edu.itba.paw.model.User;
 import ar.edu.itba.paw.webapp.auth.IAuthenticationFacade;
 import ar.edu.itba.paw.webapp.form.OrderForm;
 
@@ -31,7 +34,11 @@ public class PublicationController {
 	@Autowired
 	private Orders ord;
 	@Autowired
+	private Users users;
+	@Autowired
 	private IAuthenticationFacade auth;
+	@Autowired
+	private Emails emails;
 	
 	
 	private void includeUserTransactions(ModelMap model) {	
@@ -53,9 +60,22 @@ public class PublicationController {
 		
 		String user = auth.getAuthentication().getName();
 		
-		ord.create(Long.parseLong(form.getPublicationId()), user, Integer.parseInt(form.getQuantity()));
+		Order order = ord.create(Long.parseLong(form.getPublicationId()), user, Integer.parseInt(form.getQuantity()));
 		
-		ps.confirm(Long.parseLong(form.getPublicationId()));
+		boolean confirmed = ps.confirm(Long.parseLong(form.getPublicationId()));
+		
+		if(confirmed) {
+			String mailContent = "Gumpu\n\nOne of your orders reached the quantity goal! Yey! Go to Gumpu to check your subscriptions.\n"
+								+"Una de tus ordenes ha llegado al objetivo! Genial! Chequea tus suscripciones en Gumpu.";
+			Publication pub = ps.findById(order.getPublication_id()).get();
+			ps.loadPublicationSubscribers(pub);
+			pub.setSupervisorUser(users.findByUsername(pub.getSupervisor()).get());
+			for(User u : pub.getSubscribers()) {
+				emails.sendEmail(u.getEmail(), "Gumpu - Notification", mailContent);
+			}
+			emails.sendEmail(pub.getSupervisorUser().getEmail(), "Gumpu - Notification", mailContent);
+			return new ModelAndView("redirect:/profile/subscriptions-finalized");
+		}
 		
 		return new ModelAndView("redirect:/profile/subscriptions");
 	}

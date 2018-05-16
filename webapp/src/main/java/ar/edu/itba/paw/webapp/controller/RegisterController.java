@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.itba.paw.interfaces.Emails;
 import ar.edu.itba.paw.interfaces.Orders;
 import ar.edu.itba.paw.interfaces.Publications;
 import ar.edu.itba.paw.interfaces.Users;
@@ -42,6 +43,8 @@ public class RegisterController {
 	private IAuthenticationFacade auth;
 	@Autowired
 	private Validator validator;
+	@Autowired
+	private Emails emails;
 	
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
@@ -66,6 +69,9 @@ public class RegisterController {
 		
 		final User u = us.create(form.getUsername(), form.getEmail(), form.getPassword());
 		authWithoutPassword(u);
+		String mailContent = "Gumpu agradece tu confianza! Te invitamos a disfrutar de nuestra plataforma!\n"
+							+"Gumpu thanks you for trusting! We invite you to enjoy our platform!";
+		emails.sendEmail(u.getEmail(), "Welcome to Gumpu! Bienvenido a Gumpu!", mailContent);
 		return new ModelAndView("redirect:/profile");
 	}
 	

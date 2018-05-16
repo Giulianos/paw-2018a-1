@@ -113,9 +113,9 @@ public class ProfileController {
 		
 		List<Order> subscriptions = ord.findFinalizedBySubscriber(user);
 		for (Order order : subscriptions) {
-			order.setPublication(ps.findById(order.getPublication_id()));
-			order.setSubscriberUser(us.findByUsername(order.getSubscriber()));
-			order.getPublication().setSupervisorUser(us.findByUsername(order.getPublication().getSupervisor()));
+			order.setPublication(ps.findById(order.getPublication_id()).get());
+			order.setSubscriberUser(us.findByUsername(order.getSubscriber()).get());
+			order.getPublication().setSupervisorUser(us.findByUsername(order.getPublication().getSupervisor()).get());
 			ps.loadPublicationSubscribers(order.getPublication());
 		}
 		

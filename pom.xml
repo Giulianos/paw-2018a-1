@@ -19,6 +19,7 @@
 	<org.hibernate.validator>4.3.1.Final</org.hibernate.validator>
 	<javax.validation-api.version>1.0.0.GA</javax.validation-api.version>
 	<org.hsqldb.version>2.3.1</org.hsqldb.version>
+	<javax.mail.version>1.5.0-b01</javax.mail.version>
   </properties>
   <modules>
     <module>webapp</module>
@@ -41,8 +42,18 @@
     </plugins>
   </build>
   <dependencyManagement>
-    <dependencies>
-    <dependency>
+	<dependencies>
+	<dependency>
+	<groupId>javax.mail</groupId>
+	<artifactId>mail</artifactId>
+	<version>${javax.mail.version}</version>
+	</dependency>
+	<dependency>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-context-support</artifactId>
+	<version>${org.springframework.version}</version>
+	</dependency>
+    	<dependency>
 	<groupId>org.springframework</groupId>
 	<artifactId>spring-test</artifactId>
 	<version>${org.springframework.version}</version><scope>test</scope>
@@ -53,7 +64,7 @@
 	<version>${org.hsqldb.version}</version>
 	<scope>test</scope>
 	</dependency>
-    <dependency>
+    	<dependency>
 	<groupId>org.springframework</groupId>
 	<artifactId>spring-jdbc</artifactId>
 	<version>${org.springframework.version}</version>
