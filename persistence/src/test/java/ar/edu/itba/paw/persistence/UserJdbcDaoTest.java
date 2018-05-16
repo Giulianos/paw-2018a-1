@@ -79,13 +79,11 @@ public class UserJdbcDaoTest {
 		}
 	}
 	
-	// TEST_5 NOT PASSED. WHY?
-	
 	@Test
 	public void test_addTransaction() {
-//		int transactionBefore = userDao.findByUsername(USERNAME[0]).get().getTransactions();
-//		assertTrue(userDao.addTransaction(USERNAME[0]));
-//		int transactionAfter = userDao.findByUsername(USERNAME[0]).get().getTransactions();
-//		assertEquals(transactionBefore + 1, transactionAfter);
+		int transactionBefore = userDao.findByUsername(USERNAME[0]).get().getTransactions();
+		assertTrue(userDao.addTransaction(USERNAME[0]));
+		int transactionAfter = userDao.findByUsername(USERNAME[0]).get().getTransactions();
+		assertEquals(transactionBefore + 1, transactionAfter);
 	}
 }
