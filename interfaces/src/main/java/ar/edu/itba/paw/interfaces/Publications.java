@@ -40,6 +40,7 @@ public interface Publications {
 	 * Only returns the publications in which supervisor is not null
 	 * 
 	 * @param description The description to match.
+	 * @param checkSupervisor Check for existing supervisor.
 	 * 
 	 * @return The publications with the provided description.
 	 */

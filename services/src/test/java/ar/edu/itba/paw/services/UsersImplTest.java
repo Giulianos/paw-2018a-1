@@ -16,16 +16,14 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import ar.edu.itba.paw.interfaces.UserDao;
 import ar.edu.itba.paw.model.User;
 import ar.edu.itba.paw.persistence.TestConfig;
 import ar.edu.itba.paw.services.UsersImpl;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = TestConfig.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(classes = TestConfig.class)
 public class UsersImplTest {
 	private static final String PASSWORD = "pass";
 	private static final int [] ID = {1,2};
@@ -57,7 +55,7 @@ public class UsersImplTest {
 		Mockito.when(userDao.findByUsername(USERNAME[0]))
 			.thenReturn(Optional.of(new User(ID[0],USERNAME[0],EMAIL[0],PASSWORD)));
 		Mockito.when(userDao.findByUsername(USERNAME_UNKNOWN))
-		.thenReturn(Optional.empty());
+			.thenReturn(Optional.empty());
 		
 		Optional<User> user = users.findByUsername(USERNAME[0]);
 		assertTrue(user.isPresent());
@@ -75,7 +73,7 @@ public class UsersImplTest {
 		Mockito.when(userDao.findByEmail(EMAIL[0]))
 			.thenReturn(Optional.of(new User(ID[0],USERNAME[0],EMAIL[0],PASSWORD)));
 		Mockito.when(userDao.findByEmail(EMAIL_UNKNOWN))
-		.thenReturn(Optional.empty());
+			.thenReturn(Optional.empty());
 		
 		Optional<User> user = users.findByEmail(EMAIL[0]);
 		assertTrue(user.isPresent());
@@ -114,15 +112,14 @@ public class UsersImplTest {
 //		assertEquals(passEncoder.encode(PASSWORD),user.getPassword());
 //	}
 	
-	@SuppressWarnings("unchecked")
 	@Test
 	public void test_transaction() {
 		int transactionsBefore = 0, transactionsAfter = 1;
 		Mockito.when(userDao.findByUsername(USERNAME[0]))
-			.thenReturn(Optional.of(new User(ID[0],USERNAME[0],EMAIL[0],PASSWORD,transactionsBefore)),
-					Optional.of(new User(ID[0],USERNAME[0],EMAIL[0],PASSWORD,transactionsAfter)));
+			.thenReturn(Optional.of(new User(ID[0],USERNAME[0],EMAIL[0],PASSWORD,transactionsBefore)))
+				.thenReturn(Optional.of(new User(ID[0],USERNAME[0],EMAIL[0],PASSWORD,transactionsAfter)));
 		Mockito.when(userDao.addTransaction(USERNAME[0]))
-		.thenReturn(true);
+			.thenReturn(true);
 		
 		assertEquals(transactionsBefore,users.transaction(USERNAME[0]));
 		assertTrue(users.addTransaction(USERNAME[0]));
@@ -134,7 +131,7 @@ public class UsersImplTest {
 		Mockito.when(userDao.findByUsername(USERNAME[0]))
 			.thenReturn(Optional.of(new User(ID[0],USERNAME[0],EMAIL[0],PASSWORD)));
 		Mockito.when(userDao.findByUsername(USERNAME[1]))
-		.thenReturn(Optional.empty());
+			.thenReturn(Optional.empty());
 
 		assertFalse(users.uniqueUser(USERNAME[0]));
 		assertTrue(users.uniqueUser(USERNAME[1]));
@@ -145,7 +142,7 @@ public class UsersImplTest {
 		Mockito.when(userDao.findByEmail(EMAIL[0]))
 			.thenReturn(Optional.of(new User(ID[0],USERNAME[0],EMAIL[0],PASSWORD)));
 		Mockito.when(userDao.findByEmail(EMAIL[1]))
-		.thenReturn(Optional.empty());
+			.thenReturn(Optional.empty());
 
 		assertFalse(users.uniqueEmail(EMAIL[0]));
 		assertTrue(users.uniqueEmail(EMAIL[1]));
