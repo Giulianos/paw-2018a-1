@@ -5,6 +5,13 @@
 
 <%@ include file="../globals.jsp" %>
 
+<script>
+  function deleteConfirmation()
+  {
+    return confirm("<spring:message code="erase.confirm.publ"/>");
+  }
+</script>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -69,7 +76,7 @@
                     </form>
                   </c:when>
                   <c:otherwise>
-                    <form method="POST" action="${siteRootDir}/profile/publications/erase">
+                    <form method="POST" action="${siteRootDir}/profile/publications/erase" onsubmit="return deleteConfirmation();">
                       <input type="hidden" name="publication_id" value="${publ.id}" />
                       <input type="image" src="${siteRootDir}/img/trash.svg" height="18" border="0" alt="Submit" />
                     </form>

@@ -74,7 +74,7 @@
 
 	            <div class="row bg-white border border-secondary rounded ml-2 mr-2 mb-2">
 	              <div class="column">
-	                <img height="180" width="286" src="${publication.image}" />
+	                <img height="180" width="286" src="${publication.image}" class="p-2"/>
 	              </div>
 	              <div class="column py-2 px-3">
 	                <h3><c:out value="${publication.description}" /></h3>

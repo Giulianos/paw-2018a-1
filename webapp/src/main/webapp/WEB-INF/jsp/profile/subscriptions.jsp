@@ -5,6 +5,13 @@
 
 <%@ include file="../globals.jsp" %>
 
+<script>
+  function deleteConfirmation()
+  {
+    return confirm("<spring:message code="erase.confirm.sub"/>");
+  }
+</script>
+
 <c:set var="person"><img src="${siteRootDir}/img/person.svg" height="15" border="0"/></c:set>
 
 <!doctype html>
@@ -54,7 +61,7 @@
                   <td><c:out value="${subs.publication.remainingQuantity}"/></td> <!-- remaning quantity -->
                   <td><c:out value="${subs.publication.price}"/></td>
                   <td>
-                    <form method="POST" action="subscriptions/erase">
+                    <form method="POST" action="subscriptions/erase" onsubmit="return deleteConfirmation();">
                       <input type="hidden" name="publication_id" value="${subs.publication.id}" />
                       <input type="image" src="${siteRootDir}/img/trash.svg" height="18" border="0" alt="Submit" />
                     </form>
@@ -70,7 +77,7 @@
                   <td>
                     <div class="row">
                       <div class="col-sm">
-                        <form method="POST" action="subscriptions/erase">
+                        <form method="POST" action="subscriptions/erase" onsubmit="return deleteConfirmation();">
                           <input type="hidden" name="publication_id" value="${subs.publication.id}" />
                           <input type="image" src="${siteRootDir}/img/trash.svg" height="18" border="0" alt="Submit" />
                         </form>
