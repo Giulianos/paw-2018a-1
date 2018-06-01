@@ -1,5 +1,6 @@
 package ar.edu.itba.paw.services;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,6 +50,23 @@ public class PublicationsImpl implements Publications {
 	@Override
 	public List<Publication> findByDescription(String description, boolean checkSupervisor) {
 		return publicationDao.findByDescription(description, checkSupervisor);
+	}
+	
+	@Override
+	public List<Publication> findByDescription(String description, boolean checkSupervisor, boolean checkRemainingQuantity) {
+		List<Publication> results = findByDescription(description, checkSupervisor);
+		
+		if (checkRemainingQuantity) {
+			List<Publication> needToRemove = new LinkedList<>();
+			
+			for(Publication publication : results) {
+				if(remainingQuantity(publication.getId()) == 0)
+					needToRemove.add(publication);
+				publication.setRemainingQuantity(remainingQuantity(publication.getId()));
+			}
+			results.removeAll(needToRemove);
+		}
+		return results;
 	}
 
 	@Override

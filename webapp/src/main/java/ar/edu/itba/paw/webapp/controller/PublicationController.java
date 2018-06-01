@@ -1,12 +1,12 @@
 package ar.edu.itba.paw.webapp.controller;
 
-import java.lang.ProcessBuilder.Redirect;
-import java.util.LinkedList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -29,6 +29,8 @@ import ar.edu.itba.paw.webapp.form.OrderForm;
 
 @Controller
 public class PublicationController {
+    @Autowired
+    private MessageSource messageSource;
 	@Autowired
 	private Publications ps;
 	@Autowired
@@ -39,8 +41,7 @@ public class PublicationController {
 	private IAuthenticationFacade auth;
 	@Autowired
 	private Emails emails;
-	
-	
+
 	private void includeUserTransactions(ModelMap model) {	
 		if (auth.getAuthentication().isAuthenticated()) {
 			String user = auth.getAuthentication().getName();
@@ -49,7 +50,7 @@ public class PublicationController {
 	}
 	
 	@RequestMapping(value = "/order", method = { RequestMethod.POST })
-	public ModelAndView create(@Valid @ModelAttribute("orderForm") final OrderForm form, final BindingResult errors, ModelMap model) {
+	public ModelAndView create(@Valid @ModelAttribute("orderForm") final OrderForm form, final BindingResult errors, HttpServletRequest request, ModelMap model) {
 		boolean isValid = validOrder(form,model);
 
 		if (errors.hasErrors() || !isValid) {
@@ -65,15 +66,16 @@ public class PublicationController {
 		boolean confirmed = ps.confirm(Long.parseLong(form.getPublicationId()));
 		
 		if(confirmed) {
-			String mailContent = "Gumpu\n\nOne of your orders reached the quantity goal! Yey! Go to Gumpu to check your subscriptions.\n"
-								+"Una de tus ordenes ha llegado al objetivo! Genial! Chequea tus suscripciones en Gumpu.";
+			String mailContent = messageSource.getMessage("mail.order.content", null, request.getLocale());
+			String mailNotification = messageSource.getMessage("mail.notification", null, request.getLocale());
+			
 			Publication pub = ps.findById(order.getPublication_id()).get();
 			ps.loadPublicationSubscribers(pub);
 			pub.setSupervisorUser(users.findByUsername(pub.getSupervisor()).get());
 			for(User u : pub.getSubscribers()) {
-				emails.sendEmail(u.getEmail(), "Gumpu - Notification", mailContent);
+				emails.sendEmail(u.getEmail(), mailNotification, mailContent);
 			}
-			emails.sendEmail(pub.getSupervisorUser().getEmail(), "Gumpu - Notification", mailContent);
+			emails.sendEmail(pub.getSupervisorUser().getEmail(), mailNotification, mailContent);
 			return new ModelAndView("redirect:/profile/subscriptions-finalized");
 		}
 		
@@ -89,34 +91,20 @@ public class PublicationController {
 	
 	@RequestMapping(value = "/search/{keywords}")
 	public ModelAndView search(@Valid @ModelAttribute("orderForm") final OrderForm form, @PathVariable("keywords") String keywords) {
-		List<Publication> results = ps.findByDescription(keywords, true);
-		List<Publication> needToRemove = new LinkedList<>();
+
 		final ModelAndView mav = new ModelAndView("search");
-		for(Publication publication : results) {
-			if(ps.remainingQuantity(publication.getId()) == 0)
-				needToRemove.add(publication);
-			publication.setRemainingQuantity(ps.remainingQuantity(publication.getId()));
-		}
-		results.removeAll(needToRemove);
+		List<Publication> results = ps.findByDescription(keywords, true, true);
 		mav.addObject("resultList", results);
 		mav.addObject("searchedKeyword", keywords);
-		
+
 		return mav;
 	}
 	
 	@RequestMapping(value = "/search", method = { RequestMethod.GET })
 	public ModelAndView search(@RequestParam(value="keywords", required=false) String keywords, @Valid @ModelAttribute("orderForm") final OrderForm form) {
 		if(keywords==null) {
-			List<Publication> results = ps.findByDescription("", true);
-			List<Publication> needToRemove = new LinkedList<>();
 			final ModelAndView mav = new ModelAndView("search");
-			for(Publication publication : results) {
-				if(ps.remainingQuantity(publication.getId()) == 0)
-					needToRemove.add(publication);
-				publication.setRemainingQuantity(ps.remainingQuantity(publication.getId()));
-			}
-			
-			results.removeAll(needToRemove);
+			List<Publication> results = ps.findByDescription("", true, true);
 			mav.addObject("resultList", results);
 			return mav;
 		}

@@ -3,9 +3,11 @@ package ar.edu.itba.paw.webapp.controller;
 import java.util.Arrays;
 import java.util.Collection;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -32,7 +34,8 @@ import ar.edu.itba.paw.webapp.form.UserForm;
 
 @Controller
 public class RegisterController {
-	
+    @Autowired
+    private MessageSource messageSource;
 	@Autowired
 	private Users us;
 	@Autowired
@@ -58,7 +61,7 @@ public class RegisterController {
 	}
 
 	@RequestMapping(value = "/register", method = { RequestMethod.POST })
-	public ModelAndView register(@Valid @ModelAttribute("registerForm") final UserForm form, final BindingResult errors, ModelMap model) {
+	public ModelAndView register(@Valid @ModelAttribute("registerForm") final UserForm form, final BindingResult errors, HttpServletRequest request, ModelMap model) {
 		boolean isValid = validUser(form,model);
 
 		if (errors.hasErrors() || !isValid) {
@@ -69,9 +72,10 @@ public class RegisterController {
 		
 		final User u = us.create(form.getUsername(), form.getEmail(), form.getPassword());
 		authWithoutPassword(u);
-		String mailContent = "Gumpu agradece tu confianza! Te invitamos a disfrutar de nuestra plataforma!\n"
-							+"Gumpu thanks you for trusting! We invite you to enjoy our platform!";
-		emails.sendEmail(u.getEmail(), "Welcome to Gumpu! Bienvenido a Gumpu!", mailContent);
+		String mailContent = messageSource.getMessage("mail.register.content", null, request.getLocale());
+		String mailTitle = messageSource.getMessage("mail.register.title", null, request.getLocale());
+		
+		emails.sendEmail(u.getEmail(), mailTitle, mailContent);
 		return new ModelAndView("redirect:/profile");
 	}
 	

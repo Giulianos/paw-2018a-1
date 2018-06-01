@@ -48,6 +48,21 @@ public interface Publications {
 	List<Publication> findByDescription(String description, boolean checkSupervisor);
 	
 	/**
+	 * Finds publications that contain or have the exact provided description.
+	 * 
+	 * Only returns the publications in which supervisor is not null and/or the remaining
+	 * quantity is higher than zero.
+	 * 
+	 * @param description The description to match.
+	 * @param checkSupervisor Check for existing supervisor.
+	 * @param checkRemainingQuantity Check for publications with remaining quantities.
+	 * 
+	 * @return The publications with the provided description.
+	 */
+
+	List<Publication> findByDescription(String description, boolean checkSupervisor, boolean checkRemainingQuantity);
+	
+	/**
 	 * Finds publications that are between the specified price range.
 	 * 
 	 * @param minPrice The minimum price to look for.
