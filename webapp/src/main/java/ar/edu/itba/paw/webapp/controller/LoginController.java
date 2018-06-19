@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.paw.interfaces.Users;
@@ -16,7 +17,12 @@ public class LoginController {
 	@Autowired
 	private Users us;
 	
-	@RequestMapping("/login")
+	@RequestMapping(value = "/login")
+	public ModelAndView login() {
+		return new ModelAndView("login");
+	}
+	
+	@RequestMapping(value = "/login", method = { RequestMethod.POST })
 	public ModelAndView login(HttpServletRequest request, ModelMap model) {
 		if (!us.findByUsername(request.getParameter("j_username")).isPresent()) {
 			model.addAttribute("invalid_loginUser", true);
