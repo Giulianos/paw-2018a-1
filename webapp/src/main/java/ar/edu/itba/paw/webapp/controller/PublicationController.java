@@ -54,7 +54,6 @@ public class PublicationController {
 			return modelAndView;
 		}
 		
-		
 		String user = auth.getAuthentication().getName();
 		
 		Order order = ord.create(Long.parseLong(form.getPublicationId()), user, Integer.parseInt(form.getQuantity()));
@@ -103,7 +102,7 @@ public class PublicationController {
 
 		List<Publication> results = ps.findByDescription(keywords, index, true, true);
 
-		if (results.isEmpty() && index > 0) {
+		if (results.isEmpty() && index > 0) { // There are no results starting with the specified index.
 			return new ModelAndView("redirect:/search/" + keywords);
 		}
 
@@ -111,6 +110,7 @@ public class PublicationController {
 
 		mav.addObject("resultList", paginationConfig(index, results, mav));
 		mav.addObject("searchedKeyword", keywords);
+		mav.addObject("paginationPrefix", keywords);
 
 		return mav;
 	}

@@ -97,5 +97,6 @@
         </tbody>
       </table>
     </div>
+    <%@ include file="../pagination.jsp" %>
   </body>
 </html>

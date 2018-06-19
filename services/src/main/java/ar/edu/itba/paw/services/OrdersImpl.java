@@ -22,6 +22,16 @@ public class OrdersImpl implements Orders {
 	}
 
 	@Override
+	public List<Order> findBySubscriber(String username, boolean withFinalized) {
+		List<Order> subscriptions = findBySubscriber(username);
+		
+		if (!withFinalized) {
+			subscriptions.removeAll(findFinalizedBySubscriber(username));
+		}
+		return subscriptions;
+	}
+
+	@Override
 	public List<Order> findByPublicationId(long publication_id) {
 		return orderDao.findByPublicationId(publication_id);
 	}

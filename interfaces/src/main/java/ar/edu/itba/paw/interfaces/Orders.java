@@ -17,6 +17,18 @@ public interface Orders {
 	List<Order> findBySubscriber(final String username);
 	
 	/**
+	 * Finds orders with the provided subscriber.
+	 * 
+	 * @param username The username of the subscriber.
+	 * 
+	 * @param withFinalized True if orders for finalized publications should be included.
+	 * 
+	 * @return The orders with the provided subscriber.
+	 */
+	
+	List<Order> findBySubscriber(final String username, final boolean withFinalized);
+	
+	/**
 	 * Finds the orders with the provided publication id.
 	 * 
 	 * @param publication_id The id of the publication.

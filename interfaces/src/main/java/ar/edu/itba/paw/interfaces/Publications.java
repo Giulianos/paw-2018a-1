@@ -26,6 +26,16 @@ public interface Publications {
 	List<Publication> findBySupervisor(final String username);
 	
 	/**
+	 * Finds publications with the provided supervisor.
+	 * 
+	 * @param username The username of the supervisor.
+	 * @param fromIndex Index of the 1st element to look for. Index of the 1st possible element if zero.
+	 * @return The publications with the provided supervisor.
+	 */
+	
+	List<Publication> findBySupervisor(final String username, int fromIndex);
+	
+	/**
 	 * Finds publications that contain or have the exact provided description.
 	 * 
 	 * @param description The description to match.

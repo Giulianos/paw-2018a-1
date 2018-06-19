@@ -89,6 +89,7 @@
         </tbody>
       </table>
     </div>
+    <%@ include file="../pagination.jsp" %>
     <%@ include file="new-publication-modal.jsp" %>
   </body>
 </html>

@@ -52,5 +52,6 @@
         <%@ include file="contact-modal.jsp" %>
       </c:forEach>
     </div>
+    <%@ include file="../pagination.jsp" %>
   </body>
 </html>
