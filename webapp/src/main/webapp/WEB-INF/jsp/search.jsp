@@ -95,6 +95,7 @@
           </div>
         </div>
       </div>
+      <%@ include file="pubPagination.jsp" %>
     </div>
   </body>
 </html>

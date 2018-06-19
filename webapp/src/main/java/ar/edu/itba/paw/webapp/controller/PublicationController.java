@@ -1,6 +1,7 @@
 package ar.edu.itba.paw.webapp.controller;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -29,6 +30,8 @@ import ar.edu.itba.paw.webapp.form.OrderForm;
 
 @Controller
 public class PublicationController {
+	private final static int PAGE_SIZE = 5;
+	private final static int MAX_PAGE_LINKS = 10;
     @Autowired
     private MessageSource messageSource;
 	@Autowired
@@ -41,13 +44,6 @@ public class PublicationController {
 	private IAuthenticationFacade auth;
 	@Autowired
 	private Emails emails;
-
-	private void includeUserTransactions(ModelMap model) {	
-		if (auth.getAuthentication().isAuthenticated()) {
-			String user = auth.getAuthentication().getName();
-			model.addAttribute("publications", ps.findBySupervisor(user));
-		}
-	}
 	
 	@RequestMapping(value = "/order", method = { RequestMethod.POST })
 	public ModelAndView create(@Valid @ModelAttribute("orderForm") final OrderForm form, final BindingResult errors, HttpServletRequest request, ModelMap model) {
@@ -64,7 +60,7 @@ public class PublicationController {
 		Order order = ord.create(Long.parseLong(form.getPublicationId()), user, Integer.parseInt(form.getQuantity()));
 		
 		boolean confirmed = ps.confirm(Long.parseLong(form.getPublicationId()));
-		
+
 		if(confirmed) {
 			String mailContent = messageSource.getMessage("mail.order.content", null, request.getLocale());
 			String mailNotification = messageSource.getMessage("mail.notification", null, request.getLocale());
@@ -78,23 +74,42 @@ public class PublicationController {
 			emails.sendEmail(pub.getSupervisorUser().getEmail(), mailNotification, mailContent);
 			return new ModelAndView("redirect:/profile/subscriptions-finalized");
 		}
-		
+
 		return new ModelAndView("redirect:/profile/subscriptions");
 	}
-	
+
 	public boolean validOrder(OrderForm form, ModelMap model) {
 		if(Long.parseLong(form.getQuantity()) > ps.remainingQuantity(Long.parseLong(form.getPublicationId())))
 			return false;
 		
 		return true;
 	}
-	
+
 	@RequestMapping(value = "/search/{keywords}")
 	public ModelAndView search(@Valid @ModelAttribute("orderForm") final OrderForm form, @PathVariable("keywords") String keywords) {
+		int index = 0;
+		String[] myStrings = Pattern.compile("(^|&)start=").split(keywords);
+		keywords = myStrings[0]; // I remove the index part from keywords.
+
+		// If myStrings got more than 1 element it means the "&start=" delimiter was found.
+		if (myStrings.length > 1) {
+			if (Pattern.matches("([2-9]|[1-9][0-9]+)", myStrings[1])) {
+				index = Integer.parseInt(myStrings[1]) - 1; // Index displayed in page differs by 1 from array index.
+			} else {
+				// If the index is invalid I go to the default search page.
+				return new ModelAndView("redirect:/search/" + keywords);
+			}
+		}
+
+		List<Publication> results = ps.findByDescription(keywords, index, true, true);
+
+		if (results.isEmpty() && index > 0) {
+			return new ModelAndView("redirect:/search/" + keywords);
+		}
 
 		final ModelAndView mav = new ModelAndView("search");
-		List<Publication> results = ps.findByDescription(keywords, true, true);
-		mav.addObject("resultList", results);
+
+		mav.addObject("resultList", paginationConfig(index, results, mav));
 		mav.addObject("searchedKeyword", keywords);
 
 		return mav;
@@ -105,7 +120,7 @@ public class PublicationController {
 		if(keywords==null) {
 			final ModelAndView mav = new ModelAndView("search");
 			List<Publication> results = ps.findByDescription("", true, true);
-			mav.addObject("resultList", results);
+			mav.addObject("resultList", paginationConfig(0, results, mav));
 			return mav;
 		}
 		return new ModelAndView("redirect:/search/" + keywords);
@@ -159,5 +174,43 @@ public class PublicationController {
 		ps.delete(publication_id);
 		
 		return new ModelAndView("redirect:/profile/publications");
+	}
+	
+	public List<Publication> paginationConfig (int index, List<Publication> results, final ModelAndView mav) {
+		int totalPublications = results.size() + index;
+
+		if (results.size() > PAGE_SIZE) { // I only display up to the number of publications of 1 page.
+			results = results.subList(0, PAGE_SIZE);
+		}
+		
+		if (totalPublications > PAGE_SIZE) { // There are at least 2 pages.
+			mav.addObject("pages", true);
+			
+			int first, last, currentPage = (index/PAGE_SIZE) + 1;
+			int maxPage = ((totalPublications-1)/PAGE_SIZE) + 1;
+			
+			mav.addObject("currentPage", currentPage);
+			
+			if (currentPage <= (MAX_PAGE_LINKS/2)) {
+				first = 1;
+				last = (maxPage > MAX_PAGE_LINKS ? MAX_PAGE_LINKS : maxPage);
+				if (currentPage == 1) {
+					mav.addObject("prevDisable", true);
+				}
+			} else {
+				first = currentPage - (MAX_PAGE_LINKS/2);
+				int auxMaxLimit = currentPage + (MAX_PAGE_LINKS/2);
+				last = (maxPage > auxMaxLimit ? auxMaxLimit : maxPage);
+			}
+			if (currentPage == maxPage) {
+				mav.addObject("nextDisable", true);
+			}
+			mav.addObject("firstPage", first);
+			mav.addObject("lastPage", last);
+			mav.addObject("currentPageIndex", ((currentPage-1)*PAGE_SIZE)+1);
+			mav.addObject("firstPageIndex", ((first-1)*PAGE_SIZE)+1);
+			mav.addObject("step", PAGE_SIZE);
+		}
+		return results;
 	}
 }

@@ -70,6 +70,23 @@ public class PublicationsImpl implements Publications {
 	}
 
 	@Override
+	public List<Publication> findByDescription(String description, int fromIndex, boolean checkSupervisor,
+			boolean checkRemainingQuantity) {
+		List<Publication> results = findByDescription(description, checkSupervisor, checkRemainingQuantity);
+		int toIndex = results.size() - 1;
+		
+		if (fromIndex <= 0 || results.isEmpty()) {
+			return results;
+		}
+
+		if (fromIndex > toIndex) {
+			return results.subList(toIndex, toIndex); // empty list.
+		}
+
+		return results.subList(fromIndex, toIndex+1);
+	}
+
+	@Override
 	public List<Publication> findByPrice(float minPrice, float maxPrice) {
 		return publicationDao.findByPrice(minPrice,maxPrice);
 	}
@@ -158,5 +175,4 @@ public class PublicationsImpl implements Publications {
 		pub.setSubscribers(userDao.getSubscribersOfPublication(pub.getId()));
 		return false;
 	}
-
 }
