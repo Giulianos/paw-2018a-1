@@ -110,6 +110,27 @@ public class ProfileController {
 		
 		return mav;
 	}
+	
+	@RequestMapping(value = "/profile/publications", method = { RequestMethod.POST })
+	public ModelAndView createPublication(@Valid @ModelAttribute("publicationForm") final PublicationForm form, final BindingResult errors, ModelMap model) {
+		boolean isValid = validPublicationQuantity(errors,form,model);
+		
+		if (errors.hasErrors() || !isValid) {
+			// Add attribute to model to keep pop up form persistent
+			model.addAttribute("publicationErrors", true);
+			return publications(false, form, model);
+		}
+		// Add attribute to model to show success notification
+		model.addAttribute("publicationCreated", true);
+		
+		String currentUser = auth.getAuthentication().getName();
+		
+		final Publication p = ps.create(currentUser, form.getDescription(), Float.parseFloat(form.getPrice()), Integer.parseInt(form.getQuantity()), form.getImage());
+
+		ord.create(p.getId(), p.getSupervisor(), Integer.parseInt(form.getOwnerQuantity()));
+		
+		return publications(false, null, model);
+	}
 
 	@RequestMapping(value = "/profile/subscriptions&start={first}")
 	public ModelAndView subscriptions(@PathVariable("first") String first, ModelMap model) {
@@ -218,27 +239,6 @@ public class ProfileController {
 		mav.addObject("subscriptions", ordPaginationConfig("subscriptions-finalized", 0, subscriptions, mav));
 		
 		return mav;
-	}
-	
-	@RequestMapping(value = "/createPublication", method = { RequestMethod.POST })
-	public ModelAndView createPublication(@Valid @ModelAttribute("publicationForm") final PublicationForm form, final BindingResult errors, ModelMap model) {
-		boolean isValid = validPublicationQuantity(errors,form,model);
-		
-		if (errors.hasErrors() || !isValid) {
-			// Add attribute to model to keep pop up form persistent
-			model.addAttribute("publicationErrors", true);
-			return publications(false, form, model);
-		}
-		// Add attribute to model to show success notification
-		model.addAttribute("publicationCreated", true);
-		
-		String currentUser = auth.getAuthentication().getName();
-		
-		final Publication p = ps.create(currentUser, form.getDescription(), Float.parseFloat(form.getPrice()), Integer.parseInt(form.getQuantity()), form.getImage());
-
-		ord.create(p.getId(), p.getSupervisor(), Integer.parseInt(form.getOwnerQuantity()));
-		
-		return publications(false, null, model);
 	}
 	
 	private boolean validPublicationQuantity(final BindingResult errors, PublicationForm form, ModelMap model) {

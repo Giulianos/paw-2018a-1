@@ -23,7 +23,7 @@
 
       <!--          Create publication form          -->
       <div class="modal-body">
-         <c:url value="/createPublication" var="postPathPublication"/>
+         <c:url value="/profile/publications" var="postPathPublication"/>
          <form:form modelAttribute="publicationForm" action="${postPathPublication}" method="post">
           <div class="form-group">
             <label><spring:message code="description"/></label>
