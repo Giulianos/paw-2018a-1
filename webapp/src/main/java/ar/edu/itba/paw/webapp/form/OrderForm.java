@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 public class OrderForm {
 
 	@Size(min = 1, max = 6, message="{quantity.size}")
-	@Pattern(regexp = "[1-9][0-9]*", message="{publication.quantity.pattern}")
+	@Pattern(regexp = "0*[1-9][0-9]*", message="{publication.quantity.pattern}")
 	private String quantity;
 	
 	@Pattern(regexp = "[1-9][0-9]*")

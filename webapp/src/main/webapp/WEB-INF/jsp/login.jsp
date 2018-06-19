@@ -54,11 +54,17 @@
           <form action="${loginUrl}" method="post" enctype="application/x-www-form-urlencoded">
             <div class="form-group">
               <label for="username"><spring:message code="username"/></label>
-              <input class="form-control" id="username" name="j_username" type="text" placeholder="${enterUsername}"/>
+              <input class="form-control" id="username" name="j_username" type="text" value="${failed_username}" placeholder="${enterUsername}"/>
+              <c:if test="${not empty invalid_loginUser}">
+               <div role="alert" class="alert alert-danger mt-2"><spring:message code="login.invalid.user"/></div>
+              </c:if>
             </div>
             <div  class="form-group">
               <label for="password"><spring:message code="password"/></label>
               <input class="form-control" id="password" name="j_password" type="password" placeholder="${enterPassword}"/>
+              <c:if test="${not empty invalid_loginPassword}">
+               <div role="alert" class="alert alert-danger mt-2"><spring:message code="login.invalid.password"/></div>
+              </c:if>
             </div>
             <div class="form-group form-check">
               <input class="form-check-input" name="j_rememberme" type="checkbox">

@@ -13,11 +13,11 @@ public class PublicationForm {
 	private String price;
 
 	@Size(min = 1, max = 6, message="{quantity.size}")
-	@Pattern(regexp = "[1-9][0-9]*", message="{publication.quantity.pattern}")
+	@Pattern(regexp = "0*[1-9][0-9]*", message="{publication.quantity.pattern}")
 	private String quantity;
 
 	@Size(min = 1, max = 6, message="{quantity.size}")
-	@Pattern(regexp = "[1-9][0-9]*", message="{publication.quantity.pattern}")
+	@Pattern(regexp = "0*[1-9][0-9]*", message="{publication.quantity.pattern}")
 	private String ownerQuantity;
 
 	private String image;
