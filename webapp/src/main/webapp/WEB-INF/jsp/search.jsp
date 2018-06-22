@@ -68,7 +68,9 @@
       <div class="row align-items-center justify-content-center mt-3">
         <div class="col">
           <div class="border bg-light rounded px-3 pt-3 mb-3">
-
+            <c:if test="${empty resultList}">
+              <div class="mb-3"><spring:message code="no.results"/></div>
+            </c:if>
             <c:forEach var="publication" items="${resultList}">
             	<!-- Publication -->
 
