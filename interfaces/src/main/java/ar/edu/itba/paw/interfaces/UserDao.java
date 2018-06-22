@@ -16,7 +16,7 @@ public interface UserDao {
 	 * @return The user with the provided id.
 	 */
 	
-	Optional<User> findById(final long id);
+	public Optional<User> findById(final long id);
 	
 	/**
 	 * Finds the user with the provided username.
@@ -26,7 +26,7 @@ public interface UserDao {
 	 * @return The user with the provided username.
 	 */
 	
-	Optional<User> findByUsername(final String username);
+	public Optional<User> findByUsername(final String username);
 	
 	/**
 	 * Finds the user with the provided email.
@@ -36,7 +36,7 @@ public interface UserDao {
 	 * @return The user with the provided email.
 	 */
 	
-	Optional<User> findByEmail(final String email);
+	public Optional<User> findByEmail(final String email);
 	
 	/**
 	 * Return users subscribed to a provided publication
@@ -46,7 +46,7 @@ public interface UserDao {
 	 * @return A list with the subscribers
 	 */
 	
-	List<User> getSubscribersOfPublication(final long publications_id);
+	public List<User> getSubscribersOfPublication(final long publications_id);
 	
 	/**
 	 * Creates a new user.
@@ -58,7 +58,7 @@ public interface UserDao {
 	 * @return The created user.
 	 */
 	
-	User create(final String username, final String email, final String password);
+	public User create(final String username, final String email, final String password);
 	
 	/**
 	 * Increase the transactions attribute for the provided user by 1.
@@ -68,5 +68,5 @@ public interface UserDao {
 	 * @return True if it the count update was successful.
 	 */
 	
-	boolean addTransaction(final String username);
+	public boolean addTransaction(final String username);
 }

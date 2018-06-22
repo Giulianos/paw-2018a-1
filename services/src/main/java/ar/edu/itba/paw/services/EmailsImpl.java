@@ -11,7 +11,7 @@ import ar.edu.itba.paw.interfaces.EmailService;
 public class EmailsImpl implements EmailService{
 
 	@Autowired
-	public JavaMailSender emailSender;
+	private JavaMailSender emailSender;
 	
 	@Override
 	public void sendEmail(String to, String subject, String text) {

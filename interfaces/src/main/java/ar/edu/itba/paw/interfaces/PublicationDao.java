@@ -15,7 +15,7 @@ public interface PublicationDao {
 	 * @return The publication with the provided id.
 	 */
 	
-	Optional<Publication> findById(final long id);
+	public Optional<Publication> findById(final long id);
 	
 	/**
 	 * Finds publications with the provided supervisor.
@@ -25,7 +25,7 @@ public interface PublicationDao {
 	 * @return The publications with the provided supervisor.
 	 */
 	
-	List<Publication> findBySupervisor(final String username);
+	public List<Publication> findBySupervisor(final String username);
 	
 	/**
 	 * Finds publications that contain or have the exact provided description.
@@ -35,7 +35,7 @@ public interface PublicationDao {
 	 * @return The publications with the provided description.
 	 */
 	
-	List<Publication> findByDescription(final String description);
+	public List<Publication> findByDescription(final String description);
 
 	/**
 	 * Finds publications that contain or have the exact provided description.
@@ -47,7 +47,7 @@ public interface PublicationDao {
 	 * @return The publications with the provided description.
 	 */
 	
-	List<Publication> findByDescription(String description, boolean checkSupervisor);
+	public List<Publication> findByDescription(String description, boolean checkSupervisor);
 	
 	/**
 	 * Finds publications that are between the specified price range.
@@ -58,7 +58,7 @@ public interface PublicationDao {
 	 * @return The publications with the specified price range.
 	 */
 	
-	List<Publication> findByPrice(final float minPrice, final float maxPrice);
+	public List<Publication> findByPrice(final float minPrice, final float maxPrice);
 	
 	/**
 	 * Finds publications with the specified quantity.
@@ -68,7 +68,7 @@ public interface PublicationDao {
 	 * @return The publications with the specified quantity.
 	 */
 	
-	List<Publication> findByQuantity(final int quantity);
+	public List<Publication> findByQuantity(final int quantity);
 	
 	/**
 	 * Finds publications with the specified quantity range.
@@ -79,7 +79,7 @@ public interface PublicationDao {
 	 * @return The publications with the specified quantity range.
 	 */
 	
-	List<Publication> findByQuantity(final int minQuantity, final int maxQuantity);
+	public List<Publication> findByQuantity(final int minQuantity, final int maxQuantity);
 	
 	/**
 	 * Creates a new publication.
@@ -93,7 +93,7 @@ public interface PublicationDao {
 	 * @return The created user.
 	 */
 	
-	Publication create(final String supervisor, final String description, final float price, final int quantity, final String image);
+	public Publication create(final String supervisor, final String description, final float price, final int quantity, final String image);
 	
 	/**
 	 * Sets the is_confirmed attribute for the provided id.
@@ -103,7 +103,7 @@ public interface PublicationDao {
 	 * @return True if it the confirmation update was successful.
 	 */
 	
-	boolean confirm(final long id);
+	public boolean confirm(final long id);
 	
 	/**
 	 * Delete publication for the corresponding id.
@@ -113,7 +113,7 @@ public interface PublicationDao {
 	 * @return True if the deletion was successful.
 	 */
 	
-	boolean delete(final long id);
+	public boolean delete(final long id);
 	
 	/**
 	 * Sets a new supervisor for the corresponding id.
@@ -125,7 +125,7 @@ public interface PublicationDao {
 	 * @return True if the set was successful.
 	 */
 	
-	boolean setNewSupervisor (final String user, final long id);
+	public boolean setNewSupervisor (final String user, final long id);
 	
 	/**
 	 * Checks if supervisor is null for the corresponding id.
@@ -135,6 +135,6 @@ public interface PublicationDao {
 	 * @return True if the set was successful.
 	 */
 	
-	boolean hasSupervisor (final long id);
+	public boolean hasSupervisor (final long id);
 
 }

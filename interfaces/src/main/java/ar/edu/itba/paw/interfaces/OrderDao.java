@@ -14,7 +14,7 @@ public interface OrderDao {
 	 * @return The orders with the provided subscriber.
 	 */
 	
-	List<Order> findBySubscriber(final String username);
+	public List<Order> findBySubscriber(final String username);
 	
 	/**
 	 * Finds the orders with the provided publication id.
@@ -24,7 +24,7 @@ public interface OrderDao {
 	 * @return The orders with the provided publication id.
 	 */
 	
-	List<Order> findByPublicationId(final long publication_id);
+	public List<Order> findByPublicationId(final long publication_id);
 	
 	/**
 	 * Finds finalized orders with the provided subscriber.
@@ -46,7 +46,7 @@ public interface OrderDao {
 	 * @return The created order.
 	 */
 	
-	Order create(final long publication_id, final String subscriber, final int quantity);
+	public Order create(final long publication_id, final String subscriber, final int quantity);
 	
 	/**
 	 * Sets the is_confirmed attribute for the provided publication id and subscriber.
@@ -57,7 +57,7 @@ public interface OrderDao {
 	 * @return True if it the confirmation update was successful.
 	 */
 	
-	boolean confirm(final long publication_id, final String subscriber);
+	public boolean confirm(final long publication_id, final String subscriber);
 	
 	/**
 	 * Delete all orders for the corresponding publication id.
@@ -67,7 +67,7 @@ public interface OrderDao {
 	 * @return True if the deletion was successful.
 	 */
 	
-	boolean delete(final long publication_id);
+	public boolean delete(final long publication_id);
 
 	/**
 	 * Delete all orders for the corresponding publication id and subscriber.
@@ -78,5 +78,5 @@ public interface OrderDao {
 	 * @return True if the deletion was successful.
 	 */
 	
-	boolean delete(long publication_id, String subscriber);
+	public boolean delete(long publication_id, String subscriber);
 }

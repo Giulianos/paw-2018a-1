@@ -14,7 +14,7 @@ public interface UserService {
 	 * @return The user with the provided id.
 	 */
 	
-	Optional<User> findById(final long id);
+	public Optional<User> findById(final long id);
 	
 	/**
 	 * Finds the user with the provided username.
@@ -24,7 +24,7 @@ public interface UserService {
 	 * @return The user with the provided username.
 	 */
 	
-	Optional<User> findByUsername(final String username);
+	public Optional<User> findByUsername(final String username);
 	
 	/**
 	 * Finds the user with the provided email.
@@ -34,7 +34,7 @@ public interface UserService {
 	 * @return The user with the provided email.
 	 */
 	
-	Optional<User> findByEmail(final String email);
+	public Optional<User> findByEmail(final String email);
 	
 	/**
 	 * Create a new user.
@@ -46,7 +46,7 @@ public interface UserService {
 	 * @return The created user.
 	 */
 	
-	User create(String username, String email, String password);
+	public User create(String username, String email, String password);
 	
 	/**
 	 * Finds the number of transactions made by a user.
@@ -56,7 +56,7 @@ public interface UserService {
 	 * @return Number of transactions made by the user.
 	 */
 	
-	int transaction(final String username);
+	public int transaction(final String username);
 	
 	/**
 	 * Increase the transactions attribute for the provided user by 1.
@@ -66,7 +66,7 @@ public interface UserService {
 	 * @return True if it the count update was successful.
 	 */
 	
-	boolean addTransaction(final String username);
+	public boolean addTransaction(final String username);
 
 	/**
 	 * Check if the user is valid.
@@ -76,7 +76,7 @@ public interface UserService {
 	 * @return True if the user is unique.
 	 */
 	
-	boolean uniqueUser(final String username);
+	public boolean uniqueUser(final String username);
 
 	/**
 	 * Check if the email is valid.
@@ -86,5 +86,5 @@ public interface UserService {
 	 * @return True if the email is unique.
 	 */
 	
-	boolean uniqueEmail(final String email);
+	public boolean uniqueEmail(final String email);
 }

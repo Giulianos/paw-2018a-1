@@ -14,7 +14,7 @@ public interface ConfirmedOrderService {
 	 * @return The orders with the provided buyer.
 	 */
 	
-	List<ConfirmedOrder> findByBuyer(final String username);
+	public List<ConfirmedOrder> findByBuyer(final String username);
 	
 	/**
 	 * Finds the confirmed orders with the provided publication id.
@@ -24,7 +24,7 @@ public interface ConfirmedOrderService {
 	 * @return The confirmed orders with the provided publication id.
 	 */
 	
-	List<ConfirmedOrder> findByPublicationId(final long publication_id);
+	public List<ConfirmedOrder> findByPublicationId(final long publication_id);
 	
 	/**
 	 * Creates a new confirmed order.
@@ -36,7 +36,7 @@ public interface ConfirmedOrderService {
 	 * @return The created confirmed order.
 	 */
 	
-	ConfirmedOrder create(final long publication_id, final String buyer, final int quantity);
+	public ConfirmedOrder create(final long publication_id, final String buyer, final int quantity);
 	
 	/**
 	 * Sets the is_paid attribute for the provided publication id and buyer.
@@ -47,7 +47,7 @@ public interface ConfirmedOrderService {
 	 * @return True if it the confirmation update was successful.
 	 */
 	
-	boolean confirmPayment(final long publication_id, final String buyer);
+	public boolean confirmPayment(final long publication_id, final String buyer);
 	
 	/**
 	 * Sets the is_received attribute for the provided publication id and buyer.
@@ -58,7 +58,7 @@ public interface ConfirmedOrderService {
 	 * @return True if it the confirmation update was successful.
 	 */
 	
-	boolean confirmDelivery(final long publication_id, final String buyer);
+	public boolean confirmDelivery(final long publication_id, final String buyer);
 	
 	/**
 	 * Verifies if all orders for the provided publication id are paid and delivered.
@@ -68,7 +68,7 @@ public interface ConfirmedOrderService {
 	 * @return True if all orders are paid and received for the provided publication id.
 	 */
 	
-	boolean areFulfilled(final long publication_id);
+	public boolean areFulfilled(final long publication_id);
 	
 	/**
 	 * Delete all orders for the corresponding publication id.
@@ -78,5 +78,5 @@ public interface ConfirmedOrderService {
 	 * @return True if the deletion was successful.
 	 */
 	
-	boolean delete(final long publication_id);
+	public boolean delete(final long publication_id);
 }
