@@ -37,8 +37,7 @@
           <spring:message code="login"/>
         </div>
         <div class="card-body">
-          <c:url value='<spring:url value="/login" htmlEscape="true"/>' var="loginUrl" />
-          <form action="${loginUrl}" method="post" enctype="application/x-www-form-urlencoded">
+          <form action="<spring:url value="/login" htmlEscape="true"/>" method="post" enctype="application/x-www-form-urlencoded">
             <div class="form-group">
               <label for="username"><spring:message code="username"/></label>
               <input class="form-control" id="username" name="j_username" type="text" value="${failed_username}" placeholder="${enterUsername}"/>
