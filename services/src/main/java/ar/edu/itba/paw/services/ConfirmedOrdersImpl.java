@@ -7,12 +7,12 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import ar.edu.itba.paw.interfaces.ConfirmedOrderDao;
-import ar.edu.itba.paw.interfaces.ConfirmedOrders;
+import ar.edu.itba.paw.interfaces.ConfirmedOrderService;
 import ar.edu.itba.paw.model.ConfirmedOrder;
 
 @Primary
 @Service
-public class ConfirmedOrdersImpl implements ConfirmedOrders {
+public class ConfirmedOrdersImpl implements ConfirmedOrderService {
 	@Autowired
 	private ConfirmedOrderDao confirmedOrderDao;
 

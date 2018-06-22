@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import ar.edu.itba.paw.model.Publication;
 
-public interface Publications {
+public interface PublicationService {
 	
 	/**
 	 * Finds the publication with the provided id.

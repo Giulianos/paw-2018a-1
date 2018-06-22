@@ -24,10 +24,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import ar.edu.itba.paw.interfaces.Emails;
-import ar.edu.itba.paw.interfaces.Orders;
-import ar.edu.itba.paw.interfaces.Publications;
-import ar.edu.itba.paw.interfaces.Users;
+import ar.edu.itba.paw.interfaces.EmailService;
+import ar.edu.itba.paw.interfaces.OrderService;
+import ar.edu.itba.paw.interfaces.PublicationService;
+import ar.edu.itba.paw.interfaces.UserService;
 import ar.edu.itba.paw.model.User;
 import ar.edu.itba.paw.webapp.auth.IAuthenticationFacade;
 import ar.edu.itba.paw.webapp.form.UserForm;
@@ -37,17 +37,17 @@ public class RegisterController {
     @Autowired
     private MessageSource messageSource;
 	@Autowired
-	private Users us;
+	private UserService us;
 	@Autowired
-	private Publications pu;
+	private PublicationService pu;
 	@Autowired
-	private Orders ord;
+	private OrderService ord;
 	@Autowired
 	private IAuthenticationFacade auth;
 	@Autowired
 	private Validator validator;
 	@Autowired
-	private Emails emails;
+	private EmailService emails;
 	
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {

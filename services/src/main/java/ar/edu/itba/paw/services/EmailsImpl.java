@@ -5,10 +5,10 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
-import ar.edu.itba.paw.interfaces.Emails;
+import ar.edu.itba.paw.interfaces.EmailService;
 
 @Component
-public class EmailsImpl implements Emails{
+public class EmailsImpl implements EmailService{
 
 	@Autowired
 	public JavaMailSender emailSender;

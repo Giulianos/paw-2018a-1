@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import ar.edu.itba.paw.interfaces.Orders;
-import ar.edu.itba.paw.interfaces.Publications;
-import ar.edu.itba.paw.interfaces.Users;
+import ar.edu.itba.paw.interfaces.OrderService;
+import ar.edu.itba.paw.interfaces.PublicationService;
+import ar.edu.itba.paw.interfaces.UserService;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.webapp.auth.IAuthenticationFacade;
@@ -34,11 +34,11 @@ public class ProfileController {
 	private final static int MY_ORDERS_PAGE_SIZE = 5;
 	private final static int MY_ORDERS_MAX_PAGE_LINKS = 10;
 	@Autowired
-	private Publications ps;
+	private PublicationService ps;
 	@Autowired
-	private Users us;
+	private UserService us;
 	@Autowired
-	private Orders ord;
+	private OrderService ord;
 	@Autowired
 	private IAuthenticationFacade auth;
 	@Autowired

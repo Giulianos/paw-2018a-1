@@ -7,12 +7,12 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import ar.edu.itba.paw.interfaces.OrderDao;
-import ar.edu.itba.paw.interfaces.Orders;
+import ar.edu.itba.paw.interfaces.OrderService;
 import ar.edu.itba.paw.model.Order;
 
 @Primary
 @Service
-public class OrdersImpl implements Orders {
+public class OrdersImpl implements OrderService {
 	@Autowired
 	private OrderDao orderDao;
 

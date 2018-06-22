@@ -1,6 +1,6 @@
 package ar.edu.itba.paw.interfaces;
 
-public interface Emails {
+public interface EmailService {
 	
 	/**
 	 * Sends an email

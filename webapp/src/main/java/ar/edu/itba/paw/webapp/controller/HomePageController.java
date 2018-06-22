@@ -8,20 +8,20 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import ar.edu.itba.paw.interfaces.Orders;
-import ar.edu.itba.paw.interfaces.Publications;
-import ar.edu.itba.paw.interfaces.Users;
+import ar.edu.itba.paw.interfaces.OrderService;
+import ar.edu.itba.paw.interfaces.PublicationService;
+import ar.edu.itba.paw.interfaces.UserService;
 import ar.edu.itba.paw.webapp.auth.IAuthenticationFacade;
 
 @Controller
-public class HelloWorldController {
+public class HomePageController {
 	
 	@Autowired
-	private Users us;
+	private UserService us;
 	@Autowired
-	private Publications pu;
+	private PublicationService pu;
 	@Autowired
-	private Orders ord;
+	private OrderService ord;
 	@Autowired
 	private IAuthenticationFacade auth;
 	@Autowired

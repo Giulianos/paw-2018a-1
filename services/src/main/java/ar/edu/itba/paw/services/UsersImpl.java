@@ -8,12 +8,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ar.edu.itba.paw.interfaces.UserDao;
-import ar.edu.itba.paw.interfaces.Users;
+import ar.edu.itba.paw.interfaces.UserService;
 import ar.edu.itba.paw.model.User;
 
 @Primary
 @Service
-public class UsersImpl implements Users {
+public class UsersImpl implements UserService {
 	@Autowired
 	private UserDao userDao;
 	@Autowired

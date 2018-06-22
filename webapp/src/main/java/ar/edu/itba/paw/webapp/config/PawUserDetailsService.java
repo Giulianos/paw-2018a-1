@@ -12,13 +12,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import ar.edu.itba.paw.interfaces.Users;
+import ar.edu.itba.paw.interfaces.UserService;
 import ar.edu.itba.paw.model.User;
 
 @Component
 public class PawUserDetailsService implements UserDetailsService {
 	@Autowired
-	private Users us;
+	private UserService us;
 	
 	@Override
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {

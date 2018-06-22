@@ -4,7 +4,7 @@ import java.util.List;
 
 import ar.edu.itba.paw.model.ConfirmedOrder;
 
-public interface ConfirmedOrders {
+public interface ConfirmedOrderService {
 	
 	/**
 	 * Finds orders with the provided buyer.

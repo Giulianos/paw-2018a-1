@@ -4,7 +4,7 @@ import java.util.List;
 
 import ar.edu.itba.paw.model.Order;
 
-public interface Orders {
+public interface OrderService {
 	
 	/**
 	 * Finds orders with the provided subscriber.

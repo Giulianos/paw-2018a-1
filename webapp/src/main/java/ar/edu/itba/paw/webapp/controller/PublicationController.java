@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import ar.edu.itba.paw.interfaces.Emails;
-import ar.edu.itba.paw.interfaces.Orders;
-import ar.edu.itba.paw.interfaces.Publications;
-import ar.edu.itba.paw.interfaces.Users;
+import ar.edu.itba.paw.interfaces.EmailService;
+import ar.edu.itba.paw.interfaces.OrderService;
+import ar.edu.itba.paw.interfaces.PublicationService;
+import ar.edu.itba.paw.interfaces.UserService;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.model.User;
@@ -35,15 +35,15 @@ public class PublicationController {
     @Autowired
     private MessageSource messageSource;
 	@Autowired
-	private Publications ps;
+	private PublicationService ps;
 	@Autowired
-	private Orders ord;
+	private OrderService ord;
 	@Autowired
-	private Users users;
+	private UserService users;
 	@Autowired
 	private IAuthenticationFacade auth;
 	@Autowired
-	private Emails emails;
+	private EmailService emails;
 	
 	@RequestMapping(value = "/order", method = { RequestMethod.POST })
 	public ModelAndView create(@Valid @ModelAttribute("orderForm") final OrderForm form, final BindingResult errors, HttpServletRequest request, ModelMap model) {

@@ -8,27 +8,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-import ar.edu.itba.paw.interfaces.ConfirmedOrders;
-import ar.edu.itba.paw.interfaces.Orders;
+import ar.edu.itba.paw.interfaces.ConfirmedOrderService;
+import ar.edu.itba.paw.interfaces.OrderService;
 import ar.edu.itba.paw.interfaces.PublicationDao;
-import ar.edu.itba.paw.interfaces.Publications;
+import ar.edu.itba.paw.interfaces.PublicationService;
 import ar.edu.itba.paw.interfaces.UserDao;
-import ar.edu.itba.paw.interfaces.Users;
+import ar.edu.itba.paw.interfaces.UserService;
 import ar.edu.itba.paw.model.ConfirmedOrder;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
 
 @Primary
 @Service
-public class PublicationsImpl implements Publications {
+public class PublicationsImpl implements PublicationService {
 	@Autowired
 	private PublicationDao publicationDao;
 	@Autowired
-	private Orders orders;
+	private OrderService orders;
 	@Autowired
-	private ConfirmedOrders confirmedOrders;
+	private ConfirmedOrderService confirmedOrders;
 	@Autowired
-	private Users users;
+	private UserService users;
 	@Autowired
 	private UserDao userDao;
 	

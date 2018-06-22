@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import ar.edu.itba.paw.model.User;
 
-public interface Users {
+public interface UserService {
 	
 	/**
 	 * Finds the user with the provided id.
