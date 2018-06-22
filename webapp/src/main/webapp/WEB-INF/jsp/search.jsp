@@ -67,7 +67,7 @@
       </div>
       <div class="row align-items-center justify-content-center mt-3">
         <div class="col">
-          <div class="border bg-light rounded p-3">
+          <div class="border bg-light rounded px-3 pt-3 mb-3">
 
             <c:forEach var="publication" items="${resultList}">
             	<!-- Publication -->
@@ -83,19 +83,19 @@
 	                <form:form modelAttribute="orderForm" action="${siteRootDir}/order" method="post">
 	             		<form:input type="hidden" value="${publication.id}" path="publicationId" id="publicationId-${publication.id}"/>
 		                <div class="input-group input-group-sm mt-3">
-		                  <form:input onChange="checkOrderQuantity(this.value, '${publication.id}', ${publication.remainingQuantity});" type="number" class="form-control" placeholder="Cantidad" path="quantity" id="quantity-${publication.id}" />
+		                  <form:input value='1' oninput="checkOrderQuantity(this.value, '${publication.id}', ${publication.remainingQuantity});" type="number" class="form-control" placeholder="Cantidad" path="quantity" id="quantity-${publication.id}" />
 		                  <div class="input-group-append">
-		                    <button id="button-${publication.id}" disabled="true" class="btn btn-outline-secondary" type="submit"><spring:message code="order"/></button>
+		                    <button id="button-${publication.id}" class="btn btn-outline-secondary" type="submit"><spring:message code="order"/></button>
 		                  </div>
 		                </div>
 		            </form:form>
 	              </div>
 	            </div>
           	</c:forEach>
+            <%@ include file="pagination.jsp" %>
           </div>
         </div>
       </div>
-      <%@ include file="pagination.jsp" %>
     </div>
   </body>
 </html>
