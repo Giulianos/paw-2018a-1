@@ -83,21 +83,17 @@ public class PublicationController {
 		
 		return true;
 	}
-
-	@RequestMapping(value = "/search/{keywords}")
-	public ModelAndView search(@Valid @ModelAttribute("orderForm") final OrderForm form, @PathVariable("keywords") String keywords) {
+	
+	@RequestMapping(value = "/search", method = { RequestMethod.GET })
+	public ModelAndView search(@Valid @ModelAttribute("orderForm") final OrderForm form, @RequestParam(value="keywords", required=false) String keywords, @RequestParam(value="start", required=false) Integer start) {
 		int index = 0;
-		String[] myStrings = Pattern.compile("(^|&)start=").split(keywords);
-		keywords = myStrings[0]; // I remove the index part from keywords.
-
-		// If myStrings got more than 1 element it means the "&start=" delimiter was found.
-		if (myStrings.length > 1) {
-			if (Pattern.matches("([2-9]|[1-9][0-9]+)", myStrings[1])) {
-				index = Integer.parseInt(myStrings[1]) - 1; // Index displayed in page differs by 1 from array index.
-			} else {
-				// If the index is invalid I go to the default search page.
-				return new ModelAndView("redirect:/search/" + keywords);
-			}
+		
+		if(start != null) {
+			index = start - 1;
+		}
+		
+		if(keywords == null) {
+			keywords="";
 		}
 
 		List<Publication> results = ps.findByDescription(keywords, index, true, true);
@@ -113,17 +109,6 @@ public class PublicationController {
 		mav.addObject("paginationPrefix", keywords);
 
 		return mav;
-	}
-	
-	@RequestMapping(value = "/search", method = { RequestMethod.GET })
-	public ModelAndView search(@RequestParam(value="keywords", required=false) String keywords, @Valid @ModelAttribute("orderForm") final OrderForm form) {
-		if(keywords==null) {
-			final ModelAndView mav = new ModelAndView("search");
-			List<Publication> results = ps.findByDescription("", true, true);
-			mav.addObject("resultList", paginationConfig(0, results, mav));
-			return mav;
-		}
-		return new ModelAndView("redirect:/search/" + keywords);
 	}
 	
 	@RequestMapping(value = "/profile/subscriptions/supervise", method = { RequestMethod.POST })
