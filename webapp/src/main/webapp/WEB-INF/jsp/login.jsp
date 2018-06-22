@@ -24,19 +24,6 @@
 
 		<!-- Custom styles -->
     <link rel="stylesheet" href="${siteRootDir}/css/style.css">
-
-    <script>
-      function checkOrderQuantity(value, id, max) {
-        if (0 < value && value <= max) {
-          document.getElementById("button-"+id).disabled = false;
-          document.getElementById("quantity-"+id).classList.remove("is-invalid");
-        } else {
-          document.getElementById("button-"+id).disabled = true;
-          document.getElementById("quantity-"+id).classList.add("is-invalid");
-        }
-      }
-    </script>
-
     <title>Gumpu</title>
   </head>
   <body>
@@ -50,19 +37,16 @@
           <spring:message code="login"/>
         </div>
         <div class="card-body">
-          <c:url value="/login" var="loginUrl" />
+          <c:url value="${siteRootDir}/login" var="loginUrl" />
           <form action="${loginUrl}" method="post" enctype="application/x-www-form-urlencoded">
             <div class="form-group">
               <label for="username"><spring:message code="username"/></label>
               <input class="form-control" id="username" name="j_username" type="text" value="${failed_username}" placeholder="${enterUsername}"/>
-              <c:if test="${not empty invalid_loginUser}">
-               <div role="alert" class="alert alert-danger mt-2"><spring:message code="login.invalid.user"/></div>
-              </c:if>
             </div>
             <div  class="form-group">
               <label for="password"><spring:message code="password"/></label>
               <input class="form-control" id="password" name="j_password" type="password" placeholder="${enterPassword}"/>
-              <c:if test="${not empty invalid_loginPassword}">
+              <c:if test="${not empty invalid_loginPassword || not empty invalid_loginUser}">
                <div role="alert" class="alert alert-danger mt-2"><spring:message code="login.invalid.password"/></div>
               </c:if>
             </div>
@@ -72,6 +56,8 @@
             </div>
             <button type="submit" class="btn btn-gumpu"><spring:message code="login"/></button>
           </form>
+          <hr/>
+          <a href="${siteRootDir}/register" role="button" class="btn btn-outline-gumpu">Signup</a>
         </div>
       </div>
     </div>

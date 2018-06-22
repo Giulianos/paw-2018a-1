@@ -1,5 +1,5 @@
       <c:if test="${not empty pages}">
-	      <div class="row align-items-center justify-content-center">
+	      <div class="row align-items-center justify-content-center m-0">
 	        <nav aria-label="Page navigation example">
 	          <ul class="pagination">
 	            <li class="page-item">
