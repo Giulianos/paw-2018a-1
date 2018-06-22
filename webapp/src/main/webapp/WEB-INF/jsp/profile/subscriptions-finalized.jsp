@@ -27,27 +27,32 @@
 		<%@ include file="../login-modal.jsp" %>
     <div class="container">
       <h2 class="text-secondary mb-4"><spring:message code="pay.subscriptions"/></h2>
-      <table class="table table-striped table-bordered">
-        <thead>
-          <tr>
-            <th scope="col"><spring:message code="description"/></th>
-            <th scope="col"><spring:message code="ordered.quantity"/></th>
-            <th scope="col"><spring:message code="final.price"/></th>
-            <th scope="col"><spring:message code="get.contacts"/></th>
-          </tr>
-        </thead>
-        <tbody>
-          <c:forEach var="subs" items="${subscriptions}">
+      <c:if test="${empty subscriptions}">
+        <div class="mb-3"><spring:message code="no.subscriptions.ready"/></div>
+      </c:if>
+      <c:if test="${not empty subscriptions}">
+        <table class="table table-striped table-bordered">
+          <thead>
             <tr>
-              <th scope="row"><c:out value="${subs.publication.description}"/></th>
-              <td><c:out value="${subs.quantity}"/></td> <!-- quantity ordered -->
-              <td><c:out value="${subs.publication.price*subs.quantity}"/></td>
-              <td style="text-align:center;">
-                <a data-toggle="modal" data-target="#contactModal-${subs.publication_id}" param="subs"><input type="image" src='<spring:url value="/img/people.svg" htmlEscape="true"/>' height="18" border="0" alt="Submit" /></a>
+              <th scope="col"><spring:message code="description"/></th>
+              <th scope="col"><spring:message code="ordered.quantity"/></th>
+              <th scope="col"><spring:message code="final.price"/></th>
+              <th scope="col"><spring:message code="get.contacts"/></th>
             </tr>
-          </c:forEach>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <c:forEach var="subs" items="${subscriptions}">
+              <tr>
+                <th scope="row"><c:out value="${subs.publication.description}"/></th>
+                <td><c:out value="${subs.quantity}"/></td> <!-- quantity ordered -->
+                <td><c:out value="${subs.publication.price*subs.quantity}"/></td>
+                <td style="text-align:center;">
+                  <a data-toggle="modal" data-target="#contactModal-${subs.publication_id}" param="subs"><input type="image" src='<spring:url value="/img/people.svg" htmlEscape="true"/>' height="18" border="0" alt="Submit" /></a>
+              </tr>
+            </c:forEach>
+          </tbody>
+        </table>
+      </c:if>
       <c:forEach var="subs" items="${subscriptions}">
         <%@ include file="contact-modal.jsp" %>
       </c:forEach>

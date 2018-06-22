@@ -41,61 +41,66 @@
           <spring:message code="no.supervisor.warning" arguments="${person}"/>
         </div>
       </c:if>
-      <table class="table table-striped table-bordered">
-        <thead>
-          <tr>
-            <th scope="col"><spring:message code="description"/></th>
-            <th scope="col"><spring:message code="ordered.quantity"/></th>
-            <th scope="col"><spring:message code="remaining.quantity"/></th>
-            <th scope="col"><spring:message code="unit.price"/></th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <c:forEach var="subs" items="${subscriptions}">
-            <c:choose>
-              <c:when test="${not empty subs.publication.supervisor}">
-                <tr>
-                  <th scope="row"><c:out value="${subs.publication.description}"/></th>
-                  <td><c:out value="${subs.quantity}"/></td> <!-- quantity ordered -->
-                  <td><c:out value="${subs.publication.remainingQuantity}"/></td> <!-- remaning quantity -->
-                  <td><c:out value="${subs.publication.price}"/></td>
-                  <td>
-                    <form method="POST" action="subscriptions/erase" onsubmit="return deleteConfirmation();">
-                      <input type="hidden" name="publication_id" value="${subs.publication.id}" />
-                      <input type="image" src='<spring:url value="/img/trash.svg" htmlEscape="true"/>' height="18" border="0" alt="Submit" />
-                    </form>
-                  </td>
-                </tr>
-              </c:when>
-              <c:otherwise>
-                <tr class="table-warning">
-                  <th scope="row"><c:out value="${subs.publication.description}"/></th>
-                  <td><c:out value="${subs.quantity}"/></td> <!-- quantity ordered -->
-                  <td><c:out value="${subs.publication.remainingQuantity}"/></td> <!-- remaning quantity -->
-                  <td><c:out value="${subs.publication.price}"/></td>
-                  <td>
-                    <div class="row">
-                      <div class="col-sm">
-                        <form method="POST" action="subscriptions/erase" onsubmit="return deleteConfirmation();">
-                          <input type="hidden" name="publication_id" value="${subs.publication.id}" />
-                          <input type="image" src='<spring:url value="/img/trash.svg" htmlEscape="true"/>' height="18" border="0" alt="Submit" />
-                        </form>
+      <c:if test="${empty subscriptions}">
+        <div class="mb-3"><spring:message code="no.subscriptions"/></div>
+      </c:if>
+      <c:if test="${not empty subscriptions}">
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th scope="col"><spring:message code="description"/></th>
+              <th scope="col"><spring:message code="ordered.quantity"/></th>
+              <th scope="col"><spring:message code="remaining.quantity"/></th>
+              <th scope="col"><spring:message code="unit.price"/></th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <c:forEach var="subs" items="${subscriptions}">
+              <c:choose>
+                <c:when test="${not empty subs.publication.supervisor}">
+                  <tr>
+                    <th scope="row"><c:out value="${subs.publication.description}"/></th>
+                    <td><c:out value="${subs.quantity}"/></td> <!-- quantity ordered -->
+                    <td><c:out value="${subs.publication.remainingQuantity}"/></td> <!-- remaning quantity -->
+                    <td><c:out value="${subs.publication.price}"/></td>
+                    <td>
+                      <form method="POST" action="subscriptions/erase" onsubmit="return deleteConfirmation();">
+                        <input type="hidden" name="publication_id" value="${subs.publication.id}" />
+                        <input type="image" src='<spring:url value="/img/trash.svg" htmlEscape="true"/>' height="18" border="0" alt="Submit" />
+                      </form>
+                    </td>
+                  </tr>
+                </c:when>
+                <c:otherwise>
+                  <tr class="table-warning">
+                    <th scope="row"><c:out value="${subs.publication.description}"/></th>
+                    <td><c:out value="${subs.quantity}"/></td> <!-- quantity ordered -->
+                    <td><c:out value="${subs.publication.remainingQuantity}"/></td> <!-- remaning quantity -->
+                    <td><c:out value="${subs.publication.price}"/></td>
+                    <td>
+                      <div class="row">
+                        <div class="col-sm">
+                          <form method="POST" action="subscriptions/erase" onsubmit="return deleteConfirmation();">
+                            <input type="hidden" name="publication_id" value="${subs.publication.id}" />
+                            <input type="image" src='<spring:url value="/img/trash.svg" htmlEscape="true"/>' height="18" border="0" alt="Submit" />
+                          </form>
+                        </div>
+                        <div class="col-sm">
+                          <form method="POST" action="subscriptions/supervise">
+                            <input type="hidden" name="publication_id" value="${subs.publication.id}" />
+                            <input type="image" src='<spring:url value="/img/person.svg" htmlEscape="true"/>' height="18" border="0" alt="Submit" />
+                          </form>
+                        </div>
                       </div>
-                      <div class="col-sm">
-                        <form method="POST" action="subscriptions/supervise">
-                          <input type="hidden" name="publication_id" value="${subs.publication.id}" />
-                          <input type="image" src='<spring:url value="/img/person.svg" htmlEscape="true"/>' height="18" border="0" alt="Submit" />
-                        </form>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              </c:otherwise>
-            </c:choose>
-          </c:forEach>
-        </tbody>
-      </table>
+                    </td>
+                  </tr>
+                </c:otherwise>
+              </c:choose>
+            </c:forEach>
+          </tbody>
+        </table>
+      </c:if>
     </div>
     <%@ include file="../pagination.jsp" %>
   </body>
