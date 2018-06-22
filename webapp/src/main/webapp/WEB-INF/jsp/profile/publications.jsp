@@ -3,7 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<%@ include file="../globals.jsp" %>
+
 
 <script>
   function deleteConfirmation()
@@ -20,7 +20,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <link rel="stylesheet" href="${siteRootDir}/css/style.css">
+    <link rel="stylesheet" href='<spring:url value="/css/style.css" htmlEscape="true"/>'>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -28,7 +28,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
     <!-- Image tools for publication create -->
-    <script src="${siteRootDir}/js/image-tools.js"></script>
+    <script src='<spring:url value="/js/image-tools.js" htmlEscape="true"/>'></script>
 
     <title>Gumpu</title>
   </head>
@@ -70,15 +70,15 @@
               <td style="text-align:center;">
                 <c:choose>
                   <c:when test="${publ.remainingQuantity == 0}">
-                    <form method="POST" action="${siteRootDir}/profile/publications/check">
+                    <form method="POST" action='<spring:url value="/profile/publications/check" htmlEscape="true"/>'>
                       <input type="hidden" name="publication_id" value="${publ.id}" />
-                      <input type="image" src="${siteRootDir}/img/circle-check.svg" height="18" border="0" alt="Submit" />
+                      <input type="image" src='<spring:url value="/img/circle-check.svg" htmlEscape="true"/>' height="18" border="0" alt="Submit" />
                     </form>
                   </c:when>
                   <c:otherwise>
-                    <form method="POST" action="${siteRootDir}/profile/publications/erase" onsubmit="return deleteConfirmation();">
+                    <form method="POST" action='<spring:url value="/profile/publications/erase" htmlEscape="true"/>' onsubmit="return deleteConfirmation();">
                       <input type="hidden" name="publication_id" value="${publ.id}" />
-                      <input type="image" src="${siteRootDir}/img/trash.svg" height="18" border="0" alt="Submit" />
+                      <input type="image" src='<spring:url value="/img/trash.svg" htmlEscape="true"/>' height="18" border="0" alt="Submit" />
                     </form>
                   </c:otherwise>
                 </c:choose>

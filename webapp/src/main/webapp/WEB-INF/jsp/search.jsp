@@ -3,7 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<%@ include file="globals.jsp" %>
+
 
 <c:set var="searchPlaceholder"><spring:message code="search.what"/></c:set>
 
@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
 		<!-- Custom styles -->
-    <link rel="stylesheet" href="${siteRootDir}/css/style.css">
+    <link rel="stylesheet" href='<spring:url value="/css/style.css" htmlEscape="true"/>'>
 
     <script>
       function checkOrderQuantity(value, id, max) {
@@ -50,11 +50,11 @@
               <h2 class="mb-3"><spring:message code="search"/></h2>
             </div>
             <div class="col-sm">
-              <a class="btn btn-outline-gumpu ml-5 float-right" href="${siteRootDir}/profile/publications?newModal=true"><spring:message code="publication.create"/></a>
+              <a class="btn btn-outline-gumpu ml-5 float-right" href='<spring:url value="/profile/publications?newModal=true" htmlEscape="true"/>'><spring:message code="publication.create"/></a>
             </div>
           </div>
           <div class="border bg-light rounded p-3">
-            <form method="get" action="${siteRootDir}/search">
+            <form method="get" action='<spring:url value="/search" htmlEscape="true"/>'>
               <div class="input-group mb-3">
                     <input type="text" value='<c:out value="${searchedKeyword}" />' class="form-control" name="keywords" placeholder="${searchPlaceholder}"/>
                 <div class="input-group-append">
@@ -78,9 +78,9 @@
 	              </div>
 	              <div class="column py-2 px-3">
 	                <h3><c:out value="${publication.description}" /></h3>
-	                <span class="mt-3"><img height="18" src="${siteRootDir}/img/dollar.svg" alt="icon name" /> ${publication.price}</span></br>
+	                <span class="mt-3"><img height="18" src='<spring:url value="/img/dollar.svg" htmlEscape="true"/>' alt="icon name" /> ${publication.price}</span></br>
 	                <span class="mt-3"><spring:message code="quantity"/></span> <span class="badge badge-pill badge-gumpu"><c:out value="${publication.remainingQuantity}" /></span></br>
-	                <form:form modelAttribute="orderForm" action="${siteRootDir}/order" method="post">
+	                <form:form modelAttribute="orderForm" action='<spring:url value="/order" htmlEscape="true"/>' method="post">
 	             		<form:input type="hidden" value="${publication.id}" path="publicationId" id="publicationId-${publication.id}"/>
 		                <div class="input-group input-group-sm mt-3">
 		                  <form:input value='1' oninput="checkOrderQuantity(this.value, '${publication.id}', ${publication.remainingQuantity});" type="number" class="form-control" placeholder="Cantidad" path="quantity" id="quantity-${publication.id}" />

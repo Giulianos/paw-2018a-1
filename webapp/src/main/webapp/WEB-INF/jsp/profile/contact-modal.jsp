@@ -36,7 +36,7 @@
 
       </div>
       <div class="modal-footer">
-        <a href="${siteRootDir}/profile/subscriptions-finalized">
+        <a href='<spring:url value="/profile/subscriptions-finalized" htmlEscape="true"/>'>
       </div>
     </div>
   </div>

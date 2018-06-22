@@ -3,7 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<%@ include file="globals.jsp" %>
+
 
 <c:set var="enterUsername"><spring:message code="enter.username"/></c:set>
 <c:set var="enterPassword"><spring:message code="enter.password"/></c:set>
@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
 		<!-- Custom styles -->
-    <link rel="stylesheet" href="${siteRootDir}/css/style.css">
+    <link rel="stylesheet" href='<spring:url value="/css/style.css" htmlEscape="true"/>'>
     <title>Gumpu</title>
   </head>
   <body>
@@ -37,7 +37,7 @@
           <spring:message code="login"/>
         </div>
         <div class="card-body">
-          <c:url value="${siteRootDir}/login" var="loginUrl" />
+          <c:url value='<spring:url value="/login" htmlEscape="true"/>' var="loginUrl" />
           <form action="${loginUrl}" method="post" enctype="application/x-www-form-urlencoded">
             <div class="form-group">
               <label for="username"><spring:message code="username"/></label>
@@ -57,7 +57,7 @@
             <button type="submit" class="btn btn-gumpu"><spring:message code="login"/></button>
           </form>
           <hr/>
-          <a href="${siteRootDir}/register" role="button" class="btn btn-outline-gumpu">Signup</a>
+          <a href='<spring:url value="/register" htmlEscape="true"/>' role="button" class="btn btn-outline-gumpu">Signup</a>
         </div>
       </div>
     </div>

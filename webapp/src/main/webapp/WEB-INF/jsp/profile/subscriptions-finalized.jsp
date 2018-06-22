@@ -3,7 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<%@ include file="../globals.jsp" %>
+
 
 <!doctype html>
 <html lang="en">
@@ -18,7 +18,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <link rel="stylesheet" href="${siteRootDir}/css/style.css">
+    <link rel="stylesheet" href='<spring:url value="/css/style.css" htmlEscape="true"/>'>
 
     <title>Gumpu</title>
   </head>
@@ -43,7 +43,7 @@
               <td><c:out value="${subs.quantity}"/></td> <!-- quantity ordered -->
               <td><c:out value="${subs.publication.price*subs.quantity}"/></td>
               <td style="text-align:center;">
-                <a data-toggle="modal" data-target="#contactModal-${subs.publication_id}" param="subs"><input type="image" src="${siteRootDir}/img/people.svg" height="18" border="0" alt="Submit" /></a>
+                <a data-toggle="modal" data-target="#contactModal-${subs.publication_id}" param="subs"><input type="image" src='<spring:url value="/img/people.svg" htmlEscape="true"/>' height="18" border="0" alt="Submit" /></a>
             </tr>
           </c:forEach>
         </tbody>

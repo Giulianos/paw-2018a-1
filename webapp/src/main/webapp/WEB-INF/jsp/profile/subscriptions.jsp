@@ -3,7 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<%@ include file="../globals.jsp" %>
+
 
 <script>
   function deleteConfirmation()
@@ -12,7 +12,7 @@
   }
 </script>
 
-<c:set var="person"><img src="${siteRootDir}/img/person.svg" height="15" border="0"/></c:set>
+<c:set var="person"><img src='<spring:url value="/img/person.svg" htmlEscape="true"/>' height="15" border="0"/></c:set>
 
 <!doctype html>
 <html lang="en">
@@ -27,7 +27,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <link rel="stylesheet" href="${siteRootDir}/css/style.css">
+    <link rel="stylesheet" href='<spring:url value="/css/style.css" htmlEscape="true"/>'>
 
     <title>Gumpu</title>
   </head>
@@ -63,7 +63,7 @@
                   <td>
                     <form method="POST" action="subscriptions/erase" onsubmit="return deleteConfirmation();">
                       <input type="hidden" name="publication_id" value="${subs.publication.id}" />
-                      <input type="image" src="${siteRootDir}/img/trash.svg" height="18" border="0" alt="Submit" />
+                      <input type="image" src='<spring:url value="/img/trash.svg" htmlEscape="true"/>' height="18" border="0" alt="Submit" />
                     </form>
                   </td>
                 </tr>
@@ -79,13 +79,13 @@
                       <div class="col-sm">
                         <form method="POST" action="subscriptions/erase" onsubmit="return deleteConfirmation();">
                           <input type="hidden" name="publication_id" value="${subs.publication.id}" />
-                          <input type="image" src="${siteRootDir}/img/trash.svg" height="18" border="0" alt="Submit" />
+                          <input type="image" src='<spring:url value="/img/trash.svg" htmlEscape="true"/>' height="18" border="0" alt="Submit" />
                         </form>
                       </div>
                       <div class="col-sm">
                         <form method="POST" action="subscriptions/supervise">
                           <input type="hidden" name="publication_id" value="${subs.publication.id}" />
-                          <input type="image" src="${siteRootDir}/img/person.svg" height="18" border="0" alt="Submit" />
+                          <input type="image" src='<spring:url value="/img/person.svg" htmlEscape="true"/>' height="18" border="0" alt="Submit" />
                         </form>
                       </div>
                     </div>
