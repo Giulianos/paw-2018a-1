@@ -25,37 +25,52 @@
   <body>
     <%@ include file="../navbar.jsp" %>
 		<%@ include file="../login-modal.jsp" %>
-    <div class="container">
-      <h2 class="text-secondary mb-4"><spring:message code="pay.subscriptions"/></h2>
-      <c:if test="${empty subscriptions}">
-        <div class="mb-3"><spring:message code="no.subscriptions.ready"/></div>
-      </c:if>
-      <c:if test="${not empty subscriptions}">
-        <table class="table table-striped table-bordered">
-          <thead>
-            <tr>
-              <th scope="col"><spring:message code="description"/></th>
-              <th scope="col"><spring:message code="ordered.quantity"/></th>
-              <th scope="col"><spring:message code="final.price"/></th>
-              <th scope="col"><spring:message code="get.contacts"/></th>
-            </tr>
-          </thead>
-          <tbody>
-            <c:forEach var="subs" items="${subscriptions}">
-              <tr>
-                <th scope="row"><c:out value="${subs.publication.description}"/></th>
-                <td><c:out value="${subs.quantity}"/></td> <!-- quantity ordered -->
-                <td><c:out value="${subs.publication.price*subs.quantity}"/></td>
-                <td style="text-align:center;">
-                  <a data-toggle="modal" data-target="#contactModal-${subs.publication_id}" param="subs"><input type="image" src='<spring:url value="/img/people.svg" htmlEscape="true"/>' height="18" border="0" alt="Submit" /></a>
-              </tr>
-            </c:forEach>
-          </tbody>
-        </table>
-      </c:if>
-      <c:forEach var="subs" items="${subscriptions}">
-        <%@ include file="contact-modal.jsp" %>
-      </c:forEach>
+    <div class="row">
+      <div class="col-2">
+        <div class="row mx-3">
+          <a href='<spring:url value="/profile/publications" htmlEscape="true"/>' class="btn btn-outline-gumpu mt-3"><spring:message code="see.my.publications"/></a>
+        </div>
+        <div class="row mx-3">
+          <a href='<spring:url value="/profile/subscriptions" htmlEscape="true"/>' class="btn btn-outline-gumpu mt-3"><spring:message code="see.my.subscriptions"/></a>
+        </div>
+        <div class="row mx-3">
+          <a href='<spring:url value="/profile/subscriptions-finalized" htmlEscape="true"/>' class="btn btn-outline-gumpu mt-3"><spring:message code="see.my.pay.subscriptions"/></a>
+        </div>
+      </div>
+      <div class="col-8">
+        <div class="container">
+          <h2 class="text-secondary mb-4"><spring:message code="pay.subscriptions"/></h2>
+          <c:if test="${empty subscriptions}">
+            <div class="mb-3"><spring:message code="no.subscriptions.ready"/></div>
+          </c:if>
+          <c:if test="${not empty subscriptions}">
+            <table class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col"><spring:message code="description"/></th>
+                  <th scope="col"><spring:message code="ordered.quantity"/></th>
+                  <th scope="col"><spring:message code="final.price"/></th>
+                  <th scope="col"><spring:message code="get.contacts"/></th>
+                </tr>
+              </thead>
+              <tbody>
+                <c:forEach var="subs" items="${subscriptions}">
+                  <tr>
+                    <th scope="row"><c:out value="${subs.publication.description}"/></th>
+                    <td><c:out value="${subs.quantity}"/></td> <!-- quantity ordered -->
+                    <td><c:out value="${subs.publication.price*subs.quantity}"/></td>
+                    <td style="text-align:center;">
+                      <a data-toggle="modal" data-target="#contactModal-${subs.publication_id}" param="subs"><input type="image" src='<spring:url value="/img/people.svg" htmlEscape="true"/>' height="18" border="0" alt="Submit" /></a>
+                  </tr>
+                </c:forEach>
+              </tbody>
+            </table>
+          </c:if>
+          <c:forEach var="subs" items="${subscriptions}">
+            <%@ include file="contact-modal.jsp" %>
+          </c:forEach>
+        </div>
+      </div>
     </div>
     <%@ include file="../pagination.jsp" %>
   </body>

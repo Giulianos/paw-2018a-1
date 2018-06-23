@@ -35,64 +35,78 @@
   <body>
     <%@ include file="../navbar.jsp" %>
 		<%@ include file="../login-modal.jsp" %>
-
-    <div class="container">
-      <c:if test="${not empty publicationCreated}">
-        <div class="alert alert-success" role="alert">
-          <spring:message code="publication.create.success"/>
+    <div class="row">
+      <div class="col-2">
+        <div class="row mx-3">
+          <a href='<spring:url value="/profile/publications" htmlEscape="true"/>' class="btn btn-outline-gumpu mt-3"><spring:message code="see.my.publications"/></a>
         </div>
-      </c:if>
-      <div class="row">
-        <div class="col-sm">
-          <h2 class="text-secondary mb-4"><spring:message code="my.publications"/></h2>
+        <div class="row mx-3">
+          <a href='<spring:url value="/profile/subscriptions" htmlEscape="true"/>' class="btn btn-outline-gumpu mt-3"><spring:message code="see.my.subscriptions"/></a>
         </div>
-        <div class="col-sm">
-          <button class="btn btn-outline-gumpu ml-5 float-right" data-toggle="modal" data-target="#publicationModal" type="button"><spring:message code="publication.create"/></button>
+        <div class="row mx-3">
+          <a href='<spring:url value="/profile/subscriptions-finalized" htmlEscape="true"/>' class="btn btn-outline-gumpu mt-3"><spring:message code="see.my.pay.subscriptions"/></a>
         </div>
       </div>
-      <c:if test="${empty publications}">
-        <div class="mb-3"><spring:message code="no.publications"/></div>
-      </c:if>
-      <c:if test="${not empty publications}">
-        <table class="table table-striped table-bordered">
-          <thead>
-            <tr>
-              <th scope="col"><spring:message code="description"/></th>
-              <th scope="col"><spring:message code="needed.quantity"/></th>
-              <th scope="col"><spring:message code="remaining.quantity"/></th>
-              <th scope="col"><spring:message code="unit.price"/></th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <c:forEach var="publ" items="${publications}">
-              <tr>
-                <th scope="row"><c:out value="${publ.description}"/></th>
-                <td><c:out value="${publ.quantity}"/></td>
-                <td><c:out value="${publ.remainingQuantity}"/></td>
-                <td><c:out value="${publ.price}"/></td>
-                <td style="text-align:center;">
-                  <c:choose>
-                    <c:when test="${publ.remainingQuantity == 0}">
-                      <form method="POST" action='<spring:url value="/profile/publications/check" htmlEscape="true"/>'>
-                        <input type="hidden" name="publication_id" value="${publ.id}" />
-                        <input type="image" src='<spring:url value="/img/circle-check.svg" htmlEscape="true"/>' height="18" border="0" alt="Submit" />
-                      </form>
-                    </c:when>
-                    <c:otherwise>
-                      <form method="POST" action='<spring:url value="/profile/publications/erase" htmlEscape="true"/>' onsubmit="return deleteConfirmation();">
-                        <input type="hidden" name="publication_id" value="${publ.id}" />
-                        <input type="image" src='<spring:url value="/img/trash.svg" htmlEscape="true"/>' height="18" border="0" alt="Submit" />
-                      </form>
-                    </c:otherwise>
-                  </c:choose>
+      <div class="col-8">
+        <div class="container">
+          <c:if test="${not empty publicationCreated}">
+            <div class="alert alert-success" role="alert">
+              <spring:message code="publication.create.success"/>
+            </div>
+          </c:if>
+          <div class="row">
+            <div class="col-sm">
+              <h2 class="text-secondary mb-4"><spring:message code="my.publications"/></h2>
+            </div>
+            <div class="col-sm">
+              <button class="btn btn-outline-gumpu ml-5 float-right" data-toggle="modal" data-target="#publicationModal" type="button"><spring:message code="publication.create"/></button>
+            </div>
+          </div>
+          <c:if test="${empty publications}">
+            <div class="mb-3"><spring:message code="no.publications"/></div>
+          </c:if>
+          <c:if test="${not empty publications}">
+            <table class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col"><spring:message code="description"/></th>
+                  <th scope="col"><spring:message code="needed.quantity"/></th>
+                  <th scope="col"><spring:message code="remaining.quantity"/></th>
+                  <th scope="col"><spring:message code="unit.price"/></th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <c:forEach var="publ" items="${publications}">
+                  <tr>
+                    <th scope="row"><c:out value="${publ.description}"/></th>
+                    <td><c:out value="${publ.quantity}"/></td>
+                    <td><c:out value="${publ.remainingQuantity}"/></td>
+                    <td><c:out value="${publ.price}"/></td>
+                    <td style="text-align:center;">
+                      <c:choose>
+                        <c:when test="${publ.remainingQuantity == 0}">
+                          <form method="POST" action='<spring:url value="/profile/publications/check" htmlEscape="true"/>'>
+                            <input type="hidden" name="publication_id" value="${publ.id}" />
+                            <input type="image" src='<spring:url value="/img/circle-check.svg" htmlEscape="true"/>' height="18" border="0" alt="Submit" />
+                          </form>
+                        </c:when>
+                        <c:otherwise>
+                          <form method="POST" action='<spring:url value="/profile/publications/erase" htmlEscape="true"/>' onsubmit="return deleteConfirmation();">
+                            <input type="hidden" name="publication_id" value="${publ.id}" />
+                            <input type="image" src='<spring:url value="/img/trash.svg" htmlEscape="true"/>' height="18" border="0" alt="Submit" />
+                          </form>
+                        </c:otherwise>
+                      </c:choose>
 
-                </td>
-              </tr>
-            </c:forEach>
-          </tbody>
-        </table>
-      </c:if>
+                    </td>
+                  </tr>
+                </c:forEach>
+              </tbody>
+            </table>
+          </c:if>
+        </div>
+      </div>
     </div>
     <%@ include file="../pagination.jsp" %>
     <%@ include file="new-publication-modal.jsp" %>
