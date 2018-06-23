@@ -1,30 +1,48 @@
 package ar.edu.itba.paw.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "orders")
 public class Order {
-
-	private final long publication_id;
-	private final String subscriber;
-	private final int quantity;
-	private final boolean confirmed;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_ordid_seq")
+	@SequenceGenerator(sequenceName = "order_ordid_seq", name = "publications_ordid_seq", allocationSize = 1)
+	@Column(name = "order_id")
+	private Long order_id;
+	
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	private Publication publication;
-	private User subscriberUser;
-
-	public Order(final long publication_id, final String subscriber, final int quantity, final boolean confirmed) {
-		this.publication_id = publication_id;
+	
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	private User subscriber;
+	
+	@Column
+	private Integer quantity;
+	
+	@Column
+	private Boolean confirmed;
+	
+	public Order(final Publication publication, final User subscriber, final int quantity, final boolean confirmed) {
+		this.publication = publication;
 		this.subscriber = subscriber;
 		this.quantity = quantity;
 		this.confirmed = confirmed;
 	}
 
-	public Order(final long publication_id, final String subscriber, final int quantity) {
-		this(publication_id,subscriber,quantity,false);
+	public Order(final Publication publication, final User subscriber, final int quantity) {
+		this(publication,subscriber,quantity,false);
 	}
 
-	public long getPublication_id() {
-		return publication_id;
-	}
-
-	public String getSubscriber() {
+	public User getSubscriber() {
 		return subscriber;
 	}
 
@@ -43,16 +61,12 @@ public class Order {
 	public Publication getPublication() {
 		return publication;
 	}
-	
-	public void setSubscriberUser(User user) {
-		this.subscriberUser = user;
-	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (publication_id ^ (publication_id >>> 32));
+		result = prime * result + (int) (publication.hashCode() ^ (publication.hashCode() >>> 32));
 		result = prime * result + ((subscriber == null) ? 0 : subscriber.hashCode());
 		return result;
 	}

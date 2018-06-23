@@ -32,9 +32,12 @@ public class PublicationJdbcDao implements PublicationDao {
 						.usingColumns("supervisor", "description", "price", "quantity", "image")
 						.usingGeneratedKeyColumns("publication_id");
 	}
+	
+	@Autowired
+	
 
 	private final static RowMapper<Publication> ROW_MAPPER =
-			(ResultSet rs, int rowNum) -> new Publication(rs.getLong("publication_id"),rs.getString("supervisor"),rs.getString("description"),rs.getFloat("price"),rs.getInt("quantity"),rs.getString("image"),rs.getBoolean("is_confirmed"));
+			(ResultSet rs, int rowNum) -> new Publication(rs.getLong("publication_id"),null,rs.getString("description"),rs.getFloat("price"),rs.getInt("quantity"),rs.getString("image"),rs.getBoolean("is_confirmed"));
 			
 	@Override
 	public Optional<Publication> findById(long id) {
@@ -87,7 +90,7 @@ public class PublicationJdbcDao implements PublicationDao {
 		
 		final Number publicationId = jdbcInsert.executeAndReturnKey(args);
 		
-		return new Publication(publicationId.longValue(),supervisor,description,price,quantity,image);
+		return new Publication(publicationId.longValue(),null,description,price,quantity,image);
 	}
 
 	@Override

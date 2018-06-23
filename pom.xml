@@ -21,6 +21,8 @@
 	<org.hsqldb.version>2.3.1</org.hsqldb.version>
 	<javax.mail.version>1.5.0-b01</javax.mail.version>
   <maven-war-plugin.version>2.6</maven-war-plugin.version>
+  <org.hibernate.version>5.1.0.Final</org.hibernate.version>
+  <org.hibernate.jpa.version>1.0.0.Final</org.hibernate.jpa.version>
   </properties>
   <modules>
     <module>webapp</module>
@@ -60,6 +62,25 @@
   </build>
   <dependencyManagement>
 	<dependencies>
+    <dependency><groupId>org.springframework</groupId>
+<artifactId>spring-orm</artifactId>
+<version>${org.springframework.version}</version>
+</dependency>
+<dependency>
+<groupId>org.hibernate</groupId>
+<artifactId>hibernate-core</artifactId>
+<version>${org.hibernate.version}</version>
+</dependency>
+<dependency>
+<groupId>org.hibernate</groupId>
+<artifactId>hibernate-entitymanager</artifactId>
+<version>${org.hibernate.version}</version>
+</dependency>
+<dependency>
+<groupId>org.hibernate.javax.persistence</groupId>
+<artifactId>hibernate-jpa-2.1-api</artifactId>
+<version>${org.hibernate.jpa.version}</version>
+</dependency>
 	<dependency>
 	<groupId>javax.mail</groupId>
 	<artifactId>mail</artifactId>
@@ -100,6 +121,11 @@
 	<groupId>org.hibernate</groupId>
 	<artifactId>hibernate-validator</artifactId>
 	<version>${org.hibernate.validator}</version>
+  <exclusions>
+<exclusion>
+<groupId>org.jboss.logging</groupId>
+<artifactId>jboss-logging</artifactId>
+</exclusion>
 	</dependency>
       <dependency>
         <groupId>org.springframework</groupId>
