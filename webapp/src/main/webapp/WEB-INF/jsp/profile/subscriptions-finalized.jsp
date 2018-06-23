@@ -34,7 +34,7 @@
           <a href='<spring:url value="/profile/subscriptions" htmlEscape="true"/>' class="btn btn-outline-gumpu mt-3"><spring:message code="see.my.subscriptions"/></a>
         </div>
         <div class="row mx-3">
-          <a href='<spring:url value="/profile/subscriptions-finalized" htmlEscape="true"/>' class="btn btn-outline-gumpu mt-3"><spring:message code="see.my.pay.subscriptions"/></a>
+          <a href='<spring:url value="/profile/subscriptions-finalized" htmlEscape="true"/>' class="btn btn-outline-gumpu mt-3 disabled"><spring:message code="see.my.pay.subscriptions"/></a>
         </div>
       </div>
       <div class="col-8">
