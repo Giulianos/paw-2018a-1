@@ -39,9 +39,9 @@
       <div class="col-2 border-right">
         <div class="container">
           <div class="btn-group-vertical">
-            <a class="btn active btn-outline-gumpu">My publications</a>
-            <a href='<spring:url value="/profile/subscriptions" htmlEscape="true"/>' class="btn btn-outline-gumpu">My subscriptions</a>
-            <a href='<spring:url value="/profile/subscriptions-finalized" htmlEscape="true"/>' class="btn btn-outline-gumpu">My finalized subscriptions</a>
+            <a class="btn active btn-outline-gumpu"><spring:message code="my.publications"/></a>
+            <a href='<spring:url value="/profile/subscriptions" htmlEscape="true"/>' class="btn btn-outline-gumpu"><spring:message code="my.subscriptions"/></a>
+            <a href='<spring:url value="/profile/subscriptions-finalized" htmlEscape="true"/>' class="btn btn-outline-gumpu"><spring:message code="my.finalized.subscriptions"/></a>
           </div>
         </div>
       </div>
