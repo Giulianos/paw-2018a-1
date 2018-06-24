@@ -35,15 +35,13 @@
     <%@ include file="../navbar.jsp" %>
 		<%@ include file="../login-modal.jsp" %>
     <div class="row">
-      <div class="col-2">
-        <div class="row mx-3">
-          <a href='<spring:url value="/profile/publications" htmlEscape="true"/>' class="btn btn-outline-gumpu mt-3"><spring:message code="see.my.publications"/></a>
-        </div>
-        <div class="row mx-3">
-          <a href='<spring:url value="/profile/subscriptions" htmlEscape="true"/>' class="btn btn-outline-gumpu mt-3 disabled"><spring:message code="see.my.subscriptions"/></a>
-        </div>
-        <div class="row mx-3">
-          <a href='<spring:url value="/profile/subscriptions-finalized" htmlEscape="true"/>' class="btn btn-outline-gumpu mt-3"><spring:message code="see.my.pay.subscriptions"/></a>
+      <div class="col-2 border-right">
+        <div class="container">
+          <div class="btn-group-vertical">
+            <a href='<spring:url value="/profile/publications" htmlEscape="true"/>' class="btn btn-outline-gumpu">My publications</a>
+            <a class="btn active btn-outline-gumpu">My subscriptions</a>
+            <a href='<spring:url value="/profile/subscriptions-finalized" htmlEscape="true"/>' class="btn btn-outline-gumpu">My finalized subscriptions</a>
+          </div>
         </div>
       </div>
       <div class="col-8">
