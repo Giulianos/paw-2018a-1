@@ -82,7 +82,8 @@
 	                <h3><c:out value="${publication.description}" /></h3>
 	                <span class="mt-3"><img height="18" src='<spring:url value="/img/dollar.svg" htmlEscape="true"/>' alt="icon name" /> ${publication.price}</span></br>
 	                <span class="mt-3"><spring:message code="quantity"/></span> <span class="badge badge-pill badge-gumpu"><c:out value="${publication.remainingQuantity}" /></span></br>
-	                <form:form modelAttribute="orderForm" action='<spring:url value="/order" htmlEscape="true"/>' method="post">
+                  <spring:url var="form_order_action" value="/order" htmlEscape="true"/>
+	                <form:form modelAttribute="orderForm" action='${form_order_action}' method="post">
 	             		<form:input type="hidden" value="${publication.id}" path="publicationId" id="publicationId-${publication.id}"/>
 		                <div class="input-group input-group-sm mt-3">
 		                  <form:input value='1' oninput="checkOrderQuantity(this.value, '${publication.id}', ${publication.remainingQuantity});" type="number" class="form-control" placeholder="Cantidad" path="quantity" id="quantity-${publication.id}" />
