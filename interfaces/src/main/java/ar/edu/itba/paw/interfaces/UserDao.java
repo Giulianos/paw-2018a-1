@@ -38,15 +38,15 @@ public interface UserDao {
 	
 	public Optional<User> findByEmail(final String email);
 	
-	/**
-	 * Return users subscribed to a provided publication
-	 * 
-	 * @param publication_id The id of the publication to get the subscribers from
-	 * 
-	 * @return A list with the subscribers
-	 */
-	
-	public List<User> getSubscribersOfPublication(final long publications_id);
+//	/**
+//	 * Return users subscribed to a provided publication
+//	 * 
+//	 * @param publication_id The id of the publication to get the subscribers from
+//	 * 
+//	 * @return A list with the subscribers
+//	 */
+//	
+//	public List<User> getSubscribersOfPublication(final long publications_id);
 	
 	/**
 	 * Creates a new user.
@@ -60,13 +60,4 @@ public interface UserDao {
 	
 	public User create(final String username, final String email, final String password);
 	
-	/**
-	 * Increase the transactions attribute for the provided user by 1.
-	 * 
-	 * @param username The name of the user.
-	 * 
-	 * @return True if it the count update was successful.
-	 */
-	
-	public boolean addTransaction(final String username);
 }

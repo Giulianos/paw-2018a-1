@@ -1,10 +1,15 @@
 package ar.edu.itba.paw.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -27,31 +32,29 @@ public class User {
 	@Column(length = 100, nullable = false)
 	private String password;
 	
-	@Column(length = 40, nullable = false)
+	@Column(length = 40, nullable = false, unique = true)
 	private String email;
 	
 	@Column(name = "reg_date")
 	@Temporal(TemporalType.DATE)
 	private String regdate;
 	
-	@Column
-	private int transactions;
+	@OneToMany(mappedBy = "subscriber")
+	private List<Order> orders = new ArrayList<>();
 	
-	public User(final long id, final String username, final String email, final String password, final String regdate, final int transactions) {
-		this.id = id;
+	public User(final String username, final String email, final String password, final String regdate) {
 		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.regdate = regdate;
-		this.transactions = transactions;
 	}
 	
-	public User(final long id, final String username, final String email, final String password) {
-		this(id,username,email,password,"",0);
+	public User(final String username, final String email, final String password) {
+		this(username,email,password,"");
 	}
-	
-	public User(final long id, final String username, final String email, final String password, final int transactions) {
-		this(id,username,email,password,"",transactions);
+
+	public User() {
+		//hibernate needs this
 	}
 
 	public long getId() {
@@ -70,11 +73,11 @@ public class User {
 		return this.password;
 	}
 	
+	public List<Order> getOrders() {
+		return this.orders;
+	}
+	
 	public String getRegdate() {
 		return this.regdate;
 	}
-	
-	public int getTransactions() {
-		return this.transactions;
-	}	
 }

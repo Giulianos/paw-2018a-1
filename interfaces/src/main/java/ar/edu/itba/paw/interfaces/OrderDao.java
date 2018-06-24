@@ -27,16 +27,6 @@ public interface OrderDao {
 	public List<Order> findByPublicationId(final long publication_id);
 	
 	/**
-	 * Finds finalized orders with the provided subscriber.
-	 * 
-	  * @param username The username of the subscriber.
-	 * 
-	 * @return The finalized orders with the provided subscriber.
-	 */
-	
-	public List<Order> findFinalizedBySubscriber(String username);
-	
-	/**
 	 * Creates a new order.
 	 * 
 	 * @param publication_id The id of the publication.

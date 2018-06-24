@@ -1,5 +1,6 @@
 package ar.edu.itba.paw.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -42,8 +44,9 @@ public class Publication {
 	
 	@Column
 	private Integer remainingQuantity;
-
-	private List<User> subscribers;
+	
+	@OneToMany(mappedBy = "publication")
+	private List<Order> orders = new ArrayList<>();
 	
 	public Publication(final long id, final User supervisor, final String description, final float price, final int quantity, final String image, final boolean confirmed) {
 	    this.id = id; 
@@ -55,6 +58,10 @@ public class Publication {
 	    this.confirmed = confirmed; 
 	    this.remainingQuantity = quantity; 
 	} 
+	
+	public Publication() {
+		//hibernate needs this
+	}
 	
 	public Publication(final long id, final User supervisor, final String description, final float price, final int quantity, final String image) {
 		this(id,supervisor,description,price,quantity,image,false);
@@ -102,12 +109,8 @@ public class Publication {
 		this.remainingQuantity = remainingQuantity;
 	}
 	
-	public void setSubscribers(List<User> subscribers) {
-		this.subscribers = subscribers;
-	}
-	
-	public List<User> getSubscribers() {
-		return subscribers;
+	public List<Order> getOrders() {
+		return this.orders;
 	}
 	
 	@Override
