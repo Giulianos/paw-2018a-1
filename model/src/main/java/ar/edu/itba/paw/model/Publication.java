@@ -48,8 +48,7 @@ public class Publication {
 	@OneToMany(mappedBy = "publication")
 	private List<Order> orders = new ArrayList<>();
 	
-	public Publication(final long id, final User supervisor, final String description, final float price, final int quantity, final String image, final boolean confirmed) {
-	    this.id = id; 
+	public Publication(final User supervisor, final String description, final float price, final int quantity, final String image, final boolean confirmed) {
 	    this.supervisor = supervisor; 
 	    this.description = description; 
 	    this.price = price; 
@@ -63,12 +62,12 @@ public class Publication {
 		//hibernate needs this
 	}
 	
-	public Publication(final long id, final User supervisor, final String description, final float price, final int quantity, final String image) {
-		this(id,supervisor,description,price,quantity,image,false);
+	public Publication(final User supervisor, final String description, final float price, final int quantity, final String image) {
+		this(supervisor,description,price,quantity,image,false);
 	}
 	
-	public Publication(final long id, final User supervisor, final String description, final float price, final int quantity) {
-		this(id,supervisor,description,price,quantity,"");
+	public Publication(final User supervisor, final String description, final float price, final int quantity) {
+		this(supervisor,description,price,quantity,"");
 	}
 
 	public long getId() {
@@ -111,6 +110,14 @@ public class Publication {
 	
 	public List<Order> getOrders() {
 		return this.orders;
+	}
+	
+	public void setConfirmed(Boolean confirmed) {
+		this.confirmed = confirmed;
+	}
+	
+	public void setSupervisor(User supervisor) {
+		this.supervisor = supervisor;
 	}
 	
 	@Override

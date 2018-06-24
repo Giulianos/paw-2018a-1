@@ -5,8 +5,10 @@ import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import ar.edu.itba.paw.interfaces.PublicationDao;
+import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.model.User;
 
@@ -20,71 +22,101 @@ public class PublicationHibernateDao implements PublicationDao {
 		Publication publication = em.find(Publication.class, id);
 		return  publication == null ? Optional.empty() : Optional.of(publication);
 	}
-
+	
 	@Override
-	public List<Publication> findBySupervisor(String username) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Publication> findBySupervisor(User supervisor) {
+		final TypedQuery<Publication> query = em.createQuery("from Publication as p where p.supervisor = :supervisor", Publication.class);
+		query.setParameter("supervisor", supervisor);
+		return query.getResultList();
 	}
 
 	@Override
 	public List<Publication> findByDescription(String description) {
-		// TODO Auto-generated method stub
-		return null;
+		final TypedQuery<Publication> query = em.createQuery("from Publication as p where p.description = :description", Publication.class);
+		query.setParameter("description", description);
+		return query.getResultList();
 	}
 
 	@Override
 	public List<Publication> findByDescription(String description, boolean checkSupervisor) {
-		// TODO Auto-generated method stub
-		return null;
+		final TypedQuery<Publication> query;
+		if(!checkSupervisor) {
+			query = em.createQuery("from Publication as p where p.description = :description", Publication.class);
+			query.setParameter("description", description);
+			return query.getResultList();
+		} else {
+			query = em.createQuery("from Publication as p where (p.description = :description AND p.supervisor NOT IS NULL)", Publication.class);
+			query.setParameter("description", description);
+			return query.getResultList();
+		}
 	}
 
 	@Override
 	public List<Publication> findByPrice(float minPrice, float maxPrice) {
-		// TODO Auto-generated method stub
-		return null;
+		final TypedQuery<Publication> query = em.createQuery("from Publication as p where (p.price >= :minPrice AND p.price <= :maxPrice)", Publication.class);
+		query.setParameter("minPrice", minPrice);
+		query.setParameter("maxPrice", maxPrice);
+		return query.getResultList();
 	}
 
 	@Override
 	public List<Publication> findByQuantity(int quantity) {
-		// TODO Auto-generated method stub
-		return null;
+		final TypedQuery<Publication> query = em.createQuery("from Publication as p where p.quantity = :quantity", Publication.class);
+		query.setParameter("quantity", quantity);
+		return query.getResultList();
 	}
 
 	@Override
 	public List<Publication> findByQuantity(int minQuantity, int maxQuantity) {
-		// TODO Auto-generated method stub
-		return null;
+		final TypedQuery<Publication> query = em.createQuery("from Publication as p where (p.quantity >= :minQ AND p.quantity <= :maxQ)", Publication.class);
+		query.setParameter("minQ", minQuantity);
+		query.setParameter("maxQ", maxQuantity);
+		return query.getResultList();
 	}
 
 	@Override
-	public Publication create(String supervisor, String description, float price, int quantity, String image) {
-		// TODO Auto-generated method stub
-		return null;
+	public Publication create(User supervisor, String description, float price, int quantity, String image) {
+		final Publication publication = new Publication(supervisor, description, price, quantity, image);
+		
+		em.persist(publication);
+		return publication;
 	}
 
 	@Override
-	public boolean confirm(long id) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean confirm(Publication publication) {
+		publication.setConfirmed(true);
+		try {
+			em.refresh(publication);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
-	public boolean delete(long id) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean delete(Publication publication) {
+		try {
+			em.remove(publication);	
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
-	public boolean setNewSupervisor(String user, long id) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean setNewSupervisor(User supervisor, Publication publication) {
+		publication.setSupervisor(supervisor);
+		try {
+			em.refresh(publication);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
-	public boolean hasSupervisor(long id) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean hasSupervisor(Publication publication) {
+		return publication.getConfirmed();
 	}
-
+	
 }

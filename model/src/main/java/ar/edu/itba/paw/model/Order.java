@@ -130,6 +130,10 @@ public class Order {
 		return publication;
 	}
 	
+	public void setConfirmed(Boolean confirmed) {
+		this.confirmed = confirmed;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

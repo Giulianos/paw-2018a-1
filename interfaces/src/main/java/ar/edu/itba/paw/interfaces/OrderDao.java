@@ -3,70 +3,70 @@ package ar.edu.itba.paw.interfaces;
 import java.util.List;
 
 import ar.edu.itba.paw.model.Order;
+import ar.edu.itba.paw.model.Publication;
+import ar.edu.itba.paw.model.User;
 
 public interface OrderDao {
 	
 	/**
 	 * Finds orders with the provided subscriber.
 	 * 
-	 * @param username The username of the subscriber.
+	 * @param subscriber The subscriber.
 	 * 
 	 * @return The orders with the provided subscriber.
 	 */
 	
-	public List<Order> findBySubscriber(final String username);
+	public List<Order> findBySubscriber(User subscriber);
+
 	
 	/**
-	 * Finds the orders with the provided publication id.
+	 * Finds the orders with the provided publication.
 	 * 
-	 * @param publication_id The id of the publication.
+	 * @param publication The publication.
 	 * 
 	 * @return The orders with the provided publication id.
 	 */
 	
-	public List<Order> findByPublicationId(final long publication_id);
+	public List<Order> findByPublication(Publication publication);
 	
 	/**
 	 * Creates a new order.
 	 * 
-	 * @param publication_id The id of the publication.
-	 * @param subscriber The username of the subscriber.
+	 * @param publication The publication.
+	 * @param subscriber The subscriber.
 	 * @param quantity The quantity of the order.
 	 * 
 	 * @return The created order.
 	 */
 	
-	public Order create(final long publication_id, final String subscriber, final int quantity);
+	public Order create(Publication publication, User subscriber, int quantity);
 	
 	/**
-	 * Sets the is_confirmed attribute for the provided publication id and subscriber.
+	 * Sets the is_confirmed attribute
+	 * @param order The order to be confirmed
 	 * 
-	 * @param publication_id The id of the publication.
-	 * @param subscriber The username of the subscriber.
-	 * 
-	 * @return True if it the confirmation update was successful.
+	 * @return True if the set was successful.
 	 */
 	
-	public boolean confirm(final long publication_id, final String subscriber);
+	public boolean confirm(Order order);
 	
 	/**
 	 * Delete all orders for the corresponding publication id.
 	 * 
-	 * @param publication_id The id of the publication.
+	 * @param publication The publication.
 	 * 
 	 * @return True if the deletion was successful.
 	 */
 	
-	public boolean delete(final long publication_id);
+	public boolean delete(Publication publication);
 
 	/**
-	 * Delete all orders for the corresponding publication id and subscriber.
+	 * Delete the order 
 	 * 
-	 * @param publication_id The id of the publication.
-	 * @param subscriber The subscriber of the publication.
+	 * @param order The order to be deleted
 	 * 
 	 * @return True if the deletion was successful.
 	 */
 	
-	public boolean delete(long publication_id, String subscriber);
+	public boolean delete(Order order);
 }
