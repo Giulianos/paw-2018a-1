@@ -132,16 +132,6 @@ public interface PublicationService {
 	public Publication create(final String supervisor, final String description, final float price, final int quantity, final String image);
 	
 	/**
-	 * Finds the quantity ordered for the provided publication id.
-	 * 
-	 * @param id The id of the publication.
-	 * 
-	 * @return The quantity ordered for the provided publication id.
-	 */
-	
-	public int remainingQuantity(final long id);
-	
-	/**
 	 * Verifies if the total quantity for the provided publication_id has been reached.
 	 * If true, the database is updated accordingly.
 	 * 
@@ -152,27 +142,6 @@ public interface PublicationService {
 	
 	public boolean confirm(final long id);
 	
-	/**
-	 * Verifies if all orders have been confirmed.
-	 * If true, orders are moved to the confirmedOrders database.
-	 * 
-	 * @param id The id of the publication.
-	 * 
-	 * @return True if all orders have been confirmed.
-	 */
-	
-	public boolean confirmOrders(final long id);
-	
-	/**
-	 * Verifies if all confirmed orders have been paid and received.
-	 * If true, publication is complete and orders are removed.
-	 * 
-	 * @param id The id of the publication.
-	 * 
-	 * @return True if all orders have been paid and delivered.
-	 */
-
-	public boolean confirmFulfillment(long id);
 	
 	/**
 	 * Delete publication for the corresponding id.
@@ -194,7 +163,7 @@ public interface PublicationService {
 	 * @return True if the set was successful.
 	 */
 	
-	public boolean setNewSupervisor (final String user, final long id);
+	public boolean setNewSupervisor (final String supervisor, final long id);
 	
 	/**
 	 * Checks if supervisor is null for the corresponding id.
@@ -205,15 +174,5 @@ public interface PublicationService {
 	 */
 	
 	public boolean hasSupervisor (final long id);
-	
-	/**
-	 * Loads subscribers into a publication.
-	 * 
-	 * @param pub The publication to load the subscribers into.
-	 * 
-	 * @return True if the load was successful.
-	 */
-	
-	public boolean loadPublicationSubscribers(Publication pub);
 	
 }

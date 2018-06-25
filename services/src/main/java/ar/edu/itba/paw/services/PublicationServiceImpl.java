@@ -7,28 +7,21 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import ar.edu.itba.paw.interfaces.ConfirmedOrderService;
-import ar.edu.itba.paw.interfaces.OrderService;
 import ar.edu.itba.paw.interfaces.PublicationDao;
 import ar.edu.itba.paw.interfaces.PublicationService;
 import ar.edu.itba.paw.interfaces.UserDao;
-import ar.edu.itba.paw.interfaces.UserService;
-import ar.edu.itba.paw.model.ConfirmedOrder;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
+import ar.edu.itba.paw.model.User;
 
 @Primary
 @Service
-public class PublicationsImpl implements PublicationService {
+public class PublicationServiceImpl implements PublicationService {
 	@Autowired
 	private PublicationDao publicationDao;
-	@Autowired
-	private OrderService orders;
-	@Autowired
-	private ConfirmedOrderService confirmedOrders;
-	@Autowired
-	private UserService users;
+	
 	@Autowired
 	private UserDao userDao;
 	
@@ -39,7 +32,8 @@ public class PublicationsImpl implements PublicationService {
 
 	@Override
 	public List<Publication> findBySupervisor(String username) {
-		return publicationDao.findBySupervisor(username);
+		User supervisor = userDao.findByUsername(username).get();
+		return publicationDao.findBySupervisor(supervisor);
 	}
 
 	@Override
@@ -73,14 +67,7 @@ public class PublicationsImpl implements PublicationService {
 		List<Publication> results = findByDescription(description, checkSupervisor);
 		
 		if (checkRemainingQuantity) {
-			List<Publication> needToRemove = new LinkedList<>();
-			
-			for(Publication publication : results) {
-				if(remainingQuantity(publication.getId()) == 0)
-					needToRemove.add(publication);
-				publication.setRemainingQuantity(remainingQuantity(publication.getId()));
-			}
-			results.removeAll(needToRemove);
+			results.removeIf((Publication pub)->pub.getRemainingQuantity() == 0);
 		}
 		return results;
 	}
@@ -119,76 +106,39 @@ public class PublicationsImpl implements PublicationService {
 
 	@Override
 	public Publication create(String supervisor, String description, float price, int quantity, final String image) {
-		return publicationDao.create(supervisor,description,price,quantity,image);
+		User supervisorUser = userDao.findByUsername(supervisor).get();
+		return publicationDao.create(supervisorUser,description,price,quantity,image);
 	}
 
 	@Override
-	public int remainingQuantity(long id) {
-		int remainingQuantity = findById(id).get().getQuantity();
-		List<Order> currentOrders = orders.findByPublicationId(id);
-
-		for (Order order : currentOrders) {
-			remainingQuantity -= order.getQuantity();
-		}
-		return remainingQuantity;
-	}
-
-	@Override
+	@Transactional
 	public boolean confirm(long id) {
-		if (remainingQuantity(id) == 0) {
-			return publicationDao.confirm(id);
-		}
-		return false;
-	}
-
-	@Override
-	public boolean confirmOrders(long id) {
-		if (orders.areConfirmed(id)) {
-			List<Order> currentOrders = orders.findByPublicationId(id);
-			orders.delete(id);
-			
-			for (Order order : currentOrders) {
-				confirmedOrders.create(order.getPublication_id(),order.getSubscriber(),order.getQuantity());
-			}
-			return true;
-		}
-		return false;
-	}
-
-	@Override
-	public boolean confirmFulfillment(long id) {
-		if (confirmedOrders.areFulfilled(id)) {
-			List<ConfirmedOrder> currentOrders = confirmedOrders.findByPublicationId(id);
-			confirmedOrders.delete(id);
-			
-			for (ConfirmedOrder order : currentOrders) {
-				users.addTransaction(order.getBuyer());
-			}
-			publicationDao.delete(id);
-			
-			return true;
+		Publication publication = publicationDao.findById(id).get();
+		if (publication.getRemainingQuantity() == 0) {
+			return publicationDao.confirm(publication);
 		}
 		return false;
 	}
 	
 	@Override
+	@Transactional
 	public boolean delete(long publication_id) {
-		return publicationDao.delete(publication_id);
+		Publication publication = publicationDao.findById(publication_id).get();
+		return publicationDao.delete(publication);
 	}
 
 	@Override
-	public boolean setNewSupervisor(String user, long id) {
-		return publicationDao.setNewSupervisor(user, id);
+	@Transactional
+	public boolean setNewSupervisor(String supervisor, long id) {
+		User supervisorUser = userDao.findByUsername(supervisor).get();
+		Publication publication = publicationDao.findById(id).get();
+		return publicationDao.setNewSupervisor(supervisorUser, publication);
 	}
 
 	@Override
 	public boolean hasSupervisor(long id) {
-		return publicationDao.hasSupervisor(id);
+		Publication publication = publicationDao.findById(id).get();
+		return publicationDao.hasSupervisor(publication);
 	}
 
-	@Override
-	public boolean loadPublicationSubscribers(Publication pub) {
-		pub.setSubscribers(userDao.getSubscribersOfPublication(pub.getId()));
-		return false;
-	}
 }
