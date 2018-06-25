@@ -2,8 +2,6 @@ package ar.edu.itba.paw.interfaces;
 
 import java.util.Optional;
 
-import java.util.List;
-
 import ar.edu.itba.paw.model.User;
 
 public interface UserDao {
@@ -59,5 +57,14 @@ public interface UserDao {
 	 */
 	
 	public User create(final String username, final String email, final String password);
+	
+	/**
+	 * Updates the user object.
+	 * 
+	 * @param user The user to be updated.
+	 * 
+	 * @return true if the update was successful.
+	 */
+	public boolean updateUser(User user);
 	
 }

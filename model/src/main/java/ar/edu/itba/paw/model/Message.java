@@ -1,18 +1,21 @@
 package ar.edu.itba.paw.model;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "messages")
 public class Message {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "message_seq")
-	@SequenceGenerator(sequenceName = "message_seq", name = "message_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
 	

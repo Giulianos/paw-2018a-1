@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,7 +23,6 @@ import ar.edu.itba.paw.interfaces.PublicationService;
 import ar.edu.itba.paw.interfaces.UserService;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
-import ar.edu.itba.paw.model.User;
 import ar.edu.itba.paw.webapp.auth.IAuthenticationFacade;
 import ar.edu.itba.paw.webapp.form.OrderForm;
 
@@ -54,25 +52,11 @@ public class PublicationController {
 			return modelAndView;
 		}
 		
-		String user = auth.getAuthentication().getName();
+		String username = auth.getAuthentication().getName();
 		
-		Order order = ord.create(Long.parseLong(form.getPublicationId()), user, Integer.parseInt(form.getQuantity()));
+		Order order = ord.create(ps.findById(Long.parseLong(form.getPublicationId())).get(), users.findByUsername(username).get(), Integer.parseInt(form.getQuantity()));
 		
 		boolean confirmed = ps.confirm(Long.parseLong(form.getPublicationId()));
-
-		if(confirmed) {
-			String mailContent = messageSource.getMessage("mail.order.content", null, request.getLocale());
-			String mailNotification = messageSource.getMessage("mail.notification", null, request.getLocale());
-			
-			Publication pub = ps.findById(order.getPublication_id()).get();
-			ps.loadPublicationSubscribers(pub);
-			pub.setSupervisorUser(users.findByUsername(pub.getSupervisor()).get());
-			for(User u : pub.getSubscribers()) {
-				emails.sendEmail(u.getEmail(), mailNotification, mailContent);
-			}
-			emails.sendEmail(pub.getSupervisorUser().getEmail(), mailNotification, mailContent);
-			return new ModelAndView("redirect:/profile/subscriptions-finalized");
-		}
 
 		return new ModelAndView("redirect:/profile/subscriptions");
 	}

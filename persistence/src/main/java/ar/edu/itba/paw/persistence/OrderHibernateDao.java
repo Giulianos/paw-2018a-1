@@ -1,7 +1,5 @@
 package ar.edu.itba.paw.persistence;
 
-import static org.junit.Assert.assertNotNull;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -9,11 +7,17 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import ar.edu.itba.paw.interfaces.OrderDao;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.model.User;
 
+@Primary 
+@Repository 
 public class OrderHibernateDao implements OrderDao {
 
 	@PersistenceContext
@@ -40,6 +44,7 @@ public class OrderHibernateDao implements OrderDao {
 	}
 
 	@Override
+	@Transactional
 	public Optional<Order> create(Publication publication, User subscriber, int quantity) {
 		final Order order = new Order(publication, subscriber, quantity);
 		
@@ -48,14 +53,10 @@ public class OrderHibernateDao implements OrderDao {
 	}
 
 	@Override
+	@Transactional
 	public boolean confirm(Order order) {
 		order.setConfirmed(true);
-		try {
-			em.refresh(order);
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
+		return updateOrder(order);
 	}
 	
 	@Override
@@ -68,6 +69,19 @@ public class OrderHibernateDao implements OrderDao {
 		try {
 			em.remove(order);	
 		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	@Transactional
+	public boolean updateOrder(Order order) {
+		try {
+			em.refresh(order);
+		} catch (Exception e) {
+			System.out.println("----------------->EXCEPTION!!!!!!!");
+			System.out.println(e);
 			return false;
 		}
 		return true;

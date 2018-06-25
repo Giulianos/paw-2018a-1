@@ -3,6 +3,8 @@ package ar.edu.itba.paw.interfaces;
 import java.util.List;
 
 import ar.edu.itba.paw.model.Order;
+import ar.edu.itba.paw.model.Publication;
+import ar.edu.itba.paw.model.User;
 
 public interface OrderService {
 	
@@ -58,7 +60,7 @@ public interface OrderService {
 	 * @return The created order.
 	 */
 	
-	public Order create(final long publication_id, final String subscriber, final int quantity);
+	public Order create(Publication publication, User subscriber, final int quantity);
 	
 	/**
 	 * Verifies if all orders for the provided publication id are confirmed.
@@ -90,4 +92,13 @@ public interface OrderService {
 	 */
 	
 	public boolean delete(final long publication_id);
+	
+	/**
+	 * Checks if any of the provided orders has no supervisor.
+	 * 
+	 * @param orders The orders to check.
+	 * 
+	 * @return true if any of the orders has no supervisor.
+	 */
+	public boolean anyHasNoSupervisor(List<Order> orders);
 }

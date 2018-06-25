@@ -1,10 +1,13 @@
 package ar.edu.itba.paw.model;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,10 +24,9 @@ public class User {
 	
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_userid_seq")
-	@SequenceGenerator(sequenceName = "users_userid_seq", name = "users_userid_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
-	private Long id;
+	private Long user_id;
 	
 	@Column(length = 15, nullable = false, unique = true)
 	private String username;
@@ -37,12 +39,12 @@ public class User {
 	
 	@Column(name = "reg_date")
 	@Temporal(TemporalType.DATE)
-	private String regdate;
+	private Date regdate;
 	
-	@OneToMany(mappedBy = "subscriber")
+	@OneToMany(mappedBy = "subscriber", fetch = FetchType.EAGER)
 	private List<Order> orders = new ArrayList<>();
 	
-	public User(final String username, final String email, final String password, final String regdate) {
+	public User(final String username, final String email, final String password, final Date regdate) {
 		this.username = username;
 		this.email = email;
 		this.password = password;
@@ -50,15 +52,15 @@ public class User {
 	}
 	
 	public User(final String username, final String email, final String password) {
-		this(username,email,password,"");
+		this(username,email,password,Date.from(Instant.now()));
 	}
 
 	public User() {
 		//hibernate needs this
 	}
 
-	public long getId() {
-		return this.id;
+	public Long getId() {
+		return this.user_id;
 	}
 
 	public String getUsername() {
@@ -77,7 +79,7 @@ public class User {
 		return this.orders;
 	}
 	
-	public String getRegdate() {
+	public Date getRegdate() {
 		return this.regdate;
 	}
 }

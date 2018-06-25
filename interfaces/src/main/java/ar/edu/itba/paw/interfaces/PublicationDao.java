@@ -3,6 +3,8 @@ package ar.edu.itba.paw.interfaces;
 import java.util.List;
 import java.util.Optional;
 
+import javax.activation.UnsupportedDataTypeException;
+
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.model.User;
 
@@ -138,5 +140,14 @@ public interface PublicationDao {
 	 */
 	
 	public boolean hasSupervisor (Publication publication);
+	
+	/**
+	 * Updates the publication object.
+	 * 
+	 * @param publication The publication to be updated.
+	 * 
+	 * @return true if the update was successful.
+	 */
+	public boolean updatePublication(Publication publication);
 
 }

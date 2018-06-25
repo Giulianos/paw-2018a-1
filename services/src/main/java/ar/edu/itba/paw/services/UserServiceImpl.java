@@ -42,6 +42,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean userExists(final String username, final String email) {
-		return !findByUsername(username).isPresent() && !findByEmail(email).isPresent();
+		return findByUsername(username).isPresent() || findByEmail(email).isPresent();
 	}
 }

@@ -7,11 +7,17 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import ar.edu.itba.paw.interfaces.PublicationDao;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.model.User;
 
+@Primary 
+@Repository 
 public class PublicationHibernateDao implements PublicationDao {
 
 	@PersistenceContext
@@ -45,7 +51,7 @@ public class PublicationHibernateDao implements PublicationDao {
 			query.setParameter("description", description);
 			return query.getResultList();
 		} else {
-			query = em.createQuery("from Publication as p where (p.description = :description AND p.supervisor NOT IS NULL)", Publication.class);
+			query = em.createQuery("from Publication as p where (p.description = :description AND p.supervisor IS NOT NULL)", Publication.class);
 			query.setParameter("description", description);
 			return query.getResultList();
 		}
@@ -75,6 +81,7 @@ public class PublicationHibernateDao implements PublicationDao {
 	}
 
 	@Override
+	@Transactional
 	public Publication create(User supervisor, String description, float price, int quantity, String image) {
 		final Publication publication = new Publication(supervisor, description, price, quantity, image);
 		
@@ -83,17 +90,14 @@ public class PublicationHibernateDao implements PublicationDao {
 	}
 
 	@Override
+	@Transactional
 	public boolean confirm(Publication publication) {
 		publication.setConfirmed(true);
-		try {
-			em.refresh(publication);
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
+		return updatePublication(publication);
 	}
 
 	@Override
+	@Transactional
 	public boolean delete(Publication publication) {
 		try {
 			em.remove(publication);	
@@ -104,19 +108,26 @@ public class PublicationHibernateDao implements PublicationDao {
 	}
 
 	@Override
+	@Transactional
 	public boolean setNewSupervisor(User supervisor, Publication publication) {
 		publication.setSupervisor(supervisor);
+		return updatePublication(publication);
+	}
+
+	@Override
+	public boolean hasSupervisor(Publication publication) {
+		return publication.getSupervisor() != null;
+	}
+
+	@Override
+	@Transactional
+	public boolean updatePublication(Publication publication) {
 		try {
 			em.refresh(publication);
 		} catch (Exception e) {
 			return false;
 		}
 		return true;
-	}
-
-	@Override
-	public boolean hasSupervisor(Publication publication) {
-		return publication.getConfirmed();
 	}
 	
 }

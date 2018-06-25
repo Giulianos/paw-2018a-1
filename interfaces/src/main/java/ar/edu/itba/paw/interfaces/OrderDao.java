@@ -82,4 +82,13 @@ public interface OrderDao {
 	 */
 	
 	public boolean delete(Order order);
+	
+	/**
+	 * Updates the order object.
+	 * 
+	 * @param order The order to be updated.
+	 * 
+	 * @return true if the update was successful.
+	 */
+	public boolean updateOrder(Order order);
 }

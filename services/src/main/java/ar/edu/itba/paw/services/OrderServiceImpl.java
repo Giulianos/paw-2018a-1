@@ -50,10 +50,12 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public Order create(long publication_id, String subscriber, int quantity) {
-		Publication publication = publicationDao.findById(publication_id).get();
-		User subscriberUser = userDao.findByUsername(subscriber).get();
-		return orderDao.create(publication, subscriberUser,quantity).get();
+	public Order create(Publication publication, User subscriber, int quantity) {
+		Integer currentRemainingQuantity = publication.getRemainingQuantity();
+		
+		publication.setRemainingQuantity(currentRemainingQuantity - quantity);
+		publicationDao.updatePublication(publication);
+		return orderDao.create(publication, subscriber,quantity).get();
 	}
 
 	@Override
@@ -97,5 +99,14 @@ public class OrderServiceImpl implements OrderService {
 				orders.remove(o);
 		}
 		return orders;
+	}
+
+	@Override
+	public boolean anyHasNoSupervisor(List<Order> orders) {
+		for (Order order : orders) {
+			if(order.getPublication().getSupervisor() == null)
+				return true;
+		}
+		return false;
 	}
 }

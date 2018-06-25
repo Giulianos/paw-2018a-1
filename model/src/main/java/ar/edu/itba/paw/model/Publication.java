@@ -19,8 +19,7 @@ import javax.persistence.Table;
 public class Publication {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "publications_pubid_seq")
-	@SequenceGenerator(sequenceName = "publications_pubid_seq", name = "publications_pubid_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "publication_id")
 	private Long id;
 	
@@ -45,7 +44,7 @@ public class Publication {
 	@Column
 	private Integer remainingQuantity;
 	
-	@OneToMany(mappedBy = "publication")
+	@OneToMany(mappedBy = "publication", fetch = FetchType.EAGER)
 	private List<Order> orders = new ArrayList<>();
 	
 	public Publication(final User supervisor, final String description, final float price, final int quantity, final String image, final boolean confirmed) {
