@@ -48,20 +48,12 @@ public class OrderHibernateDao implements OrderDao {
 	public Optional<Order> create(Publication publication, User subscriber, int quantity) {
 		final Order order = new Order(publication, subscriber, quantity);
 		
-		em.persist(order);
+		try {
+			em.persist(order);
+		} catch (Exception e) {
+			return null;
+		}
 		return order == null ? Optional.empty() : Optional.of(order);
-	}
-
-	@Override
-	@Transactional
-	public boolean confirm(Order order) {
-		order.setConfirmed(true);
-		return updateOrder(order);
-	}
-	
-	@Override
-	public boolean isConfirm(Order order) {
-		return order.getConfirmed();
 	}
 
 	@Override
@@ -75,15 +67,8 @@ public class OrderHibernateDao implements OrderDao {
 	}
 
 	@Override
-	@Transactional
 	public boolean updateOrder(Order order) {
-		try {
-			em.refresh(order);
-		} catch (Exception e) {
-			System.out.println("----------------->EXCEPTION!!!!!!!");
-			System.out.println(e);
-			return false;
-		}
+		em.flush();
 		return true;
 	}
 	

@@ -47,7 +47,7 @@
                 <td><c:out value="${subs.quantity}"/></td> <!-- quantity ordered -->
                 <td><c:out value="${subs.publication.price*subs.quantity}"/></td>
                 <td style="text-align:center;">
-                  <a data-toggle="modal" data-target="#contactModal-${subs.publication_id}" param="subs"><input type="image" src='<spring:url value="/img/people.svg" htmlEscape="true"/>' height="18" border="0" alt="Submit" /></a>
+                  <a data-toggle="modal" data-target="#contactModal-${subs.publication.id}" param="subs"><input type="image" src='<spring:url value="/img/people.svg" htmlEscape="true"/>' height="18" border="0" alt="Submit" /></a>
               </tr>
             </c:forEach>
           </tbody>

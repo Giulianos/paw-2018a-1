@@ -2,6 +2,7 @@ package ar.edu.itba.paw.persistence;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.WeakHashMap;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -90,14 +91,12 @@ public class PublicationHibernateDao implements PublicationDao {
 	}
 
 	@Override
-	@Transactional
 	public boolean confirm(Publication publication) {
 		publication.setConfirmed(true);
 		return updatePublication(publication);
 	}
 
 	@Override
-	@Transactional
 	public boolean delete(Publication publication) {
 		try {
 			em.remove(publication);	
@@ -108,7 +107,6 @@ public class PublicationHibernateDao implements PublicationDao {
 	}
 
 	@Override
-	@Transactional
 	public boolean setNewSupervisor(User supervisor, Publication publication) {
 		publication.setSupervisor(supervisor);
 		return updatePublication(publication);
@@ -120,13 +118,8 @@ public class PublicationHibernateDao implements PublicationDao {
 	}
 
 	@Override
-	@Transactional
 	public boolean updatePublication(Publication publication) {
-		try {
-			em.refresh(publication);
-		} catch (Exception e) {
-			return false;
-		}
+		em.flush();
 		return true;
 	}
 	

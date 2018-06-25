@@ -2,10 +2,12 @@ package ar.edu.itba.paw.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.itba.paw.interfaces.OrderDao;
 import ar.edu.itba.paw.interfaces.OrderService;
@@ -50,11 +52,14 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
+	@Transactional
 	public Order create(Publication publication, User subscriber, int quantity) {
-		Integer currentRemainingQuantity = publication.getRemainingQuantity();
+
+		Publication managedPublication = publicationDao.findById(publication.getId()).get();
+		Integer currentRemainingQuantity = managedPublication.getRemainingQuantity();
+		managedPublication.setRemainingQuantity(currentRemainingQuantity-quantity);
+		publicationDao.updatePublication(managedPublication);
 		
-		publication.setRemainingQuantity(currentRemainingQuantity - quantity);
-		publicationDao.updatePublication(publication);
 		return orderDao.create(publication, subscriber,quantity).get();
 	}
 
@@ -71,6 +76,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
+	@Transactional
 	public boolean delete(final long publication_id) {
 		Publication publication = publicationDao.findById(publication_id).get();
 		List<Order> orders = publication.getOrders();
@@ -82,6 +88,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	@Override
+	@Transactional
 	public boolean delete(long publication_id, String subscriber) {
 		Publication publication = publicationDao.findById(publication_id).get();
 		User subscriberUser = userDao.findByUsername(subscriber).get();
@@ -94,10 +101,8 @@ public class OrderServiceImpl implements OrderService {
 		User subscriberUser = userDao.findByUsername(subscriber).get();
 		List<Order> orders = new ArrayList<>(); 
 		orders.addAll(subscriberUser.getOrders());
-		for(Order o: orders) {
-			if(!orderDao.isConfirm(o))
-				orders.remove(o);
-		}
+		orders.removeIf((Order ord) -> !ord.getPublication().getConfirmed());
+		
 		return orders;
 	}
 

@@ -23,6 +23,8 @@ public class Order {
 
 	@Embeddable
 	public static class OrderId implements Serializable {
+		private static final long serialVersionUID = 1L;
+
 		@Column(name = "fk_subscriber")
 		protected Long subscriberId;
 		
@@ -33,6 +35,10 @@ public class Order {
 			this.subscriberId = subscriberId;	
 			this.publicationId = publicationId;
 		}
+		
+		public OrderId() {
+		}
+		
 		@Override
 		public int hashCode() {
 			final int prime = 31;

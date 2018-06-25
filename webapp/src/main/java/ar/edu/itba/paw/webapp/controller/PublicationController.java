@@ -62,7 +62,12 @@ public class PublicationController {
 	}
 
 	public boolean validOrder(OrderForm form, ModelMap model) {
-		if(Long.parseLong(form.getQuantity()) > ps.remainingQuantity(Long.parseLong(form.getPublicationId())))
+		
+		Integer quantity = Integer.parseInt(form.getQuantity());
+		Long publicationId = Long.parseLong(form.getPublicationId());
+		Integer publicationRemainingQuantity = ps.findById(publicationId).get().getRemainingQuantity();
+		
+		if(quantity > publicationRemainingQuantity)
 			return false;
 		
 		return true;
@@ -123,7 +128,7 @@ public class PublicationController {
 		} else if(list.size() == 1) {
 			Order order = list.get(0);
 			if(order.getSubscriber().equals(auth.getAuthentication().getName())) {
-				if(ps.remainingQuantity(publication_id) != 0) {
+				if(ps.findById(publication_id).get().getRemainingQuantity() != 0) {
 					ps.delete(publication_id);
 				}
 			}

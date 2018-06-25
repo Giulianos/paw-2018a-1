@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.itba.paw.interfaces.PublicationDao;
 import ar.edu.itba.paw.interfaces.PublicationService;
@@ -66,14 +67,7 @@ public class PublicationServiceImpl implements PublicationService {
 		List<Publication> results = findByDescription(description, checkSupervisor);
 		
 		if (checkRemainingQuantity) {
-			List<Publication> needToRemove = new LinkedList<>();
-			
-			for(Publication publication : results) {
-				if(remainingQuantity(publication.getId()) == 0)
-					needToRemove.add(publication);
-				publication.setRemainingQuantity(remainingQuantity(publication.getId()));
-			}
-			results.removeAll(needToRemove);
+			results.removeIf((Publication pub)->pub.getRemainingQuantity() == 0);
 		}
 		return results;
 	}
@@ -117,18 +111,7 @@ public class PublicationServiceImpl implements PublicationService {
 	}
 
 	@Override
-	public int remainingQuantity(long id) {
-		Publication publication = publicationDao.findById(id).get();
-		int remainingQuantity = publication.getQuantity();
-		List<Order> orders = publication.getOrders();
-
-		for (Order o : orders) {
-			remainingQuantity -= o.getQuantity();
-		}
-		return remainingQuantity;
-	}
-
-	@Override
+	@Transactional
 	public boolean confirm(long id) {
 		Publication publication = publicationDao.findById(id).get();
 		if (publication.getRemainingQuantity() == 0) {
@@ -138,12 +121,14 @@ public class PublicationServiceImpl implements PublicationService {
 	}
 	
 	@Override
+	@Transactional
 	public boolean delete(long publication_id) {
 		Publication publication = publicationDao.findById(publication_id).get();
 		return publicationDao.delete(publication);
 	}
 
 	@Override
+	@Transactional
 	public boolean setNewSupervisor(String supervisor, long id) {
 		User supervisorUser = userDao.findByUsername(supervisor).get();
 		Publication publication = publicationDao.findById(id).get();

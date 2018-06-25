@@ -132,16 +132,6 @@ public interface PublicationService {
 	public Publication create(final String supervisor, final String description, final float price, final int quantity, final String image);
 	
 	/**
-	 * Finds the remaining quantity for the provided publication id.
-	 * 
-	 * @param id The id of the publication.
-	 * 
-	 * @return The remaining quantity for the provided publication id.
-	 */
-	
-	public int remainingQuantity(final long id);
-	
-	/**
 	 * Verifies if the total quantity for the provided publication_id has been reached.
 	 * If true, the database is updated accordingly.
 	 * 

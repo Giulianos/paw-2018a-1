@@ -1,4 +1,4 @@
-<div class="modal fade" id="contactModal-${subs.publication_id}" tabindex="-1" role="dialog" aria-labelledby="Contact" aria-hidden="true">
+<div class="modal fade" id="contactModal-${subs.publication.id}" tabindex="-1" role="dialog" aria-labelledby="Contact" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -12,10 +12,10 @@
           <c:choose>
             <c:when test="${subs.publication.supervisor == subs.subscriber}">
               <!-- show all emails -->
-              <c:forEach var="subscriber" items="${subs.publication.subscribers}">
+              <c:forEach var="order" items="${subs.publication.orders}">
                 <li class="list-group-item">
-                  <span class="bold capitalized"><c:out value="${subscriber.username}"/>:</span>
-                  <c:out value="${subscriber.email}"/>
+                  <span class="bold capitalized"><c:out value="${order.subscriber.username}"/>:</span>
+                  <c:out value="${order.subscriber.email}"/>
                 </li>
               </c:forEach>
               <li class="list-group-item">
@@ -26,9 +26,9 @@
               <!-- show supervisors email -->
               <li class="list-group-item">
                 <span class="bold capitalized">
-                  <c:out value="${subs.publication.supervisorUser.username}"/>
+                  <c:out value="${subs.publication.supervisor.username}"/>
                 </span>
-                <c:out value="${subs.publication.supervisorUser.email}"/>
+                <c:out value="${subs.publication.supervisor.email}"/>
               </li>
             </c:otherwise>
           </c:choose>

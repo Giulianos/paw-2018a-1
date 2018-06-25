@@ -54,24 +54,6 @@ public interface OrderDao {
 	
 	public Optional<Order> create(Publication publication, User subscriber, int quantity);
 	
-	/**
-	 * Sets the is_confirmed attribute
-	 * @param order The order to be confirmed
-	 * 
-	 * @return True if the set was successful.
-	 */
-	
-	public boolean confirm(Order order);
-	
-	/**
-	 * Returns if order is confirmed
-	 * @param order The order
-	 * 
-	 * @return True if the order is confirmed.
-	 */
-	
-	public boolean isConfirm(Order order);
-	
 
 	/**
 	 * Delete the order 

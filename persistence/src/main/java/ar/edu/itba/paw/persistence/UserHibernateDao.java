@@ -57,13 +57,8 @@ public class UserHibernateDao implements UserDao{
 	}
 
 	@Override
-	@Transactional
 	public boolean updateUser(User user) {
-		try {
-			em.refresh(user);
-		} catch (Exception e) {
-			return false;
-		}
+		em.flush();
 		return true;
 	}
 
