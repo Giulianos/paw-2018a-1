@@ -1,10 +1,13 @@
 package ar.edu.itba.paw.persistence;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
+import javax.persistence.TypedQuery;
 
 import ar.edu.itba.paw.interfaces.OrderDao;
 import ar.edu.itba.paw.model.Order;
@@ -25,13 +28,23 @@ public class OrderHibernateDao implements OrderDao {
 	public List<Order> findByPublication(Publication publication) {
 		return  publication == null ? null : publication.getOrders();
 	}
+	
+	@Override
+	public Optional<Order> findByPublicationAndSupervisor(Publication publication, User subscriber) {
+		final TypedQuery<Order> query = em.createQuery("from Order as o where (o.publication = :publication AND o.subscriber = :subscriber)", Order.class);
+		query.setParameter("publication", publication);
+		query.setParameter("subscriber", subscriber);
+		final List<Order> list = query.getResultList();
+		return list.isEmpty() ? Optional.empty() : Optional.of(list.get(0)); 
+		
+	}
 
 	@Override
-	public Order create(Publication publication, User subscriber, int quantity) {
+	public Optional<Order> create(Publication publication, User subscriber, int quantity) {
 		final Order order = new Order(publication, subscriber, quantity);
 		
 		em.persist(order);
-		return order;
+		return order == null ? Optional.empty() : Optional.of(order);
 	}
 
 	@Override
@@ -44,15 +57,10 @@ public class OrderHibernateDao implements OrderDao {
 		}
 		return true;
 	}
-
+	
 	@Override
-	public boolean delete(Publication publication) {
-		List<Order> orders = publication.getOrders();
-		for(Order o : orders) {
-			if(!delete(o))
-				return false;
-		}
-		return true;
+	public boolean isConfirm(Order order) {
+		return order.getConfirmed();
 	}
 
 	@Override

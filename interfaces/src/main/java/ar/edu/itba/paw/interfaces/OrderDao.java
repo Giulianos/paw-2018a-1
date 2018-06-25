@@ -1,6 +1,7 @@
 package ar.edu.itba.paw.interfaces;
 
 import java.util.List;
+import java.util.Optional;
 
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
@@ -24,10 +25,22 @@ public interface OrderDao {
 	 * 
 	 * @param publication The publication.
 	 * 
-	 * @return The orders with the provided publication id.
+	 * @return The orders with the provided publication.
 	 */
 	
 	public List<Order> findByPublication(Publication publication);
+	
+	/**
+	 * Finds the order with the provided publication and subscriber.
+	 * 
+	 * @param publication The publication.
+	 * 
+	 * @param supervisor The subscriber.
+	 * 
+	 * @return The order with the provided publication and subscriber.
+	 */
+	
+	public Optional<Order> findByPublicationAndSupervisor(Publication publication, User subscriber);
 	
 	/**
 	 * Creates a new order.
@@ -39,7 +52,7 @@ public interface OrderDao {
 	 * @return The created order.
 	 */
 	
-	public Order create(Publication publication, User subscriber, int quantity);
+	public Optional<Order> create(Publication publication, User subscriber, int quantity);
 	
 	/**
 	 * Sets the is_confirmed attribute
@@ -51,14 +64,14 @@ public interface OrderDao {
 	public boolean confirm(Order order);
 	
 	/**
-	 * Delete all orders for the corresponding publication id.
+	 * Returns if order is confirmed
+	 * @param order The order
 	 * 
-	 * @param publication The publication.
-	 * 
-	 * @return True if the deletion was successful.
+	 * @return True if the order is confirmed.
 	 */
 	
-	public boolean delete(Publication publication);
+	public boolean isConfirm(Order order);
+	
 
 	/**
 	 * Delete the order 

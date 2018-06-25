@@ -46,7 +46,7 @@ public interface OrderService {
 	 * @return The finalized orders with the provided subscriber.
 	 */
 
-	public List<Order> findFinalizedBySubscriber(String username);
+	public List<Order> findFinalizedBySubscriber(String subscriber);
 	
 	/**
 	 * Creates a new order.
@@ -59,16 +59,6 @@ public interface OrderService {
 	 */
 	
 	public Order create(final long publication_id, final String subscriber, final int quantity);
-	/**
-	 * Sets the is_confirmed attribute for the provided publication id and subscriber.
-	 * 
-	 * @param publication_id The id of the publication.
-	 * @param subscriber The username of the subscriber.
-	 * 
-	 * @return True if it the confirmation update was successful.
-	 */
-	
-	public boolean confirm(final long publication_id, final String subscriber);
 	
 	/**
 	 * Verifies if all orders for the provided publication id are confirmed.
@@ -90,7 +80,7 @@ public interface OrderService {
 	 */
 	
 	public boolean delete(long publication_id, String subscriber);
-
+	
 	/**
 	 * Delete all orders for the corresponding publication id.
 	 * 
