@@ -46,7 +46,15 @@ public class OrderHibernateDao implements OrderDao {
 	@Override
 	@Transactional
 	public Optional<Order> create(Publication publication, User subscriber, int quantity) {
-		final Order order = new Order(publication, subscriber, quantity);
+		Optional<Order> optOrd = findByPublicationAndSupervisor(publication, subscriber);
+		Order order;
+		if(optOrd.isPresent()) {
+			order = optOrd.get();
+			order.setQuantity(order.getQuantity() + quantity);
+		}
+		else {
+			order = new Order(publication, subscriber, quantity);	
+		}
 		
 		try {
 			em.persist(order);
@@ -58,6 +66,9 @@ public class OrderHibernateDao implements OrderDao {
 
 	@Override
 	public boolean delete(Order order) {
+		Integer quantity = order.getQuantity();
+		Integer currentRemainingQuantity = order.getPublication().getRemainingQuantity();
+		order.getPublication().setRemainingQuantity(currentRemainingQuantity + quantity);
 		try {
 			em.remove(order);	
 		} catch (Exception e) {

@@ -8,13 +8,9 @@ import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -138,6 +134,10 @@ public class Order {
 	
 	public void setConfirmed(Boolean confirmed) {
 		this.confirmed = confirmed;
+	}
+	
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 	
 	@Override
