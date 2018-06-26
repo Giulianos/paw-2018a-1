@@ -138,9 +138,14 @@ public class PublicationServiceImpl implements PublicationService {
 	@Override
 	@Transactional
 	public boolean setNewSupervisor(String supervisor, long id) {
-		User supervisorUser = userDao.findByUsername(supervisor).get();
+		Optional<User> supervisorUser = userDao.findByUsername(supervisor);
 		Publication publication = publicationDao.findById(id).get();
-		return publicationDao.setNewSupervisor(supervisorUser, publication);
+		
+		if(supervisorUser.isPresent()) {
+			return publicationDao.setNewSupervisor(supervisorUser.get(), publication);	
+		} else {
+			return publicationDao.setNewSupervisor(null, publication);
+		}
 	}
 
 	@Override

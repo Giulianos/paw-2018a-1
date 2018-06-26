@@ -23,7 +23,7 @@ public class Publication {
 	@Column(name = "publication_id")
 	private Long id;
 	
-	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = true)
 	private User supervisor;
 	
 	@Column(length = 30)

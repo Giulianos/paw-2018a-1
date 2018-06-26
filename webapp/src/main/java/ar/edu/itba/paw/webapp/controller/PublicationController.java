@@ -128,7 +128,7 @@ public class PublicationController {
 		} else if(list.size() == 1) {
 			Order order = list.get(0);
 			if(order.getSubscriber().getUsername().equals(auth.getAuthentication().getName())) {
-				if(ps.findById(publication_id).get().getRemainingQuantity() != 0) {
+				if(order.getPublication().getRemainingQuantity() != 0) {
 					ps.delete(publication_id);
 				}
 			}
