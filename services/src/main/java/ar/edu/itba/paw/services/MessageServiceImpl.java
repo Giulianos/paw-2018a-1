@@ -26,10 +26,10 @@ public class MessageServiceImpl implements MessageService {
 	public Optional<Message> sendMessage(User me, Order order, String text) {
 		User from = me;
 		User to;
-		if(order.getSubscriber().equals(me)) {
-			to = order.getPublication().getSupervisor();
-		} else {
+		if(order.getPublication().getSupervisor().getUsername().equals(me.getUsername())) {
 			to = order.getSubscriber();
+		} else {
+			to = order.getPublication().getSupervisor();
 		}
 		
 		return messageDao.create(from, to, order, text);
