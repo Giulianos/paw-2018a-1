@@ -10,6 +10,21 @@ body {
   background-size: cover;
 }
 
+form.rate-star {
+	display:inline-block;
+}
+
+button.rate-star {
+	background-color: transparent;
+	border: 0px none transparent;
+	padding:0px;
+	margin:0px;
+}
+
+button.rate-star:hover {
+	cursor: pointer;
+}
+
 .logo-title {
 	font-family: Helvetica;
 	font-weight: bold;

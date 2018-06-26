@@ -138,12 +138,16 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	@Transactional
 	public void setSupervisorReputation(Order order, Integer reputation) {
-		order.setSupervisorReputation(reputation);
+		Order managedOrder = orderDao.findByPublicationAndSupervisor(order.getPublication(), order.getSubscriber()).get();
+		managedOrder.setSupervisorReputation(reputation);
+		orderDao.updateOrder(order);
 	}
 
 	@Override
 	@Transactional
-	public void setSupervisorSubscriber(Order order, Integer reputation) {
-		order.setSubscriberReputation(reputation);		
+	public void setSubscriberReputation(Order order, Integer reputation) {
+		Order managedOrder = orderDao.findByPublicationAndSupervisor(order.getPublication(), order.getSubscriber()).get();
+		managedOrder.setSubscriberReputation(reputation);
+		orderDao.updateOrder(order);
 	}
 }

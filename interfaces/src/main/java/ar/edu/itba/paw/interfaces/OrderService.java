@@ -128,5 +128,5 @@ public interface OrderService {
 	 * 
 	 * @param reputation The reputation to be set
 	 */
-	public void setSupervisorSubscriber(Order order, Integer reputation);
+	public void setSubscriberReputation(Order order, Integer reputation);
 }

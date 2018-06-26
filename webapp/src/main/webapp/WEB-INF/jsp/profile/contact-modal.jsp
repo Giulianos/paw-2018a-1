@@ -13,13 +13,15 @@
             <c:when test="${subs.publication.supervisor == subs.subscriber}">
               <!-- show all emails -->
               <c:forEach var="order" items="${subs.publication.orders}">
-                <li class="list-group-item">
-                  <span class="bold capitalized"><c:out value="${order.subscriber.username}"/>
-                    <a href='<spring:url value="/profile/messaging/${order.publication.id}/${order.subscriber.id}" htmlEscape="true"/>'>
-                      <img height="18" src='<spring:url value="/img/msg.svg" htmlEscape="true"/>' alt="icon name" />
-                    </a>
-                  </span>
-                </li>
+                <c:if test="${order.subscriber.id != order.publication.supervisor.id}">
+                  <li class="list-group-item">
+                    <span class="bold capitalized"><c:out value="${order.subscriber.username}"/>
+                      <a href='<spring:url value="/profile/messaging/${order.publication.id}/${order.subscriber.id}" htmlEscape="true"/>'>
+                        <img height="18" src='<spring:url value="/img/msg.svg" htmlEscape="true"/>' alt="icon name" />
+                      </a>
+                    </span>
+                  </li>
+                </c:if>
               </c:forEach>
             </c:when>
             <c:otherwise>

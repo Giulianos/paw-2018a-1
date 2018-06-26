@@ -73,6 +73,104 @@
             </div>
         </div>
       </div>
+      <div class="col-2 border-left">
+        <div class="card" style="width: 18rem;">
+          <div class="card-header">
+              <spring:message code="order.information"/>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <c:if test="${my_username == order.subscriber.username}">
+                <spring:message code="user"/>: ${order.publication.supervisor.username}
+              </c:if>
+              <c:if test="${my_username != order.subscriber.username}">
+                <spring:message code="user"/>: ${order.subscriber.username}
+              </c:if>
+            </li>
+            <li class="list-group-item">
+              <c:if test="${my_username == order.subscriber.username}">
+                <spring:message code="email"/>: ${order.publication.supervisor.email}
+              </c:if>
+              <c:if test="${my_username != order.subscriber.username}">
+                <spring:message code="email"/>: ${order.subscriber.email}
+              </c:if>
+            </li>
+            <c:if test="${my_username != order.subscriber.username}">
+              <li class="list-group-item">
+              <spring:message code="quantity"/>: ${order.quantity}
+              </li>
+            </c:if>
+          </ul>
+        </div>
+        <div class="mt-3 card" style="width: 18rem;">
+              <c:if test="${my_username == order.subscriber.username}">
+                <c:if test="${empty order.supervisorReputation}">
+                  <div class="card-header">
+                    <spring:message code="rate"/>
+                  </div>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                  <c:forEach begin="1" end="5" varStatus="i">
+                    <form class="rate-star" action="/profile/rate" method="post">
+                      <input type="hidden" value="${order.subscriber.username}" name="subscriberUsername"/>
+                      <input type="hidden" value="${order.publication.id}" name="publicationId"/>
+                      <input type="hidden" value="1" name="rateSupervisor"/>
+                      <button id="button-rate-${i.index}" class="rate-star" type="submit" name="stars" value="${i.index}">
+                        <img id="star-${i.index}" style="display:inline" height="45" class="pb-3" src='<spring:url value="/img/greyStar.svg" htmlEscape="true"/>' alt="icon name" />
+                      </button>
+                    </form>
+                  </c:forEach>
+                </c:if>
+                <c:if test="${not empty order.supervisorReputation}">
+                  <div class="card-header">
+                    <spring:message code="rated"/>
+                  </div>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                  <c:forEach begin="1" end="${order.supervisorReputation}" varStatus="i">
+                      <img style="display:inline" height="45" class="pb-3" src='<spring:url value="/img/star.svg" htmlEscape="true"/>' alt="icon name" />
+                  </c:forEach>
+                  <c:forEach begin="${order.supervisorReputation+1}" end="5" varStatus="i">
+                      <img style="display:inline" height="45" class="pb-3" src='<spring:url value="/img/greyStar.svg" htmlEscape="true"/>' alt="icon name" />
+                  </c:forEach>
+                </c:if>
+              </c:if>
+              <c:if test="${my_username != order.subscriber.username}">
+                <c:if test="${empty order.subscriberReputation}">
+                  <div class="card-header">
+                    <spring:message code="rate"/>
+                  </div>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                  <c:forEach begin="1" end="5" varStatus="i">
+                    <form class="rate-star" action="/profile/rate" method="post">
+                      <input type="hidden" value="${order.subscriber.username}" name="subscriberUsername"/>
+                      <input type="hidden" value="${order.publication.id}" name="publicationId"/>
+                      <input type="hidden" value="0" name="rateSupervisor"/>
+                      <button class="rate-star" type="submit" name="stars" value="${i.index}">
+                        <img id="star-${i.index}" style="display:inline" height="45" class="pb-3" src='<spring:url value="/img/greyStar.svg" htmlEscape="true"/>' alt="icon name" />
+                      </button>
+                    </form>
+                  </c:forEach>
+                </c:if>
+                <c:if test="${not empty order.subscriberReputation}">
+                  <div class="card-header">
+                    <spring:message code="rated"/>
+                  </div>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                  <c:forEach begin="1" end="${order.subscriberReputation}" varStatus="i">
+                      <img style="display:inline" height="45" class="pb-3" src='<spring:url value="/img/star.svg" htmlEscape="true"/>' alt="icon name" />
+                  </c:forEach>
+                  <c:forEach begin="${order.subscriberReputation+1}" end="5" varStatus="i">
+                      <img style="display:inline" height="45" class="pb-3" src='<spring:url value="/img/greyStar.svg" htmlEscape="true"/>' alt="icon name" />
+                  </c:forEach>
+                </c:if>
+              </c:if>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </body>
 </html>
