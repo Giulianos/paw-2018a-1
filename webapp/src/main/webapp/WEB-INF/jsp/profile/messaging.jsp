@@ -37,58 +37,39 @@
       </div>
       <div class="col-8">
         <div class="container">
-            <h2 class="text-secondary mb-4"><spring:message code="messages.for"/> ${order_id}</h2>
+            <h2 class="text-secondary mb-4"><spring:message code="messages.for"/> ${order.publication.description}</h2>
             <div class="message-line">
-              <div class="message-box-sender" />
-                <div class="message message-sender">
-                  <div class="message-text">Hola, como andas?jkfhkdsjfhkjasdhfkjshkjdfhskdjfhksjdhfkjsdhfkjshdkjfhsdkjfhskjdfhksjdhfkjsdhfkjsdhfkjsdhkfjshdkjfhskjdfhskjdhfkjsdhfkjsdhfkjshdkfjhskdjfhksjdhfkjsdhfkjsdhfkjshdfkjshdkjfhskdjhfksdjfhk</div>
-                  <div class="message-date">23/07/18</div>
-                </div>
-              </div>
-              <div class="message-box-receiver">
-                <div class="message message-receiver">
-                  <div class="message-text">Hola! Todo bien</div>
-                  <div class="message-date">23/07/18</div>
-                </div>
-              </div>
-              <div class="message-box-receiver">
-                <div class="message message-receiver">
-                  <div class="message-text">Hola! Todo bien</div>
-                  <div class="message-date">23/07/18</div>
-                </div>
-              </div>
-              <div class="message-box-receiver">
-                <div class="message message-receiver">
-                  <div class="message-text">Hola! Todo bien</div>
-                  <div class="message-date">23/07/18</div>
-                </div>
-              </div>
-              <div class="message-box-receiver">
-                <div class="message message-receiver">
-                  <div class="message-text">Hola! Todo bien</div>
-                  <div class="message-date">23/07/18</div>
-                </div>
-              </div>
-              <div class="message-box-sender" />
-                <div class="message message-sender">
-                  <div class="message-text">Hola, como andas?jkfhkdsjfhkjasdhfkjshkjdfhskdjfhksjdhfkjsdhfkjshdkjfhsdkjfhskjdfhksjdhfkjsdhfkjsdhfkjsdhkfjshdkjfhskjdfhskjdhfkjsdhfkjsdhfkjshdkfjhskdjfhksjdhfkjsdhfkjsdhfkjshdfkjshdkjfhskdjhfksdjfhk</div>
-                  <div class="message-date">23/07/18</div>
-                </div>
-              </div>
-              <div class="message-box-sender" />
-                <div class="message message-sender">
-                  <div class="message-text">Hola, como andas?jkfhkdsjfhkjasdhfkjshkjdfhskdjfhksjdhfkjsdhfkjshdkjfhsdkjfhskjdfhksjdhfkjsdhfkjsdhfkjsdhkfjshdkjfhskjdfhskjdhfkjsdhfkjsdhfkjshdkfjhskdjfhksjdhfkjsdhfkjsdhfkjshdfkjshdkjfhskdjhfksdjfhk</div>
-                  <div class="message-date">23/07/18</div>
-                </div>
-              </div>
+              <c:if test="${empty messages}">
+                No messages found!
+              </c:if>
+              <c:forEach var="message" items="${messages}">
+                <c:if test="${message.from.username == my_username}">
+                  <div class="message-box-sender">
+                    <div class="message message-sender">
+                      <div class="message-text">${message.text}</div>
+                      <div class="message-date">${message.sentTime}</div>
+                    </div>
+                  </div>
+                </c:if>
+                <c:if test="${message.to.username == my_username}">
+                  <div class="message-box-receiver">
+                    <div class="message message-receiver">
+                      <div class="message-text">${message.text}</div>
+                      <div class="message-date">${message.sentTime}</div>
+                    </div>
+                  </div>
+                </c:if>
+              </c:forEach>
             </div>
             <div class="new-message">
-              <div class="input-group">
-                <textarea id="new-message-text" class="form-control" aria-label="With textarea"></textarea>
-                <div class="input-group-append">
-                  <button class="btn btn-gumpu" type="button"><spring:message code="send.message"/></button>
+              <form action="" method="post">
+                <div class="input-group">
+                  <textarea name="message_body" id="new-message-text" class="form-control" aria-label="With textarea"></textarea>
+                  <div class="input-group-append">
+                    <button class="btn btn-gumpu" type="submit"><spring:message code="send.message"/></button>
+                  </div>
                 </div>
-              </div>
+              </form>
             </div>
         </div>
       </div>

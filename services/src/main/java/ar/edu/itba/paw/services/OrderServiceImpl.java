@@ -2,7 +2,7 @@ package ar.edu.itba.paw.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -113,5 +113,15 @@ public class OrderServiceImpl implements OrderService {
 				return true;
 		}
 		return false;
+	}
+
+	@Override
+	public Optional<Order> findByPublicationAndSubscriber(Long publication_id, String username) {
+		Optional<Publication> publication = publicationDao.findById(publication_id);
+		Optional<User> subscriber = userDao.findByUsername(username);
+		if(!publication.isPresent() || !subscriber.isPresent()) {
+			return Optional.empty();
+		}
+		return orderDao.findByPublicationAndSupervisor(publication.get(), subscriber.get());
 	}
 }
