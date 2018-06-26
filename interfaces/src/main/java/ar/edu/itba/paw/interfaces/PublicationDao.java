@@ -92,11 +92,12 @@ public interface PublicationDao {
 	 * @param price The price of the publication.
 	 * @param quantity The quantity of the publication.
 	 * @param image The publication image encoded in base64
+	 * @param tags The tags to find the publication
 	 * 
 	 * @return The created user.
 	 */
 	
-	public Publication create(User supervisor, final String description, final float price, final int quantity, final String image);
+	public Publication create(User supervisor, final String description, final float price, final int quantity, final String image, final String tags);
 	
 	/**
 	 * Sets the is_confirmed attribute for the provided id.

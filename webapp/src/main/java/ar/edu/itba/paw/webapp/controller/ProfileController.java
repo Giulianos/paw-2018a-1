@@ -93,7 +93,7 @@ public class ProfileController {
 		
 		String currentUser = auth.getAuthentication().getName();
 		
-		final Publication p = ps.create(currentUser, form.getDescription(), Float.parseFloat(form.getPrice()), Integer.parseInt(form.getQuantity()), form.getImage());
+		final Publication p = ps.create(currentUser, form.getDescription(), Float.parseFloat(form.getPrice()), Integer.parseInt(form.getQuantity()), form.getImage(), form.getTags());
 
 		ord.create(p, p.getSupervisor(), Integer.parseInt(form.getOwnerQuantity()));
 		

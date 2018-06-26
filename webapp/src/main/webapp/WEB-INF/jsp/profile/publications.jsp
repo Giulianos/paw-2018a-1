@@ -71,6 +71,7 @@
                   <th scope="col"><spring:message code="needed.quantity"/></th>
                   <th scope="col"><spring:message code="remaining.quantity"/></th>
                   <th scope="col"><spring:message code="unit.price"/></th>
+                  <th scope="col"><spring:message code="tags"/></th>
                   <th scope="col"></th>
                 </tr>
               </thead>
@@ -81,6 +82,7 @@
                     <td><c:out value="${publ.quantity}"/></td>
                     <td><c:out value="${publ.remainingQuantity}"/></td>
                     <td><c:out value="${publ.price}"/></td>
+                    <td><c:out value="${publ.tags}"/></td>
                     <td style="text-align:center;">
                       <c:choose>
                         <c:when test="${publ.remainingQuantity == 0}">

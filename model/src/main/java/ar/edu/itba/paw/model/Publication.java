@@ -45,10 +45,13 @@ public class Publication {
 	@Column
 	private Integer remainingQuantity;
 	
+	@Column
+	private String tags;
+	
 	@OneToMany(mappedBy = "publication", fetch = FetchType.EAGER)
 	private List<Order> orders = new ArrayList<>();
 	
-	public Publication(final User supervisor, final String description, final float price, final int quantity, final String image, final boolean confirmed) {
+	public Publication(final User supervisor, final String description, final float price, final int quantity, final String image, final boolean confirmed, final String tags) {
 	    this.supervisor = supervisor; 
 	    this.description = description; 
 	    this.price = price; 
@@ -56,20 +59,29 @@ public class Publication {
 	    this.image = image; 
 	    this.confirmed = confirmed; 
 	    this.remainingQuantity = quantity; 
+	    this.tags = tags+" "+description;
 	} 
 	
 	public Publication() {
 		//hibernate needs this
 	}
 	
-	public Publication(final User supervisor, final String description, final float price, final int quantity, final String image) {
-		this(supervisor,description,price,quantity,image,false);
+	public Publication(final User supervisor, final String description, final float price, final int quantity, final String image, String tags) {
+		this(supervisor,description,price,quantity,image,false, tags);
+	}
+	
+	public Publication(final User supervisor, final String description, final float price, final int quantity, final String tags) {
+		this(supervisor,description,price,quantity,"", tags);
+	}
+
+	public Publication(final User supervisor, final String description, final float price, final String image, final int quantity) {
+		this(supervisor,description,price,quantity,image,false, "");
 	}
 	
 	public Publication(final User supervisor, final String description, final float price, final int quantity) {
-		this(supervisor,description,price,quantity,"");
+		this(supervisor,description,price,quantity,"", "");
 	}
-
+	
 	public long getId() {
 		return this.id;
 	}
@@ -88,6 +100,14 @@ public class Publication {
 	
 	public int getQuantity() {
 		return this.quantity;
+	}
+	
+	public String getTags() {
+		return tags;
+	}
+	
+	public void setTags(String tags) {
+		this.tags = tags;
 	}
 	
 	public String getImage() {

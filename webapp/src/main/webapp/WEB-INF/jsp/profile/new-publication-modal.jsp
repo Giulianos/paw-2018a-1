@@ -1,6 +1,7 @@
 <c:set var="enterDescription"><spring:message code="enter.description"/></c:set>
 <c:set var="enterPrice"><spring:message code="enter.price"/></c:set>
 <c:set var="enterQuantity"><spring:message code="enter.quantity"/></c:set>
+<c:set var="enterTags"><spring:message code="enter.tags"/></c:set>
 
 <div class="modal fade" id="publicationModal" tabindex="-1" role="dialog" aria-labelledby="Publication" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -54,6 +55,11 @@
             <c:if test="${not empty invalidQuantity}">
               <div role="alert" class="alert alert-danger mt-2"><spring:message code="publication.invalid.quantity"/></div>
             </c:if>
+          </div>
+          <div class="form-group">
+            <label><spring:message code="tags"/></label>
+            <form:input type="text" class="form-control" aria-describedby="tags" placeholder="${enterTags}"
+            path="tags" id="tags"/>
           </div>
           <label><spring:message code="publication.image"/></label>
           <div class="input-group mb-3">

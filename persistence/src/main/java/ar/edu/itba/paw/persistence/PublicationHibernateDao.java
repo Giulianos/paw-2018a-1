@@ -83,8 +83,8 @@ public class PublicationHibernateDao implements PublicationDao {
 
 	@Override
 	@Transactional
-	public Publication create(User supervisor, String description, float price, int quantity, String image) {
-		final Publication publication = new Publication(supervisor, description, price, quantity, image);
+	public Publication create(User supervisor, String description, float price, int quantity, String image, String tags) {
+		final Publication publication = new Publication(supervisor, description, price, quantity, image, tags);
 		
 		em.persist(publication);
 		return publication;

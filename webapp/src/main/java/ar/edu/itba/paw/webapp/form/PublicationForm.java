@@ -20,6 +20,8 @@ public class PublicationForm {
 	@Pattern(regexp = "0*[1-9][0-9]*", message="{publication.quantity.pattern}")
 	private String ownerQuantity;
 
+	private String tags;
+	
 	private String image;
 
 	public String getDescription() {
@@ -52,6 +54,14 @@ public class PublicationForm {
 
 	public void setOwnerQuantity(String ownerQuantity) {
 		this.ownerQuantity = ownerQuantity;
+	}
+	
+	public String getTags() {
+		return tags;
+	}
+	
+	public void setTags(String tags) {
+		this.tags = tags;
 	}
 	
 	public boolean quantityCheck() {

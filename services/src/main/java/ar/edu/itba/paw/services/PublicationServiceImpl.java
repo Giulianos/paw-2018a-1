@@ -105,9 +105,9 @@ public class PublicationServiceImpl implements PublicationService {
 	}
 
 	@Override
-	public Publication create(String supervisor, String description, float price, int quantity, final String image) {
+	public Publication create(String supervisor, String description, float price, int quantity, final String image, final String tags) {
 		User supervisorUser = userDao.findByUsername(supervisor).get();
-		return publicationDao.create(supervisorUser,description,price,quantity,image);
+		return publicationDao.create(supervisorUser,description,price,quantity,image, tags);
 	}
 
 	@Override
