@@ -28,6 +28,16 @@ body {
 	font-size: 3.7vw;
 }
 
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-btn-group {
+	width: 100%;
+}
+
 .btn-gumpu {
 	color:#fff;
 	background-color:#61c2b5;
