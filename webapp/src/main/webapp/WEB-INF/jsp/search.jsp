@@ -73,7 +73,7 @@
             </c:if>
             <c:forEach var="publication" items="${resultList}">
             	<!-- Publication -->
-
+              <c:set var="reputation" value="${publication.supervisor.reputation}"/>
 	            <div class="row bg-white border border-secondary rounded ml-2 mr-2 mb-2">
 	              <div class="column">
 	                <img height="180" width="286" src="${publication.image}" class="p-2"/>
@@ -81,6 +81,23 @@
 	              <div class="column py-2 px-3">
 	                <h3><c:out value="${publication.description}" /></h3>
 	                <span class="mt-3"><img height="18" src='<spring:url value="/img/dollar.svg" htmlEscape="true"/>' alt="icon name" /> ${publication.price}</span></br>
+                  <span class="mt-3"><spring:message code="reputation" />
+                    <c:if test="${empty reputation}">
+                      <img height="20" class="pb-1" src='<spring:url value="/img/greyStar.svg" htmlEscape="true"/>' alt="icon name" />
+                      <img height="20" class="pb-1" src='<spring:url value="/img/greyStar.svg" htmlEscape="true"/>' alt="icon name" />
+                      <img height="20" class="pb-1" src='<spring:url value="/img/greyStar.svg" htmlEscape="true"/>' alt="icon name" />
+                      <img height="20" class="pb-1" src='<spring:url value="/img/greyStar.svg" htmlEscape="true"/>' alt="icon name" />
+                      <img height="20" class="pb-1" src='<spring:url value="/img/greyStar.svg" htmlEscape="true"/>' alt="icon name" />
+                    </c:if>
+                    <c:if test="${not empty reputation}">
+                      <c:forEach begin="1" end="${reputation}" varStatus="i">
+                        <img height="20" class="pb-1" src='<spring:url value="/img/star.svg" htmlEscape="true"/>' alt="icon name" />
+                      </c:forEach>
+                      <c:forEach begin="${reputation}" end="4" varStatus="i">
+                        <img height="20" class="pb-1" src='<spring:url value="/img/greyStar.svg" htmlEscape="true"/>' alt="icon name" />
+                      </c:forEach>
+                    </c:if>
+                  </span></br>
 	                <span class="mt-3"><spring:message code="quantity.available"/></span> <span class="badge badge-pill badge-gumpu"><c:out value="${publication.remainingQuantity}" /></span></br>
                   <spring:url var='order_form_url' value="/order" htmlEscape="true"/>
 	                <form:form modelAttribute="orderForm" action='${order_form_url}' method="post">
