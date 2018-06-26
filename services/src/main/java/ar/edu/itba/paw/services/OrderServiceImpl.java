@@ -13,6 +13,7 @@ import ar.edu.itba.paw.interfaces.OrderDao;
 import ar.edu.itba.paw.interfaces.OrderService;
 import ar.edu.itba.paw.interfaces.PublicationDao;
 import ar.edu.itba.paw.interfaces.UserDao;
+import ar.edu.itba.paw.interfaces.UserService;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.model.User;
@@ -30,7 +31,7 @@ public class OrderServiceImpl implements OrderService {
 	private PublicationDao publicationDao;
 	
 	@Autowired
-	private UserServiceImpl userService;
+	private UserService userService;
 
 	@Override
 	public List<Order> findBySubscriber(String username) {

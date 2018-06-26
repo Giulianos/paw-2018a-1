@@ -48,7 +48,7 @@
                   <th scope="col"><spring:message code="description"/></th>
                   <th scope="col"><spring:message code="ordered.quantity"/></th>
                   <th scope="col"><spring:message code="final.price"/></th>
-                  <th scope="col"><spring:message code="get.contacts"/></th>
+                  <th scope="col"><spring:message code="contact"/></th>
                 </tr>
               </thead>
               <tbody>
