@@ -1,7 +1,6 @@
 package ar.edu.itba.paw.webapp.controller;
 
 import java.util.List;
-import java.util.regex.Pattern;
 
 import javax.validation.Valid;
 
@@ -13,7 +12,6 @@ import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,7 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.paw.interfaces.OrderService;
 import ar.edu.itba.paw.interfaces.PublicationService;
-import ar.edu.itba.paw.interfaces.UserService;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.webapp.auth.IAuthenticationFacade;
@@ -35,8 +32,6 @@ public class ProfileController {
 	private final static int MY_ORDERS_MAX_PAGE_LINKS = 10;
 	@Autowired
 	private PublicationService ps;
-	@Autowired
-	private UserService us;
 	@Autowired
 	private OrderService ord;
 	@Autowired
@@ -76,10 +71,6 @@ public class ProfileController {
 		
 		ModelAndView mav = new ModelAndView("profile/publications");
 
-		for (Publication publication : publications) {
-			publication.setRemainingQuantity(ps.remainingQuantity(publication.getId()));
-		}
-		
 		if(newModal) {
 			model.addAttribute("shouldShowModal", true);
 		}
@@ -104,7 +95,7 @@ public class ProfileController {
 		
 		final Publication p = ps.create(currentUser, form.getDescription(), Float.parseFloat(form.getPrice()), Integer.parseInt(form.getQuantity()), form.getImage());
 
-		ord.create(p.getId(), p.getSupervisor(), Integer.parseInt(form.getOwnerQuantity()));
+		ord.create(p, p.getSupervisor(), Integer.parseInt(form.getOwnerQuantity()));
 		
 		return publications(0, false, null, model);
 	}
@@ -120,22 +111,14 @@ public class ProfileController {
 		ModelAndView mav = new ModelAndView("profile/subscriptions");
 		
 		String user = auth.getAuthentication().getName();
-		List<Order> subscriptions = ord.findBySubscriber(user, false);
-		Boolean anyHasNoSupervisor = false;
-		
-		for (Order order : subscriptions) {
-			order.setPublication(ps.findById(order.getPublication_id()).get());
-			order.getPublication().setRemainingQuantity(ps.remainingQuantity(order.getPublication_id()));
-			if(!anyHasNoSupervisor && !ps.hasSupervisor(order.getPublication_id())) {
-				anyHasNoSupervisor = true;
-			}
-		}
+		List<Order> orders = ord.findBySubscriber(user, false);
+		Boolean anyHasNoSupervisor = ord.anyHasNoSupervisor(orders);
 		
 		// The list is reduced to fit into a page after checking for publications with no supervisor.
-		subscriptions = subscriptions.subList(index, subscriptions.size());
+		orders = orders.subList(index, orders.size());
 		
 		mav.addObject("anyHasNoSupervisor", anyHasNoSupervisor);
-		mav.addObject("subscriptions", ordPaginationConfig("subscriptions", index, subscriptions, mav));
+		mav.addObject("subscriptions", ordPaginationConfig("subscriptions", index, orders, mav));
 		
 		return mav;
 	}
@@ -153,12 +136,6 @@ public class ProfileController {
 		
 		String user = auth.getAuthentication().getName();
 		List<Order> subscriptions = ord.findFinalizedBySubscriber(user);
-		for (Order order : subscriptions) {
-			order.setPublication(ps.findById(order.getPublication_id()).get());
-			order.setSubscriberUser(us.findByUsername(order.getSubscriber()).get());
-			order.getPublication().setSupervisorUser(us.findByUsername(order.getPublication().getSupervisor()).get());
-			ps.loadPublicationSubscribers(order.getPublication());
-		}
 		
 		// The list is reduced to fit into a page after checking for publications with no supervisor.
 		subscriptions = subscriptions.subList(index, subscriptions.size());

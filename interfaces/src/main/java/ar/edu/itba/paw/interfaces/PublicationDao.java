@@ -3,7 +3,10 @@ package ar.edu.itba.paw.interfaces;
 import java.util.List;
 import java.util.Optional;
 
+import javax.activation.UnsupportedDataTypeException;
+
 import ar.edu.itba.paw.model.Publication;
+import ar.edu.itba.paw.model.User;
 
 public interface PublicationDao {
 	
@@ -20,12 +23,12 @@ public interface PublicationDao {
 	/**
 	 * Finds publications with the provided supervisor.
 	 * 
-	 * @param username The username of the supervisor.
+	 * @param supervisor The supervisor.
 	 * 
 	 * @return The publications with the provided supervisor.
 	 */
 	
-	public List<Publication> findBySupervisor(final String username);
+	public List<Publication> findBySupervisor(User supervisor);
 	
 	/**
 	 * Finds publications that contain or have the exact provided description.
@@ -84,7 +87,7 @@ public interface PublicationDao {
 	/**
 	 * Creates a new publication.
 	 * 
-	 * @param supervisor The username of the supervisor.
+	 * @param supervisor The supervisor.
 	 * @param description The description of the publication.
 	 * @param price The price of the publication.
 	 * @param quantity The quantity of the publication.
@@ -93,48 +96,58 @@ public interface PublicationDao {
 	 * @return The created user.
 	 */
 	
-	public Publication create(final String supervisor, final String description, final float price, final int quantity, final String image);
+	public Publication create(User supervisor, final String description, final float price, final int quantity, final String image);
 	
 	/**
 	 * Sets the is_confirmed attribute for the provided id.
 	 * 
-	 * @param id The id of the publication.
+	 * @param publication The publication.
 	 * 
-	 * @return True if it the confirmation update was successful.
+	 * @return True if the set was successful.
+	 * 
 	 */
 	
-	public boolean confirm(final long id);
+	public boolean confirm(Publication publication);
 	
 	/**
-	 * Delete publication for the corresponding id.
+	 * Delete publication.
 	 * 
-	 * @param id The id of the publication to be deleted.
+	 * @param publication The publication to be deleted.
 	 * 
 	 * @return True if the deletion was successful.
 	 */
 	
-	public boolean delete(final long id);
+	public boolean delete(Publication publication);
 	
 	/**
-	 * Sets a new supervisor for the corresponding id.
+	 * Sets a new supervisor for the corresponding publication.
 	 * 
-	 * @param user The user is the new supervisor
+	 * @param supervisor The new supervisor
 	 * 
-	 * @param id The id of the publication to be deleted.
+	 * @param publication The publication
 	 * 
 	 * @return True if the set was successful.
 	 */
 	
-	public boolean setNewSupervisor (final String user, final long id);
+	public boolean setNewSupervisor (User supervisor, Publication publication);
 	
 	/**
-	 * Checks if supervisor is null for the corresponding id.
+	 * Checks if supervisor is null for the corresponding publication.
 	 * 
-	 * @param id The id of the publication to be deleted.
+	 * @param publication The publication.
 	 * 
 	 * @return True if the set was successful.
 	 */
 	
-	public boolean hasSupervisor (final long id);
+	public boolean hasSupervisor (Publication publication);
+	
+	/**
+	 * Updates the publication object.
+	 * 
+	 * @param publication The publication to be updated.
+	 * 
+	 * @return true if the update was successful.
+	 */
+	public boolean updatePublication(Publication publication);
 
 }

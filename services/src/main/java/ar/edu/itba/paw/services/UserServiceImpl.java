@@ -13,9 +13,10 @@ import ar.edu.itba.paw.model.User;
 
 @Primary
 @Service
-public class UsersImpl implements UserService {
+public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDao userDao;
+	
 	@Autowired
 	private PasswordEncoder passEncoder;
 	
@@ -40,21 +41,7 @@ public class UsersImpl implements UserService {
 	}
 
 	@Override
-	public int transaction(String username) {
-		Optional<User> user = userDao.findByUsername(username);
-		return user.isPresent() ? user.get().getTransactions() : 0;
-	}
-
-	@Override
-	public boolean addTransaction(String username) {
-		return userDao.addTransaction(username);
-	}
-
-	public boolean uniqueUser(final String username) {
-		return !findByUsername(username).isPresent();
-	}
-
-	public boolean uniqueEmail(final String email) {
-		return !findByEmail(email).isPresent();
+	public boolean userExists(final String username, final String email) {
+		return findByUsername(username).isPresent() || findByEmail(email).isPresent();
 	}
 }

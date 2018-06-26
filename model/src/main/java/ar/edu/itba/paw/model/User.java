@@ -1,33 +1,66 @@
 package ar.edu.itba.paw.model;
 
-public class User {
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-	private final long id;
-	private final String username;
-	private final String email;
-	private final String regdate;
-	private final int transactions;
-	private final String password;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Entity
+@Table(name = "users")
+public class User {
 	
-	public User(final long id, final String username, final String email, final String password, final String regdate, final int transactions) {
-		this.id = id;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "user_id")
+	private Long user_id;
+	
+	@Column(length = 15, nullable = false, unique = true)
+	private String username;
+	
+	@Column(length = 100, nullable = false)
+	private String password;
+	
+	@Column(length = 40, nullable = false, unique = true)
+	private String email;
+	
+	@Column(name = "reg_date")
+	@Temporal(TemporalType.DATE)
+	private Date regdate;
+	
+	@OneToMany(mappedBy = "subscriber", fetch = FetchType.EAGER)
+	private List<Order> orders = new ArrayList<>();
+	
+	public User(final String username, final String email, final String password, final Date regdate) {
 		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.regdate = regdate;
-		this.transactions = transactions;
 	}
 	
-	public User(final long id, final String username, final String email, final String password) {
-		this(id,username,email,password,"",0);
-	}
-	
-	public User(final long id, final String username, final String email, final String password, final int transactions) {
-		this(id,username,email,password,"",transactions);
+	public User(final String username, final String email, final String password) {
+		this(username,email,password,Date.from(Instant.now()));
 	}
 
-	public long getId() {
-		return this.id;
+	public User() {
+		//hibernate needs this
+	}
+
+	public Long getId() {
+		return this.user_id;
 	}
 
 	public String getUsername() {
@@ -42,11 +75,11 @@ public class User {
 		return this.password;
 	}
 	
-	public String getRegdate() {
-		return this.regdate;
+	public List<Order> getOrders() {
+		return this.orders;
 	}
 	
-	public int getTransactions() {
-		return this.transactions;
-	}	
+	public Date getRegdate() {
+		return this.regdate;
+	}
 }

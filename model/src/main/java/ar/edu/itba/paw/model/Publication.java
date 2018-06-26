@@ -1,44 +1,80 @@
 package ar.edu.itba.paw.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "publications")
 public class Publication {
 
-	private final long id;
-	private final String supervisor;
-	private final String description;
-	private final float price;
-	private final int quantity;
-	private final String image;
-	private final boolean confirmed;
-	private int remainingQuantity;
-	private User supervisorUser;
-	private List<User> subscribers;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "publication_id")
+	private Long id;
 	
-	public Publication(final long id, final String supervisor, final String description, final float price, final int quantity, final String image, final boolean confirmed) {
-		this.id = id;
-		this.supervisor = supervisor;
-		this.description = description;
-		this.price = price;
-		this.quantity = quantity;
-		this.image = image;
-		this.confirmed = confirmed;
-		this.remainingQuantity = quantity;
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	private User supervisor;
+	
+	@Column(length = 30)
+	private String description;
+	
+	@Column
+	private Float price;
+	
+	@Column
+	private Integer quantity;
+	
+	@Column(length = 50000)
+	private String image;
+	
+	@Column
+	private Boolean confirmed;
+	
+	@Column
+	private Integer remainingQuantity;
+	
+	@OneToMany(mappedBy = "publication", fetch = FetchType.EAGER)
+	private List<Order> orders = new ArrayList<>();
+	
+	public Publication(final User supervisor, final String description, final float price, final int quantity, final String image, final boolean confirmed) {
+	    this.supervisor = supervisor; 
+	    this.description = description; 
+	    this.price = price; 
+	    this.quantity = quantity; 
+	    this.image = image; 
+	    this.confirmed = confirmed; 
+	    this.remainingQuantity = quantity; 
+	} 
+	
+	public Publication() {
+		//hibernate needs this
 	}
 	
-	public Publication(final long id, final String supervisor, final String description, final float price, final int quantity, final String image) {
-		this(id,supervisor,description,price,quantity,image,false);
+	public Publication(final User supervisor, final String description, final float price, final int quantity, final String image) {
+		this(supervisor,description,price,quantity,image,false);
 	}
 	
-	public Publication(final long id, final String supervisor, final String description, final float price, final int quantity) {
-		this(id,supervisor,description,price,quantity,"");
+	public Publication(final User supervisor, final String description, final float price, final int quantity) {
+		this(supervisor,description,price,quantity,"");
 	}
 
 	public long getId() {
 		return this.id;
 	}
 
-	public String getSupervisor() {
+	public User getSupervisor() {
 		return this.supervisor;
 	}
 
@@ -72,20 +108,16 @@ public class Publication {
 		this.remainingQuantity = remainingQuantity;
 	}
 	
-	public void setSupervisorUser(User user) {
-		this.supervisorUser = user;
+	public List<Order> getOrders() {
+		return this.orders;
 	}
 	
-	public User getSupervisorUser() {
-		return supervisorUser;
+	public void setConfirmed(Boolean confirmed) {
+		this.confirmed = confirmed;
 	}
 	
-	public void setSubscribers(List<User> subscribers) {
-		this.subscribers = subscribers;
-	}
-	
-	public List<User> getSubscribers() {
-		return subscribers;
+	public void setSupervisor(User supervisor) {
+		this.supervisor = supervisor;
 	}
 	
 	@Override

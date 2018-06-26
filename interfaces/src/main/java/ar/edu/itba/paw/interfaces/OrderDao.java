@@ -1,82 +1,76 @@
 package ar.edu.itba.paw.interfaces;
 
 import java.util.List;
+import java.util.Optional;
 
 import ar.edu.itba.paw.model.Order;
+import ar.edu.itba.paw.model.Publication;
+import ar.edu.itba.paw.model.User;
 
 public interface OrderDao {
 	
 	/**
 	 * Finds orders with the provided subscriber.
 	 * 
-	 * @param username The username of the subscriber.
+	 * @param subscriber The subscriber.
 	 * 
 	 * @return The orders with the provided subscriber.
 	 */
 	
-	public List<Order> findBySubscriber(final String username);
+	public List<Order> findBySubscriber(User subscriber);
+
 	
 	/**
-	 * Finds the orders with the provided publication id.
+	 * Finds the orders with the provided publication.
 	 * 
-	 * @param publication_id The id of the publication.
+	 * @param publication The publication.
 	 * 
-	 * @return The orders with the provided publication id.
+	 * @return The orders with the provided publication.
 	 */
 	
-	public List<Order> findByPublicationId(final long publication_id);
+	public List<Order> findByPublication(Publication publication);
 	
 	/**
-	 * Finds finalized orders with the provided subscriber.
+	 * Finds the order with the provided publication and subscriber.
 	 * 
-	  * @param username The username of the subscriber.
+	 * @param publication The publication.
 	 * 
-	 * @return The finalized orders with the provided subscriber.
+	 * @param supervisor The subscriber.
+	 * 
+	 * @return The order with the provided publication and subscriber.
 	 */
 	
-	public List<Order> findFinalizedBySubscriber(String username);
+	public Optional<Order> findByPublicationAndSupervisor(Publication publication, User subscriber);
 	
 	/**
 	 * Creates a new order.
 	 * 
-	 * @param publication_id The id of the publication.
-	 * @param subscriber The username of the subscriber.
+	 * @param publication The publication.
+	 * @param subscriber The subscriber.
 	 * @param quantity The quantity of the order.
 	 * 
 	 * @return The created order.
 	 */
 	
-	public Order create(final long publication_id, final String subscriber, final int quantity);
+	public Optional<Order> create(Publication publication, User subscriber, int quantity);
 	
-	/**
-	 * Sets the is_confirmed attribute for the provided publication id and subscriber.
-	 * 
-	 * @param publication_id The id of the publication.
-	 * @param subscriber The username of the subscriber.
-	 * 
-	 * @return True if it the confirmation update was successful.
-	 */
-	
-	public boolean confirm(final long publication_id, final String subscriber);
-	
-	/**
-	 * Delete all orders for the corresponding publication id.
-	 * 
-	 * @param publication_id The id of the publication.
-	 * 
-	 * @return True if the deletion was successful.
-	 */
-	
-	public boolean delete(final long publication_id);
 
 	/**
-	 * Delete all orders for the corresponding publication id and subscriber.
+	 * Delete the order 
 	 * 
-	 * @param publication_id The id of the publication.
-	 * @param subscriber The subscriber of the publication.
+	 * @param order The order to be deleted
 	 * 
 	 * @return True if the deletion was successful.
 	 */
 	
-	public boolean delete(long publication_id, String subscriber);
+	public boolean delete(Order order);
+	
+	/**
+	 * Updates the order object.
+	 * 
+	 * @param order The order to be updated.
+	 * 
+	 * @return true if the update was successful.
+	 */
+	public boolean updateOrder(Order order);
 }

@@ -47,44 +47,15 @@ public interface UserService {
 	 */
 	
 	public User create(String username, String email, String password);
-	
-	/**
-	 * Finds the number of transactions made by a user.
-	 * 
-	 * @param username The name of the user.
-	 * 
-	 * @return Number of transactions made by the user.
-	 */
-	
-	public int transaction(final String username);
-	
-	/**
-	 * Increase the transactions attribute for the provided user by 1.
-	 * 
-	 * @param username The name of the user.
-	 * 
-	 * @return True if it the count update was successful.
-	 */
-	
-	public boolean addTransaction(final String username);
 
 	/**
-	 * Check if the user is valid.
+	 * Checks if there already exists a user with that username or email.
 	 * 
-	 * @param username user to be checked.
+	 * @param username The to be checked.
 	 * 
-	 * @return True if the user is unique.
+	 * @param email The email to be checked
+	 * 
+	 * @return True if the user is already exists.
 	 */
-	
-	public boolean uniqueUser(final String username);
-
-	/**
-	 * Check if the email is valid.
-	 * 
-	 * @param email email to be checked.
-	 * 
-	 * @return True if the email is unique.
-	 */
-	
-	public boolean uniqueEmail(final String email);
+	public boolean userExists(final String username, final String email);
 }

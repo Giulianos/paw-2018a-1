@@ -2,8 +2,6 @@ package ar.edu.itba.paw.interfaces;
 
 import java.util.Optional;
 
-import java.util.List;
-
 import ar.edu.itba.paw.model.User;
 
 public interface UserDao {
@@ -38,15 +36,15 @@ public interface UserDao {
 	
 	public Optional<User> findByEmail(final String email);
 	
-	/**
-	 * Return users subscribed to a provided publication
-	 * 
-	 * @param publication_id The id of the publication to get the subscribers from
-	 * 
-	 * @return A list with the subscribers
-	 */
-	
-	public List<User> getSubscribersOfPublication(final long publications_id);
+//	/**
+//	 * Return users subscribed to a provided publication
+//	 * 
+//	 * @param publication_id The id of the publication to get the subscribers from
+//	 * 
+//	 * @return A list with the subscribers
+//	 */
+//	
+//	public List<User> getSubscribersOfPublication(final long publications_id);
 	
 	/**
 	 * Creates a new user.
@@ -61,12 +59,12 @@ public interface UserDao {
 	public User create(final String username, final String email, final String password);
 	
 	/**
-	 * Increase the transactions attribute for the provided user by 1.
+	 * Updates the user object.
 	 * 
-	 * @param username The name of the user.
+	 * @param user The user to be updated.
 	 * 
-	 * @return True if it the count update was successful.
+	 * @return true if the update was successful.
 	 */
+	public boolean updateUser(User user);
 	
-	public boolean addTransaction(final String username);
 }

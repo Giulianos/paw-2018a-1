@@ -56,7 +56,7 @@ public class RegisterController {
 	
 	@RequestMapping("/register")
 	public ModelAndView register(@ModelAttribute("registerForm") final UserForm form, ModelMap model) {
-		includeUserTransactions(model);
+
 		return new ModelAndView("register");
 	}
 
@@ -68,7 +68,6 @@ public class RegisterController {
 			return register(form, model);
 		}
 
-		includeUserTransactions(model);
 		
 		final User u = us.create(form.getUsername(), form.getEmail(), form.getPassword());
 		authWithoutPassword(u);
@@ -90,25 +89,14 @@ public class RegisterController {
 	    Authentication authentication = new UsernamePasswordAuthenticationToken(springUser, null, authorities);
 	    SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
-
-	private void includeUserTransactions(ModelMap model) {	
-		if (auth.getAuthentication().isAuthenticated()) {
-			String user = auth.getAuthentication().getName();
-			model.addAttribute("publications", pu.findBySupervisor(user));
-		}
-	}
 	
 	private boolean validUser(UserForm form, ModelMap model) {
 		boolean isValid = true;
-		
-		if (!us.uniqueUser(form.getUsername())) {
+		if(us.userExists(form.getUsername(), form.getEmail())) {
 			isValid = false;
 			model.addAttribute("invalidUser", true);
 		}
-		if (!us.uniqueEmail(form.getEmail())) {
-			isValid = false;
-			model.addAttribute("invalidEmail", true);
-		}
+		
 		if (!form.passwordCheck()) {
 			isValid = false;
 			model.addAttribute("invalidPassword", true);
