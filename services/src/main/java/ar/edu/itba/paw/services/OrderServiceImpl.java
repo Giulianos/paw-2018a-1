@@ -28,6 +28,9 @@ public class OrderServiceImpl implements OrderService {
 	
 	@Autowired
 	private PublicationDao publicationDao;
+	
+	@Autowired
+	private UserServiceImpl userService;
 
 	@Override
 	public List<Order> findBySubscriber(String username) {
@@ -93,6 +96,12 @@ public class OrderServiceImpl implements OrderService {
 		Publication publication = publicationDao.findById(publication_id).get();
 		User subscriberUser = userDao.findByUsername(subscriber).get();
 		Order order = orderDao.findByPublicationAndSupervisor(publication, subscriberUser).get();
+		if(order.getSubscriberReputation() != null) {
+			userService.updateReputation(order.getSubscriber().getUsername(), order.getSubscriberReputation());
+		}
+		if(order.getSupervisorReputation() != null) {
+			userService.updateReputation(order.getPublication().getSupervisor().getUsername(), order.getSupervisorReputation());
+		}
 		return orderDao.delete(order);
 	}
 
@@ -113,5 +122,17 @@ public class OrderServiceImpl implements OrderService {
 				return true;
 		}
 		return false;
+	}
+
+	@Override
+	@Transactional
+	public void setSupervisorReputation(Order order, Integer reputation) {
+		order.setSupervisorReputation(reputation);
+	}
+
+	@Override
+	@Transactional
+	public void setSupervisorSubscriber(Order order, Integer reputation) {
+		order.setSubscriberReputation(reputation);		
 	}
 }

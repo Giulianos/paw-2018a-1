@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.paw.interfaces.OrderService;
 import ar.edu.itba.paw.interfaces.PublicationService;
+import ar.edu.itba.paw.interfaces.UserService;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.webapp.auth.IAuthenticationFacade;
@@ -34,6 +35,8 @@ public class ProfileController {
 	private PublicationService ps;
 	@Autowired
 	private OrderService ord;
+	@Autowired
+	private UserService us;
 	@Autowired
 	private IAuthenticationFacade auth;
 	@Autowired
@@ -53,6 +56,7 @@ public class ProfileController {
 		mav.addObject("publicationsQuantity", ps.findBySupervisor(user).size());
 		mav.addObject("subscriptionsQuantity", ord.findBySubscriber(user).size()-ord.findFinalizedBySubscriber(user).size());
 		mav.addObject("finalizedSubscriptionsQuantity", ord.findFinalizedBySubscriber(user).size());
+		mav.addObject("reputation", us.getReputation(user));
 		
 		return mav;
 	}

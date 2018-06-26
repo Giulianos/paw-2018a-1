@@ -11,9 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,6 +35,12 @@ public class User {
 	@Column(length = 40, nullable = false, unique = true)
 	private String email;
 	
+	@Column(nullable = true)
+	private Integer reputation;
+	
+	@Column
+	private Integer numberOfQualifications;
+	
 	@Column(name = "reg_date")
 	@Temporal(TemporalType.DATE)
 	private Date regdate;
@@ -49,6 +53,8 @@ public class User {
 		this.email = email;
 		this.password = password;
 		this.regdate = regdate;
+		this.reputation = null;
+		this.numberOfQualifications = 0;
 	}
 	
 	public User(final String username, final String email, final String password) {
@@ -81,5 +87,21 @@ public class User {
 	
 	public Date getRegdate() {
 		return this.regdate;
+	}
+	
+	public Integer getReputation() {
+		return reputation;
+	}
+	
+	public void setReputation(Integer reputation) {
+		this.reputation = reputation;
+	}
+	
+	public Integer getNumberOfQualifications() {
+		return numberOfQualifications;
+	}
+	
+	public void setNumberOfQualifications(Integer numberOfQualifications) {
+		this.numberOfQualifications = numberOfQualifications;
 	}
 }

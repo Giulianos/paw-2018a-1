@@ -58,4 +58,22 @@ public interface UserService {
 	 * @return True if the user is already exists.
 	 */
 	public boolean userExists(final String username, final String email);
+	
+	/**
+	 * Updates the reputation of the provided user.
+	 * 
+	 * @param username The username of the user to be updated.
+	 * 
+	 * @param reputation The new reputation.
+	 */
+	public void updateReputation(String username, Integer reputation);
+	
+	/**
+	 * Gets the reputation of the provided user.
+	 * 
+	 * @param user Username of the user to look for the reputation.
+	 * 
+	 * @return the value of the reputation. null is returned if was never qualified.
+	 */
+	public Integer getReputation(String username);
 }
