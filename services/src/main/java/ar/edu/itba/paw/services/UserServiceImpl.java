@@ -49,6 +49,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public void updateReputation(String username, Integer reputation) {
+		System.out.println("--------------------->Updated reputation of: "+username);
+		System.out.println("--------------------->Qualified with: "+reputation);
 		User user = userDao.findByUsername(username).get();
 		user.setNumberOfQualifications(user.getNumberOfQualifications()+1);
 		if(user.getReputation() == null) {
@@ -56,6 +58,7 @@ public class UserServiceImpl implements UserService {
 		} else {
 			user.setReputation((reputation + user.getReputation()) / user.getNumberOfQualifications());
 		}
+		userDao.updateUser(user);
 	}
 
 	@Override

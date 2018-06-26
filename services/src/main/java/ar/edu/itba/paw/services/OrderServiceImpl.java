@@ -97,12 +97,6 @@ public class OrderServiceImpl implements OrderService {
 		Publication publication = publicationDao.findById(publication_id).get();
 		User subscriberUser = userDao.findByUsername(subscriber).get();
 		Order order = orderDao.findByPublicationAndSupervisor(publication, subscriberUser).get();
-		if(order.getSubscriberReputation() != null) {
-			userService.updateReputation(order.getSubscriber().getUsername(), order.getSubscriberReputation());
-		}
-		if(order.getSupervisorReputation() != null) {
-			userService.updateReputation(order.getPublication().getSupervisor().getUsername(), order.getSupervisorReputation());
-		}
 		return orderDao.delete(order);
 	}
 

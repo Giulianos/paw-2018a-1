@@ -127,7 +127,7 @@ public class PublicationController {
 			ps.delete(publication_id);
 		} else if(list.size() == 1) {
 			Order order = list.get(0);
-			if(order.getSubscriber().equals(auth.getAuthentication().getName())) {
+			if(order.getSubscriber().getUsername().equals(auth.getAuthentication().getName())) {
 				if(ps.findById(publication_id).get().getRemainingQuantity() != 0) {
 					ps.delete(publication_id);
 				}
@@ -143,9 +143,7 @@ public class PublicationController {
 	@RequestMapping(value = "/profile/publications/check", method = { RequestMethod.POST })
 	public ModelAndView checkPublication(@RequestParam(value="publication_id") Integer publication_id) {
 		
-		//need to erase publication and subscriptions
-		ord.delete(publication_id);
-		ps.delete(publication_id);
+		ps.check(publication_id);
 		
 		return new ModelAndView("redirect:/profile/publications");
 	}

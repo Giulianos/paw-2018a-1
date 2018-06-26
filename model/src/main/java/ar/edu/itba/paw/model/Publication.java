@@ -3,6 +3,7 @@ package ar.edu.itba.paw.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -46,7 +47,7 @@ public class Publication {
 	@Column
 	private String tags;
 	
-	@OneToMany(mappedBy = "publication", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "publication", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<Order> orders = new ArrayList<>();
 	
 	public Publication(final User supervisor, final String description, final float price, final int quantity, final String image, final boolean confirmed, final String tags) {

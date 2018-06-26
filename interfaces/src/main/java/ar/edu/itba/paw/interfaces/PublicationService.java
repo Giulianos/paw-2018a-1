@@ -143,6 +143,16 @@ public interface PublicationService {
 	
 	public boolean confirm(final long id);
 	
+	/**
+	 * Checks a publication.
+	 * 
+	 * @param id The id of the publication.
+	 * 
+	 * @return True if successfull.
+	 */
+	
+	public boolean check(final long id);
+	
 	
 	/**
 	 * Delete publication for the corresponding id.
