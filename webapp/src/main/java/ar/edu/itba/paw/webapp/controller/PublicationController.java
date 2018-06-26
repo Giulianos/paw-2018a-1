@@ -57,6 +57,10 @@ public class PublicationController {
 		Order order = ord.create(ps.findById(Long.parseLong(form.getPublicationId())).get(), users.findByUsername(username).get(), Integer.parseInt(form.getQuantity()));
 		
 		boolean confirmed = ps.confirm(Long.parseLong(form.getPublicationId()));
+		
+		if(confirmed) {
+			emails.notifyPublicationFulfillment(order.getPublication());
+		}
 
 		return new ModelAndView("redirect:/profile/subscriptions");
 	}

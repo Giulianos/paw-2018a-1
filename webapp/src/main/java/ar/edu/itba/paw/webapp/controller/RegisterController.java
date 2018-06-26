@@ -71,10 +71,7 @@ public class RegisterController {
 		
 		final User u = us.create(form.getUsername(), form.getEmail(), form.getPassword());
 		authWithoutPassword(u);
-		String mailContent = messageSource.getMessage("mail.register.content", null, request.getLocale());
-		String mailTitle = messageSource.getMessage("mail.register.title", null, request.getLocale());
-		
-		emails.sendEmail(u.getEmail(), mailTitle, mailContent);
+		emails.welcomeUser(u);
 		return new ModelAndView("redirect:/profile");
 	}
 	
