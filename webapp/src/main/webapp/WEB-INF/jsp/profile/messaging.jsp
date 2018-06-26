@@ -83,7 +83,12 @@
               </div>
             </div>
             <div class="new-message">
-              <textarea class="new-message"></textarea>
+              <div class="input-group">
+                <textarea id="new-message-text" class="form-control" aria-label="With textarea"></textarea>
+                <div class="input-group-append">
+                  <button class="btn btn-gumpu" type="button"><spring:message code="send.message"/></button>
+                </div>
+              </div>
             </div>
         </div>
       </div>

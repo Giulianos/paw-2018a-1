@@ -13,14 +13,21 @@ div.new-message {
   background-color: #EFEFEF;
   border-radius: 5px;
   margin-top: 10px;
-  padding: 0px 10px;
   margin-bottom: 10px
 }
 
 textarea.new-message {
-  width: 100%;
   margin-top: 10px;
   margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+button.new-message {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 0px;
+  margin-right: 10px;
+  float: right;
   border-radius: 5px;
 }
 
