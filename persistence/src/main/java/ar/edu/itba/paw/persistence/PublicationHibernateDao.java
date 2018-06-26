@@ -39,8 +39,8 @@ public class PublicationHibernateDao implements PublicationDao {
 
 	@Override
 	public List<Publication> findByDescription(String description) {
-		final TypedQuery<Publication> query = em.createQuery("from Publication as p where p.description = :description", Publication.class);
-		query.setParameter("description", description);
+		final TypedQuery<Publication> query = em.createQuery("from Publication as p where lower(p.tags) like :tags", Publication.class);
+		query.setParameter("tags", "%"+description.toLowerCase()+"%");
 		return query.getResultList();
 	}
 
@@ -48,12 +48,12 @@ public class PublicationHibernateDao implements PublicationDao {
 	public List<Publication> findByDescription(String description, boolean checkSupervisor) {
 		final TypedQuery<Publication> query;
 		if(!checkSupervisor) {
-			query = em.createQuery("from Publication as p where p.description = :description", Publication.class);
-			query.setParameter("description", description);
+			query = em.createQuery("from Publication as p where lower(p.tags) like :tags", Publication.class);
+			query.setParameter("tags", "%"+description.toLowerCase()+"%");
 			return query.getResultList();
 		} else {
-			query = em.createQuery("from Publication as p where (p.description = :description AND p.supervisor IS NOT NULL)", Publication.class);
-			query.setParameter("description", description);
+			query = em.createQuery("from Publication as p where (lower(p.tags) like :tags AND p.supervisor IS NOT NULL)", Publication.class);
+			query.setParameter("tags", "%"+description.toLowerCase()+"%");
 			return query.getResultList();
 		}
 	}
