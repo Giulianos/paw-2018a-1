@@ -66,4 +66,43 @@ public class MessagingController {
 		return new ModelAndView("redirect:/profile/messaging/"+publication_id);
 	}
 	
+	/* Used by supervisor */
+	
+	@RequestMapping(value = "profile/messaging/{publication_id}/{subscriber_id}")
+	public ModelAndView messagingForOrder(@PathVariable("subscriber_id") Long subscriber_id, @PathVariable("publication_id") Long publication_id) {
+		
+		ModelAndView mav = new ModelAndView("profile/messaging");
+		
+		Optional<User> subscriber = us.findById(subscriber_id);
+		Optional<Order> order = os.findByPublicationAndSubscriber(publication_id, subscriber.get().getUsername());
+		
+		/** Allow only supervisor to communicate with other subscribers */
+		if(!order.get().getPublication().getSupervisor().getUsername().equals(auth.getAuthentication().getName())) {
+			return new ModelAndView("redirect:/profile/messaging/"+publication_id);
+		}
+		
+		List<Message> messages = ms.retreiveFromOrder(order.get());
+		
+		mav.addObject("messages", messages);
+		mav.addObject("my_username", auth.getAuthentication().getName());
+		mav.addObject("order", order.get());
+		return mav;
+	}
+	
+	@RequestMapping(value = "profile/messaging/{publication_id}/{subscriber_id}", method= {RequestMethod.POST})
+	public ModelAndView messagingForOrder(@PathVariable("subscriber_id") Long subscriber_id, @PathVariable("publication_id") Long publication_id, @RequestParam("message_body") String message_body) {
+		Optional<User> me = us.findByUsername(auth.getAuthentication().getName());
+		Optional<User> subscriber = us.findById(subscriber_id);
+		Optional<Order> order = os.findByPublicationAndSubscriber(publication_id, subscriber.get().getUsername());
+		
+		/** Allow only supervisor to communicate with other subscribers */
+		if(!order.get().getPublication().getSupervisor().getUsername().equals(auth.getAuthentication().getName())) {
+			return new ModelAndView("redirect:/profile/messaging/"+publication_id);
+		}
+		
+		ms.sendMessage(me.get(), order.get(), HtmlUtils.htmlEscape(message_body));
+		
+		return new ModelAndView("redirect:/profile/messaging/"+publication_id+"/"+subscriber_id.toString());
+	}
+	
 }
