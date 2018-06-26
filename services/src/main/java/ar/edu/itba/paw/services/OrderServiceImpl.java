@@ -2,7 +2,7 @@ package ar.edu.itba.paw.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -13,6 +13,7 @@ import ar.edu.itba.paw.interfaces.OrderDao;
 import ar.edu.itba.paw.interfaces.OrderService;
 import ar.edu.itba.paw.interfaces.PublicationDao;
 import ar.edu.itba.paw.interfaces.UserDao;
+import ar.edu.itba.paw.interfaces.UserService;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.model.User;
@@ -28,6 +29,9 @@ public class OrderServiceImpl implements OrderService {
 	
 	@Autowired
 	private PublicationDao publicationDao;
+	
+	@Autowired
+	private UserService userService;
 
 	@Override
 	public List<Order> findBySubscriber(String username) {
@@ -113,5 +117,31 @@ public class OrderServiceImpl implements OrderService {
 				return true;
 		}
 		return false;
+	}
+
+	@Override
+	public Optional<Order> findByPublicationAndSubscriber(Long publication_id, String username) {
+		Optional<Publication> publication = publicationDao.findById(publication_id);
+		Optional<User> subscriber = userDao.findByUsername(username);
+		if(!publication.isPresent() || !subscriber.isPresent()) {
+			return Optional.empty();
+		}
+		return orderDao.findByPublicationAndSupervisor(publication.get(), subscriber.get());
+	}
+
+	@Override
+	@Transactional
+	public void setSupervisorReputation(Order order, Integer reputation) {
+		Order managedOrder = orderDao.findByPublicationAndSupervisor(order.getPublication(), order.getSubscriber()).get();
+		managedOrder.setSupervisorReputation(reputation);
+		orderDao.updateOrder(order);
+	}
+
+	@Override
+	@Transactional
+	public void setSubscriberReputation(Order order, Integer reputation) {
+		Order managedOrder = orderDao.findByPublicationAndSupervisor(order.getPublication(), order.getSubscriber()).get();
+		managedOrder.setSubscriberReputation(reputation);
+		orderDao.updateOrder(order);
 	}
 }

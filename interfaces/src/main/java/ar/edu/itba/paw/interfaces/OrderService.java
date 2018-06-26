@@ -1,6 +1,8 @@
 package ar.edu.itba.paw.interfaces;
 
 import java.util.List;
+import java.util.Set;
+import java.util.Optional;
 
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
@@ -17,6 +19,14 @@ public interface OrderService {
 	 */
 	
 	public List<Order> findBySubscriber(final String username);
+	
+	/**
+	 * Finds an order of a subscriber on a publication
+	 * @param publication_id The publication of the order
+	 * @param username The subscriber of the order
+	 * @return If any, the obtained order.
+	 */
+	public Optional<Order> findByPublicationAndSubscriber(final Long publication_id, final String username);
 	
 	/**
 	 * Finds orders with the provided subscriber.
@@ -101,4 +111,22 @@ public interface OrderService {
 	 * @return true if any of the orders has no supervisor.
 	 */
 	public boolean anyHasNoSupervisor(List<Order> orders);
+	
+	/**
+	 * sets reputation for the supervisor of the order
+	 * 
+	 * @param order Order to be updated
+	 * 
+	 * @param reputation The reputation to be set
+	 */
+	public void setSupervisorReputation(Order order, Integer reputation);
+	
+	/**
+	 * sets reputation for the subscriber of the order
+	 * 
+	 * @param order Order to be updated
+	 * 
+	 * @param reputation The reputation to be set
+	 */
+	public void setSubscriberReputation(Order order, Integer reputation);
 }

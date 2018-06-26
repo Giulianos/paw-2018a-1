@@ -1,6 +1,7 @@
 package ar.edu.itba.paw.webapp.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -16,11 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.config.MvcNamespaceHandler;
 
 import ar.edu.itba.paw.interfaces.OrderService;
 import ar.edu.itba.paw.interfaces.PublicationService;
+import ar.edu.itba.paw.interfaces.UserService;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
+import ar.edu.itba.paw.model.User;
 import ar.edu.itba.paw.webapp.auth.IAuthenticationFacade;
 import ar.edu.itba.paw.webapp.form.PublicationForm;
 
@@ -34,6 +38,8 @@ public class ProfileController {
 	private PublicationService ps;
 	@Autowired
 	private OrderService ord;
+	@Autowired
+	private UserService us;
 	@Autowired
 	private IAuthenticationFacade auth;
 	@Autowired
@@ -53,6 +59,7 @@ public class ProfileController {
 		mav.addObject("publicationsQuantity", ps.findBySupervisor(user).size());
 		mav.addObject("subscriptionsQuantity", ord.findBySubscriber(user).size()-ord.findFinalizedBySubscriber(user).size());
 		mav.addObject("finalizedSubscriptionsQuantity", ord.findFinalizedBySubscriber(user).size());
+		mav.addObject("reputation", us.getReputation(user));
 		
 		return mav;
 	}
@@ -143,6 +150,28 @@ public class ProfileController {
 		mav.addObject("subscriptions", ordPaginationConfig("subscriptions-finalized", index, subscriptions, mav));
 		
 		return mav;
+	}
+	
+	@RequestMapping(value = "/profile/rate", method = { RequestMethod.POST })
+	public ModelAndView rate(@RequestParam(value="subscriberUsername", required=true) String subscriberUsername, @RequestParam(value="publicationId", required=true) Long publicationId, 
+			@RequestParam(value="stars", required=true) Integer stars, @RequestParam(value="rateSupervisor", required=true) Integer rateSupervisor) {
+
+		Optional<Order> order = ord.findByPublicationAndSubscriber(publicationId, subscriberUsername);
+		if(rateSupervisor != 0) {
+			if(order.get().getSupervisorReputation() != null) {
+				return new ModelAndView("redirect:/profile/messaging/"+publicationId);
+			}
+				
+			ord.setSupervisorReputation(order.get(), stars);
+			return new ModelAndView("redirect:/profile/messaging/"+publicationId);
+		} else {
+			if(order.get().getSubscriberReputation() != null) {
+				return new ModelAndView("redirect:/profile/messaging/"+publicationId+"/"+order.get().getSubscriber().getId());
+			}
+			
+			ord.setSubscriberReputation(order.get(), stars);
+			return new ModelAndView("redirect:/profile/messaging/"+publicationId+"/"+order.get().getSubscriber().getId());
+		}
 	}
 
 	private boolean validPublicationQuantity(final BindingResult errors, PublicationForm form, ModelMap model) {

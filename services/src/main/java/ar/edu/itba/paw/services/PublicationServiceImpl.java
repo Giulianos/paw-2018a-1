@@ -1,17 +1,19 @@
 package ar.edu.itba.paw.services;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.objenesis.instantiator.sun.MagicInstantiator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ar.edu.itba.paw.interfaces.OrderDao;
 import ar.edu.itba.paw.interfaces.PublicationDao;
 import ar.edu.itba.paw.interfaces.PublicationService;
 import ar.edu.itba.paw.interfaces.UserDao;
+import ar.edu.itba.paw.interfaces.UserService;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.model.User;
@@ -24,6 +26,12 @@ public class PublicationServiceImpl implements PublicationService {
 	
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private OrderDao orderDao;
+	
+	@Autowired
+	private UserService us;
 	
 	@Override
 	public Optional<Publication> findById(long id) {
@@ -130,15 +138,39 @@ public class PublicationServiceImpl implements PublicationService {
 	@Override
 	@Transactional
 	public boolean setNewSupervisor(String supervisor, long id) {
-		User supervisorUser = userDao.findByUsername(supervisor).get();
+		Optional<User> supervisorUser = userDao.findByUsername(supervisor);
 		Publication publication = publicationDao.findById(id).get();
-		return publicationDao.setNewSupervisor(supervisorUser, publication);
+		
+		if(supervisorUser.isPresent()) {
+			return publicationDao.setNewSupervisor(supervisorUser.get(), publication);	
+		} else {
+			return publicationDao.setNewSupervisor(null, publication);
+		}
 	}
 
 	@Override
 	public boolean hasSupervisor(long id) {
 		Publication publication = publicationDao.findById(id).get();
 		return publicationDao.hasSupervisor(publication);
+	}
+
+	@Override
+	@Transactional
+	public boolean check(long id) {
+		Publication managedPublication = publicationDao.findById(id).get();
+		User supervisor = managedPublication.getSupervisor();
+		
+		for(Order order : managedPublication.getOrders()) {
+			if(order.getSupervisorReputation() != null) {
+				us.updateReputation(supervisor.getUsername(), order.getSupervisorReputation());
+			}
+			if(order.getSubscriberReputation() != null) {
+				us.updateReputation(order.getSubscriber().getUsername(), order.getSubscriberReputation());
+			}
+		}
+		
+		publicationDao.delete(managedPublication);
+		return true;
 	}
 
 }

@@ -3,16 +3,15 @@ package ar.edu.itba.paw.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -24,7 +23,7 @@ public class Publication {
 	@Column(name = "publication_id")
 	private Long id;
 	
-	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = true)
 	private User supervisor;
 	
 	@Column(length = 30)
@@ -48,7 +47,7 @@ public class Publication {
 	@Column
 	private String tags;
 	
-	@OneToMany(mappedBy = "publication", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "publication", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<Order> orders = new ArrayList<>();
 	
 	public Publication(final User supervisor, final String description, final float price, final int quantity, final String image, final boolean confirmed, final String tags) {

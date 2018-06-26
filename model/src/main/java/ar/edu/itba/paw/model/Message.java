@@ -1,5 +1,8 @@
 package ar.edu.itba.paw.model;
 
+import java.time.Instant;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,8 +10,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "messages")
@@ -33,6 +37,16 @@ public class Message {
 	
 	@Column
 	private Boolean read;
+	
+	@Column
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date sentTime;
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString();
+	}
 
 	public Message(Order order, User from, User to, String text, Boolean read) {
 		super();
@@ -41,6 +55,7 @@ public class Message {
 		this.to = to;
 		this.text = text;
 		this.read = read;
+		this.sentTime = Date.from(Instant.now());
 	}
 	
 	public Message() {
@@ -93,6 +108,10 @@ public class Message {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public Date getSentTime() {
+		return sentTime;
 	}
 
 	@Override

@@ -22,7 +22,25 @@
 		<%@ include file="../login-modal.jsp" %>
 
     <div class="container">
-      <h1 style="text-transform: capitalize"><security:authentication property="principal.username" /></h1><hr>
+      <h1 style="text-transform: capitalize;display:inline;"><security:authentication property="principal.username" /></h1>
+      <span class="ml-2">
+        <c:if test="${empty reputation}">
+          <img height="45" class="pb-3" src='<spring:url value="/img/greyStar.svg" htmlEscape="true"/>' alt="icon name" />
+          <img height="45" class="pb-3" src='<spring:url value="/img/greyStar.svg" htmlEscape="true"/>' alt="icon name" />
+          <img height="45" class="pb-3" src='<spring:url value="/img/greyStar.svg" htmlEscape="true"/>' alt="icon name" />
+          <img height="45" class="pb-3" src='<spring:url value="/img/greyStar.svg" htmlEscape="true"/>' alt="icon name" />
+          <img height="45" class="pb-3" src='<spring:url value="/img/greyStar.svg" htmlEscape="true"/>' alt="icon name" />
+        </c:if>
+        <c:if test="${not empty reputation}">
+          <c:forEach begin="1" end="${reputation}" varStatus="i">
+            <img height="45" class="pb-3" src='<spring:url value="/img/star.svg" htmlEscape="true"/>' alt="icon name" />
+          </c:forEach>
+          <c:forEach begin="${reputation}" end="4" varStatus="i">
+            <img height="45" class="pb-3" src='<spring:url value="/img/greyStar.svg" htmlEscape="true"/>' alt="icon name" />
+          </c:forEach>
+        </c:if>
+      </span>
+      <hr>
       <h2 class="text-secondary"><spring:message code="summary"/></h2>
       <div class="card my-3">
         <div class="card-header">

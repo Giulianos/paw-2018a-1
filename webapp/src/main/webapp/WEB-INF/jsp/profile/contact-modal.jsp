@@ -2,7 +2,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"><spring:message code="contacts"/></h5>
+        <h5 class="modal-title" id="exampleModalLabel"><spring:message code="send.msg.to"/></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -13,30 +13,32 @@
             <c:when test="${subs.publication.supervisor == subs.subscriber}">
               <!-- show all emails -->
               <c:forEach var="order" items="${subs.publication.orders}">
-                <li class="list-group-item">
-                  <span class="bold capitalized"><c:out value="${order.subscriber.username}"/>:</span>
-                  <c:out value="${order.subscriber.email}"/>
-                </li>
+                <c:if test="${order.subscriber.id != order.publication.supervisor.id}">
+                  <li class="list-group-item">
+                    <span class="bold capitalized"><c:out value="${order.subscriber.username}"/>
+                      <a href='<spring:url value="/profile/messaging/${order.publication.id}/${order.subscriber.id}" htmlEscape="true"/>'>
+                        <img height="18" src='<spring:url value="/img/msg.svg" htmlEscape="true"/>' alt="icon name" />
+                      </a>
+                    </span>
+                  </li>
+                </c:if>
               </c:forEach>
-              <li class="list-group-item">
-                <span class="bold capitalized"><spring:message code="me"/></span>
-              </li>
             </c:when>
             <c:otherwise>
               <!-- show supervisors email -->
               <li class="list-group-item">
                 <span class="bold capitalized">
                   <c:out value="${subs.publication.supervisor.username}"/>
-                </span>
-                <c:out value="${subs.publication.supervisor.email}"/>
+                  <a href='<spring:url value="/profile/messaging/${subs.publication.id}" htmlEscape="true"/>'>
+                  <img height="18" src='<spring:url value="/img/msg.svg" htmlEscape="true"/>' alt="icon name" />
+                  </a>
+                  </span>
               </li>
             </c:otherwise>
           </c:choose>
         </ul>
-
       </div>
       <div class="modal-footer">
-        <a href='<spring:url value="/profile/subscriptions-finalized" htmlEscape="true"/>'>
       </div>
     </div>
   </div>

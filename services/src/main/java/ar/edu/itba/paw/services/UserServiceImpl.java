@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.itba.paw.interfaces.UserDao;
 import ar.edu.itba.paw.interfaces.UserService;
@@ -43,5 +44,26 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean userExists(final String username, final String email) {
 		return findByUsername(username).isPresent() || findByEmail(email).isPresent();
+	}
+
+	@Override
+	@Transactional
+	public void updateReputation(String username, Integer reputation) {
+		System.out.println("--------------------->Updated reputation of: "+username);
+		System.out.println("--------------------->Qualified with: "+reputation);
+		User user = userDao.findByUsername(username).get();
+		user.setNumberOfQualifications(user.getNumberOfQualifications()+1);
+		if(user.getReputation() == null) {
+			user.setReputation(reputation);
+		} else {
+			user.setReputation((reputation + user.getReputation()) / user.getNumberOfQualifications());
+		}
+		userDao.updateUser(user);
+	}
+
+	@Override
+	public Integer getReputation(String username) {
+		User user = userDao.findByUsername(username).get();
+		return user.getReputation();
 	}
 }

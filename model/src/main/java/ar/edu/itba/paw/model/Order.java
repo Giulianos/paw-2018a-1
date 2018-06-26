@@ -3,6 +3,7 @@ package ar.edu.itba.paw.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
@@ -84,7 +85,7 @@ public class Order {
 	@JoinColumn(name = "fk_subscriber", insertable = false, updatable = false)
 	private User subscriber;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "order")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "order", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<Message> messages;
 	
 	@Column
@@ -93,12 +94,20 @@ public class Order {
 	@Column
 	private Boolean confirmed;
 	
+	@Column(nullable = true)
+	private Integer subscriberReputation;
+	
+	@Column(nullable = true)
+	private Integer supervisorReputation;
+	
 	public Order(final Publication publication, final User subscriber, final int quantity, final boolean confirmed) {
 		this.id = new OrderId(subscriber.getId(), publication.getId());
 		this.publication = publication;
 		this.subscriber = subscriber;
 		this.quantity = quantity;
 		this.confirmed = confirmed;
+		this.subscriberReputation = null;
+		this.supervisorReputation = null;
 		
 		publication.getOrders().add(this);
 		subscriber.getOrders().add(this);
@@ -138,6 +147,22 @@ public class Order {
 	
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
+	}
+	
+	public Integer getSubscriberReputation() {
+		return subscriberReputation;
+	}
+	
+	public void setSubscriberReputation(Integer subscriberReputation) {
+		this.subscriberReputation = subscriberReputation;
+	}
+	
+	public Integer getSupervisorReputation() {
+		return supervisorReputation;
+	}
+	
+	public void setSupervisorReputation(Integer supervisorReputation) {
+		this.supervisorReputation = supervisorReputation;
 	}
 	
 	@Override
