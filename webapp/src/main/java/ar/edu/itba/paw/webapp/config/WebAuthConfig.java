@@ -22,9 +22,6 @@ public class WebAuthConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private PawUserDetailsService userDetailsService;
 	
-	@Autowired
-	private LoginAuthenticationFailureHandler loginAuthenticationFailureHandler;
-	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 	    return new BCryptPasswordEncoder();
@@ -53,7 +50,6 @@ public class WebAuthConfig extends WebSecurityConfigurerAdapter {
 				.passwordParameter("j_password")
 				.defaultSuccessUrl("/profile", false)
 				.loginPage("/login")
-				.failureHandler(loginAuthenticationFailureHandler)
 			.and().rememberMe()
 				.rememberMeParameter("j_rememberme")
 				.userDetailsService(userDetailsService)

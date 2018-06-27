@@ -111,7 +111,8 @@
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                   <c:forEach begin="1" end="5" varStatus="i">
-                    <form class="rate-star" action="/profile/rate" method="post">
+                    <spring:url value="/profile/rate" var="action_url" htmlEscape="true"/>
+                    <form class="rate-star" action="${action_url}" method="post">
                       <input type="hidden" value="${order.subscriber.username}" name="subscriberUsername"/>
                       <input type="hidden" value="${order.publication.id}" name="publicationId"/>
                       <input type="hidden" value="1" name="rateSupervisor"/>
@@ -143,7 +144,8 @@
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                   <c:forEach begin="1" end="5" varStatus="i">
-                    <form class="rate-star" action="/profile/rate" method="post">
+                    <spring:url value="/profile/rate" var="action_url" htmlEscape="true"/>
+                    <form class="rate-star" action="${action_url}" method="post">
                       <input type="hidden" value="${order.subscriber.username}" name="subscriberUsername"/>
                       <input type="hidden" value="${order.publication.id}" name="publicationId"/>
                       <input type="hidden" value="0" name="rateSupervisor"/>

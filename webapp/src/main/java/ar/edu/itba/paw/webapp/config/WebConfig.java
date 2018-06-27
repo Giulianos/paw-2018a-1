@@ -58,9 +58,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		final SimpleDriverDataSource ds = new SimpleDriverDataSource();
 		
 		ds.setDriverClass(org.postgresql.Driver.class);
-		ds.setUrl("jdbc:postgresql://localhost/paw_project");
-		ds.setUsername("paw");
-		ds.setPassword("paw");
+		ds.setUrl("jdbc:postgresql://localhost/paw-2018a-1"); 
+	    ds.setUsername("paw-2018a-1"); 
+	    ds.setPassword("2Aazb4Apv"); 
 				
 		return	ds;
 	}
@@ -116,8 +116,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		final Properties properties = new Properties();
 		properties.setProperty("hibernate.hbm2ddl.auto", "update");
 		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL92Dialect");
-		// Si ponen esto en prod, hay tabla!!!
-		properties.setProperty("hibernate.show_sql", "true");
 		properties.setProperty("format_sql", "true");factoryBean.setJpaProperties(properties);
 		return factoryBean;
 	}

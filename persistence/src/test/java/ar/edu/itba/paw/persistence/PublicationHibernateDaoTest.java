@@ -111,34 +111,6 @@ public class PublicationHibernateDaoTest {
 	}
 	
 	@Test
-	public void test_findByPriceRange() {
-		// PRICE is ordered from lower to higher so if I search by the min and max
-		// values, the original list should be obtained.
-		List<Publication> publications = publicationDao.findByPrice(PRICE[0], PRICE[PRICE.length-1]);
-		assertFalse(publications.isEmpty());
-		assertEquals(PRICE.length, publications.size());
-		
-		// If I test with a range that includes mine the result should be the same as before.
-		publications = publicationDao.findByPrice(PRICE[0]-0.1f, PRICE[PRICE.length-1]+0.1f);
-		assertFalse(publications.isEmpty());
-		assertEquals(PRICE.length, publications.size());
-		
-		// If I test with a range that inside mine there should be no match.
-		publications = publicationDao.findByPrice(PRICE[0]+0.1f, PRICE[PRICE.length-1]-0.1f);
-		assertTrue(publications.isEmpty());
-		
-		// If I test up to min bound from left or up to max bound from right,
-		// there should be only 1 match.
-		publications = publicationDao.findByPrice(PRICE[0]-0.1f, PRICE[0]);
-		assertFalse(publications.isEmpty());
-		assertEquals(1, publications.size());
-		
-		publications = publicationDao.findByPrice(PRICE[PRICE.length-1], PRICE[PRICE.length-1]+0.1f);
-		assertFalse(publications.isEmpty());
-		assertEquals(1, publications.size());
-	}
-	
-	@Test
 	public void test_findByQuantityRange() {
 		// QUANTITY is ordered from lower to higher so if I search by the min and max
 		// values, the original list should be obtained.

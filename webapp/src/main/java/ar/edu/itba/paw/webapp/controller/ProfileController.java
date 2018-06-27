@@ -17,14 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.config.MvcNamespaceHandler;
 
 import ar.edu.itba.paw.interfaces.OrderService;
 import ar.edu.itba.paw.interfaces.PublicationService;
 import ar.edu.itba.paw.interfaces.UserService;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
-import ar.edu.itba.paw.model.User;
 import ar.edu.itba.paw.webapp.auth.IAuthenticationFacade;
 import ar.edu.itba.paw.webapp.form.PublicationForm;
 
