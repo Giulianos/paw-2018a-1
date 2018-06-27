@@ -114,7 +114,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		final JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 		factoryBean.setJpaVendorAdapter(vendorAdapter);
 		final Properties properties = new Properties();
-		properties.setProperty("hibernate.hbm2ddl.auto", "update");
+		properties.setProperty("hibernate.hbm2ddl.auto", "create");
 		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL92Dialect");
 		properties.setProperty("format_sql", "true");factoryBean.setJpaProperties(properties);
 		return factoryBean;
