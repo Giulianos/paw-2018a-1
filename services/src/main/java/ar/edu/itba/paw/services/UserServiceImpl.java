@@ -8,8 +8,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ar.edu.itba.paw.interfaces.UserDao;
-import ar.edu.itba.paw.interfaces.UserService;
+import ar.edu.itba.paw.interfaces.dao.UserDao;
+import ar.edu.itba.paw.interfaces.service.UserService;
 import ar.edu.itba.paw.model.User;
 
 @Primary

@@ -17,7 +17,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import ar.edu.itba.paw.interfaces.OrderDao;
+import ar.edu.itba.paw.interfaces.dao.OrderDao;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.model.User;

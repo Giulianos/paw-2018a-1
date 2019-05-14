@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import ar.edu.itba.paw.interfaces.UserService;
+import ar.edu.itba.paw.interfaces.service.UserService;
 import ar.edu.itba.paw.model.User;
 
 @Component

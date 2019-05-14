@@ -12,8 +12,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import ar.edu.itba.paw.interfaces.OrderService;
-import ar.edu.itba.paw.interfaces.PublicationDao;
+import ar.edu.itba.paw.interfaces.service.OrderService;
+import ar.edu.itba.paw.interfaces.dao.PublicationDao;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.model.User;
 

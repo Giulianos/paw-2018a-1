@@ -10,7 +10,7 @@ import javax.persistence.TypedQuery;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
-import ar.edu.itba.paw.interfaces.MessageDao;
+import ar.edu.itba.paw.interfaces.dao.MessageDao;
 import ar.edu.itba.paw.model.Message;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.User;

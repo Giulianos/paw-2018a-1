@@ -40,84 +40,84 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 @EnableTransactionManagement
 public class WebConfig extends WebMvcConfigurerAdapter {
-	@Value("classpath:schema.sql")
-	private Resource schemaSql;
-	
-	@Bean
-	public ViewResolver viewResolver() {
-		final InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-		
-		viewResolver.setViewClass(JstlView.class);
-		viewResolver.setPrefix("/WEB-INF/jsp/");
-		viewResolver.setSuffix(".jsp");
-		
-		return viewResolver;
-	}
-	@Bean
-	public DataSource dataSource()	{
-		final SimpleDriverDataSource ds = new SimpleDriverDataSource();
-		
-		ds.setDriverClass(org.postgresql.Driver.class);
-		ds.setUrl("jdbc:postgresql://localhost/paw-2018a-1"); 
-	    ds.setUsername("paw-2018a-1"); 
-	    ds.setPassword("2Aazb4Apv"); 
-				
-		return	ds;
-	}
-	
-	@Bean
-	public PlatformTransactionManager transactionManager(
-		final EntityManagerFactory emf) {
-		return new JpaTransactionManager(emf);
-	}
-	
-	@Bean
-	public Validator validator() {
-	    final LocalValidatorFactoryBean factory = new LocalValidatorFactoryBean();
-	    factory.setValidationMessageSource(messageSource());
-	    return factory;
-	}
-	@Bean
-	public MessageSource messageSource() {
-		final ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-		
-		messageSource.setBasename("classpath:i18n/messages");
-		messageSource.setDefaultEncoding(StandardCharsets.UTF_8.displayName());
-		messageSource.setCacheSeconds(5);
-		
-		return messageSource;
-	}
-	
-	@Bean
-	public JavaMailSender getJavaMailSender() {
-	    JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-	    mailSender.setHost("smtp.gmail.com");
-	    mailSender.setPort(587);
-	     
-	    mailSender.setUsername("gumpuonline@gmail.com");
-	    mailSender.setPassword("gumpupaw");
-	     
-	    Properties props = mailSender.getJavaMailProperties();
-	    props.put("mail.transport.protocol", "smtp");
-	    props.put("mail.smtp.auth", "true");
-	    props.put("mail.smtp.starttls.enable", "true");
-	    props.put("mail.debug", "true");
-	     
-	    return mailSender;
-	}
-	
-	@Bean
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-		final LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
-		factoryBean.setPackagesToScan("ar.edu.itba.paw.model");
-		factoryBean.setDataSource(dataSource());
-		final JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-		factoryBean.setJpaVendorAdapter(vendorAdapter);
-		final Properties properties = new Properties();
-		properties.setProperty("hibernate.hbm2ddl.auto", "create");
-		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL92Dialect");
-		properties.setProperty("format_sql", "true");factoryBean.setJpaProperties(properties);
-		return factoryBean;
-	}
+  @Value("classpath:schema.sql")
+  private Resource schemaSql;
+
+  @Bean
+  public ViewResolver viewResolver() {
+    final InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+
+    viewResolver.setViewClass(JstlView.class);
+    viewResolver.setPrefix("/WEB-INF/jsp/");
+    viewResolver.setSuffix(".jsp");
+
+    return viewResolver;
+  }
+  @Bean
+  public DataSource dataSource()	{
+    final SimpleDriverDataSource ds = new SimpleDriverDataSource();
+
+    ds.setDriverClass(org.postgresql.Driver.class);
+    ds.setUrl("jdbc:postgresql://localhost/paw-2018a-1");
+    ds.setUsername("paw-2018a-1");
+    ds.setPassword("2Aazb4Apv");
+
+    return	ds;
+  }
+
+  @Bean
+  public PlatformTransactionManager transactionManager(
+      final EntityManagerFactory emf) {
+    return new JpaTransactionManager(emf);
+  }
+
+  @Bean
+  public Validator validator() {
+    final LocalValidatorFactoryBean factory = new LocalValidatorFactoryBean();
+    factory.setValidationMessageSource(messageSource());
+    return factory;
+  }
+  @Bean
+  public MessageSource messageSource() {
+    final ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+
+    messageSource.setBasename("classpath:i18n/messages");
+    messageSource.setDefaultEncoding(StandardCharsets.UTF_8.displayName());
+    messageSource.setCacheSeconds(5);
+
+    return messageSource;
+  }
+
+  @Bean
+  public JavaMailSender getJavaMailSender() {
+    JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+    mailSender.setHost("smtp.gmail.com");
+    mailSender.setPort(587);
+
+    mailSender.setUsername("gumpuonline@gmail.com");
+    mailSender.setPassword("gumpupaw");
+
+    Properties props = mailSender.getJavaMailProperties();
+    props.put("mail.transport.protocol", "smtp");
+    props.put("mail.smtp.auth", "true");
+    props.put("mail.smtp.starttls.enable", "true");
+    props.put("mail.debug", "true");
+
+    return mailSender;
+  }
+
+  @Bean
+  public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+    final LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
+    factoryBean.setPackagesToScan("ar.edu.itba.paw.model");
+    factoryBean.setDataSource(dataSource());
+    final JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+    factoryBean.setJpaVendorAdapter(vendorAdapter);
+    final Properties properties = new Properties();
+    properties.setProperty("hibernate.hbm2ddl.auto", "create");
+    properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL92Dialect");
+    properties.setProperty("format_sql", "true");factoryBean.setJpaProperties(properties);
+    return factoryBean;
+  }
 
 }

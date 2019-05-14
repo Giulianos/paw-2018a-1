@@ -5,15 +5,14 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
-import org.springframework.objenesis.instantiator.sun.MagicInstantiator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ar.edu.itba.paw.interfaces.OrderDao;
-import ar.edu.itba.paw.interfaces.PublicationDao;
-import ar.edu.itba.paw.interfaces.PublicationService;
-import ar.edu.itba.paw.interfaces.UserDao;
-import ar.edu.itba.paw.interfaces.UserService;
+import ar.edu.itba.paw.interfaces.dao.OrderDao;
+import ar.edu.itba.paw.interfaces.dao.PublicationDao;
+import ar.edu.itba.paw.interfaces.service.PublicationService;
+import ar.edu.itba.paw.interfaces.dao.UserDao;
+import ar.edu.itba.paw.interfaces.service.UserService;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.model.User;

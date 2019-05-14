@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import ar.edu.itba.paw.interfaces.OrderService;
-import ar.edu.itba.paw.interfaces.PublicationService;
-import ar.edu.itba.paw.interfaces.UserService;
+import ar.edu.itba.paw.interfaces.service.OrderService;
+import ar.edu.itba.paw.interfaces.service.PublicationService;
+import ar.edu.itba.paw.interfaces.service.UserService;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.webapp.auth.IAuthenticationFacade;

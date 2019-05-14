@@ -16,7 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import ar.edu.itba.paw.interfaces.UserDao;
+import ar.edu.itba.paw.interfaces.dao.UserDao;
 import ar.edu.itba.paw.model.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)

@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import ar.edu.itba.paw.interfaces.OrderDao;
+import ar.edu.itba.paw.interfaces.dao.OrderDao;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.model.User;

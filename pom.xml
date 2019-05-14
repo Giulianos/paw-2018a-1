@@ -16,13 +16,14 @@
     <servlet-api.version>2.5</servlet-api.version>
     <org.postgresql.version>9.3-1102-jdbc41</org.postgresql.version>
     <jstl.version>1.2</jstl.version>
-	<org.hibernate.validator>4.3.1.Final</org.hibernate.validator>
-	<javax.validation-api.version>1.0.0.GA</javax.validation-api.version>
-	<org.hsqldb.version>2.3.1</org.hsqldb.version>
-	<javax.mail.version>1.5.0-b01</javax.mail.version>
-  <maven-war-plugin.version>2.6</maven-war-plugin.version>
-  <org.hibernate.version>5.1.0.Final</org.hibernate.version>
-  <org.hibernate.jpa.version>1.0.0.Final</org.hibernate.jpa.version>
+    <org.hibernate.validator>4.3.1.Final</org.hibernate.validator>
+    <javax.validation-api.version>1.0.0.GA</javax.validation-api.version>
+    <org.hsqldb.version>2.3.1</org.hsqldb.version>
+    <javax.mail.version>1.5.0-b01</javax.mail.version>
+    <maven-war-plugin.version>2.6</maven-war-plugin.version>
+    <org.hibernate.version>5.1.0.Final</org.hibernate.version>
+    <org.hibernate.jpa.version>1.0.0.Final</org.hibernate.jpa.version>
+    <jersey.version>3.0-SNAPSHOT</jersey.version>
   </properties>
   <modules>
     <module>webapp</module>
@@ -37,18 +38,18 @@
         <artifactId>maven-war-plugin</artifactId>
         <version>${maven-war-plugin.version}</version>
         <configuration>
-        <packagingExcludes>**/logback-test.xml</packagingExcludes>
+          <packagingExcludes>**/logback-test.xml</packagingExcludes>
         </configuration>
-        </plugin>
+      </plugin>
       <plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-compiler-plugin</artifactId>
-    <version>3.1</version>
-    <configuration>
-        <source>1.8</source>
-        <target>1.8</target>
-    </configuration>
-</plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-eclipse-plugin</artifactId>
@@ -61,79 +62,79 @@
     </plugins>
   </build>
   <dependencyManagement>
-	<dependencies>
-    <dependency><groupId>org.springframework</groupId>
-<artifactId>spring-orm</artifactId>
-<version>${org.springframework.version}</version>
-<scope>compile</scope>
-</dependency>
-<dependency>
-<groupId>org.hibernate</groupId>
-<artifactId>hibernate-core</artifactId>
-<version>${org.hibernate.version}</version>
-</dependency>
-<dependency>
-<groupId>org.hibernate</groupId>
-<artifactId>hibernate-entitymanager</artifactId>
-<version>${org.hibernate.version}</version>
-</dependency>
-<dependency>
-<groupId>org.hibernate.javax.persistence</groupId>
-<artifactId>hibernate-jpa-2.1-api</artifactId>
-<version>${org.hibernate.jpa.version}</version>
-</dependency>
-	<dependency>
-	<groupId>javax.mail</groupId>
-	<artifactId>mail</artifactId>
-	<version>${javax.mail.version}</version>
-	</dependency>
-	<dependency>
-	<groupId>org.springframework</groupId>
-	<artifactId>spring-context-support</artifactId>
-	<version>${org.springframework.version}</version>
-	</dependency>
-    	<dependency>
-	<groupId>org.springframework</groupId>
-	<artifactId>spring-test</artifactId>
-	<version>${org.springframework.version}</version><scope>test</scope>
-	</dependency>
-  <dependency>
-<groupId>org.springframework</groupId>
-<artifactId>spring-tx</artifactId>
-<version>${org.springframework.version}</version>
-</dependency>
-	<dependency>
-	<groupId>org.hsqldb</groupId>
-	<artifactId>hsqldb</artifactId>
-	<version>${org.hsqldb.version}</version>
-	<scope>test</scope>
-	</dependency>
-    	<dependency>
-	<groupId>org.springframework</groupId>
-	<artifactId>spring-jdbc</artifactId>
-	<version>${org.springframework.version}</version>
-	</dependency>
-	<dependency>
-	<groupId>org.postgresql</groupId>
-	<artifactId>postgresql</artifactId>
-	<version>${org.postgresql.version}</version>
-	</dependency>
-	<dependency>
-	<groupId>javax.validation</groupId>
-	<artifactId>validation-api</artifactId>
-	<version>${javax.validation-api.version}</version>
-	</dependency>
-	<dependency>
-  	<groupId>org.hibernate</groupId>
-  	<artifactId>hibernate-validator</artifactId>
-  	<version>${org.hibernate.validator}</version>
-    <exclusions>
-      <exclusion>
-        <groupId>org.jboss.logging</groupId>
-        <artifactId>jboss-logging</artifactId>
-      </exclusion>
-    </exclusions>
-	</dependency>
+    <dependencies>
+      <dependency><groupId>org.springframework</groupId>
+        <artifactId>spring-orm</artifactId>
+        <version>${org.springframework.version}</version>
+        <scope>compile</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-core</artifactId>
+        <version>${org.hibernate.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-entitymanager</artifactId>
+        <version>${org.hibernate.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.hibernate.javax.persistence</groupId>
+        <artifactId>hibernate-jpa-2.1-api</artifactId>
+        <version>${org.hibernate.jpa.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>javax.mail</groupId>
+        <artifactId>mail</artifactId>
+        <version>${javax.mail.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context-support</artifactId>
+        <version>${org.springframework.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-test</artifactId>
+        <version>${org.springframework.version}</version><scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-tx</artifactId>
+        <version>${org.springframework.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.hsqldb</groupId>
+        <artifactId>hsqldb</artifactId>
+        <version>${org.hsqldb.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-jdbc</artifactId>
+        <version>${org.springframework.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>${org.postgresql.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>javax.validation</groupId>
+        <artifactId>validation-api</artifactId>
+        <version>${javax.validation-api.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-validator</artifactId>
+        <version>${org.hibernate.validator}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-webmvc</artifactId>
@@ -156,51 +157,92 @@
         <version>${jstl.version}</version>
         <scope>compile</scope>
       </dependency>
-	<dependency>
-		<groupId>org.springframework.security</groupId>
-		<artifactId>spring-security-core</artifactId>
-		<version>${spring-security.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.springframework.security</groupId>
-		<artifactId>spring-security-web</artifactId>
-		<version>${spring-security.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.springframework.security</groupId>
-		<artifactId>spring-security-config</artifactId>
-		<version>${spring-security.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.springframework.security</groupId>
-		<artifactId>spring-security-taglibs</artifactId>
-		<version>${spring-security.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.slf4j</groupId>
-		<artifactId>slf4j-api</artifactId>
-		<version>${org.slf4j.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>ch.qos.logback</groupId>
-		<artifactId>logback-classic</artifactId>
-		<version>${logback.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>ch.qos.logback</groupId>
-		<artifactId>logback-core</artifactId>
-		<version>${logback.version}</version></dependency>
-	<dependency>
-		<groupId>org.slf4j</groupId>
-		<artifactId>jcl-over-slf4j</artifactId>
-		<version>${org.slf4j.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.logback-extensions</groupId>
-		<artifactId>logback-ext-spring</artifactId>
-		<version>${logback-ext-spring.version}</version>
-		<scope>runtime</scope>
-	</dependency>
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-core</artifactId>
+        <version>${spring-security.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-web</artifactId>
+        <version>${spring-security.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-config</artifactId>
+        <version>${spring-security.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-taglibs</artifactId>
+        <version>${spring-security.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${org.slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>${logback.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-core</artifactId>
+        <version>${logback.version}</version></dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>jcl-over-slf4j</artifactId>
+        <version>${org.slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.logback-extensions</groupId>
+        <artifactId>logback-ext-spring</artifactId>
+        <version>${logback-ext-spring.version}</version>
+        <scope>runtime</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.glassfish.jersey.containers</groupId>
+        <artifactId>jersey-container-servlet-core</artifactId>
+        <version>${jersey.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.glassfish.jersey.ext</groupId>
+        <artifactId>jersey-spring4</artifactId>
+        <version>${jersey.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.glassfish.jersey.core</groupId>
+        <artifactId>jersey-server</artifactId>
+        <version>${jersey.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.glassfish.jersey.media</groupId>
+        <artifactId>jersey-media-moxy</artifactId>
+        <version>${jersey.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.glassfish.jersey.media</groupId>
+        <artifactId>jersey-media-jaxb</artifactId>
+        <version>${jersey.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
+  <repositories>
+    <repository>
+      <id>jersey-snapshot</id>
+      <url>https://maven.java.net/content/repositories/snapshots/</url>
+      <name>Jersey Snapshots</name>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
 </project>
