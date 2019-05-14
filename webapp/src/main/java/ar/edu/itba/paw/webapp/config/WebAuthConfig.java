@@ -2,6 +2,7 @@ package ar.edu.itba.paw.webapp.config;
 
 import java.util.concurrent.TimeUnit;
 
+import ar.edu.itba.paw.webapp.auth.TokenAuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -12,28 +13,21 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-@ComponentScan({"ar.edu.itba.paw.webapp.config"})
+@ComponentScan("ar.edu.itba.paw.webapp.auth")
 public class WebAuthConfig extends WebSecurityConfigurerAdapter {
+	private static final String API_PREFIX = "/api";
+
 	@Autowired
-	private PawUserDetailsService userDetailsService;
-	
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-	    return new BCryptPasswordEncoder();
-	}
-	
-	@Bean
-	public DaoAuthenticationProvider authProvider() {
-	    DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-	    authProvider.setUserDetailsService(userDetailsService);
-	    authProvider.setPasswordEncoder(passwordEncoder());
-	    return authProvider;
-	}
+	private UserDetailsService userDetailsService;
+
+	@Autowired
+	private TokenAuthenticationService tokenAuthenticationService;
 	
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
@@ -69,10 +63,5 @@ public class WebAuthConfig extends WebSecurityConfigurerAdapter {
 		web.ignoring()
 			.antMatchers("/css/**", "/js/**", "/img/**", "/favicon.ico", "/403");
 	}
-	
-	@Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authProvider());
-    }
 	
 }
