@@ -1,12 +1,14 @@
 package ar.edu.itba.paw.webapp.auth;
 
-import ar.edu.itba.paw.webapp.dto.SampleEchoDTO;
+import ar.edu.itba.paw.webapp.dto.UserLoginDTO;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +21,9 @@ public class TokenAuthenticationService {
 
   @Autowired
   private UserDetailsService userDetailsService;
+
+  @Autowired
+  private PasswordEncoder passwordEncoder;
 
   private final TokenHandler tokenHandler;
 
@@ -52,14 +57,16 @@ public class TokenAuthenticationService {
   }
 
   Authentication getAuthenticationForLogin(final HttpServletRequest request) {
+    ObjectMapper objectMapper = new ObjectMapper();
+
     try {
-      /** Here we should extract the username from the request */
-      final UserDetails userDetails = userDetailsService.loadUserByUsername("giuliano");
+      UserLoginDTO userLogin = objectMapper.readValue(request.getInputStream(), UserLoginDTO.class);
+
+      final UserDetails userDetails = userDetailsService.loadUserByUsername(userLogin.getUsername());
 
       if(userDetails != null) {
-        /** here we should check that the provided password matches against the stored in the db */
-        if(true) {
-          return new UsernamePasswordAuthenticationToken("giuliano", "thePassword", userDetails.getAuthorities());
+        if(passwordEncoder.matches(userLogin.getPassword(), userDetails.getPassword())) {
+          return new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails.getPassword(), userDetails.getAuthorities());
         }
       }
     } catch (final Exception e) {
