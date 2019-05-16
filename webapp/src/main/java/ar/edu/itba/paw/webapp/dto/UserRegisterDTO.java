@@ -1,8 +1,19 @@
 package ar.edu.itba.paw.webapp.dto;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class UserRegisterDTO {
+
+    @NotNull
+    @Size(max = 15)
     private String username;
+
+
     private String email;
+
+    @NotNull
+    @Size(min = 8, message = "Password must contain at least 8 characters")
     private String password;
 
     public UserRegisterDTO() {
