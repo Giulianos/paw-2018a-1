@@ -2,6 +2,7 @@ package ar.edu.itba.paw.webapp.controller;
 
 import ar.edu.itba.paw.interfaces.service.UserService;
 import ar.edu.itba.paw.model.User;
+import ar.edu.itba.paw.webapp.dto.ConstraintViolationDTO;
 import ar.edu.itba.paw.webapp.dto.UserDTO;
 import ar.edu.itba.paw.webapp.dto.UserRegisterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,21 +26,17 @@ public class UsersController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private Validator validator;
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response register(@Valid UserRegisterDTO user) {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
 
         Set<ConstraintViolation<UserRegisterDTO>> violations = validator.validate(user);
-
         if(!violations.isEmpty()) {
-            for(ConstraintViolation<UserRegisterDTO> violation : violations) {
-                System.out.println(violation.getMessage());
-            }
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(422).entity(new ConstraintViolationDTO(violations)).build();
         }
 
         try {
