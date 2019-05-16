@@ -6,14 +6,14 @@ import javax.validation.constraints.Size;
 public class UserRegisterDTO {
 
     @NotNull
-    @Size(max = 15)
+    @Size(min=3, max = 15)
     private String username;
 
-
+    @NotNull
     private String email;
 
     @NotNull
-    @Size(min = 8, message = "Password must contain at least 8 characters")
+    @Size(min = 8)
     private String password;
 
     public UserRegisterDTO() {
