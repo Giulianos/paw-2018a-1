@@ -8,7 +8,7 @@
   <name>paw_project</name>
   <properties>
     <maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
-    <org.springframework.version>4.2.5.RELEASE</org.springframework.version>
+    <org.springframework.version>4.2.6.RELEASE</org.springframework.version>
     <spring-security.version>4.0.4.RELEASE</spring-security.version>
     <org.slf4j.version>1.7.5</org.slf4j.version>
     <logback.version>1.1.2</logback.version>
@@ -16,14 +16,15 @@
     <servlet-api.version>2.5</servlet-api.version>
     <org.postgresql.version>9.3-1102-jdbc41</org.postgresql.version>
     <jstl.version>1.2</jstl.version>
-    <org.hibernate.validator>4.3.1.Final</org.hibernate.validator>
-    <javax.validation-api.version>1.0.0.GA</javax.validation-api.version>
+    <javax.validation-api.version>1.1.0.Final</javax.validation-api.version>
+    <org.hibernate-validator.version>5.2.4.Final</org.hibernate-validator.version>
     <org.hsqldb.version>2.3.1</org.hsqldb.version>
     <javax.mail.version>1.5.0-b01</javax.mail.version>
     <maven-war-plugin.version>2.6</maven-war-plugin.version>
     <org.hibernate.version>5.1.0.Final</org.hibernate.version>
     <org.hibernate.jpa.version>1.0.0.Final</org.hibernate.jpa.version>
     <jersey.version>3.0-SNAPSHOT</jersey.version>
+    <jersey.bean-validation>2.25</jersey.bean-validation>
     <jwt.version>0.7.0</jwt.version>
   </properties>
   <modules>
@@ -128,13 +129,7 @@
       <dependency>
         <groupId>org.hibernate</groupId>
         <artifactId>hibernate-validator</artifactId>
-        <version>${org.hibernate.validator}</version>
-        <exclusions>
-          <exclusion>
-            <groupId>org.jboss.logging</groupId>
-            <artifactId>jboss-logging</artifactId>
-          </exclusion>
-        </exclusions>
+        <version>${org.hibernate-validator.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springframework</groupId>
@@ -150,7 +145,7 @@
         <groupId>javax.servlet</groupId>
         <artifactId>servlet-api</artifactId>
         <version>${servlet-api.version}</version>
-        <scope>compile</scope>
+        <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>javax.servlet</groupId>
@@ -226,6 +221,17 @@
           <exclusion>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.glassfish.jersey.ext</groupId>
+        <artifactId>jersey-bean-validation</artifactId>
+        <version>${jersey.bean-validation}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>javax.el</groupId>
+            <artifactId>javax.el-api</artifactId>
           </exclusion>
         </exclusions>
       </dependency>

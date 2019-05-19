@@ -39,6 +39,9 @@ public class WebAuthConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 				.antMatchers(HttpMethod.GET, API_PREFIX + "/echo").hasAuthority("ROLE_USER")
 				.antMatchers(HttpMethod.POST, API_PREFIX + "/echo").hasAuthority("ROLE_USER")
+
+				// Allow login and register for everyone
+				.antMatchers(HttpMethod.POST, API_PREFIX + "/users").permitAll()
 				.antMatchers(HttpMethod.POST, API_PREFIX + "/login").permitAll();
 
 		http

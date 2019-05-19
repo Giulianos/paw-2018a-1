@@ -5,6 +5,7 @@ import java.util.Properties;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -14,9 +15,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
-import org.springframework.jdbc.datasource.init.DataSourceInitializer;
-import org.springframework.jdbc.datasource.init.DatabasePopulator;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -26,7 +24,6 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -72,12 +69,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
   }
 
   @Bean
-  public Validator validator() {
-    final LocalValidatorFactoryBean factory = new LocalValidatorFactoryBean();
-    factory.setValidationMessageSource(messageSource());
-    return factory;
-  }
-  @Bean
   public MessageSource messageSource() {
     final ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
 
@@ -116,8 +107,16 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     final Properties properties = new Properties();
     properties.setProperty("hibernate.hbm2ddl.auto", "create");
     properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL92Dialect");
-    properties.setProperty("format_sql", "true");factoryBean.setJpaProperties(properties);
+    properties.setProperty("format_sql", "true");
+    factoryBean.setJpaProperties(properties);
     return factoryBean;
+  }
+
+  @Bean
+  public Validator validator() {
+    final LocalValidatorFactoryBean factory = new LocalValidatorFactoryBean();
+    factory.setValidationMessageSource(messageSource());
+    return factory;
   }
 
 }
