@@ -8,7 +8,7 @@
   <name>paw_project</name>
   <properties>
     <maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
-    <org.springframework.version>4.2.6.RELEASE</org.springframework.version>
+    <org.springframework.version>4.2.5.RELEASE</org.springframework.version>
     <spring-security.version>4.0.4.RELEASE</spring-security.version>
     <org.slf4j.version>1.7.5</org.slf4j.version>
     <logback.version>1.1.2</logback.version>

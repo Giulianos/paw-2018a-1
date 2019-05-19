@@ -2,7 +2,8 @@ package ar.edu.itba.paw.webapp.controller;
 
 import ar.edu.itba.paw.interfaces.service.UserService;
 import ar.edu.itba.paw.model.User;
-import ar.edu.itba.paw.webapp.dto.ConstraintViolationDTO;
+import ar.edu.itba.paw.webapp.dto.ErrorDTO;
+import ar.edu.itba.paw.webapp.dto.constraints.ConstraintViolationsDTO;
 import ar.edu.itba.paw.webapp.dto.UserDTO;
 import ar.edu.itba.paw.webapp.dto.UserRegisterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class UsersController {
 
         Set<ConstraintViolation<UserRegisterDTO>> violations = validator.validate(user);
         if(!violations.isEmpty()) {
-            return Response.status(422).entity(new ConstraintViolationDTO(violations)).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(new ConstraintViolationsDTO(violations)).build();
         }
 
         try {
@@ -48,8 +49,7 @@ public class UsersController {
 
             return Response.ok(new UserDTO(createdUser)).build();
         } catch(Exception e) {
-            // TODO: create ErrorDTO with an error message and return that
-            return Response.serverError().build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorDTO("User could no be created")).build();
         }
     }
 
