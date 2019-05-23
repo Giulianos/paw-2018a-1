@@ -2,6 +2,7 @@ package ar.edu.itba.paw.services;
 
 import java.util.Optional;
 
+import ar.edu.itba.paw.interfaces.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,15 +21,13 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private PasswordEncoder passEncoder;
+
+	@Autowired
+	private EmailService emailService;
 	
 	@Override
 	public Optional<User> findById(final long id) {
 		return userDao.findById(id);
-	}
-	
-	@Override
-	public Optional<User> findByUsername(final String username) {
-		return userDao.findByUsername(username);
 	}
 
 	@Override
@@ -37,33 +36,17 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public User create(final String username, final String email, final String password) {
-		return userDao.create(username, email, passEncoder.encode(password));
-	}
-
-	@Override
-	public boolean userExists(final String username, final String email) {
-		return findByUsername(username).isPresent() || findByEmail(email).isPresent();
-	}
-
-	@Override
-	@Transactional
-	public void updateReputation(String username, Integer reputation) {
-		System.out.println("--------------------->Updated reputation of: "+username);
-		System.out.println("--------------------->Qualified with: "+reputation);
-		User user = userDao.findByUsername(username).get();
-		user.setNumberOfQualifications(user.getNumberOfQualifications()+1);
-		if(user.getReputation() == null) {
-			user.setReputation(reputation);
-		} else {
-			user.setReputation((reputation + user.getReputation()) / user.getNumberOfQualifications());
+	public User create(final String name, final String email, final String password) {
+		User createdUser = userDao.create(name, email, passEncoder.encode(password));
+		if(createdUser != null) {
+			emailService.welcomeUser(createdUser);
 		}
-		userDao.updateUser(user);
+
+		return createdUser;
 	}
 
 	@Override
-	public Integer getReputation(String username) {
-		User user = userDao.findByUsername(username).get();
-		return user.getReputation();
+	public boolean userExists(final String email) {
+		return findByEmail(email).isPresent();
 	}
 }

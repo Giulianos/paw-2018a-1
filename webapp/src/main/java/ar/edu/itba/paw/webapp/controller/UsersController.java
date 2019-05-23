@@ -42,7 +42,7 @@ public class UsersController {
 
         try {
             User createdUser = userService.create(
-                    user.getUsername(),
+                    user.getName(),
                     user.getEmail(),
                     user.getPassword()
             );

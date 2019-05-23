@@ -18,7 +18,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User extends TimestampedEntity {
 	
 	
 	@Id
@@ -26,39 +26,19 @@ public class User {
 	@Column(name = "user_id")
 	private Long user_id;
 	
-	@Column(length = 15, nullable = false, unique = true)
-	private String username;
+	@Column(length = 15, nullable = false)
+	private String name;
 	
 	@Column(length = 100, nullable = false)
 	private String password;
 	
 	@Column(length = 40, nullable = false, unique = true)
 	private String email;
-	
-	@Column(nullable = true)
-	private Integer reputation;
-	
-	@Column
-	private Integer numberOfQualifications;
-	
-	@Column(name = "reg_date")
-	@Temporal(TemporalType.DATE)
-	private Date regdate;
-	
-	@OneToMany(mappedBy = "subscriber", fetch = FetchType.EAGER)
-	private List<Order> orders = new ArrayList<>();
-	
-	public User(final String username, final String email, final String password, final Date regdate) {
-		this.username = username;
+
+	public User(final String name, final String email, final String password) {
+		this.name = name;
 		this.email = email;
 		this.password = password;
-		this.regdate = regdate;
-		this.reputation = null;
-		this.numberOfQualifications = 0;
-	}
-	
-	public User(final String username, final String email, final String password) {
-		this(username,email,password,Date.from(Instant.now()));
 	}
 
 	public User() {
@@ -68,10 +48,6 @@ public class User {
 	public Long getId() {
 		return this.user_id;
 	}
-
-	public String getUsername() {
-		return this.username;
-	}
 	
 	public String getEmail() {
 		return this.email;
@@ -80,28 +56,9 @@ public class User {
 	public String getPassword() {
 		return this.password;
 	}
-	
-	public List<Order> getOrders() {
-		return this.orders;
+
+	public String getName() {
+		return this.name;
 	}
-	
-	public Date getRegdate() {
-		return this.regdate;
-	}
-	
-	public Integer getReputation() {
-		return reputation;
-	}
-	
-	public void setReputation(Integer reputation) {
-		this.reputation = reputation;
-	}
-	
-	public Integer getNumberOfQualifications() {
-		return numberOfQualifications;
-	}
-	
-	public void setNumberOfQualifications(Integer numberOfQualifications) {
-		this.numberOfQualifications = numberOfQualifications;
-	}
+
 }

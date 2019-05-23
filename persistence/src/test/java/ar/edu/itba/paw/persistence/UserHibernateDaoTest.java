@@ -25,9 +25,8 @@ import ar.edu.itba.paw.model.User;
 @Rollback
 public class UserHibernateDaoTest {
 	private static final String PASSWORD = "pass";
-	private static final String [] USERNAME = {"user1","user2"};
+	private static final String [] NAME = {"alice","bob"};
 	private static final String [] EMAIL = {"user1@example.com","user2@example.com"};
-	private static final String USERNAME_UNKNOWN = "userx";
 	private static final String EMAIL_UNKNOWN = "userx@example.com";
 
 	@PersistenceContext
@@ -38,20 +37,9 @@ public class UserHibernateDaoTest {
 
 	@Before
 	public void setUp() {
-		for (int i = 0; i < USERNAME.length; i++) {
-			em.persist(new User(USERNAME[i], EMAIL[i], PASSWORD));
+		for (int i = 0; i < NAME.length; i++) {
+			em.persist(new User(NAME[i], EMAIL[i], PASSWORD));
 		}
-	}
-	
-	@Test
-	public void test_findByUsername() {
-		userDao.findByUsername(USERNAME_UNKNOWN);
-		for (int i = 0; i < USERNAME.length; i++) {
-		    Optional<User> user = userDao.findByUsername(USERNAME[i]);
-		    assertTrue(user.isPresent());
-			assertEquals(USERNAME[i], user.get().getUsername());
-		}
-		assertFalse(userDao.findByUsername(USERNAME_UNKNOWN).isPresent());
 	}
 	
 	@Test
@@ -61,14 +49,14 @@ public class UserHibernateDaoTest {
 		    assertTrue(user.isPresent());
 			assertEquals(EMAIL[i], user.get().getEmail());
 		}
-		assertFalse(userDao.findByUsername(EMAIL_UNKNOWN).isPresent());
+		assertFalse(userDao.findByEmail(EMAIL_UNKNOWN).isPresent());
 	}
 	
 	@Test
 	public void test_findById() {
-		for (int i = 0; i <USERNAME.length; i++) {
-			// Search 1st by username to get the id.
-			Long id = userDao.findByUsername(USERNAME[i]).get().getId();
+		for (int i = 0; i < EMAIL.length; i++) {
+			// Search 1st by email to get the id.
+			Long id = userDao.findByEmail(EMAIL[i]).get().getId();
 			Optional<User> user = userDao.findById(id);
 		    assertTrue(user.isPresent());
 			assertEquals(id, user.get().getId());

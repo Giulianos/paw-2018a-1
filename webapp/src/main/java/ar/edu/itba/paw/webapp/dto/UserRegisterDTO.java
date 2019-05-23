@@ -7,7 +7,7 @@ public class UserRegisterDTO {
 
     @NotNull
     @Size(min=3, max = 15)
-    private String username;
+    private String name;
 
     @NotNull
     private String email;
@@ -20,12 +20,12 @@ public class UserRegisterDTO {
         // Empty constructor needed by JAX-RS
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {

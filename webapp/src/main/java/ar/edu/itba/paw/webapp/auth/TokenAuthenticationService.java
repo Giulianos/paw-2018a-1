@@ -62,7 +62,7 @@ public class TokenAuthenticationService {
     try {
       UserLoginDTO userLogin = objectMapper.readValue(request.getInputStream(), UserLoginDTO.class);
 
-      final UserDetails userDetails = userDetailsService.loadUserByUsername(userLogin.getUsername());
+      final UserDetails userDetails = userDetailsService.loadUserByUsername(userLogin.getEmail());
 
       if(userDetails != null) {
         if(passwordEncoder.matches(userLogin.getPassword(), userDetails.getPassword())) {
