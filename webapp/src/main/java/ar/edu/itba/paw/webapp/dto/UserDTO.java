@@ -4,12 +4,12 @@ import ar.edu.itba.paw.model.User;
 
 public class UserDTO {
 
-    private String username;
+    private String name;
     private String email;
     private Long id;
 
     public UserDTO(User u) {
-        this.username = u.getUsername();
+        this.name = u.getName();
         this.email = u.getEmail();
         this.id = u.getId();
     }
@@ -18,12 +18,12 @@ public class UserDTO {
         // Empty constructor needed by JAX-RS
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {

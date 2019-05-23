@@ -16,7 +16,7 @@ import ar.edu.itba.paw.model.User;
 
 @Primary 
 @Repository 
-public class UserHibernateDao implements UserDao{
+public class UserHibernateDao implements UserDao {
 
 	@PersistenceContext
 	private EntityManager em;
@@ -25,16 +25,6 @@ public class UserHibernateDao implements UserDao{
 	public Optional<User> findById(long id) {
 		User user = em.find(User.class, id);
 		return  user == null ? Optional.empty() : Optional.of(user);
-	}
-
-	@Override
-	public Optional<User> findByUsername(String username) {
-		final TypedQuery<User> query = em.createQuery("from User as u where u.username = :username", User.class);
-		query.setParameter("username", username);
-		final List<User> list = query.getResultList();
-		if(list.isEmpty())
-			System.out.println("The username wasnt found!");
-		return  list.isEmpty() ? Optional.empty() : Optional.of(list.get(0)); 
 	}
 
 	@Override
@@ -49,8 +39,8 @@ public class UserHibernateDao implements UserDao{
 
 	@Override
 	@Transactional
-	public User create(String username, String email, String password) {
-		final User user = new User(username, email, password);
+	public User create(String name, String email, String password) {
+		final User user = new User(name, email, password);
 		
 		em.persist(user);
 		return user;
