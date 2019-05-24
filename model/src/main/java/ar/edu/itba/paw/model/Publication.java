@@ -1,6 +1,7 @@
 package ar.edu.itba.paw.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "publications")
@@ -15,6 +16,11 @@ public class Publication extends TimestampedEntity {
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @Access(AccessType.PROPERTY)
     private User supervisor;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "publication_id", referencedColumnName = "id")
+    @Access(AccessType.PROPERTY)
+    private Set<Order> orders;
 
     @Column(length = 50, nullable = false)
     private String description;
@@ -70,6 +76,18 @@ public class Publication extends TimestampedEntity {
 
     public void setSupervisor(User supervisor) {
         this.supervisor = supervisor;
+    }
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
+    }
+
+    public Long getAvailableQuantity() {
+        return this.quantity - (orders == null ? 0 : orders.stream().map(Order::getQuantity).reduce(0L, Long::sum));
     }
 
     @Override
