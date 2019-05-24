@@ -12,14 +12,12 @@ import org.springframework.stereotype.Controller;
 import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
 import javax.validation.Validator;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import java.util.Optional;
 import java.util.Set;
 
 @Path("publications")
@@ -35,6 +33,22 @@ public class PublicationsController {
     @Autowired
     private PublicationService publicationService;
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/{id}")
+    public Response retreive(@PathParam("id") Long id) {
+        if(id == null) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(new ErrorDTO("Invalid or undefined publication id")).build();
+        }
+
+        Optional<Publication> publicationOptional = publicationService.findById(id);
+
+        if(!publicationOptional.isPresent()) {
+            return Response.status(Response.Status.NOT_FOUND).entity(new ErrorDTO("Publication not found")).build();
+        }
+
+        return Response.ok(new PublicationDTO(publicationOptional.get())).build();
+    }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
