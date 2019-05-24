@@ -68,11 +68,8 @@ public class PublicationsController {
                     publication.getDetailedDescription()
             );
 
-            System.out.println(createdPublication);
-
             return Response.ok(new PublicationDTO(createdPublication)).build();
         } catch (Exception e) {
-            e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorDTO("Publication could no be created")).build();
         }
     }
