@@ -9,6 +9,7 @@ public class Publication extends TimestampedEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @Access(AccessType.PROPERTY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
@@ -43,6 +44,9 @@ public class Publication extends TimestampedEntity {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getDescription() {
         return description;
