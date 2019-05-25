@@ -39,6 +39,8 @@ public class OrderHibernateDao implements OrderDao {
   @Transactional
   public Order create(Publication publication, User orderer, Long quantity) {
     final Order newOrder = new Order(publication, orderer, quantity);
+    publication.addOrder(newOrder);
+
     em.persist(newOrder);
 
     return newOrder;
@@ -48,5 +50,6 @@ public class OrderHibernateDao implements OrderDao {
   @Transactional
   public void update(final Order order) {
     em.merge(order);
+    em.flush();
   }
 }

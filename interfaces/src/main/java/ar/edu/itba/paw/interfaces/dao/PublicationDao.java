@@ -26,4 +26,10 @@ public interface PublicationDao {
      * @return The created publication
      */
     public Publication create(final User supervisor, final String description, final Double unitPrice, final Long quantity, final String detailedDescription);
+
+    /**
+     * Update publication
+     * @param publication
+     */
+    public void update(final Publication publication);
 }

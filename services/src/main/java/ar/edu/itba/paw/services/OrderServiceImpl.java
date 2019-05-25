@@ -6,7 +6,9 @@ import ar.edu.itba.paw.interfaces.service.UserService;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.model.User;
+import ar.edu.itba.paw.model.events.PublicationFulfilledEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +24,8 @@ public class OrderServiceImpl implements OrderService {
   private OrderDao orderDao;
   @Autowired
   private UserService userService;
+  @Autowired
+  private ApplicationEventPublisher eventPublisher;
 
   @Override
   public Order create(Publication publication, Long quantity) {
@@ -35,18 +39,27 @@ public class OrderServiceImpl implements OrderService {
       throw new IllegalStateException("User is not logged in but it accessed create order");
     }
 
-    Optional<Order> foundOrder = orderDao.find(publication, loggedUser.get());
+    if(publication.getAvailableQuantity() < quantity) {
+      throw new IllegalArgumentException("Order quantity should be le than available quantity");
+    }
 
-    if(foundOrder.isPresent()) {
+    Optional<Order> existantOrder = publication.getOrders().stream().filter(o -> o.getOrderer().equals(loggedUser)).findFirst();
+
+    if(existantOrder.isPresent()) {
       /** The user already ordered from this publication, so we just update the quantity */
-      final Long newQuantity = foundOrder.get().getQuantity() + quantity;
-      foundOrder.get().setQuantity(newQuantity);
-      orderDao.update(foundOrder.get());
-
-      return foundOrder.get();
+      final Long newQuantity = existantOrder.get().getQuantity() + quantity;
+      existantOrder.get().setQuantity(newQuantity);
+      orderDao.update(existantOrder.get());
     } else {
       /** Create a new order */
-      return orderDao.create(publication, loggedUser.get(), quantity);
+      existantOrder = Optional.of(orderDao.create(publication, loggedUser.get(), quantity));
     }
+
+    if(publication.getAvailableQuantity().equals(0L)) {
+      // The user ordered all remaining products (publication fulfilled)
+      eventPublisher.publishEvent(new PublicationFulfilledEvent(publication));
+    }
+
+    return existantOrder.get();
   }
 }

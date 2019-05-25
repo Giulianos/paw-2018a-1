@@ -13,12 +13,12 @@ public class Order extends TimestampedEntity {
   @EmbeddedId
   private OrderId id;
 
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @ManyToOne(fetch = FetchType.EAGER, optional = false)
   @Access(AccessType.PROPERTY)
   @JoinColumn(name = "publication_id", insertable = false, updatable = false)
   private Publication publication;
 
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @ManyToOne(fetch = FetchType.EAGER, optional = false)
   @Access(AccessType.PROPERTY)
   @JoinColumn(name = "orderer_id", insertable = false, updatable = false)
   private User orderer;
@@ -67,5 +67,18 @@ public class Order extends TimestampedEntity {
 
   public void setQuantity(Long quantity) {
     this.quantity = quantity;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Order order = (Order) o;
+    return id.equals(order.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id);
   }
 }

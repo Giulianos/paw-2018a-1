@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.Optional;
 
 @Primary
@@ -31,5 +32,12 @@ public class PublicationHibernateDao implements PublicationDao {
         em.persist(newPublication);
 
         return newPublication;
+    }
+
+    @Override
+    @Transactional
+    public void update(Publication publication) {
+        em.merge(publication);
+        em.flush();
     }
 }

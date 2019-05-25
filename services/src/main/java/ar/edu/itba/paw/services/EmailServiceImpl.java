@@ -2,6 +2,7 @@ package ar.edu.itba.paw.services;
 
 import javax.mail.internet.MimeMessage;
 
+import ar.edu.itba.paw.model.Publication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -10,12 +11,20 @@ import org.springframework.stereotype.Component;
 
 import ar.edu.itba.paw.interfaces.service.EmailService;
 import ar.edu.itba.paw.model.User;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
+/**
+ * TODO
+ *  - move executorService.submit to sendEmail method
+ *  - use template for emails
+ *  - i18nalize emails
+ */
+
 @Component
-public class EmailsImpl implements EmailService {
+public class EmailServiceImpl implements EmailService {
 
     private final int THREADS_QUANTITY = 10;
 
@@ -56,6 +65,38 @@ public class EmailsImpl implements EmailService {
                             "</li>" +
                             "<li>" +
                             "<a href='" + getAbsoluteURL("search") + "'>Subscribing to existing publications</a>" +
+                            "</li>" +
+                            "</ul>"
+            );
+        });
+    }
+
+    @Override
+    public void notifyOrdererPublicationFulfillment(User user, Publication publication) {
+        executorService.submit(() -> {
+            sendEmail(user.getEmail(),
+                    "\uD83C\uDFC1 Your order is ready to be bought!",
+                    "<h1>Hi " + user.getName() + "!</h1><h3>Your order is ready to be bought!</h3>" +
+                            "<p>Get in touch with the publisher to arrange the pickup</p>" +
+                            "<ul>" +
+                            "<li>" +
+                            "<a href='" + getAbsoluteURL("profile/publications?newModal=true") + "'>Message publisher</a>" +
+                            "</li>" +
+                            "</ul>"
+            );
+        });
+    }
+
+    @Override
+    public void notifySupervisorPublicationFulfillment(Publication publication) {
+        executorService.submit(() -> {
+            sendEmail(publication.getSupervisor().getEmail(),
+                    "\uD83C\uDFC1 Your publication was fulfilled!",
+                    "<h1>Hi " + publication.getSupervisor().getName() + "!</h1><h3>Your publication was fulfilled!</h3>" +
+                            "<p>Get in touch with the orderers to arrange the pickup</p>" +
+                            "<ul>" +
+                            "<li>" +
+                            "<a href='" + getAbsoluteURL("profile/publications?newModal=true") + "'>View publication orderers</a>" +
                             "</li>" +
                             "</ul>"
             );
