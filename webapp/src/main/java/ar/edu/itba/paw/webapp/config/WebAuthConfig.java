@@ -13,6 +13,9 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,6 +43,10 @@ public class WebAuthConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.GET, API_PREFIX + "/echo").hasAuthority("ROLE_USER")
 				.antMatchers(HttpMethod.POST, API_PREFIX + "/echo").hasAuthority("ROLE_USER")
 
+				// Publications
+				.antMatchers(HttpMethod.POST, API_PREFIX + "/publications").hasAuthority("ROLE_USER")
+				.antMatchers(HttpMethod.GET, API_PREFIX + "/publications").permitAll()
+
 				// Allow login and register for everyone
 				.antMatchers(HttpMethod.POST, API_PREFIX + "/users").permitAll()
 				.antMatchers(HttpMethod.POST, API_PREFIX + "/login").permitAll();
@@ -63,6 +70,11 @@ public class WebAuthConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
+	}
+
+	@Bean
+	public SecurityContext authenticationContext() {
+		return SecurityContextHolder.getContext();
 	}
 	
 }

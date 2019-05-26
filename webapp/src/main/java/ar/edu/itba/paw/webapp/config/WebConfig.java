@@ -37,6 +37,7 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 @EnableTransactionManagement
 public class WebConfig extends WebMvcConfigurerAdapter {
+
   @Value("classpath:schema.sql")
   private Resource schemaSql;
 
@@ -106,7 +107,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     factoryBean.setJpaVendorAdapter(vendorAdapter);
     final Properties properties = new Properties();
     properties.setProperty("hibernate.hbm2ddl.auto", "create");
-    properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL92Dialect");
+    properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
     properties.setProperty("format_sql", "true");
     factoryBean.setJpaProperties(properties);
     return factoryBean;
