@@ -78,4 +78,18 @@ public class OrderServiceImpl implements OrderService {
   public Long userOrdersQuantity(User user) {
     return orderDao.userOrdersQuantity(user);
   }
+
+  @Override
+  public List<Order> publicationOrders(Publication publication, Integer page, Integer pageSize) throws UnauthorizedAccessException {
+    if(!publication.getSupervisor().getEmail().equals(SecurityContextHolder.getContext().getAuthentication().getName())) {
+      throw new UnauthorizedAccessException("Only the supervisor can see the orders");
+    }
+
+    return orderDao.publicationOrders(publication, page, pageSize);
+  }
+
+  @Override
+  public Long publicationOrdersQuantity(Publication publication) {
+    return orderDao.publicationOrdersQuantity(publication);
+  }
 }

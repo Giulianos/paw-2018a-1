@@ -63,6 +63,24 @@ public class OrderHibernateDao implements OrderDao {
   }
 
   @Override
+  public List<Order> publicationOrders(Publication publication, Integer page, Integer pageSize) {
+    final TypedQuery<Order> query = em.createQuery("from Order as o where (o.publication = :publication)", Order.class);
+    query.setParameter("publication", publication);
+    query.setFirstResult(pageSize*page);
+    query.setMaxResults(pageSize);
+
+    return query.getResultList();
+  }
+
+  @Override
+  public Long publicationOrdersQuantity(Publication publication) {
+    final TypedQuery<Long> query = em.createQuery("select count(*) from Order as o where (o.publication = :publication)", Long.class);
+    query.setParameter("publication", publication);
+
+    return query.getSingleResult();
+  }
+
+  @Override
   @Transactional
   public void update(final Order order) {
     em.merge(order);

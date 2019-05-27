@@ -44,6 +44,22 @@ public interface OrderDao {
   public Long userOrdersQuantity(final User user);
 
   /**
+   * Retrieves a paginated list of publication's orders
+   * @param publication the publication
+   * @param page the page number
+   * @param pageSize the size of the page
+   * @return the paginated list
+   */
+  public List<Order> publicationOrders(final Publication publication, final Integer page, final Integer pageSize);
+
+  /**
+   * Retrieves publication's orders quantity
+   * @param publication
+   * @return
+   */
+  public Long publicationOrdersQuantity(final Publication publication);
+
+  /**
    * Update order
    * @param order
    */
