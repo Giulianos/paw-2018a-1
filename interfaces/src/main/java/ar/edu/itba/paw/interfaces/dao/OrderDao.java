@@ -65,4 +65,11 @@ public interface OrderDao {
    */
   public void update(final Order order);
 
+  /**
+   * Delete order by id
+   * @param ordererId
+   * @param publicationId
+   */
+  public void deleteById(final Long ordererId, final Long publicationId);
+
 }

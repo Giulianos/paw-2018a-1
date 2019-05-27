@@ -1,5 +1,7 @@
 package ar.edu.itba.paw.interfaces.service;
 
+import ar.edu.itba.paw.interfaces.exception.EntityNotFoundException;
+import ar.edu.itba.paw.interfaces.exception.PublicationFulfilledException;
 import ar.edu.itba.paw.interfaces.exception.UnauthorizedAccessException;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
@@ -16,6 +18,10 @@ public interface OrderService {
    * @return created order
    */
   public Order create(final Publication publication, final Long quantity);
+
+  /**
+   * Find order by
+   */
 
   /**
    * Retreives a paginated list of user's orders
@@ -48,5 +54,11 @@ public interface OrderService {
    * @return
    */
   public Long publicationOrdersQuantity(final Publication publication);
+
+  /**
+   * Delete order by publication id
+   * @param publicationId
+   */
+  public void deleteByPublicationId(final Long publicationId) throws PublicationFulfilledException, EntityNotFoundException;
 
 }

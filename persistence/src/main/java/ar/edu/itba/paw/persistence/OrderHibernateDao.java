@@ -4,6 +4,7 @@ import ar.edu.itba.paw.interfaces.dao.OrderDao;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.model.User;
+import ar.edu.itba.paw.model.compositepks.OrderId;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -85,5 +86,13 @@ public class OrderHibernateDao implements OrderDao {
   public void update(final Order order) {
     em.merge(order);
     em.flush();
+  }
+
+  @Override
+  public void deleteById(final Long ordererId, final Long publicationId) {
+    final Query query = em.createQuery("delete Order as o where (o.id = :id)");
+    query.setParameter("id", new OrderId(ordererId, publicationId));
+
+    query.executeUpdate();
   }
 }

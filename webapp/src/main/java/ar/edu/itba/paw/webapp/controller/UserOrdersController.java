@@ -1,13 +1,17 @@
 package ar.edu.itba.paw.webapp.controller;
 
+import ar.edu.itba.paw.interfaces.exception.EntityNotFoundException;
+import ar.edu.itba.paw.interfaces.exception.PublicationFulfilledException;
 import ar.edu.itba.paw.interfaces.exception.UnauthorizedAccessException;
 import ar.edu.itba.paw.interfaces.service.OrderService;
 import ar.edu.itba.paw.interfaces.service.UserService;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.User;
+import ar.edu.itba.paw.webapp.dto.ErrorDTO;
 import ar.edu.itba.paw.webapp.dto.OrderDTO;
 import ar.edu.itba.paw.webapp.dto.OrderPageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import javax.ws.rs.*;
@@ -18,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Path("users/{id}/orders")
+@Path("users/{userId}/orders")
 @Controller
 public class UserOrdersController {
 
@@ -28,7 +32,7 @@ public class UserOrdersController {
     @Autowired
     private UserService userService;
 
-    @PathParam("id")
+    @PathParam("userId")
     private Long userId;
 
     @GET
@@ -56,6 +60,30 @@ public class UserOrdersController {
         } catch (Exception e) {
             e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public Response delete(@PathParam("id") final Long publicationId) {
+        if(publicationId == null) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        Optional<User> user = userService.findById(userId);
+
+        if(!user.isPresent() || !user.get().getEmail().equals(SecurityContextHolder.getContext().getAuthentication().getName())) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        try {
+            orderService.deleteByPublicationId(publicationId);
+
+            return Response.status(Response.Status.NO_CONTENT).build();
+        } catch(PublicationFulfilledException e) {
+            return Response.status(Response.Status.CONFLICT).entity(new ErrorDTO(e.getReason())).build();
+        } catch(EntityNotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
 
