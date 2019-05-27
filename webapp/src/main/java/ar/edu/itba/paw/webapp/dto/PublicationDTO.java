@@ -11,6 +11,7 @@ public class PublicationDTO {
     private String description;
     private Double unitPrice;
     private Long quantity;
+    private Long availableQuantity;
     private String detailedDescription;
 
     public PublicationDTO(Publication publication) {
@@ -21,6 +22,7 @@ public class PublicationDTO {
         this.unitPrice = publication.getUnitPrice();
         this.quantity = publication.getQuantity();
         this.detailedDescription = publication.getDetailedDescription();
+        this.availableQuantity = publication.getAvailableQuantity();
     }
 
     public PublicationDTO() {
@@ -29,6 +31,14 @@ public class PublicationDTO {
 
     public Long getId() {
         return id;
+    }
+
+    public Long getAvailableQuantity() {
+        return availableQuantity;
+    }
+
+    public void setAvailableQuantity(Long availableQuantity) {
+        this.availableQuantity = availableQuantity;
     }
 
     public Long getSupervisorId() {

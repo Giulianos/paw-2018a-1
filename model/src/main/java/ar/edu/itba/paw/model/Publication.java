@@ -1,6 +1,9 @@
 package ar.edu.itba.paw.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "publications")
@@ -9,20 +12,33 @@ public class Publication extends TimestampedEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @Access(AccessType.PROPERTY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @Access(AccessType.PROPERTY)
     private User supervisor;
+
+    @OneToMany(
+        mappedBy = "publication",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true,
+        fetch = FetchType.EAGER
+    )
+    @Access(AccessType.PROPERTY)
+    private Set<Order> orders = new HashSet<>();
 
     @Column(length = 50, nullable = false)
     private String description;
 
-    @Column
+    @Column(nullable = false)
     private Double unitPrice;
 
-    @Column
+    @Column(nullable = false)
     private Long quantity;
+
+    @Column(nullable = false)
+    private Boolean fulfilled = false;
 
     @Column(length = 1000)
     private String detailedDescription;
@@ -43,6 +59,9 @@ public class Publication extends TimestampedEntity {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getDescription() {
         return description;
@@ -68,15 +87,46 @@ public class Publication extends TimestampedEntity {
         this.supervisor = supervisor;
     }
 
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
+    }
+
+    public Boolean getFulfilled() {
+        return fulfilled;
+    }
+
+    public void setFulfilled(Boolean fulfilled) {
+        this.fulfilled = fulfilled;
+    }
+
+    public Long getAvailableQuantity() {
+        return this.quantity - (orders == null ? 0 : orders.stream().map(Order::getQuantity).reduce(0L, Long::sum));
+    }
+
+    public void addOrder(Order order) {
+        orders.add(order);
+        order.setPublication(this);
+    }
+
+    public void removeOrder(Order order) {
+        orders.remove(order);
+        order.setPublication(null);
+    }
+
     @Override
-    public String toString() {
-        return "Publication{" +
-                "id=" + id +
-                ", supervisorId=" + supervisor.getId() +
-                ", description='" + description + '\'' +
-                ", unitPrice=" + unitPrice +
-                ", quantity=" + quantity +
-                ", detailedDescription='" + detailedDescription + '\'' +
-                '}';
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Publication that = (Publication) o;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
