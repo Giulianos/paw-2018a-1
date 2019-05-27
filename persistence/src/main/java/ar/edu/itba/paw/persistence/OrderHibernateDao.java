@@ -8,10 +8,8 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
+import java.util.List;
 import java.util.Optional;
 
 @Primary
@@ -44,6 +42,24 @@ public class OrderHibernateDao implements OrderDao {
     em.persist(newOrder);
 
     return newOrder;
+  }
+
+  @Override
+  public List<Order> userOrders(User user, Integer page, Integer pageSize) {
+    final TypedQuery<Order> query = em.createQuery("from Order as o where (o.orderer = :orderer)", Order.class);
+    query.setParameter("orderer", user);
+    query.setFirstResult(pageSize*page);
+    query.setMaxResults(pageSize);
+
+    return query.getResultList();
+  }
+
+  @Override
+  public Long userOrdersQuantity(User user) {
+    final TypedQuery<Long> query = em.createQuery("select count(*) from Order as o where (o.orderer = :orderer)", Long.class);
+    query.setParameter("orderer", user);
+
+    return query.getSingleResult();
   }
 
   @Override

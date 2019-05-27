@@ -1,6 +1,7 @@
 package ar.edu.itba.paw.services;
 
 import ar.edu.itba.paw.interfaces.dao.OrderDao;
+import ar.edu.itba.paw.interfaces.exception.UnauthorizedAccessException;
 import ar.edu.itba.paw.interfaces.service.OrderService;
 import ar.edu.itba.paw.interfaces.service.UserService;
 import ar.edu.itba.paw.model.Order;
@@ -14,6 +15,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Primary
@@ -61,5 +63,19 @@ public class OrderServiceImpl implements OrderService {
     }
 
     return existantOrder.get();
+  }
+
+  @Override
+  public List<Order> userOrders(User user, Integer page, Integer pageSize) throws UnauthorizedAccessException {
+    if (!user.getEmail().equals(SecurityContextHolder.getContext().getAuthentication().getName())) {
+      throw new UnauthorizedAccessException("Can't access other user's orders");
+    }
+
+    return orderDao.userOrders(user, page, pageSize);
+  }
+
+  @Override
+  public Long userOrdersQuantity(User user) {
+    return orderDao.userOrdersQuantity(user);
   }
 }
