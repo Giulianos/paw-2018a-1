@@ -1,9 +1,7 @@
 package ar.edu.itba.paw.model;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "images")
@@ -17,6 +15,11 @@ public class Image extends TimestampedEntity {
 
   @Column(name = "base64", nullable = false, unique = true)
   private String image;
+
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @Access(AccessType.PROPERTY)
+  @JoinColumn(name = "publication_id", insertable = false, updatable = false)
+  private Publication publication;
 
   public Image(String image) {
     this.image = image;
@@ -40,6 +43,14 @@ public class Image extends TimestampedEntity {
 
   public void setImage(String image) {
     this.image = image;
+  }
+
+  public Publication getPublication() {
+    return publication;
+  }
+
+  public void setPublication(Publication publication) {
+    this.publication = publication;
   }
 
   @Override

@@ -51,6 +51,15 @@ public class Publication extends TimestampedEntity {
     )
     private Set<Tag> tags = new HashSet<>();
 
+    @OneToMany(
+        mappedBy = "publication",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true,
+        fetch = FetchType.LAZY
+    )
+    @Access(AccessType.PROPERTY)
+    private Set<Image> images = new HashSet<>();
+
     public Publication() {
         // Hibernate needs this
     }
@@ -137,6 +146,23 @@ public class Publication extends TimestampedEntity {
 
     public Set<Tag> getTags() {
         return tags;
+    }
+
+    public void addImage(final Image image) {
+        images.add(image);
+        image.setPublication(this);
+    }
+
+    public void removeImage(final Image image) {
+        images.remove(image);
+    }
+
+    public Set<Image> getImages() {
+        return this.images;
+    }
+
+    public void setImages(Set<Image> images) {
+        this.images = images;
     }
 
     @Override
