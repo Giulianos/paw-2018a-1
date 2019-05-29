@@ -18,7 +18,7 @@ public class Tag extends TimestampedEntity{
   @Column(name = "tag", nullable = false, unique = true)
   private String tag;
 
-  @ManyToMany(mappedBy = "tags")
+  @ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)
   private Set<Publication> publications = new HashSet<>();
 
   public Tag() {
@@ -45,12 +45,20 @@ public class Tag extends TimestampedEntity{
     this.tag = tag;
   }
 
+  public Set<Publication> getPublications() {
+    return publications;
+  }
+
   public void addPublication(final Publication publication) {
     this.publications.add(publication);
   }
 
   public void removePublication(final Publication publication) {
     this.publications.remove(publication);
+  }
+
+  public Integer getUsage() {
+    return this.getPublications().size();
   }
 
   @Override
