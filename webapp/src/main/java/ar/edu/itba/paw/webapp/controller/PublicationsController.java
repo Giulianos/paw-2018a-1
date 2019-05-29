@@ -65,11 +65,13 @@ public class PublicationsController {
                     publication.getDescription(),
                     publication.getUnitPrice(),
                     publication.getQuantity(),
-                    publication.getDetailedDescription()
+                    publication.getDetailedDescription(),
+                    publication.getTags()
             );
 
             return Response.ok(new PublicationDTO(createdPublication)).build();
         } catch (Exception e) {
+            e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorDTO("Publication could no be created")).build();
         }
     }

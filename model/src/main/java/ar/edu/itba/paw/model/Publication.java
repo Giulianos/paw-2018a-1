@@ -43,6 +43,14 @@ public class Publication extends TimestampedEntity {
     @Column(length = 1000)
     private String detailedDescription;
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+    @JoinTable(
+        name = "publication_tags",
+        joinColumns = { @JoinColumn(name = "publication_id", referencedColumnName = "id")},
+        inverseJoinColumns = { @JoinColumn(name = "tag_id", referencedColumnName = "id")}
+    )
+    private Set<Tag> tags = new HashSet<>();
+
     public Publication() {
         // Hibernate needs this
     }
@@ -115,6 +123,20 @@ public class Publication extends TimestampedEntity {
     public void removeOrder(Order order) {
         orders.remove(order);
         order.setPublication(null);
+    }
+
+    public void addTag(final Tag tag) {
+        tags.add(tag);
+        tag.addPublication(this);
+    }
+
+    public void removeTag(final Tag tag) {
+        tags.remove(tag);
+        tag.removePublication(this);
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
     }
 
     @Override
