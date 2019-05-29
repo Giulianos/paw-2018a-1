@@ -1,8 +1,12 @@
 package ar.edu.itba.paw.webapp.dto;
 
 import ar.edu.itba.paw.model.Publication;
+import ar.edu.itba.paw.model.Tag;
 import ar.edu.itba.paw.webapp.config.WebConfig;
 import ar.edu.itba.paw.webapp.utils.URLResolver;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class PublicationDTO {
     private Long id;
@@ -13,6 +17,7 @@ public class PublicationDTO {
     private Long quantity;
     private Long availableQuantity;
     private String detailedDescription;
+    private List<String> tags;
 
     public PublicationDTO(Publication publication) {
         this.id = publication.getId();
@@ -23,6 +28,7 @@ public class PublicationDTO {
         this.quantity = publication.getQuantity();
         this.detailedDescription = publication.getDetailedDescription();
         this.availableQuantity = publication.getAvailableQuantity();
+        this.tags = publication.getTags().stream().map(Tag::getTag).collect(Collectors.toList());
     }
 
     public PublicationDTO() {
@@ -91,5 +97,13 @@ public class PublicationDTO {
 
     public void setDetailedDescription(String detailedDescription) {
         this.detailedDescription = detailedDescription;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 }

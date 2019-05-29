@@ -135,6 +135,10 @@ public class Publication extends TimestampedEntity {
         tag.removePublication(this);
     }
 
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

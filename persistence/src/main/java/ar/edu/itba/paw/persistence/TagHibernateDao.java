@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
@@ -44,5 +45,13 @@ public class TagHibernateDao implements TagDao {
     results.forEach(tag -> tag.getUsage());
 
     return results;
+  }
+
+  @Override
+  public Optional<Tag> retrieve(String tag) {
+    TypedQuery<Tag> query = em.createQuery("from Tag as t where t.tag = :tag", Tag.class);
+    query.setParameter("tag", tag);
+
+    return Optional.of(query.getSingleResult());
   }
 }

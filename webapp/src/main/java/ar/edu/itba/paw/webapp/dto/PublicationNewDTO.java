@@ -2,6 +2,7 @@ package ar.edu.itba.paw.webapp.dto;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 public class PublicationNewDTO {
     @Size(min = 4, max = 50)
@@ -15,6 +16,9 @@ public class PublicationNewDTO {
 
     @Size(max = 1000)
     private String detailedDescription;
+
+    @NotNull
+    private List<String> tags;
 
     public PublicationNewDTO() {
         // Empty constructor needed by JAX-RS
@@ -50,5 +54,13 @@ public class PublicationNewDTO {
 
     public void setDetailedDescription(String detailedDescription) {
         this.detailedDescription = detailedDescription;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 }
