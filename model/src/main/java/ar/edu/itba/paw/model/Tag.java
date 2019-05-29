@@ -1,6 +1,9 @@
 package ar.edu.itba.paw.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tags")
@@ -14,6 +17,9 @@ public class Tag extends TimestampedEntity{
 
   @Column(name = "tag", nullable = false, unique = true)
   private String tag;
+
+  @ManyToMany(mappedBy = "tags")
+  private Set<Publication> publications = new HashSet<>();
 
   public Tag() {
     // hibernate needs this
@@ -37,5 +43,26 @@ public class Tag extends TimestampedEntity{
 
   public void setTag(String tag) {
     this.tag = tag;
+  }
+
+  public void addPublication(final Publication publication) {
+    this.publications.add(publication);
+  }
+
+  public void removePublication(final Publication publication) {
+    this.publications.remove(publication);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Tag tag1 = (Tag) o;
+    return tag.equals(tag1.tag);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(tag);
   }
 }
