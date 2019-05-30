@@ -1,5 +1,6 @@
 package ar.edu.itba.paw.interfaces.service;
 
+import ar.edu.itba.paw.model.Image;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.model.User;
 
@@ -32,5 +33,13 @@ public interface PublicationService {
       final String detailedDescription,
       final List<String> tags
   );
+
+  /**
+   * Adds an image to a publication
+   * @param publication
+   * @param base64
+   * @return the added image entity, empty if the image could not be added
+   */
+  public Optional<Image> addImage(final Publication publication, final String base64);
 
 }

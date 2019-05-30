@@ -26,6 +26,7 @@
     <jersey.version>3.0-SNAPSHOT</jersey.version>
     <jersey.bean-validation>2.25</jersey.bean-validation>
     <jwt.version>0.7.0</jwt.version>
+    <mock-javamail.version>1.9</mock-javamail.version>
   </properties>
   <modules>
     <module>webapp</module>
@@ -248,6 +249,11 @@
         <groupId>org.glassfish.jersey.media</groupId>
         <artifactId>jersey-media-jaxb</artifactId>
         <version>${jersey.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jvnet.mock-javamail</groupId>
+        <artifactId>mock-javamail</artifactId>
+        <version>${mock-javamail.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
