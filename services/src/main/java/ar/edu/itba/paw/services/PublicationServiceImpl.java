@@ -94,6 +94,10 @@ public class PublicationServiceImpl implements PublicationService {
         throw new UnauthorizedAccessException("Only supervisor can add images");
       }
 
+      if(publication.get().getImages().size() >= 5) {
+        throw new IllegalStateException("Publication can't have more than 5 images");
+      }
+
       Image addedImage = imageDao.addToPublication(publication.get(), base64);
 
       return Optional.of(addedImage);

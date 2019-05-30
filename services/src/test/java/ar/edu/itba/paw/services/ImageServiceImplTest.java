@@ -80,4 +80,20 @@ public class ImageServiceImplTest {
     // Create image in non-existent publication
     Optional<Image> image = publicationService.addImage("other@email.com", -1L, "imageInBase64");
   }
+
+  @Test(expected = IllegalStateException.class)
+  public void addMoreImages() throws UnauthorizedAccessException, EntityNotFoundException {
+    // Create test publication
+    Publication testPublication = publicationDao.create(testUser, "Test Publication",1.0, 2L, "");
+
+    // Create image in testPublication
+    publicationService.addImage(testUser.getEmail(), testPublication.getId(), "image1InBase64");
+    publicationService.addImage(testUser.getEmail(), testPublication.getId(), "image2InBase64");
+    publicationService.addImage(testUser.getEmail(), testPublication.getId(), "image3InBase64");
+    publicationService.addImage(testUser.getEmail(), testPublication.getId(), "image4InBase64");
+    publicationService.addImage(testUser.getEmail(), testPublication.getId(), "image5InBase64");
+
+    // this should throw an exception
+    publicationService.addImage(testUser.getEmail(), testPublication.getId(), "image6InBase64");
+  }
 }

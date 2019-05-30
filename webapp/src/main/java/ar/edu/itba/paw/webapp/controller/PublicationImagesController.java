@@ -34,7 +34,7 @@ public class PublicationImagesController {
   @Consumes(MediaType.TEXT_PLAIN)
   public Response add(final String base64Image) {
 
-    if(base64Image == null) {
+    if (base64Image == null) {
       return Response.status(Response.Status.BAD_REQUEST).build();
     }
 
@@ -48,10 +48,12 @@ public class PublicationImagesController {
           .entity(new ImageDTO(image.get()))
           .location(new URI(URLResolver.getFullURL("/images/") + image.get().getId()))
           .build();
-    } catch(UnauthorizedAccessException e) {
+    } catch (UnauthorizedAccessException e) {
       return Response.status(Response.Status.UNAUTHORIZED).build();
-    } catch(EntityNotFoundException e) {
+    } catch (EntityNotFoundException e) {
       return Response.status(Response.Status.NOT_FOUND).build();
+    } catch (IllegalStateException e) {
+      return Response.status(Response.Status.CONFLICT).build();
     } catch (Exception e) {
       return Response.serverError().build();
     }
