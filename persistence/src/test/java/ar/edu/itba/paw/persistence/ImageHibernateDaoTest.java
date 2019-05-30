@@ -36,16 +36,36 @@ public class ImageHibernateDaoTest {
 	private ImageDao imageDao;
 
 	private User testUser;
-	private Publication testPublication;
 
 	@Before
 	public void testSetup() {
 		this.testUser = userDao.create("John Doe", "john.doe@example.com", "password123");
-		this.testPublication = publicationDao.create(testUser, "Test Publication", 10.0, 2L, "");
+
+	}
+
+	@Test
+	public void findImageById() {
+		// Create test publication
+		Publication testPublication = publicationDao.create(testUser, "Test Publication", 10.0, 2L, "");
+
+		// Create image in testPublication
+		Image image = imageDao.addToPublication(testPublication, "imageInBase64");
+		publicationDao.update(testPublication);
+
+		// Find image by id
+		Optional<Image> foundImage = imageDao.findById(image.getId());
+
+		// Check if it's present and it's the one we created
+		assertTrue(foundImage.isPresent());
+		assertEquals(foundImage.get(), image);
+
 	}
 
 	@Test
 	public void addImageToPublicationThenRetrieve() {
+		// Create test publication
+		Publication testPublication = publicationDao.create(testUser, "Test Publication", 10.0, 2L, "");
+
 		// Create image in testPublication
 		Image image = imageDao.addToPublication(testPublication, "imageInBase64");
 		publicationDao.update(testPublication);

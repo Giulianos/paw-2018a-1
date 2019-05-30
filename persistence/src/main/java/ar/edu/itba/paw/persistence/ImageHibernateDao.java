@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.Optional;
 
 @Primary
 @Repository
@@ -24,5 +25,16 @@ public class ImageHibernateDao implements ImageDao {
     em.persist(newImage);
 
     return newImage;
+  }
+
+  @Override
+  public Optional<Image> findById(final Long id) {
+    Image image = em.find(Image.class, id);
+
+    if(image == null) {
+      return Optional.empty();
+    }
+
+    return Optional.of(image);
   }
 }
