@@ -1,5 +1,8 @@
 package ar.edu.itba.paw.interfaces.service;
 
+import ar.edu.itba.paw.interfaces.exception.EntityNotFoundException;
+import ar.edu.itba.paw.interfaces.exception.UnauthorizedAccessException;
+import ar.edu.itba.paw.model.Image;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.model.User;
 
@@ -32,5 +35,19 @@ public interface PublicationService {
       final String detailedDescription,
       final List<String> tags
   );
+
+  /**
+   * Adds an image to a publication
+   *
+   * @param userEmail the email of the user trying to add the image
+   * @param publicationId
+   * @param base64
+   *
+   * @throws EntityNotFoundException if the publication doesn't exist
+   * @throws UnauthorizedAccessException if the user is not the supervisor
+   *
+   * @return the added image entity, empty if the image could not be added
+   */
+  public Optional<Image> addImage(final String userEmail, final Long publicationId, final String base64) throws EntityNotFoundException, UnauthorizedAccessException;
 
 }

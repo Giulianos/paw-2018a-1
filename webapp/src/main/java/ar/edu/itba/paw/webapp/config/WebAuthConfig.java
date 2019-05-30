@@ -45,6 +45,7 @@ public class WebAuthConfig extends WebSecurityConfigurerAdapter {
 
 				// Publications
 				.antMatchers(HttpMethod.POST, API_PREFIX + "/publications").hasAuthority("ROLE_USER")
+				.antMatchers(HttpMethod.POST, API_PREFIX + "/publications/{\\d+}/images").hasAuthority("ROLE_USER")
 				.antMatchers(HttpMethod.GET, API_PREFIX + "/publications").permitAll()
 
 				// Orders

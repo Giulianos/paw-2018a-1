@@ -18,6 +18,7 @@ public class PublicationDTO {
     private Long availableQuantity;
     private String detailedDescription;
     private List<String> tags;
+    private List<String> imagesUrls;
 
     public PublicationDTO(Publication publication) {
         this.id = publication.getId();
@@ -29,6 +30,11 @@ public class PublicationDTO {
         this.detailedDescription = publication.getDetailedDescription();
         this.availableQuantity = publication.getAvailableQuantity();
         this.tags = publication.getTags().stream().map(Tag::getTag).collect(Collectors.toList());
+        this.imagesUrls = publication
+            .getImages()
+            .stream()
+            .map(i -> URLResolver.getFullURL("/images/" + i.getId()))
+            .collect(Collectors.toList());
     }
 
     public PublicationDTO() {
@@ -105,5 +111,13 @@ public class PublicationDTO {
 
     public void setTags(List<String> tags) {
         this.tags = tags;
+    }
+
+    public List<String> getImagesUrls() {
+        return imagesUrls;
+    }
+
+    public void setImagesUrls(List<String> imagesUrls) {
+        this.imagesUrls = imagesUrls;
     }
 }

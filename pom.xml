@@ -18,7 +18,7 @@
     <jstl.version>1.2</jstl.version>
     <javax.validation-api.version>1.1.0.Final</javax.validation-api.version>
     <org.hibernate-validator.version>5.2.4.Final</org.hibernate-validator.version>
-    <org.hsqldb.version>2.3.1</org.hsqldb.version>
+    <h2.version>1.4.197</h2.version>
     <javax.mail.version>1.5.0-b01</javax.mail.version>
     <maven-war-plugin.version>2.6</maven-war-plugin.version>
     <org.hibernate.version>5.1.0.Final</org.hibernate.version>
@@ -26,6 +26,7 @@
     <jersey.version>3.0-SNAPSHOT</jersey.version>
     <jersey.bean-validation>2.25</jersey.bean-validation>
     <jwt.version>0.7.0</jwt.version>
+    <mock-javamail.version>1.9</mock-javamail.version>
   </properties>
   <modules>
     <module>webapp</module>
@@ -111,10 +112,9 @@
         <version>${org.springframework.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.hsqldb</groupId>
-        <artifactId>hsqldb</artifactId>
-        <version>${org.hsqldb.version}</version>
-        <scope>test</scope>
+        <groupId>com.h2database</groupId>
+        <artifactId>h2</artifactId>
+        <version>${h2.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springframework</groupId>
@@ -249,6 +249,11 @@
         <groupId>org.glassfish.jersey.media</groupId>
         <artifactId>jersey-media-jaxb</artifactId>
         <version>${jersey.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jvnet.mock-javamail</groupId>
+        <artifactId>mock-javamail</artifactId>
+        <version>${mock-javamail.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
