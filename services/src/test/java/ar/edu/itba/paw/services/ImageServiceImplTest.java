@@ -1,6 +1,8 @@
 package ar.edu.itba.paw.services;
 
 import ar.edu.itba.paw.interfaces.dao.PublicationDao;
+import ar.edu.itba.paw.interfaces.exception.EntityNotFoundException;
+import ar.edu.itba.paw.interfaces.exception.UnauthorizedAccessException;
 import ar.edu.itba.paw.interfaces.service.ImageService;
 import ar.edu.itba.paw.interfaces.service.PublicationService;
 import ar.edu.itba.paw.interfaces.service.UserService;
@@ -48,12 +50,12 @@ public class ImageServiceImplTest {
   }
 
   @Test
-  public void findImageById() {
+  public void findImageById() throws Exception {
     // Create test publication
     Publication testPublication = publicationDao.create(testUser, "Test Publication",1.0, 2L, "");
 
     // Create image in testPublication
-    Optional<Image> image = publicationService.addImage(testPublication, "imageInBase64");
+    Optional<Image> image = publicationService.addImage(testUser.getEmail(), testPublication.getId(), "imageInBase64");
 
     // Find image by id
     Optional<Image> foundImage = imageService.findById(image.get().getId());
@@ -62,5 +64,20 @@ public class ImageServiceImplTest {
     assertTrue(foundImage.isPresent());
     assertEquals(foundImage.get(), image.get());
 
+  }
+
+  @Test(expected = UnauthorizedAccessException.class)
+  public void unauthorizedAccessException() throws UnauthorizedAccessException, EntityNotFoundException {
+    // Create test publication
+    Publication testPublication = publicationDao.create(testUser, "Test Publication",1.0, 2L, "");
+
+    // Create image in testPublication
+    Optional<Image> image = publicationService.addImage("other@email.com", testPublication.getId(), "imageInBase64");
+  }
+
+  @Test(expected = EntityNotFoundException.class)
+  public void entityNotFoundException() throws UnauthorizedAccessException, EntityNotFoundException {
+    // Create image in non-existent publication
+    Optional<Image> image = publicationService.addImage("other@email.com", -1L, "imageInBase64");
   }
 }

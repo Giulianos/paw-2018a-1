@@ -2,6 +2,8 @@ package ar.edu.itba.paw.services;
 
 import ar.edu.itba.paw.interfaces.dao.ImageDao;
 import ar.edu.itba.paw.interfaces.dao.PublicationDao;
+import ar.edu.itba.paw.interfaces.exception.EntityNotFoundException;
+import ar.edu.itba.paw.interfaces.exception.UnauthorizedAccessException;
 import ar.edu.itba.paw.interfaces.service.PublicationService;
 import ar.edu.itba.paw.interfaces.service.TagService;
 import ar.edu.itba.paw.interfaces.service.UserService;
@@ -79,13 +81,21 @@ public class PublicationServiceImpl implements PublicationService {
   }
 
   @Override
-  public Optional<Image> addImage(Publication publication, String base64) {
-    try {
-      Image addedImage = imageDao.addToPublication(publication, base64);
+  @Transactional
+  public Optional<Image> addImage(final String userEmail, final Long publicationId, String base64) throws EntityNotFoundException, UnauthorizedAccessException {
+
+      Optional<Publication> publication = publicationDao.findById(publicationId);
+
+      if(!publication.isPresent()) {
+        throw new EntityNotFoundException();
+      }
+
+      if(!publication.get().getSupervisor().getEmail().equals(userEmail)) {
+        throw new UnauthorizedAccessException("Only supervisor can add images");
+      }
+
+      Image addedImage = imageDao.addToPublication(publication.get(), base64);
 
       return Optional.of(addedImage);
-    } catch (Exception e) {
-      return Optional.empty();
-    }
   }
 }

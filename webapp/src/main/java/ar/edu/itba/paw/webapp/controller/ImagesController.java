@@ -38,7 +38,7 @@ public class ImagesController {
 
     // Set cache control for the resource
     CacheControl cc = new CacheControl();
-    cc.setMaxAge(7 * 24 * 60 * 60); // 7 days
+    cc.setMaxAge(31536000); // id is unique for each image (aggressive caching)
     cc.setPrivate(false);
 
     return Response.ok(new ImageDTO(image.get())).cacheControl(cc).build();

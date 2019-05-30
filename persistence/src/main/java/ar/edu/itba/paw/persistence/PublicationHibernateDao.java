@@ -24,8 +24,13 @@ public class PublicationHibernateDao implements PublicationDao {
     @Transactional
     public Optional<Publication> findById(Long id) {
         Publication publication = em.find(Publication.class, id);
-        publication.getImages().stream().forEach(Image::getId);
-        return publication == null ? Optional.empty() : Optional.of(publication);
+
+        if(publication != null) {
+            publication.getImages().forEach(Image::getId);
+            return Optional.of(publication);
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
