@@ -1,9 +1,11 @@
 package ar.edu.itba.paw.services;
 
+import ar.edu.itba.paw.interfaces.dao.ImageDao;
 import ar.edu.itba.paw.interfaces.dao.PublicationDao;
 import ar.edu.itba.paw.interfaces.service.PublicationService;
 import ar.edu.itba.paw.interfaces.service.TagService;
 import ar.edu.itba.paw.interfaces.service.UserService;
+import ar.edu.itba.paw.model.Image;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.model.Tag;
 import ar.edu.itba.paw.model.User;
@@ -31,6 +33,9 @@ public class PublicationServiceImpl implements PublicationService {
 
   @Autowired
   private TagService tagService;
+
+  @Autowired
+  private ImageDao imageDao;
 
   @Override
   public Optional<Publication> findById(Long id) {
@@ -71,5 +76,16 @@ public class PublicationServiceImpl implements PublicationService {
     }
 
     throw new IllegalStateException("User is not logged in but it accessed create publication");
+  }
+
+  @Override
+  public Optional<Image> addImage(Publication publication, String base64) {
+    try {
+      Image addedImage = imageDao.addToPublication(publication, base64);
+
+      return Optional.of(addedImage);
+    } catch (Exception e) {
+      return Optional.empty();
+    }
   }
 }
