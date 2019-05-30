@@ -18,7 +18,7 @@ public class Image extends TimestampedEntity {
 
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @Access(AccessType.PROPERTY)
-  @JoinColumn(name = "publication_id", insertable = false, updatable = false)
+  @JoinColumn(name = "publication_id", updatable = false)
   private Publication publication;
 
   public Image(String image) {
