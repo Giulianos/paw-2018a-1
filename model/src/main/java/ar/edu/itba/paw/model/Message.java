@@ -24,11 +24,29 @@ public class Message extends TimestampedEntity {
   @Column
   private String message;
 
-  @Column(name = "to_supervisor")
-  private Boolean toSupervisor;
+  @Column(name = "read_by_receiver")
+  private Boolean readByReceiver;
+
+  @ManyToOne
+  @Access(AccessType.PROPERTY)
+  @JoinColumn(name = "sender_id")
+  private User sender;
+
+  @ManyToOne
+  @Access(AccessType.PROPERTY)
+  @JoinColumn(name = "receiver_id")
+  private User receiver;
 
   public Message() {
     // needed by Hibernate
+  }
+
+  public Message(Order order, String message, Boolean readByReceiver, User sender, User receiver) {
+    this.order = order;
+    this.message = message;
+    this.readByReceiver = readByReceiver;
+    this.sender = sender;
+    this.receiver = receiver;
   }
 
   public Long getId() {
@@ -55,12 +73,28 @@ public class Message extends TimestampedEntity {
     this.message = message;
   }
 
-  public Boolean getToSupervisor() {
-    return toSupervisor;
+  public Boolean getReadByReceiver() {
+    return readByReceiver;
   }
 
-  public void setToSupervisor(Boolean toSupervisor) {
-    this.toSupervisor = toSupervisor;
+  public void setReadByReceiver(Boolean readByReceiver) {
+    this.readByReceiver = readByReceiver;
+  }
+
+  public User getSender() {
+    return sender;
+  }
+
+  public void setSender(User sender) {
+    this.sender = sender;
+  }
+
+  public User getReceiver() {
+    return receiver;
+  }
+
+  public void setReceiver(User receiver) {
+    this.receiver = receiver;
   }
 
   @Override
