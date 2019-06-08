@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 import CardContainer from 'components/ui/CardContainer';
 import Button from 'components/ui/Button';
@@ -16,8 +15,7 @@ function Home() {
   const email = useFormInput('', v => !!v);
 
   return (
-    <div>
-      <h1>This is the Home screen.</h1>
+    <div className="view-container column middle">
       <CardContainer className={styles.customCard}>
         <h2 className="txt-xlarge mb-48">Inputs</h2>
         <SmartInput label="Name" className="mb-24" {...name} />
@@ -37,7 +35,6 @@ function Home() {
         <Button className="mb-8" variant="secondary" color="yellow">SECONDARY</Button>
         <Button className="mb-8" variant="secondary" color="green">SECONDARY</Button>
       </CardContainer>
-      <Link to="/secondary">Go to secondary...</Link>
     </div>
   );
 }
