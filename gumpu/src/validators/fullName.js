@@ -1,0 +1,1 @@
+export default fullName => !!fullName && fullName.length > 3 && fullName.length < 30;
