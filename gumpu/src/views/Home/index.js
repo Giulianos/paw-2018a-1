@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 import CardContainer from 'components/ui/CardContainer';
 import Button from 'components/ui/Button';
-import Input from 'components/ui/Input';
+import SmartInput from 'components/ui/SmartInput';
+
+import useFormInput from 'hooks/useFormInput';
 
 import styles from './styles.module.scss';
 
 function Home() {
-  const [name, setName] = useState('John Doe');
-
-  const handleChangeName = e => setName(e.target.value);
+  
+  const name = useFormInput('', v => !!v && v.length > 3);
+  const surname = useFormInput('');
+  const email = useFormInput('', v => !!v);
 
   return (
     <div>
@@ -18,11 +21,11 @@ function Home() {
       <CardContainer className={styles.customCard}>
         <h2 className="txt-xlarge mb-48">Inputs</h2>
         <label className="txt-input-label">Name</label>
-        <Input className="mb-24" value={name} onChange={handleChangeName} />
+        <SmartInput className="mb-24" {...name} />
         <label className="txt-input-label">Surname</label>
-        <Input className="mb-24" variant="invalid" value={name} onChange={handleChangeName} />
+        <SmartInput className="mb-24" {...surname} />
         <label className="txt-input-label">Email</label>
-        <Input className="mb-24" variant="valid" value={name} onChange={handleChangeName} />
+        <SmartInput className="mb-24" {...email} />
       </CardContainer>
 
       <CardContainer className={styles.customCard}>
