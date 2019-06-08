@@ -20,12 +20,9 @@ function Home() {
       <h1>This is the Home screen.</h1>
       <CardContainer className={styles.customCard}>
         <h2 className="txt-xlarge mb-48">Inputs</h2>
-        <label className="txt-input-label">Name</label>
-        <SmartInput className="mb-24" {...name} />
-        <label className="txt-input-label">Surname</label>
-        <SmartInput className="mb-24" {...surname} />
-        <label className="txt-input-label">Email</label>
-        <SmartInput className="mb-24" {...email} />
+        <SmartInput label="Name" className="mb-24" {...name} />
+        <SmartInput label="Surname" className="mb-24" {...surname} />
+        <SmartInput label="Email" className="mb-24" {...email} />
       </CardContainer>
 
       <CardContainer className={styles.customCard}>

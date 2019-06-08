@@ -2,10 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Input from '../Input';
 
-function SmartInput({ valid, dirty, ...props }) {
+function SmartInput({ label, valid, dirty, ...props }) {
   const variant = valid === undefined || !dirty ? 'default' : (valid ? 'valid' : 'invalid');
 
-  return <Input variant={variant} {...props} />;
+  return (
+    <>
+      <label className={`column txt-input-label ${variant}`}>
+        { label }
+        <Input variant={variant} {...props} />
+      </label>
+    </>
+  );
 }
 
 SmartInput.propTypes = {
