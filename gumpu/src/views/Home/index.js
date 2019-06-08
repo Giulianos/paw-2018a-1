@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import CardContainer from 'components/ui/CardContainer';
 import Button from 'components/ui/Button';
+import Input from 'components/ui/Input';
 
 import styles from './styles.module.scss';
 
 function Home() {
+  const [name, setName] = useState('John Doe');
+
+  const handleChangeName = e => setName(e.target.value);
+
   return (
     <div>
       <h1>This is the Home screen.</h1>
@@ -21,6 +26,13 @@ function Home() {
       <Button variant="secondary" color="red">SECONDARY</Button>
       <Button variant="secondary" color="yellow">SECONDARY</Button>
       <Button variant="secondary" color="green">SECONDARY</Button>
+      <br />
+      <br />
+      <Input value={name} onChange={handleChangeName} />
+      <Input value={name} onChange={handleChangeName} variant="invalid" />
+      <Input value={name} onChange={handleChangeName} variant="valid" />
+      <br />
+      <br />
       <Link to="/secondary">Go to secondary...</Link>
     </div>
   );
