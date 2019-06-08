@@ -1,0 +1,35 @@
+@import '~scss/colors';
+
+.input {
+  height: 40px;
+  background-color: $white;
+  color: var(--text-color);
+  font-size: 16px;
+  line-height: 19px;
+  border: 1px solid var(--line-color);
+  border-radius: 8px;
+  padding: 11px 16px 10px;
+
+  &:hover {
+    box-shadow: 0 0 8px $black-alpha10;
+  }
+
+  &:focus {
+    box-shadow: 0 0 8px $black-alpha10;
+  }
+}
+
+.default {
+  --text-color: #{$black};
+  --line-color: #{$gray2};
+}
+
+.invalid {
+  --text-color: #{$red};
+  --line-color: #{$red};
+}
+
+.valid {
+  --text-color: #{$black};
+  --line-color: #{$green};
+}

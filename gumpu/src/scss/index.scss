@@ -1,0 +1,13 @@
+@import url("https://use.typekit.net/qsi3noh.css");
+@import '~destyle.css';
+
+@import 'colors';
+@import 'texts';
+@import 'spacings';
+@import 'flex';
+
+body {
+  margin: 0;
+  font-family: 'Lato', sans-serif;
+  color: $black;
+}

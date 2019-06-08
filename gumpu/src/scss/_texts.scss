@@ -1,0 +1,51 @@
+@import 'colors';
+
+.txt-input-label {
+  color: $gray3;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 17px;
+
+  &.invalid {
+    color: $red;
+  }
+
+  &.valid {
+    color: $green;
+  }
+}
+
+.txt-xlarge {
+  font-size: 48px;
+  font-weight: 500;
+  line-height: 58px;
+}
+
+.txt-large {
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 48px;
+}
+
+.txt-medium {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 29px;
+}
+
+.txt-normal {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19px;
+}
+
+.txt-normal-accent {
+  @extend .txt-normal;
+  font-weight: 500;
+}
+
+.txt-small {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+}
