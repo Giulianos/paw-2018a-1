@@ -1,7 +1,7 @@
 import { create } from 'apisauce';
 
 const api = create({
-  baseURL: "http://gumpu.localhost/api"
+  baseURL: '/api'
 })
 
 export default api;

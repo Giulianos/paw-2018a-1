@@ -3,6 +3,13 @@
 .productCard {
   width: 256px;
   min-height: 442px;
+
+  transition: box-shadow 0.3s ease-in-out;
+
+  &:hover {
+    box-shadow: 0 0 16px $black-alpha20;
+    cursor: pointer;
+  }
 }
 
 .image {
