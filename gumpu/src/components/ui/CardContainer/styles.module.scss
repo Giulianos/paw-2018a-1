@@ -1,0 +1,8 @@
+@import '~scss/_colors.scss';
+
+.cardContainer {
+  border: 1px solid $gray1;
+  background-color: $white;
+  box-shadow: 0 0 16px $black-alpha5;
+  border-radius: 16px;
+}

@@ -1,0 +1,34 @@
+$spacings: 0, 8, 16, 24, 32, 48, 64;
+
+@each $spacing in $spacings {
+  .m-#{$spacing} {
+    margin: #{$spacing * 1px};
+  }
+  .mt-#{$spacing} {
+    margin-top: #{$spacing * 1px};
+  }
+  .mr-#{$spacing} {
+    margin-right: #{$spacing * 1px};
+  }
+  .mb-#{$spacing} {
+    margin-bottom: #{$spacing * 1px};
+  }
+  .ml-#{$spacing} {
+    margin-left: #{$spacing * 1px};
+  }
+  .p-#{$spacing} {
+    padding: #{$spacing * 1px};
+  }
+  .pt-#{$spacing} {
+    padding-top: #{$spacing * 1px};
+  }
+  .pr-#{$spacing} {
+    padding-right: #{$spacing * 1px};
+  }
+  .pb-#{$spacing} {
+    padding-bottom: #{$spacing * 1px};
+  }
+  .pl-#{$spacing} {
+    padding-left: #{$spacing * 1px};
+  }
+}
