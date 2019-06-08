@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import styles from './styles.module.scss';
 import ProductCard from 'components/ui/ProductCard';
 
 function ProductCarrousel({ className }) {
