@@ -56,6 +56,24 @@
   line-height: 17px;
 }
 
+.txt-tiny {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14px;
+}
+
+.txt-right {
+  text-align: right;
+}
+
+.txt-left {
+  text-align: left;
+}
+
+.txt-red {
+  color: $red;
+}
+
 .txt-gray1 {
   color: $gray1;
 }
