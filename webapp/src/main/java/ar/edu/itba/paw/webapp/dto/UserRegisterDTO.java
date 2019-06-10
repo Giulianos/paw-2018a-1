@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 public class UserRegisterDTO {
 
     @NotNull
-    @Size(min=3, max = 15)
+    @Size(min=3, max = 30)
     private String name;
 
     @NotNull
