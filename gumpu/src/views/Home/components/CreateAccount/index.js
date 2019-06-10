@@ -15,7 +15,7 @@ import {
 
 import CreateAccountLayout from './layout';
 
-function CreateAccount({ createUser, loading, error, success }) {
+function CreateAccount({ createUser, loading, error, success, resetCreateUser }) {
 
   const form = {
     name: useFormInput('', fullNameValidator),
@@ -23,11 +23,14 @@ function CreateAccount({ createUser, loading, error, success }) {
     password: useFormInput('', passwordValidator)
   }
 
-  const handleSubmit = () => createUser({
-    name: form.name.value,
-    email: form.email.value,
-    password: form.password.value
-  })
+  const handleSubmit = event => {
+    event.preventDefault();
+    createUser({
+      name: form.name.value,
+      email: form.email.value,
+      password: form.password.value
+    })
+  }
 
   return (
     <CreateAccountLayout
@@ -36,11 +39,13 @@ function CreateAccount({ createUser, loading, error, success }) {
       loading={loading}
       error={error}
       success={success}
+      resetRequest={resetCreateUser}
     />
   );
 }
 
 CreateAccount.propTypes = {
+  resetCreateUser: PropTypes.func.isRequired,
   createUser: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   error: PropTypes.bool.isRequired

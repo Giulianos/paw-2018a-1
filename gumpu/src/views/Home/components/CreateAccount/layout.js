@@ -10,29 +10,30 @@ import Loader from 'components/ui/Loader';
 import Failure from './components/Failure';
 import Success from './components/Success';
 
-function CreateAccountLayout({ name, email, password, handleSubmit, loading, error, success }) {
+function CreateAccountLayout({ name, email, password, handleSubmit, resetRequest, loading, error, success }) {
   return (
     <CardContainer className={`${styles.cardContainer} column center-alt center`}>
       { loading && <Loader /> }
-      { error && <Failure /> }
+      { error && <Failure handleRetry={resetRequest} /> }
       { success && <Success /> }
       { (!loading && !error && !success) && (
-        <>
+        <form className="w100 column center-alt center" onSubmit={handleSubmit}>
           <SmartInput label="Name" className="mb-24 w100" {...name} />
           <SmartInput label="Email" className="mb-24 w100" {...email} />
           <SmartInput label="New password" className="mb-32 w100" {...password} type="password" />
-          <Button handleClick={handleSubmit} className="pl-32 pr-32">CREATE ACCOUNT</Button>
-        </>
+          <Button type="submit" className="pl-32 pr-32">CREATE ACCOUNT</Button>
+        </form>
       ) }
     </CardContainer>
   );
 }
 
 CreateAccountLayout.propTypes = {
-  name: PropTypes.object,
-  email: PropTypes.object,
-  passwor: PropTypes.object,
-  handleSubmit: PropTypes.func,
+  name: PropTypes.object.isRequired,
+  email: PropTypes.object.isRequired,
+  password: PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  resetRequest: PropTypes.func.isRequired,
   loading: PropTypes.bool,
   error: PropTypes.bool,
   success: PropTypes.bool

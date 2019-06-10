@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "animate.css": "^3.7.2",
     "apisauce": "^1.0.2",
     "destyle.css": "^1.0.5",
     "node-sass": "^4.12.0",
