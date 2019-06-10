@@ -19,7 +19,7 @@ public class User extends TimestampedEntity {
 	@Access(AccessType.PROPERTY)
 	private Long id;
 	
-	@Column(length = 15, nullable = false)
+	@Column(length = 30, nullable = false)
 	private String name;
 	
 	@Column(length = 100, nullable = false)

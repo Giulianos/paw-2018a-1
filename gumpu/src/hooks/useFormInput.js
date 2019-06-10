@@ -9,11 +9,13 @@ function useFormInput(initialValue, validator) {
     setValue(e.target.value);
   }
 
-  const valid = validator && validator(value);
+  const validatable = !!validator;
+  const valid = validatable && validator(value);
   
   return {
     value,
     onChange: handleChange,
+    validatable,
     valid,
     dirty
   }

@@ -1,7 +1,7 @@
 import { create } from 'apisauce';
 
 const api = create({
-  baseURL: "http://requestbin.fullcontact.com/tqadgwtq"
+  baseURL: '/api'
 })
 
 export default api;

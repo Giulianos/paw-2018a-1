@@ -1,0 +1,32 @@
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+}
+
+.center {
+  justify-content: center;
+}
+
+.center-alt {
+  align-items: center;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.space-between-alt {
+  align-items: space-between;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.relative {
+  position: relative;
+}

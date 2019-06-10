@@ -27,6 +27,12 @@
   line-height: 48px;
 }
 
+.txt-medium32 {
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 48px;
+}
+
 .txt-medium {
   font-size: 24px;
   font-weight: 400;
@@ -48,4 +54,50 @@
   font-size: 14px;
   font-weight: 400;
   line-height: 17px;
+}
+
+.txt-tiny {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14px;
+}
+
+.txt-right {
+  text-align: right;
+}
+
+.txt-left {
+  text-align: left;
+}
+
+.txt-bold {
+  font-weight: 700;
+}
+
+.txt-red {
+  color: $red;
+}
+
+.txt-blue {
+  color: $blue;
+}
+
+.txt-yellow {
+  color: $yellow;
+}
+
+.txt-green {
+  color: $green;
+}
+
+.txt-gray1 {
+  color: $gray1;
+}
+
+.txt-gray2 {
+  color: $gray2;
+}
+
+.txt-gray3 {
+  color: $gray3;
 }

@@ -1,13 +1,19 @@
 @import url("https://use.typekit.net/qsi3noh.css");
 @import '~destyle.css';
+@import '~animate.css';
 
 @import 'colors';
 @import 'texts';
 @import 'spacings';
-@import 'flex';
+@import 'positioning';
+@import 'dimensions';
 
 body {
   margin: 0;
   font-family: 'Lato', sans-serif;
   color: $black;
+  background-image: url('~assets/bg/yellow.svg');
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  background-size: 100%;
 }

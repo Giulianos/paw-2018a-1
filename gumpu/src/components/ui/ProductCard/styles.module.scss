@@ -1,0 +1,42 @@
+@import '~scss/_colors';
+
+.productCard {
+  width: 256px;
+  min-height: 442px;
+
+  transition: box-shadow 0.3s ease-in-out;
+
+  &:hover {
+    box-shadow: 0 0 16px $black-alpha20;
+    cursor: pointer;
+  }
+}
+
+.image {
+  width: 208px;
+  height: 208px;
+  border-radius: 8px;
+}
+
+.imagePlaceHolder {
+  @extend .image;
+  background-color: $gray1;
+}
+
+.titlePlaceHolder {
+  background-color: $gray1;
+  width: 208px;
+  height: 58px;
+}
+
+.pricePlaceHolder {
+  background-color: $gray1;
+  width: 84px;
+  height: 38px;
+}
+
+.ratingPlaceHolder {
+  background-color: $gray1;
+  width: 170px;
+  height: 34px;
+}

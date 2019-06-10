@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 @Path("users")
 @Controller
@@ -33,7 +34,10 @@ public class UsersController {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response register(@Valid UserRegisterDTO user) {
+    public Response register(@Valid UserRegisterDTO user) throws InterruptedException {
+
+        // TODO: remove after front evaluation
+        TimeUnit.SECONDS.sleep(1);
 
         Set<ConstraintViolation<UserRegisterDTO>> violations = validator.validate(user);
         if(!violations.isEmpty()) {

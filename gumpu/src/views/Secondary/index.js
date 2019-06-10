@@ -4,12 +4,14 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { createSample } from 'redux/sample/actionCreators';
+import Loader from 'components/ui/Loader';
 
 function Secondary({ sample }) {
   return (
-    <div>
+    <div style={{ height: '1000px' }}>
       <h1>This is the secondary screen.</h1>
       <Link to="/">Go to home...</Link>
+      <Loader />
       <button onClick={sample}>Run sample</button>
     </div>
   );

@@ -1,0 +1,53 @@
+@import '~scss/_colors';
+
+@keyframes left-move
+{
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-48px); }
+  50% { transform: translateX(-48px); }
+  75% { transform: translateX(0); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes right-move
+{
+  0% { transform: translateX(0); }
+  25% { transform: translateX(48px); }
+  50% { transform: translateX(48px); }
+  75% { transform: translateX(0); }
+  100% { transform: translateX(0); }
+}
+
+.loader {
+  height: 88px;
+  width: 88px;
+  display: grid;
+  grid-template: 40px 40px / 40px 40px;
+  gap: 8px;
+  
+  div {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+  }
+
+  :nth-child(1) {
+    background-color: $yellow;
+    animation: right-move 2s ease-in infinite;
+  }
+
+  :nth-child(2) {
+    background-color: $green;
+    animation: left-move 2s ease-in infinite;
+  }
+
+  :nth-child(3) {
+    background-color: $red;
+    animation: right-move 2s ease-in .5s infinite;
+  }
+
+  :nth-child(4) {
+    background-color: $blue;
+    animation: left-move 2s ease-in .5s infinite;
+  }
+}
