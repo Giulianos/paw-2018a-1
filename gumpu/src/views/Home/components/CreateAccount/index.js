@@ -8,11 +8,14 @@ import fullNameValidator from 'validators/fullName';
 import emailValidator from 'validators/email';
 import passwordValidator from 'validators/password';
 
-import { createUser as createUserAction } from 'redux/user/actionCreators';
+import {
+  createUser as createUserAction,
+  resetCreateUser as resetCreateUserAction
+} from 'redux/user/actionCreators';
 
 import CreateAccountLayout from './layout';
 
-function CreateAccount({ createUser, loading, error }) {
+function CreateAccount({ createUser, loading, error, success }) {
 
   const form = {
     name: useFormInput('', fullNameValidator),
@@ -26,7 +29,15 @@ function CreateAccount({ createUser, loading, error }) {
     password: form.password.value
   })
 
-  return <CreateAccountLayout {...form} handleSubmit={handleSubmit} loading={loading} error={error} />;
+  return (
+    <CreateAccountLayout
+      {...form}
+      handleSubmit={handleSubmit}
+      loading={loading}
+      error={error}
+      success={success}
+    />
+  );
 }
 
 CreateAccount.propTypes = {
@@ -36,12 +47,14 @@ CreateAccount.propTypes = {
 }
 
 const mapStateToPros = state =>({
+  success: state.user.create.success,
   loading: state.user.create.loading,
   error: state.user.create.error
 });
 
 const mapDispatchToProps = dispatch => ({
-  createUser: newUser => dispatch(createUserAction(newUser))
+  createUser: newUser => dispatch(createUserAction(newUser)),
+  resetCreateUser: () => dispatch(resetCreateUserAction())
 });
 
 export default connect(

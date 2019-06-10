@@ -1,0 +1,17 @@
+import React from 'react';
+
+import successIcon from 'assets/result_indicator/ok.svg';
+
+function Success() {
+  return (
+    <div className="h100 w100 column center center-alt">
+      <img alt="" className="mb-48" src={successIcon} />
+      <span>
+        <span className="txt-green txt-medium txt-bold mr-8">Yay!</span>
+        <span className="txt-medium txt-gray3">Your account has been created!</span>
+      </span>
+    </div>
+  )
+}
+
+export default Success;

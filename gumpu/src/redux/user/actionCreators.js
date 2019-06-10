@@ -17,3 +17,5 @@ export const createUser = newUser => async dispatch => {
   }
 
 }
+
+export const resetCreateUser = () => ({ type: actions.CREATE_RESET })

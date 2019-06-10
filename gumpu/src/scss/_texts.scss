@@ -70,8 +70,24 @@
   text-align: left;
 }
 
+.txt-bold {
+  font-weight: 700;
+}
+
 .txt-red {
   color: $red;
+}
+
+.txt-blue {
+  color: $blue;
+}
+
+.txt-yellow {
+  color: $yellow;
+}
+
+.txt-green {
+  color: $green;
 }
 
 .txt-gray1 {
