@@ -20,11 +20,11 @@ function ProductCarrousel({ className }) {
 }
 
 ProductCarrousel.defaultProps = {
-  className: ''
+  className: '',
 };
 
 ProductCarrousel.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
 export default ProductCarrousel;

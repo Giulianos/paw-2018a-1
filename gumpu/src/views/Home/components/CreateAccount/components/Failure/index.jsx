@@ -10,15 +10,15 @@ function Failure({ handleRetry }) {
       <img alt="" className="mb-48" src={failureIcon} />
       <span className="mb-48">
         <span className="txt-red txt-medium txt-bold mr-8">Oops!</span>
-        <span className="txt-medium txt-gray3">We couldn't create your account</span>
+        <span className="txt-medium txt-gray3">We couldn&apos;t create your account</span>
       </span>
       <Button type="button" color="red" variant="secondary" handleClick={handleRetry}>TRY AGAIN</Button>
     </div>
-  )
+  );
 }
 
 Failure.propTypes = {
-  handleRetry: PropTypes.func.isRequired
-}
+  handleRetry: PropTypes.func.isRequired,
+};
 
 export default Failure;
