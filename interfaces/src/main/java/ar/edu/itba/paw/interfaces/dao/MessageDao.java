@@ -23,4 +23,12 @@ public interface MessageDao {
    * @param messages
    */
   public void markRead(final List<Message> messages);
+
+  /**
+   * Get unread messages to receiver in order
+   * @param order
+   * @param receiver
+   * @return The list of unread messages
+   */
+  public List<Message> getUnread(final Order order, final User receiver);
 }
