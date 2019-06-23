@@ -10,7 +10,7 @@ function SmartInput({
   let variant = 'default';
 
   if (validatable && dirty) {
-    variant = valid ? 'valid' : 'invalid';
+    variant = valid === true ? 'valid' : 'invalid';
   }
   return (
     <div className={`${className} relative`}>
