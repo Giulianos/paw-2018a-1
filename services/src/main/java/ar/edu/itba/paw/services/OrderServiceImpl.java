@@ -193,6 +193,7 @@ public class OrderServiceImpl implements OrderService {
   }
 
   @Override
+  @Transactional
   public void sendMessage(OrderId id, String message) throws EntityNotFoundException, UnauthorizedAccessException {
     Optional<Order> order = orderDao.findById(id);
     Optional<User> loggedUser = userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());

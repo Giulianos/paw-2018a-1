@@ -16,8 +16,8 @@ public class Message extends TimestampedEntity {
   @ManyToOne
   @Access(AccessType.PROPERTY)
   @JoinColumns({
-      @JoinColumn(name = "ord_publication_id", insertable = false, updatable = false),
-      @JoinColumn(name = "ord_orderer_id", insertable = false, updatable = false)
+      @JoinColumn(name = "ord_publication_id", nullable = false),
+      @JoinColumn(name = "ord_orderer_id", nullable = false)
   })
   private Order order;
 
@@ -27,12 +27,12 @@ public class Message extends TimestampedEntity {
   @Column(name = "read_by_receiver")
   private Boolean readByReceiver;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER)
   @Access(AccessType.PROPERTY)
   @JoinColumn(name = "sender_id")
   private User sender;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER)
   @Access(AccessType.PROPERTY)
   @JoinColumn(name = "receiver_id")
   private User receiver;
