@@ -5,12 +5,14 @@ import SmartInput from 'components/ui/SmartInput';
 import CardContainer from 'components/ui/CardContainer';
 import Button from 'components/ui/Button';
 
-import styles from './styles.module.scss';
 import Loader from 'components/ui/Loader';
+import styles from './styles.module.scss';
 import Failure from './components/Failure';
 import Success from './components/Success';
 
-function CreateAccountLayout({ name, email, password, handleSubmit, resetRequest, loading, error, success }) {
+function CreateAccountLayout({
+  name, email, password, handleSubmit, resetRequest, loading, error, success,
+}) {
   return (
     <CardContainer className={`${styles.cardContainer} column center-alt center`}>
       { loading && <Loader /> }
@@ -36,7 +38,7 @@ CreateAccountLayout.propTypes = {
   resetRequest: PropTypes.func.isRequired,
   loading: PropTypes.bool,
   error: PropTypes.bool,
-  success: PropTypes.bool
+  success: PropTypes.bool,
 };
 
 export default CreateAccountLayout;

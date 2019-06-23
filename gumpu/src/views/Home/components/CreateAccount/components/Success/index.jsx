@@ -11,7 +11,7 @@ function Success() {
         <span className="txt-medium txt-gray3">Your account has been created!</span>
       </span>
     </div>
-  )
+  );
 }
 
 export default Success;

@@ -10,27 +10,28 @@ import passwordValidator from 'validators/password';
 
 import {
   createUser as createUserAction,
-  resetCreateUser as resetCreateUserAction
+  resetCreateUser as resetCreateUserAction,
 } from 'redux/user/actionCreators';
 
 import CreateAccountLayout from './layout';
 
-function CreateAccount({ createUser, loading, error, success, resetCreateUser }) {
-
+function CreateAccount({
+  createUser, loading, error, success, resetCreateUser,
+}) {
   const form = {
     name: useFormInput('', fullNameValidator),
     email: useFormInput('', emailValidator),
-    password: useFormInput('', passwordValidator)
-  }
+    password: useFormInput('', passwordValidator),
+  };
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     createUser({
       name: form.name.value,
       email: form.email.value,
-      password: form.password.value
-    })
-  }
+      password: form.password.value,
+    });
+  };
 
   return (
     <CreateAccountLayout
@@ -48,21 +49,21 @@ CreateAccount.propTypes = {
   resetCreateUser: PropTypes.func.isRequired,
   createUser: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
-  error: PropTypes.bool.isRequired
-}
+  error: PropTypes.bool.isRequired,
+};
 
-const mapStateToPros = state =>({
+const mapStateToPros = state => ({
   success: state.user.create.success,
   loading: state.user.create.loading,
-  error: state.user.create.error
+  error: state.user.create.error,
 });
 
 const mapDispatchToProps = dispatch => ({
   createUser: newUser => dispatch(createUserAction(newUser)),
-  resetCreateUser: () => dispatch(resetCreateUserAction())
+  resetCreateUser: () => dispatch(resetCreateUserAction()),
 });
 
 export default connect(
   mapStateToPros,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(CreateAccount);

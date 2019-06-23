@@ -10,11 +10,13 @@ function CardContainer({ children, className }) {
 }
 
 CardContainer.defaultProps = {
-  className: ''
-}
+  className: '',
+  children: '',
+};
 
 CardContainer.propTypes = {
-  className: PropTypes.string
-}
+  className: PropTypes.string,
+  children: PropTypes.node,
+};
 
 export default CardContainer;
