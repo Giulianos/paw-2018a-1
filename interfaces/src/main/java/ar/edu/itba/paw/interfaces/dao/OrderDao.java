@@ -3,6 +3,7 @@ package ar.edu.itba.paw.interfaces.dao;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.model.User;
+import ar.edu.itba.paw.model.compositepks.OrderId;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,14 @@ public interface OrderDao {
    * @return found order or empty
    */
   public Optional<Order> find(final Publication publication, final User orderer);
+
+  /**
+   * Finds the order by id
+   * @param id
+   * @return found order or empty
+   */
+  public Optional<Order> findById(final OrderId id);
+
 
   /**
    * Create an order for user in publication

@@ -35,6 +35,13 @@ public class OrderHibernateDao implements OrderDao {
   }
 
   @Override
+  public Optional<Order> findById(OrderId id) {
+    Order order = em.find(Order.class, id);
+
+    return order == null ? Optional.empty() : Optional.of(order);
+  }
+
+  @Override
   @Transactional
   public Order create(Publication publication, User orderer, Long quantity) {
     final Order newOrder = new Order(publication, orderer, quantity);
