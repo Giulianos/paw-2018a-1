@@ -107,4 +107,24 @@ public class UserOrderMessagesController {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }
+
+    @PUT
+    @Path("/unseen")
+    public Response markRead() {
+        if(publicationId == null) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        OrderId orderId = new OrderId(userId, publicationId);
+
+        try {
+            orderService.markMessagesAsSeen(orderId);
+
+            return Response.status(Response.Status.ACCEPTED).build();
+        } catch(EntityNotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch(UnauthorizedAccessException e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
 }
