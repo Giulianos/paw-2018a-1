@@ -17,6 +17,7 @@ public class PublicationDTO {
     private Long quantity;
     private Long availableQuantity;
     private String detailedDescription;
+    private String status;
     private List<String> tags;
     private List<String> imagesUrls;
 
@@ -28,6 +29,7 @@ public class PublicationDTO {
         this.unitPrice = publication.getUnitPrice();
         this.quantity = publication.getQuantity();
         this.detailedDescription = publication.getDetailedDescription();
+        this.status = publication.getState().toString();
         this.availableQuantity = publication.getAvailableQuantity();
         this.tags = publication.getTags().stream().map(Tag::getTag).collect(Collectors.toList());
         this.imagesUrls = publication
@@ -119,5 +121,13 @@ public class PublicationDTO {
 
     public void setImagesUrls(List<String> imagesUrls) {
         this.imagesUrls = imagesUrls;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
