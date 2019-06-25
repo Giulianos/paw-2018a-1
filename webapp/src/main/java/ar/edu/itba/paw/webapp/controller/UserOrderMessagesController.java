@@ -87,4 +87,24 @@ public class UserOrderMessagesController {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("EXCEPTION").build();
         }
     }
+
+    @GET
+    @Path("/unseen")
+    public Response listUnseen() {
+        if(publicationId == null) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        OrderId orderId = new OrderId(userId, publicationId);
+
+        try {
+            List<Message> unreadMessages = orderService.getOrderUnseenMessages(orderId);
+
+            return Response.ok(new MessageListDTO(unreadMessages)).build();
+        } catch(EntityNotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch(UnauthorizedAccessException e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
 }
