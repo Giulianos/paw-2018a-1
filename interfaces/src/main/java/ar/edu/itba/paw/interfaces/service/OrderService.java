@@ -3,9 +3,11 @@ package ar.edu.itba.paw.interfaces.service;
 import ar.edu.itba.paw.interfaces.exception.EntityNotFoundException;
 import ar.edu.itba.paw.interfaces.exception.PublicationFulfilledException;
 import ar.edu.itba.paw.interfaces.exception.UnauthorizedAccessException;
+import ar.edu.itba.paw.model.Message;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.model.User;
+import ar.edu.itba.paw.model.compositepks.OrderId;
 
 import java.util.List;
 
@@ -60,5 +62,34 @@ public interface OrderService {
    * @param publicationId
    */
   public void deleteByPublicationId(final Long publicationId) throws PublicationFulfilledException, EntityNotFoundException;
+
+  /**
+   * Retrieves order messages
+   * @param id
+   * @return The list of messages
+   */
+  public List<Message> getOrderMessagesById(final OrderId id) throws EntityNotFoundException, UnauthorizedAccessException;
+
+  /**
+   * Retrieves the unseen messages for logged user in order
+   * @param id
+   * @return The list of messages
+   */
+  public List<Message> getOrderUnseenMessages(final OrderId id) throws EntityNotFoundException, UnauthorizedAccessException;
+
+  /**
+   * Marks logged user messages in order as seen
+   * @param id
+   * @throws EntityNotFoundException
+   * @throws UnauthorizedAccessException
+   */
+  public void markMessagesAsSeen(final OrderId id) throws EntityNotFoundException, UnauthorizedAccessException;
+
+  /**
+   * Sends a message to an order from logged user
+   * @param id
+   * @param message
+   */
+  public void sendMessage(final OrderId id, final String message) throws EntityNotFoundException, UnauthorizedAccessException;
 
 }

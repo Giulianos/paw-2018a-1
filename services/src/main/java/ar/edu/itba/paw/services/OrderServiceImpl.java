@@ -1,5 +1,6 @@
 package ar.edu.itba.paw.services;
 
+import ar.edu.itba.paw.interfaces.dao.MessageDao;
 import ar.edu.itba.paw.interfaces.dao.OrderDao;
 import ar.edu.itba.paw.interfaces.dao.PublicationDao;
 import ar.edu.itba.paw.interfaces.exception.EntityNotFoundException;
@@ -7,9 +8,11 @@ import ar.edu.itba.paw.interfaces.exception.PublicationFulfilledException;
 import ar.edu.itba.paw.interfaces.exception.UnauthorizedAccessException;
 import ar.edu.itba.paw.interfaces.service.OrderService;
 import ar.edu.itba.paw.interfaces.service.UserService;
+import ar.edu.itba.paw.model.Message;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.model.User;
+import ar.edu.itba.paw.model.compositepks.OrderId;
 import ar.edu.itba.paw.model.events.PublicationFulfilledEvent;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.swing.text.html.parser.Entity;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +40,8 @@ public class OrderServiceImpl implements OrderService {
   private UserService userService;
   @Autowired
   private ApplicationEventPublisher eventPublisher;
+  @Autowired
+  private MessageDao messageDao;
 
   @Override
   public Order create(Publication publication, Long quantity) {
@@ -120,5 +126,93 @@ public class OrderServiceImpl implements OrderService {
     }
 
     orderDao.deleteById(loggedUser.get().getId(), publicationId);
+  }
+
+  @Override
+  @Transactional
+  public List<Message> getOrderMessagesById(OrderId id) throws EntityNotFoundException, UnauthorizedAccessException {
+    Optional<Order> order = orderDao.findById(id);
+    Optional<User> loggedUser = userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+
+    if(!order.isPresent()) {
+      throw new EntityNotFoundException();
+    }
+
+    if(!loggedUser.isPresent()) {
+      throw new IllegalStateException("User is not logged in but it accessed messages");
+    }
+
+    if(!order.get().getOrderer().equals(loggedUser.get()) && !order.get().getPublication().getSupervisor().equals(loggedUser.get())) {
+      throw new UnauthorizedAccessException("Only orderer or supervisor can see order messages");
+    }
+
+    return new LinkedList<>(order.get().getMessages());
+  }
+
+  @Override
+  @Transactional
+  public List<Message> getOrderUnseenMessages(OrderId id) throws EntityNotFoundException, UnauthorizedAccessException {
+    Optional<Order> order = orderDao.findById(id);
+    Optional<User> loggedUser = userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+
+    if(!order.isPresent()) {
+      throw new EntityNotFoundException();
+    }
+
+    if(!loggedUser.isPresent()) {
+      throw new IllegalStateException("User is not logged in but it accessed messages");
+    }
+
+    if(!order.get().getOrderer().equals(loggedUser.get()) && !order.get().getPublication().getSupervisor().equals(loggedUser.get())) {
+      throw new UnauthorizedAccessException("Only orderer or supervisor can see unseen messages");
+    }
+
+    return messageDao.getUnread(order.get(), loggedUser.get());
+  }
+
+  @Override
+  public void markMessagesAsSeen(final OrderId id) throws EntityNotFoundException, UnauthorizedAccessException {
+    Optional<Order> order = orderDao.findById(id);
+    Optional<User> loggedUser = userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+
+    if(!order.isPresent()) {
+      throw new EntityNotFoundException();
+    }
+
+    if(!loggedUser.isPresent()) {
+      throw new IllegalStateException("User is not logged in but it accessed messages");
+    }
+
+    if(!order.get().getOrderer().equals(loggedUser.get()) && !order.get().getPublication().getSupervisor().equals(loggedUser.get())) {
+      throw new UnauthorizedAccessException("Only orderer or supervisor can mark messages");
+    }
+
+    List<Message> unseenMessages = messageDao.getUnread(order.get(), loggedUser.get());
+
+    messageDao.markRead(unseenMessages);
+  }
+
+  @Override
+  @Transactional
+  public void sendMessage(OrderId id, String message) throws EntityNotFoundException, UnauthorizedAccessException {
+    Optional<Order> order = orderDao.findById(id);
+    Optional<User> loggedUser = userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+
+    if(!order.isPresent()) {
+      throw new EntityNotFoundException();
+    }
+
+    if(!loggedUser.isPresent()) {
+      throw new IllegalStateException("User is not logged in but it accessed messages");
+    }
+
+    if(!order.get().getOrderer().equals(loggedUser.get()) && !order.get().getPublication().getSupervisor().equals(loggedUser.get())) {
+      throw new UnauthorizedAccessException("Only orderer or supervisor can send messages");
+    }
+
+    User receiver = order.get().getOrderer().equals(loggedUser.get()) ? order.get().getPublication().getSupervisor() : order.get().getOrderer();
+
+    messageDao.createMessage(order.get(), loggedUser.get(), receiver, message);
+    orderDao.update(order.get());
   }
 }

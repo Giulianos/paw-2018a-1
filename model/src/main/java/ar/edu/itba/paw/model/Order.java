@@ -4,7 +4,9 @@ import ar.edu.itba.paw.model.compositepks.OrderId;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "orders")
@@ -22,6 +24,15 @@ public class Order extends TimestampedEntity {
   @Access(AccessType.PROPERTY)
   @JoinColumn(name = "orderer_id", insertable = false, updatable = false)
   private User orderer;
+
+  @OneToMany(
+      mappedBy = "order",
+      cascade = CascadeType.ALL,
+      orphanRemoval = true,
+      fetch = FetchType.LAZY
+  )
+  @Access(AccessType.PROPERTY)
+  private Set<Message> messages = new HashSet<>();
 
   @Column
   private Long quantity;
@@ -67,6 +78,24 @@ public class Order extends TimestampedEntity {
 
   public void setQuantity(Long quantity) {
     this.quantity = quantity;
+  }
+
+  public Set<Message> getMessages() {
+    return messages;
+  }
+
+  public void setMessages(Set<Message> messages) {
+    this.messages = messages;
+  }
+
+  public void addMessage(final Message message) {
+    this.messages.add(message);
+    message.setOrder(this);
+  }
+
+  public void removeMessage(final Message message) {
+    this.messages.remove(message);
+    message.setOrder(null);
   }
 
   @Override
