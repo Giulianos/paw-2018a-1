@@ -25,6 +25,7 @@ import java.util.Optional;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static junit.framework.TestCase.assertNull;
+import static junit.framework.TestCase.assertFalse;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
@@ -78,6 +79,24 @@ public class PublicationServiceImplTest {
     assertTrue(retrievedPublication.isPresent());
     assertNull(retrievedPublication.get().getSupervisor());
     assertEquals(retrievedPublication.get().getState(), PublicationState.ORPHAN);
+  }
+
+  @Test
+  public void publicationIsDeletedOnLeaveWithoutOrders() throws Exception {
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+
+    // Create publication
+    Publication testPublication = publicationService.create("Test Publication", 1.0d, 10L, "", new LinkedList<>());
+
+    // Supervisor leaves the publication
+    publicationService.leavePublication(testPublication.getId());
+
+    // Retrieve publication again
+    Optional<Publication> retrievedPublication = publicationService.findById(testPublication.getId());
+
+    // Check if publication is not present
+    assertFalse(retrievedPublication.isPresent());
   }
 
 }

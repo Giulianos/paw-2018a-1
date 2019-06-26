@@ -126,7 +126,9 @@ public class PublicationServiceImpl implements PublicationService {
 
         // If the publication doesn't have orders (or the only one is form the supervisor), delete it
         if(publication.get().getOrders().stream().allMatch(o -> o.getOrderer().getEmail().equals(loggedUserEmail))){
-          // TODO: delete publication
+          publicationDao.deleteById(publication.get().getId());
+          // End process, we don't notify/update anything
+          return;
         }
 
         publication.get().setState(PublicationState.ORPHAN);
