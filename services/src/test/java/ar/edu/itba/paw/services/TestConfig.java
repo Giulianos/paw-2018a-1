@@ -12,6 +12,9 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -36,6 +39,25 @@ public class TestConfig {
     dataSource.setUrl("jdbc:h2:mem:myDb;DB_CLOSE_DELAY=-1");
 
     return dataSource;
+  }
+
+  @Bean
+  public SecurityContext securityContext() {
+    final SecurityContext context = new SecurityContext() {
+      private Authentication auth;
+
+      @Override
+      public Authentication getAuthentication() {
+        return auth;
+      }
+
+      @Override
+      public void setAuthentication(Authentication authentication) {
+        this.auth = authentication;
+      }
+    };
+
+    return context;
   }
 
   @Bean
