@@ -1,6 +1,7 @@
 package ar.edu.itba.paw.services;
 
 import ar.edu.itba.paw.interfaces.exception.PublicationFulfilledException;
+import ar.edu.itba.paw.interfaces.exception.UnauthorizedAccessException;
 import ar.edu.itba.paw.interfaces.service.OrderService;
 import ar.edu.itba.paw.interfaces.service.PublicationService;
 import ar.edu.itba.paw.interfaces.service.UserService;
@@ -97,6 +98,41 @@ public class PublicationServiceImplTest {
 
     // Check if publication is not present
     assertFalse(retrievedPublication.isPresent());
+  }
+
+  @Test
+  public void publicationIsDeletedOnLeaveWithSupervisorOrder() throws Exception {
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+
+    // Create publication
+    Publication testPublication = publicationService.create("Test publication", 1.0d, 10L, "", new LinkedList<>());
+
+    // Create order for supervisor
+    Order order = orderService.create(testPublication, 5L);
+
+    // Supervisor leaves the publication
+    publicationService.leavePublication(testPublication.getId());
+
+    // Retrieve publication again
+    Optional<Publication> retrievePublication = publicationService.findById(testPublication.getId());
+
+    assertFalse(retrievePublication.isPresent());
+  }
+
+  @Test(expected = UnauthorizedAccessException.class)
+  public void nonSupervisorTriesToLeavePublication() throws Exception {
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+
+    // Create publication
+    Publication testPublication = publicationService.create("Test publication", 1.0d, 10L, "", new LinkedList<>());
+
+    // Login as other user
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testOrderer.getEmail()));
+
+    // Try to delete order (this should throw an exception)
+    publicationService.leavePublication(testPublication.getId());
   }
 
 }
