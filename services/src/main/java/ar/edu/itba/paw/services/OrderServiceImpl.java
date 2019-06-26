@@ -8,10 +8,7 @@ import ar.edu.itba.paw.interfaces.exception.PublicationFulfilledException;
 import ar.edu.itba.paw.interfaces.exception.UnauthorizedAccessException;
 import ar.edu.itba.paw.interfaces.service.OrderService;
 import ar.edu.itba.paw.interfaces.service.UserService;
-import ar.edu.itba.paw.model.Message;
-import ar.edu.itba.paw.model.Order;
-import ar.edu.itba.paw.model.Publication;
-import ar.edu.itba.paw.model.User;
+import ar.edu.itba.paw.model.*;
 import ar.edu.itba.paw.model.compositepks.OrderId;
 import ar.edu.itba.paw.model.events.PublicationFulfilledEvent;
 import javassist.NotFoundException;
@@ -121,7 +118,9 @@ public class OrderServiceImpl implements OrderService {
       throw new IllegalStateException("User is not logged in but it accessed delete order");
     }
 
-    if(publication.get().getFulfilled()) {
+    PublicationState publicationState = publication.get().getState();
+
+    if(!publicationState.equals(PublicationState.IN_PROGRESS) && !publicationState.equals(PublicationState.ORPHAN)) {
       throw new PublicationFulfilledException("Can't delete an order from a fulfilled publication");
     }
 
