@@ -1,6 +1,7 @@
 package ar.edu.itba.paw.model;
 
 import ar.edu.itba.paw.model.compositepks.OrderId;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -36,6 +37,9 @@ public class Order extends TimestampedEntity {
 
   @Column
   private Long quantity;
+
+  @Column
+  private Boolean purchaseAccepted = false;
 
   public Order() {
     // Needed by Hibernate
@@ -86,6 +90,14 @@ public class Order extends TimestampedEntity {
 
   public void setMessages(Set<Message> messages) {
     this.messages = messages;
+  }
+
+  public Boolean getPurchaseAccepted() {
+    return purchaseAccepted;
+  }
+
+  public void setPurchaseAccepted(Boolean purchaseAccepted) {
+    this.purchaseAccepted = purchaseAccepted;
   }
 
   public void addMessage(final Message message) {
