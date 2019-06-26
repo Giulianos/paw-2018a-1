@@ -9,6 +9,7 @@ import ar.edu.itba.paw.interfaces.service.PublicationService;
 import ar.edu.itba.paw.interfaces.service.TagService;
 import ar.edu.itba.paw.interfaces.service.UserService;
 import ar.edu.itba.paw.model.*;
+import ar.edu.itba.paw.model.events.NewSupervisorEvent;
 import ar.edu.itba.paw.model.events.SupervisorLeftEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -107,6 +108,7 @@ public class PublicationServiceImpl implements PublicationService {
   }
 
     @Override
+    @Transactional
     public void leavePublication(Long id) throws EntityNotFoundException, UnauthorizedAccessException, PublicationFulfilledException {
         Optional<Publication> publication = publicationDao.findById(id);
 
@@ -139,4 +141,34 @@ public class PublicationServiceImpl implements PublicationService {
 
         publicationDao.update(publication.get());
     }
+
+  @Override
+  @Transactional
+  public void adoptPublication(Long id) throws EntityNotFoundException, UnauthorizedAccessException {
+    Optional<Publication> publication = findById(id);
+
+    if(!publication.isPresent()) {
+      throw new EntityNotFoundException();
+    }
+
+    String loggedUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+
+
+    // Check if the user trying to adopt the publication is an orderer
+    if(publication.get().getOrders().stream().noneMatch(o -> o.getOrderer().getEmail().equals(loggedUserEmail))) {
+      throw new UnauthorizedAccessException("Only an orderer can adopt a publication");
+    }
+
+    Optional<User> newSupervisor = userService.findByEmail(loggedUserEmail);
+
+    if(!newSupervisor.isPresent()) {
+      throw new IllegalStateException();
+    }
+
+    publication.get().setSupervisor(newSupervisor.get());
+    publication.get().setState(PublicationState.IN_PROGRESS);
+    publicationDao.update(publication.get());
+
+    eventPublisher.publishEvent(new NewSupervisorEvent(publication.get()));
+  }
 }

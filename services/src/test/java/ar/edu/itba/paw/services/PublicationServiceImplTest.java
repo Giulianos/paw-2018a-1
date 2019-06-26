@@ -135,4 +135,74 @@ public class PublicationServiceImplTest {
     publicationService.leavePublication(testPublication.getId());
   }
 
+  @Test
+  public void adoptPublication() throws Exception {
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+
+    // Create publication
+    Publication testPublication = publicationService.create("Test publication", 1.0d, 10L, "", new LinkedList<>());
+
+    // Login as orderer
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testOrderer.getEmail()));
+
+    // Create order
+    Order order = orderService.create(testPublication, 5L);
+
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+
+    // Leave publication
+    publicationService.leavePublication(testPublication.getId());
+
+    // Login as orderer
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testOrderer.getEmail()));
+
+    // Adopt publication
+    publicationService.adoptPublication(testPublication.getId());
+
+    // Retrieve the publication
+    Optional<Publication> retrievedPublication = publicationService.findById(testPublication.getId());
+
+    assertTrue(retrievedPublication.isPresent());
+
+    // Check if the supervisor is the orderer
+    assertEquals(retrievedPublication.get().getSupervisor(), testOrderer);
+  }
+
+  @Test
+  public void publicationChangesToInProgressOnAdopt() throws Exception {
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+
+    // Create publication
+    Publication testPublication = publicationService.create("Test publication", 1.0d, 10L, "", new LinkedList<>());
+
+    // Login as orderer
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testOrderer.getEmail()));
+
+    // Create order
+    Order order = orderService.create(testPublication, 5L);
+
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+
+    // Leave publication
+    publicationService.leavePublication(testPublication.getId());
+
+    // Login as orderer
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testOrderer.getEmail()));
+
+    // Adopt publication
+    publicationService.adoptPublication(testPublication.getId());
+
+    // Retrieve the publication
+    Optional<Publication> retrievedPublication = publicationService.findById(testPublication.getId());
+
+    assertTrue(retrievedPublication.isPresent());
+
+    // Check if order state is IN PROGRESS
+    assertEquals(retrievedPublication.get().getState(), PublicationState.IN_PROGRESS);
+  }
+
 }

@@ -56,4 +56,12 @@ public interface PublicationService {
    * @param id
    */
   public void leavePublication(final Long id) throws EntityNotFoundException, UnauthorizedAccessException, PublicationFulfilledException;
+
+  /**
+   * Adopts an orphan publication
+   * @param id
+   * @throws EntityNotFoundException
+   * @throws UnauthorizedAccessException
+   */
+  public void adoptPublication(final Long id) throws EntityNotFoundException, UnauthorizedAccessException;
 }
