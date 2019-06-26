@@ -38,9 +38,6 @@ public class Publication extends TimestampedEntity {
     private Long quantity;
 
     @Column(nullable = false)
-    private Boolean fulfilled = false;
-
-    @Column(nullable = false)
     private PublicationState state = PublicationState.IN_PROGRESS;
 
     @Column(length = 1000)
@@ -113,14 +110,6 @@ public class Publication extends TimestampedEntity {
 
     public void setOrders(Set<Order> orders) {
         this.orders = orders;
-    }
-
-    public Boolean getFulfilled() {
-        return fulfilled;
-    }
-
-    public void setFulfilled(Boolean fulfilled) {
-        this.fulfilled = fulfilled;
     }
 
     public PublicationState getState() {
