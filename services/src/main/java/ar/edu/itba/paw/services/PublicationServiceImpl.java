@@ -3,15 +3,15 @@ package ar.edu.itba.paw.services;
 import ar.edu.itba.paw.interfaces.dao.ImageDao;
 import ar.edu.itba.paw.interfaces.dao.PublicationDao;
 import ar.edu.itba.paw.interfaces.exception.EntityNotFoundException;
+import ar.edu.itba.paw.interfaces.exception.PublicationFulfilledException;
 import ar.edu.itba.paw.interfaces.exception.UnauthorizedAccessException;
 import ar.edu.itba.paw.interfaces.service.PublicationService;
 import ar.edu.itba.paw.interfaces.service.TagService;
 import ar.edu.itba.paw.interfaces.service.UserService;
-import ar.edu.itba.paw.model.Image;
-import ar.edu.itba.paw.model.Publication;
-import ar.edu.itba.paw.model.Tag;
-import ar.edu.itba.paw.model.User;
+import ar.edu.itba.paw.model.*;
+import ar.edu.itba.paw.model.events.SupervisorLeftEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -38,6 +38,9 @@ public class PublicationServiceImpl implements PublicationService {
 
   @Autowired
   private ImageDao imageDao;
+
+  @Autowired
+  private ApplicationEventPublisher eventPublisher;
 
   @Override
   public Optional<Publication> findById(Long id) {
@@ -102,4 +105,36 @@ public class PublicationServiceImpl implements PublicationService {
 
       return Optional.of(addedImage);
   }
+
+    @Override
+    public void leavePublication(Long id) throws EntityNotFoundException, UnauthorizedAccessException, PublicationFulfilledException {
+        Optional<Publication> publication = publicationDao.findById(id);
+
+        if(!publication.isPresent()) {
+            throw new EntityNotFoundException();
+        }
+
+        String loggedUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        if(!loggedUserEmail.equals(publication.get().getSupervisor().getEmail())) {
+            throw new UnauthorizedAccessException("Only supervisor can leave publication");
+        }
+
+        if(publication.get().getState() != PublicationState.IN_PROGRESS) {
+            throw new PublicationFulfilledException("Publication can be left only while in progress");
+        }
+
+        // If the publication doesn't have orders (or the only one is form the supervisor), delete it
+        if(publication.get().getOrders().stream().allMatch(o -> o.getOrderer().getEmail().equals(loggedUserEmail))){
+          // TODO: delete publication
+        }
+
+        publication.get().setState(PublicationState.ORPHAN);
+        publication.get().setSupervisor(null);
+
+        // Publish event (for notification purposes)
+        eventPublisher.publishEvent(new SupervisorLeftEvent(publication.get()));
+
+        publicationDao.update(publication.get());
+    }
 }
