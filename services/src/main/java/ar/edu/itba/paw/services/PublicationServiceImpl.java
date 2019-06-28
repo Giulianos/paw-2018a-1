@@ -10,6 +10,7 @@ import ar.edu.itba.paw.interfaces.service.TagService;
 import ar.edu.itba.paw.interfaces.service.UserService;
 import ar.edu.itba.paw.model.*;
 import ar.edu.itba.paw.model.events.NewSupervisorEvent;
+import ar.edu.itba.paw.model.events.PublicationPurchasedEvent;
 import ar.edu.itba.paw.model.events.SupervisorLeftEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -170,5 +171,29 @@ public class PublicationServiceImpl implements PublicationService {
     publicationDao.update(publication.get());
 
     eventPublisher.publishEvent(new NewSupervisorEvent(publication.get()));
+  }
+
+  @Override
+  public void markAsPurchased(Long id) throws EntityNotFoundException, UnauthorizedAccessException {
+    Optional<Publication> publication = findById(id);
+
+    String loggedUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+
+    if(!publication.isPresent()) {
+      throw new EntityNotFoundException();
+    }
+
+    if(!publication.get().getSupervisor().getEmail().equals(loggedUserEmail)) {
+      throw new UnauthorizedAccessException("Only the supervisor can mark the publication as purchased");
+    }
+
+    if(!publication.get().getState().equals(PublicationState.FULFILLED)) {
+      throw new IllegalStateException();
+    }
+
+    publication.get().setState(PublicationState.PURCHASED);
+    publicationDao.update(publication.get());
+
+    eventPublisher.publishEvent(new PublicationPurchasedEvent(publication.get()));
   }
 }
