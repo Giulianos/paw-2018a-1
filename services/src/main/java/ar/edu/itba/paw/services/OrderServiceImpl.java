@@ -10,6 +10,7 @@ import ar.edu.itba.paw.interfaces.service.OrderService;
 import ar.edu.itba.paw.interfaces.service.UserService;
 import ar.edu.itba.paw.model.*;
 import ar.edu.itba.paw.model.compositepks.OrderId;
+import ar.edu.itba.paw.model.events.OrderConfirmedEvent;
 import ar.edu.itba.paw.model.events.PublicationFulfilledEvent;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -213,5 +214,29 @@ public class OrderServiceImpl implements OrderService {
 
     messageDao.createMessage(order.get(), loggedUser.get(), receiver, message);
     orderDao.update(order.get());
+  }
+
+  @Override
+  @Transactional
+  public void confirmOrderPurchase(OrderId id) throws EntityNotFoundException, UnauthorizedAccessException {
+    Optional<Order> order = orderDao.findById(id);
+    String loggedUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+
+    if(!order.isPresent()) {
+      throw new EntityNotFoundException();
+    }
+
+    if(!order.get().getOrderer().getEmail().equals(loggedUserEmail)) {
+      throw new UnauthorizedAccessException("Only the orderer can confirm the purchase");
+    }
+
+    if(order.get().getPublication().getState() != PublicationState.FULFILLED) {
+      throw new IllegalStateException();
+    }
+
+    order.get().setPurchaseAccepted(true);
+    orderDao.update(order.get());
+
+    eventPublisher.publishEvent(new OrderConfirmedEvent(order.get()));
   }
 }

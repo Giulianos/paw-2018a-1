@@ -28,72 +28,114 @@ import static junit.framework.TestCase.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
-        classes = { TestConfig.class },
-        loader = AnnotationConfigContextLoader.class)
+    classes = {TestConfig.class},
+    loader = AnnotationConfigContextLoader.class)
 @Transactional
 public class OrderServiceImplTest {
 
-        @Autowired
-        private UserService userService;
+  @Autowired
+  private UserService userService;
 
-        @Autowired
-        private PublicationService publicationService;
+  @Autowired
+  private PublicationService publicationService;
 
-        @Autowired
-        private OrderService orderService;
+  @Autowired
+  private OrderService orderService;
 
-        private User testSupervisor;
-        private User testOrderer;
+  private User testSupervisor;
+  private User testOrderer;
 
-    @Before
-    public void setupTest() {
-        this.testSupervisor = userService.create("John Supervisor", "supervisor@example.com", "password123");
-        this.testOrderer = userService.create("Will Orderer", "orderer@example.com", "password123");
-    }
+  @Before
+  public void setupTest() {
+    this.testSupervisor = userService.create("John Supervisor", "supervisor@example.com", "password123");
+    this.testOrderer = userService.create("Will Orderer", "orderer@example.com", "password123");
+  }
 
-    @Test
-    public void orderDecreasesAvailability() {
-        // Login as supervisor
-        SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+  @Test
+  public void orderDecreasesAvailability() {
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
 
-        // Create publication
-        Publication testPublication = publicationService.create("Test Publication", 1.0d, 10L, "", new LinkedList<>());
+    // Create publication
+    Publication testPublication = publicationService.create("Test Publication", 1.0d, 10L, "", new LinkedList<>());
 
-        // Login as orderer
-        SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock((testOrderer.getEmail())));
+    // Login as orderer
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock((testOrderer.getEmail())));
 
-        // Order
-        Order order = orderService.create(testPublication, 5L);
+    // Order
+    Order order = orderService.create(testPublication, 5L);
 
-        Optional<Publication> retrievedPublication = publicationService.findById(testPublication.getId());
+    Optional<Publication> retrievedPublication = publicationService.findById(testPublication.getId());
 
-        assertTrue(retrievedPublication.isPresent());
-        assertEquals(retrievedPublication.get().getAvailableQuantity(), new Long(5L));
-    }
+    assertTrue(retrievedPublication.isPresent());
+    assertEquals(retrievedPublication.get().getAvailableQuantity(), new Long(5L));
+  }
 
-    @Test(expected = PublicationFulfilledException.class)
-    public void cantDeleteOrderOnFulfilledPublication() throws Exception {
-        // Login as supervisor
-        SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+  @Test(expected = PublicationFulfilledException.class)
+  public void cantDeleteOrderOnFulfilledPublication() throws Exception {
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
 
-        // Create publication
-        Publication testPublication = publicationService.create("Test Publication", 1.0d, 10L, "", new LinkedList<>());
+    // Create publication
+    Publication testPublication = publicationService.create("Test Publication", 1.0d, 10L, "", new LinkedList<>());
 
-        // Order
-        Order supervisorOrder = orderService.create(testPublication, 5L);
+    // Order
+    Order supervisorOrder = orderService.create(testPublication, 5L);
 
-        // Login as orderer
-        SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock((testOrderer.getEmail())));
+    // Login as orderer
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock((testOrderer.getEmail())));
 
-        // Order (and fulfill publication)
-        Order ordererOrder = orderService.create(testPublication, 5L);
+    // Order (and fulfill publication)
+    Order ordererOrder = orderService.create(testPublication, 5L);
 
-        Optional<Publication> retrievedPublication = publicationService.findById(testPublication.getId());
+    Optional<Publication> retrievedPublication = publicationService.findById(testPublication.getId());
 
-        assertTrue(retrievedPublication.isPresent());
+    assertTrue(retrievedPublication.isPresent());
 
-        // Try to delete order (this throws an exception)
-        orderService.deleteByPublicationId(retrievedPublication.get().getId());
-    }
+    // Try to delete order (this throws an exception)
+    orderService.deleteByPublicationId(retrievedPublication.get().getId());
+  }
+
+  @Test
+  public void confirmOrder() throws Exception {
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+
+    // Create publication
+    Publication testPublication = publicationService.create("Test Publication", 1.0d, 10L, "", new LinkedList<>());
+
+    // Login as orderer
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testOrderer.getEmail()));
+
+    // Order
+    Order order = orderService.create(testPublication, 10L);
+
+    // Confirm order
+    orderService.confirmOrderPurchase(order.getId());
+
+    // Retrieve publication
+    Optional<Publication> publication = publicationService.findById(testPublication.getId());
+
+    // Check that all orders are confirmed
+    publication.get().getOrders().forEach(o -> assertTrue(o.getPurchaseAccepted()));
+  }
+
+  @Test(expected = IllegalStateException.class)
+  public void cantConfirmOrderOfNotFulfilledPublication() throws Exception {
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+
+    // Create publication
+    Publication testPublication = publicationService.create("Test Publication", 1.0d, 10L, "", new LinkedList<>());
+
+    // Login as orderer
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testOrderer.getEmail()));
+
+    // Order
+    Order order = orderService.create(testPublication, 5L);
+
+    // Confirm order
+    orderService.confirmOrderPurchase(order.getId());
+  }
 
 }
