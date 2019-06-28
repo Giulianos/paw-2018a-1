@@ -263,4 +263,44 @@ public class PublicationServiceImplTest {
     publicationService.markAsPurchased(testPublication.getId());
   }
 
+  @Test
+  public void allOrderConfirmedFinalizesPublication() throws Exception {
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+
+    // Create publication
+    Publication testPublication = publicationService.create("Test Publication", 1.0d, 10L, "", new LinkedList<>());
+
+    // Login as orderer
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock((testOrderer.getEmail())));
+
+    // Order everything
+    Order order = orderService.create(testPublication, 10L);
+
+    // Retrieve fulfilled publication
+    Optional<Publication> fulfilledPublication = publicationService.findById(testPublication.getId());
+
+    assertTrue(fulfilledPublication.isPresent());
+    assertEquals(fulfilledPublication.get().getState(), PublicationState.FULFILLED);
+
+    // Login as supervisor again
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock((testSupervisor.getEmail())));
+
+    // Supervisor marks the publication as purchased
+    publicationService.markAsPurchased(testPublication.getId());
+
+    // Login as orderer again
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock((testOrderer.getEmail())));
+
+    // Accept purchase
+    orderService.confirmOrderPurchase(order.getId());
+
+    // Retrieve publication again
+    Optional<Publication> retrievedPublication = publicationService.findById(testPublication.getId());
+
+    // Check if publication has state finalized
+    assertTrue(retrievedPublication.isPresent());
+    assertEquals(retrievedPublication.get().getState(), PublicationState.FINALIZED);
+  }
+
 }
