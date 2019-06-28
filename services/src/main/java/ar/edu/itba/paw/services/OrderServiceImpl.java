@@ -230,7 +230,7 @@ public class OrderServiceImpl implements OrderService {
       throw new UnauthorizedAccessException("Only the orderer can confirm the purchase");
     }
 
-    if(order.get().getPublication().getState() != PublicationState.FULFILLED) {
+    if(order.get().getPublication().getState() != PublicationState.PURCHASED) {
       throw new IllegalStateException();
     }
 

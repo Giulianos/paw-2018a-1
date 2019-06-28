@@ -110,6 +110,15 @@ public class OrderServiceImplTest {
     // Order
     Order order = orderService.create(testPublication, 10L);
 
+    // Login again as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+
+    // Mark publication as purchased
+    publicationService.markAsPurchased(testPublication.getId());
+
+    // Login as orderer
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testOrderer.getEmail()));
+
     // Confirm order
     orderService.confirmOrderPurchase(order.getId());
 
