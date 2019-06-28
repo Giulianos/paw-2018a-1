@@ -64,4 +64,12 @@ public interface PublicationService {
    * @throws UnauthorizedAccessException
    */
   public void adoptPublication(final Long id) throws EntityNotFoundException, UnauthorizedAccessException;
+
+  /**
+   * Marks the publication as purchased
+   * @param id
+   * @throws EntityNotFoundException
+   * @throws UnauthorizedAccessException
+   */
+  public void markAsPurchased(final Long id) throws EntityNotFoundException, UnauthorizedAccessException;
 }
