@@ -205,4 +205,62 @@ public class PublicationServiceImplTest {
     assertEquals(retrievedPublication.get().getState(), PublicationState.IN_PROGRESS);
   }
 
+  @Test
+  public void publicationCanBeMarkedAsPurchased() throws Exception {
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+
+    // Create publication
+    Publication testPublication = publicationService.create("Test Publication", 1.0d, 10L, "", new LinkedList<>());
+
+    // Login as orderer
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock((testOrderer.getEmail())));
+
+    // Order everything
+    Order order = orderService.create(testPublication, 10L);
+
+    // Login as supervisor again
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock((testSupervisor.getEmail())));
+
+    // Supervisor marks the publication as purchased
+    publicationService.markAsPurchased(testPublication.getId());
+
+    // Retrieve publication again
+    Optional<Publication> retrievedPublication = publicationService.findById(testPublication.getId());
+
+    // Check if publication has state purchased
+    assertTrue(retrievedPublication.isPresent());
+    assertEquals(retrievedPublication.get().getState(), PublicationState.PURCHASED);
+  }
+
+  @Test(expected = IllegalStateException.class)
+  public void cantMarkAsPurchasedIfNotFulfilled() throws Exception {
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+
+    // Create publication
+    Publication testPublication = publicationService.create("Test Publication", 1.0d, 10L, "", new LinkedList<>());
+
+    // Supervisor tries to mark the publication as purchased
+    publicationService.markAsPurchased(testPublication.getId());
+  }
+
+  @Test(expected =  UnauthorizedAccessException.class)
+  public void onlySupervisorCanMarkPurchased() throws Exception {
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+
+    // Create publication
+    Publication testPublication = publicationService.create("Test Publication", 1.0d, 10L, "", new LinkedList<>());
+
+    // Login as orderer
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock((testOrderer.getEmail())));
+
+    // Order everything
+    Order order = orderService.create(testPublication, 10L);
+
+    // Orderer tries to mark the publication as purchased
+    publicationService.markAsPurchased(testPublication.getId());
+  }
+
 }
