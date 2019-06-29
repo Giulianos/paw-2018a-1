@@ -1,11 +1,15 @@
 package ar.edu.itba.paw.webapp.controller;
 
+import ar.edu.itba.paw.interfaces.exception.EntityNotFoundException;
+import ar.edu.itba.paw.interfaces.exception.UnauthorizedAccessException;
 import ar.edu.itba.paw.interfaces.service.PublicationService;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.webapp.dto.ErrorDTO;
 import ar.edu.itba.paw.webapp.dto.PublicationDTO;
 import ar.edu.itba.paw.webapp.dto.PublicationNewDTO;
+import ar.edu.itba.paw.webapp.dto.PublicationStateDTO;
 import ar.edu.itba.paw.webapp.dto.constraints.ConstraintViolationsDTO;
+import ar.edu.itba.paw.webapp.httpmethods.PATCH;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -73,6 +77,30 @@ public class PublicationsController {
         } catch (Exception e) {
             e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorDTO("Publication could no be created")).build();
+        }
+    }
+
+    @PATCH
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{id}")
+    public Response markPurchased(@Valid PublicationStateDTO publicationState, @PathParam("id") final Long publicationId) {
+        Set<ConstraintViolation<PublicationStateDTO>> violations = validator.validate(publicationState);
+        if(!violations.isEmpty()) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(new ConstraintViolationsDTO(violations)).build();
+        }
+
+        try {
+            publicationService.markAsPurchased(publicationId);
+
+            return Response.accepted().build();
+        } catch(UnauthorizedAccessException e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        } catch(EntityNotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch(IllegalStateException e) {
+            return Response.status(Response.Status.CONFLICT).build();
+        } catch(Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 }
