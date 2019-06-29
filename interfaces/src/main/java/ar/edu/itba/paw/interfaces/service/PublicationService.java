@@ -1,6 +1,7 @@
 package ar.edu.itba.paw.interfaces.service;
 
 import ar.edu.itba.paw.interfaces.exception.EntityNotFoundException;
+import ar.edu.itba.paw.interfaces.exception.PublicationFulfilledException;
 import ar.edu.itba.paw.interfaces.exception.UnauthorizedAccessException;
 import ar.edu.itba.paw.model.Image;
 import ar.edu.itba.paw.model.Publication;
@@ -50,4 +51,25 @@ public interface PublicationService {
    */
   public Optional<Image> addImage(final String userEmail, final Long publicationId, final String base64) throws EntityNotFoundException, UnauthorizedAccessException;
 
+  /**
+   * The supervisor leaves the publication
+   * @param id
+   */
+  public void leavePublication(final Long id) throws EntityNotFoundException, UnauthorizedAccessException, PublicationFulfilledException;
+
+  /**
+   * Adopts an orphan publication
+   * @param id
+   * @throws EntityNotFoundException
+   * @throws UnauthorizedAccessException
+   */
+  public void adoptPublication(final Long id) throws EntityNotFoundException, UnauthorizedAccessException;
+
+  /**
+   * Marks the publication as purchased
+   * @param id
+   * @throws EntityNotFoundException
+   * @throws UnauthorizedAccessException
+   */
+  public void markAsPurchased(final Long id) throws EntityNotFoundException, UnauthorizedAccessException;
 }

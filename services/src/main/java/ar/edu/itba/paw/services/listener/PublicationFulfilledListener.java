@@ -4,6 +4,7 @@ import ar.edu.itba.paw.interfaces.dao.PublicationDao;
 import ar.edu.itba.paw.interfaces.service.EmailService;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
+import ar.edu.itba.paw.model.PublicationState;
 import ar.edu.itba.paw.model.User;
 import ar.edu.itba.paw.model.events.PublicationFulfilledEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +26,10 @@ public class PublicationFulfilledListener implements ApplicationListener<Publica
     @Override
     @Transactional
     public void onApplicationEvent(PublicationFulfilledEvent event) {
-        System.out.println("Publication fulfilled");
         final Publication fulfilledPublication = (Publication) event.getSource();
 
         /* Set publication as fulfilled */
-        fulfilledPublication.setFulfilled(true);
+        fulfilledPublication.setState(PublicationState.FULFILLED);
         publicationDao.update(fulfilledPublication);
 
         /* Get updated publication */
@@ -40,7 +40,7 @@ public class PublicationFulfilledListener implements ApplicationListener<Publica
         }
 
 
-        /* Notify orderers (this should also be done conditionally) */
+        /* TODO: Notify orderers (this should also be done conditionally) */
         updatedPublication
                 .get()
                 .getOrders()
@@ -50,7 +50,7 @@ public class PublicationFulfilledListener implements ApplicationListener<Publica
                 .filter(u -> !u.equals(updatedPublication.get().getSupervisor()))
                 .forEach((User u) -> emailService.notifyOrdererPublicationFulfillment(u, updatedPublication.get()));
 
-        /* Notify supervisor (this should be done conditionally based on user notification preferences) */
+        /* TODO: Notify supervisor (this should be done conditionally based on user notification preferences) */
         emailService.notifySupervisorPublicationFulfillment(updatedPublication.get());
     }
 }

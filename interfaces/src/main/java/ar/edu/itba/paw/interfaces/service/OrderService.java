@@ -92,4 +92,10 @@ public interface OrderService {
    */
   public void sendMessage(final OrderId id, final String message) throws EntityNotFoundException, UnauthorizedAccessException;
 
+  /**
+   * Confirms that the supervisor purchased the order
+   * @param id
+   */
+  public void confirmOrderPurchase(final OrderId id) throws EntityNotFoundException, UnauthorizedAccessException;
+
 }

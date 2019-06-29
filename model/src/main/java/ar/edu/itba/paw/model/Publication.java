@@ -38,7 +38,7 @@ public class Publication extends TimestampedEntity {
     private Long quantity;
 
     @Column(nullable = false)
-    private Boolean fulfilled = false;
+    private PublicationState state = PublicationState.IN_PROGRESS;
 
     @Column(length = 1000)
     private String detailedDescription;
@@ -112,12 +112,12 @@ public class Publication extends TimestampedEntity {
         this.orders = orders;
     }
 
-    public Boolean getFulfilled() {
-        return fulfilled;
+    public PublicationState getState() {
+        return state;
     }
 
-    public void setFulfilled(Boolean fulfilled) {
-        this.fulfilled = fulfilled;
+    public void setState(PublicationState state) {
+        this.state = state;
     }
 
     public Long getAvailableQuantity() {

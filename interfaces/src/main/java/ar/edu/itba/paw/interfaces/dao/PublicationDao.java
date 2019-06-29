@@ -32,4 +32,10 @@ public interface PublicationDao {
      * @param publication
      */
     public void update(final Publication publication);
+
+    /**
+     * Delete publication by id
+     * @param id
+     */
+    public void deleteById(final Long id);
 }
