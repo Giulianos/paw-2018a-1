@@ -125,4 +125,32 @@ public class NotificationServiceImplTest {
     assertEquals(ordererNotifications.get(0).getRelatedPublication(), testPublication);
     assertEquals(ordererNotifications.get(0).getRelatedOrder(), ordererOrder);
   }
+
+  @Test
+  public void supervisorLeftTriggersNotification() throws Exception {
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+    // Create test publication
+    Publication testPublication = publicationService.create("Test publication", 1d, 10L, "", new LinkedList<>());
+
+    // Login as orderer
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testOrderer.getEmail()));
+    // Create order
+    Order ordererOrder = orderService.create(testPublication, 5L);
+
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+    // Leave publication
+    publicationService.leavePublication(testPublication.getId());
+
+    // Retrieve orderer notifications
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testOrderer.getEmail()));
+    List<Notification> ordererNotifications = notificationService.getLatest();
+    // Check that it has the Publication orphan notification
+    assertEquals(ordererNotifications.size(), 1);
+    assertEquals(ordererNotifications.get(0).getType(), NotificationType.PUBLICATION_ORPHAN);
+    // The notification should have a related order and publication
+    assertEquals(ordererNotifications.get(0).getRelatedPublication(), testPublication);
+    assertEquals(ordererNotifications.get(0).getRelatedOrder(), ordererOrder);
+  }
 }
