@@ -71,7 +71,11 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     // Everything ok, create review
-    order.get().setReview(new Review(comment, rating));
+    try {
+      order.get().setReview(new Review(comment, rating));
+    } catch (Exception e) {
+      throw new IllegalStateException("Cannot review an order more than once");
+    }
   }
 
   @Override
