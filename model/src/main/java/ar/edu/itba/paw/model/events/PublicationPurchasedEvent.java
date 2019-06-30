@@ -7,4 +7,8 @@ public class PublicationPurchasedEvent extends ApplicationEvent {
   public PublicationPurchasedEvent(Publication publication) {
     super(publication);
   }
+
+  public Publication getSource() {
+    return (Publication)super.getSource();
+  }
 }
