@@ -10,6 +10,7 @@ import ar.edu.itba.paw.interfaces.service.OrderService;
 import ar.edu.itba.paw.interfaces.service.UserService;
 import ar.edu.itba.paw.model.*;
 import ar.edu.itba.paw.model.compositepks.OrderId;
+import ar.edu.itba.paw.model.events.NewMessageEvent;
 import ar.edu.itba.paw.model.events.OrderConfirmedEvent;
 import ar.edu.itba.paw.model.events.PublicationFulfilledEvent;
 import javassist.NotFoundException;
@@ -212,8 +213,11 @@ public class OrderServiceImpl implements OrderService {
 
     User receiver = order.get().getOrderer().equals(loggedUser.get()) ? order.get().getPublication().getSupervisor() : order.get().getOrderer();
 
-    messageDao.createMessage(order.get(), loggedUser.get(), receiver, message);
+    Message sentMessage = messageDao.createMessage(order.get(), loggedUser.get(), receiver, message);
     orderDao.update(order.get());
+
+    // Publish event (for notifications)
+    eventPublisher.publishEvent(new NewMessageEvent(sentMessage));
   }
 
   @Override
