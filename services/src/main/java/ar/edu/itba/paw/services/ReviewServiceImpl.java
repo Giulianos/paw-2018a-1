@@ -5,9 +5,11 @@ import ar.edu.itba.paw.interfaces.dao.ReviewDao;
 import ar.edu.itba.paw.interfaces.exception.EntityNotFoundException;
 import ar.edu.itba.paw.interfaces.exception.UnauthorizedAccessException;
 import ar.edu.itba.paw.interfaces.service.ReviewService;
+import ar.edu.itba.paw.interfaces.service.UserService;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.model.Review;
+import ar.edu.itba.paw.model.User;
 import ar.edu.itba.paw.model.compositepks.OrderId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -20,6 +22,7 @@ import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
 import java.time.temporal.TemporalUnit;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Primary
@@ -30,6 +33,8 @@ public class ReviewServiceImpl implements ReviewService {
   ReviewDao reviewDao;
   @Autowired
   OrderDao orderDao;
+  @Autowired
+  UserService userService;
 
   @Override
   @Transactional
@@ -57,7 +62,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     // Check if the order is confirmed and it isn't from more than 15 days
-    final Date limitDate = Date.from(Instant.now().plus(15, ChronoUnit.DAYS));
+    final Date limitDate = Date.from(Instant.now().minus(15, ChronoUnit.DAYS));
     if(order.get().getUpdatedAt().before(limitDate)) {
       throw new IllegalStateException("The period to review the supervisor has expired");
     }
@@ -67,5 +72,22 @@ public class ReviewServiceImpl implements ReviewService {
 
     // Everything ok, create review
     order.get().setReview(new Review(comment, rating));
+  }
+
+  @Override
+  public List<Review> getUserReviews(Long userId) throws EntityNotFoundException, UnauthorizedAccessException {
+    Optional<User> user = userService.findById(userId);
+
+    if(!user.isPresent()) {
+      throw new EntityNotFoundException();
+    }
+
+    final String loggedUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+
+    if(!user.get().getEmail().equals(loggedUserEmail)) {
+      throw new UnauthorizedAccessException("Only own reviews can be seen");
+    }
+
+    return reviewDao.userReviews(userId);
   }
 }

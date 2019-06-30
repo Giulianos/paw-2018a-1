@@ -7,6 +7,7 @@ import ar.edu.itba.paw.interfaces.service.ReviewService;
 import ar.edu.itba.paw.interfaces.service.UserService;
 import ar.edu.itba.paw.model.Order;
 import ar.edu.itba.paw.model.Publication;
+import ar.edu.itba.paw.model.Review;
 import ar.edu.itba.paw.model.User;
 import ar.edu.itba.paw.services.mocks.AuthenticationMock;
 import org.junit.Before;
@@ -20,6 +21,9 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
+import java.util.List;
+
+import static junit.framework.TestCase.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
@@ -173,5 +177,78 @@ public class ReviewServiceImplTest {
 
     // Try to review with less than 1
     reviewService.reviewOrder(testOrder.getId(), "Very bad!", 0);
+  }
+
+  @Test
+  public void canRetrieveUserReviews() throws Exception {
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+
+    // Create publication
+    Publication testPublication = publicationService.create("Test Publication", 1.0d, 10L, "", new LinkedList<>());
+
+    // Login as orderer
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testOrderer.getEmail()));
+
+    // Order all products
+    Order testOrder = orderService.create(testPublication, 10L);
+
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+
+    // Mark publication as purchased
+    publicationService.markAsPurchased(testPublication.getId());
+
+    // Login as orderer
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testOrderer.getEmail()));
+
+    // Confirm order
+    orderService.confirmOrderPurchase(testOrder.getId());
+
+    // Review
+    reviewService.reviewOrder(testOrder.getId(), "Good!", 3);
+
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+
+    // Retrieve reviews
+    List<Review> reviews  = reviewService.getUserReviews(testSupervisor.getId());
+
+    assertEquals(reviews.size(), 1);
+    assertEquals(reviews.get(0).getComment(), "Good!");
+    assertEquals(reviews.get(0).getRating(), new Integer(3));
+  }
+
+  @Test(expected = UnauthorizedAccessException.class)
+  public void usersCannotRetrieveOthersReviews() throws Exception {
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+
+    // Create publication
+    Publication testPublication = publicationService.create("Test Publication", 1.0d, 10L, "", new LinkedList<>());
+
+    // Login as orderer
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testOrderer.getEmail()));
+
+    // Order all products
+    Order testOrder = orderService.create(testPublication, 10L);
+
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+
+    // Mark publication as purchased
+    publicationService.markAsPurchased(testPublication.getId());
+
+    // Login as orderer
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testOrderer.getEmail()));
+
+    // Confirm order
+    orderService.confirmOrderPurchase(testOrder.getId());
+
+    // Review
+    reviewService.reviewOrder(testOrder.getId(), "Good!", 3);
+
+    // Try to retrieve supervisor reviews
+    List<Review> reviews  = reviewService.getUserReviews(testSupervisor.getId());
   }
 }
