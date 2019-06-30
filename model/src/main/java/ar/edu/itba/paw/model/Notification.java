@@ -16,6 +16,10 @@ public class Notification extends TimestampedEntity {
   private NotificationType type;
 
   @ManyToOne
+  @JoinColumn(name = "user_id")
+  private User user;
+
+  @ManyToOne
   @JoinColumn(name = "related_publication_id")
   private Publication relatedPublication;
 
@@ -30,10 +34,19 @@ public class Notification extends TimestampedEntity {
     // Empty constructor needed by Hibernate
   }
 
-  public Notification(NotificationType type, Publication relatedPublication, Order relatedOrder) {
+  public Notification(NotificationType type, User user, Publication relatedPublication, Order relatedOrder) {
     this.type = type;
     this.relatedPublication = relatedPublication;
     this.relatedOrder = relatedOrder;
+    this.user = user;
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
   }
 
   public Long getId() {
