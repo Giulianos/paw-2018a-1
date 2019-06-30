@@ -6,7 +6,9 @@ import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.model.events.SupervisorLeftEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.stereotype.Component;
 
+@Component
 public class SupervisorLeftListener implements ApplicationListener<SupervisorLeftEvent> {
 
   @Autowired
