@@ -251,4 +251,39 @@ public class ReviewServiceImplTest {
     // Try to retrieve supervisor reviews
     List<Review> reviews  = reviewService.getUserReviews(testSupervisor.getId());
   }
+
+  @Test
+  public void canRetrieveUserRating() throws Exception {
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+
+    // Create publication
+    Publication testPublication = publicationService.create("Test Publication", 1.0d, 10L, "", new LinkedList<>());
+
+    // Login as orderer
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testOrderer.getEmail()));
+
+    // Order all products
+    Order testOrder = orderService.create(testPublication, 10L);
+
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+
+    // Mark publication as purchased
+    publicationService.markAsPurchased(testPublication.getId());
+
+    // Login as orderer
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testOrderer.getEmail()));
+
+    // Confirm order
+    orderService.confirmOrderPurchase(testOrder.getId());
+
+    // Review
+    reviewService.reviewOrder(testOrder.getId(), "Good!", 5);
+
+    // Retrieve rating
+    final Integer rating  = reviewService.getUserRating(testSupervisor.getId());
+
+    assertEquals(rating, new Integer(5));
+  }
 }

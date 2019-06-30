@@ -90,4 +90,17 @@ public class ReviewServiceImpl implements ReviewService {
 
     return reviewDao.userReviews(userId);
   }
+
+  @Override
+  public Integer getUserRating(Long userId) throws EntityNotFoundException {
+    Optional<User> user = userService.findById(userId);
+
+    if(!user.isPresent()) {
+      throw new EntityNotFoundException();
+    }
+
+    final List<Review> userReviews = reviewDao.userReviews(userId);
+
+    return userReviews.stream().map(Review::getRating).reduce(0, Integer::sum) / userReviews.size();
+  }
 }

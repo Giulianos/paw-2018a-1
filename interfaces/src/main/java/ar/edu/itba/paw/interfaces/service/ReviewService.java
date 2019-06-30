@@ -22,4 +22,12 @@ public interface ReviewService {
    * @return
    */
   public List<Review> getUserReviews(final Long userId) throws EntityNotFoundException, UnauthorizedAccessException;
+
+  /**
+   * Gets only the average of ratings of a user
+   * @param userId
+   * @return
+   * @throws EntityNotFoundException
+   */
+  public Integer getUserRating(final Long userId) throws EntityNotFoundException;
 }
