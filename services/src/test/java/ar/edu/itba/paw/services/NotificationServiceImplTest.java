@@ -40,7 +40,6 @@ public class NotificationServiceImplTest {
 
   private User testOrderer;
   private User testSupervisor;
-  private Publication testPublication;
 
   @Before
   public void setupTest() {
@@ -54,7 +53,7 @@ public class NotificationServiceImplTest {
     // Login as supervisor
     SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
     // Create test publication
-    testPublication = publicationService.create("Test publication", 1d, 10L, "", new LinkedList<>());
+    Publication testPublication = publicationService.create("Test publication", 1d, 10L, "", new LinkedList<>());
 
     // Login as orderer
     SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testOrderer.getEmail()));
@@ -87,4 +86,43 @@ public class NotificationServiceImplTest {
     assertEquals(ordererNotifications.get(0).getRelatedOrder(), ordererOrder);
   }
 
+  @Test
+  public void publicationPurchasedTriggersNotification() throws Exception {
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+    // Create test publication
+    Publication testPublication = publicationService.create("Test publication", 1d, 10L, "", new LinkedList<>());
+
+    // Login as orderer
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testOrderer.getEmail()));
+    // Create order
+    Order ordererOrder = orderService.create(testPublication, 5L);
+
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+    // Create order (and fulfill publication)
+    Order supervisorOrder = orderService.create(testPublication, 5L);
+    // Mark the publication as purchased
+    publicationService.markAsPurchased(testPublication.getId());
+
+    // Retrieve supervisor notifications
+    List<Notification> supervisorNotifications = notificationService.getLatest();
+    // Check that it has a Publication fulfilled notification (it doesn't receive the publication purchased notification)
+    assertEquals(supervisorNotifications.size(), 1);
+    assertEquals(supervisorNotifications.get(0).getType(), NotificationType.PUBLICATION_FULFILLED);
+    // The notification should have a related publication
+    assertEquals(supervisorNotifications.get(0).getRelatedPublication(), testPublication);
+    // The notification for the supervisor shouldn't have a related order (even though it has one)
+    assertNull(supervisorNotifications.get(0).getRelatedOrder());
+
+    // Retrieve orderer notifications
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testOrderer.getEmail()));
+    List<Notification> ordererNotifications = notificationService.getLatest();
+    // Check that it has a 2 notifications and the last one is the Publication purchased notification
+    assertEquals(ordererNotifications.size(), 2);
+    assertEquals(ordererNotifications.get(0).getType(), NotificationType.ORDER_PURCHASED);
+    // The notification should have a related order and publication
+    assertEquals(ordererNotifications.get(0).getRelatedPublication(), testPublication);
+    assertEquals(ordererNotifications.get(0).getRelatedOrder(), ordererOrder);
+  }
 }
