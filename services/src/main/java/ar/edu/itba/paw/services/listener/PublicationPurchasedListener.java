@@ -19,8 +19,11 @@ public class PublicationPurchasedListener implements ApplicationListener<Publica
     Publication publication = publicationPurchasedEvent.getSource();
 
     // Notify orderers of the event
-    publication.getOrders().parallelStream().forEach(o -> {
-      notificationDao.create(o.getOrderer(), NotificationType.ORDER_PURCHASED, publication, o);
-    });
+    publication.getOrders()
+        .stream()
+        .filter(o -> !o.getOrderer().equals(publication.getSupervisor()))
+        .forEach(o -> {
+          notificationDao.create(o.getOrderer(), NotificationType.ORDER_PURCHASED, publication, o);
+        });
   }
 }
