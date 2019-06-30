@@ -24,7 +24,10 @@ public class Notification extends TimestampedEntity {
   private Publication relatedPublication;
 
   @ManyToOne
-  @JoinColumn(name = "related_order_id")
+  @JoinColumns({
+      @JoinColumn(name = "related_order_pub_id", referencedColumnName = "publication_id"),
+      @JoinColumn(name = "related_order_ord_id", referencedColumnName = "orderer_id")
+  })
   private Order relatedOrder;
 
   @Column
