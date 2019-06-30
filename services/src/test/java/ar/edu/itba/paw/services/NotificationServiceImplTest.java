@@ -153,4 +153,30 @@ public class NotificationServiceImplTest {
     assertEquals(ordererNotifications.get(0).getRelatedPublication(), testPublication);
     assertEquals(ordererNotifications.get(0).getRelatedOrder(), ordererOrder);
   }
+
+  @Test
+  public void multipleMessagesTriggersOneNotification() throws Exception {
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+    // Create test publication
+    Publication testPublication = publicationService.create("Test publication", 1d, 10L, "", new LinkedList<>());
+
+    // Login as orderer
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testOrderer.getEmail()));
+    // Create order
+    Order ordererOrder = orderService.create(testPublication, 5L);
+
+    // Send multiple messages
+    orderService.sendMessage(ordererOrder.getId(), "Hi supervisor!");
+    orderService.sendMessage(ordererOrder.getId(), "This is another message");
+
+    // Retrieve supervisor notifications
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+    List<Notification> supervisorNotifications = notificationService.getLatest();
+    // Check that it has just one new message notification
+    assertEquals(supervisorNotifications.size(), 1);
+    assertEquals(supervisorNotifications.get(0).getType(), NotificationType.NEW_MESSAGES);
+    // The notification should have a related order (the one the message was sent to)
+    assertEquals(supervisorNotifications.get(0).getRelatedOrder(), ordererOrder);
+  }
 }
