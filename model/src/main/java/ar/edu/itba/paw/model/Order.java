@@ -1,10 +1,8 @@
 package ar.edu.itba.paw.model;
 
 import ar.edu.itba.paw.model.compositepks.OrderId;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -34,6 +32,14 @@ public class Order extends TimestampedEntity {
   )
   @Access(AccessType.PROPERTY)
   private Set<Message> messages = new HashSet<>();
+
+  @OneToOne(
+      mappedBy = "order",
+      cascade = CascadeType.ALL,
+      orphanRemoval = true,
+      fetch = FetchType.EAGER
+  )
+  private Review review;
 
   @Column
   private Long quantity;
@@ -108,6 +114,15 @@ public class Order extends TimestampedEntity {
   public void removeMessage(final Message message) {
     this.messages.remove(message);
     message.setOrder(null);
+  }
+
+  public Review getReview() {
+    return review;
+  }
+
+  public void setReview(Review review) {
+    this.review = review;
+    review.setOrder(this);
   }
 
   @Override
