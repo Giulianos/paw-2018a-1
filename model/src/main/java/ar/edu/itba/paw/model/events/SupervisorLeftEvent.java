@@ -7,4 +7,8 @@ public class SupervisorLeftEvent extends ApplicationEvent {
     public SupervisorLeftEvent(Publication publication) {
         super(publication);
     }
+
+    public Publication getSource() {
+        return (Publication)super.getSource();
+    }
 }

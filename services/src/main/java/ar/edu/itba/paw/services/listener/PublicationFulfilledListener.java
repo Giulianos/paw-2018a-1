@@ -1,11 +1,9 @@
 package ar.edu.itba.paw.services.listener;
 
+import ar.edu.itba.paw.interfaces.dao.NotificationDao;
 import ar.edu.itba.paw.interfaces.dao.PublicationDao;
 import ar.edu.itba.paw.interfaces.service.EmailService;
-import ar.edu.itba.paw.model.Order;
-import ar.edu.itba.paw.model.Publication;
-import ar.edu.itba.paw.model.PublicationState;
-import ar.edu.itba.paw.model.User;
+import ar.edu.itba.paw.model.*;
 import ar.edu.itba.paw.model.events.PublicationFulfilledEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -22,6 +20,9 @@ public class PublicationFulfilledListener implements ApplicationListener<Publica
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private NotificationDao notificationDao;
 
     @Override
     @Transactional
@@ -45,12 +46,15 @@ public class PublicationFulfilledListener implements ApplicationListener<Publica
                 .get()
                 .getOrders()
                 .stream()
-                .map(Order::getOrderer)
                 // Remove supervisor form orderers (it will be notified later)
-                .filter(u -> !u.equals(updatedPublication.get().getSupervisor()))
-                .forEach((User u) -> emailService.notifyOrdererPublicationFulfillment(u, updatedPublication.get()));
+                .filter(o -> !o.getOrderer().equals(updatedPublication.get().getSupervisor()))
+                .forEach(o -> {
+                    emailService.notifyOrdererPublicationFulfillment(o.getOrderer(), updatedPublication.get());
+                    notificationDao.create(o.getOrderer(), NotificationType.PUBLICATION_FULFILLED, updatedPublication.get(), o);
+                });
 
         /* TODO: Notify supervisor (this should be done conditionally based on user notification preferences) */
         emailService.notifySupervisorPublicationFulfillment(updatedPublication.get());
+        notificationDao.create(updatedPublication.get().getSupervisor(), NotificationType.PUBLICATION_FULFILLED, updatedPublication.get(), null);
     }
 }
