@@ -15,7 +15,7 @@ Button.defaultProps = {
   color: '',
   className: '',
   variant: '',
-  type: 'submit',
+  type: 'submit'
 };
 
 Button.propTypes = {
@@ -24,7 +24,7 @@ Button.propTypes = {
   className: PropTypes.string,
   variant: PropTypes.string,
   type: PropTypes.string,
-  handleClick: PropTypes.func.isRequired,
+  handleClick: PropTypes.func,
 };
 
 export default Button;
