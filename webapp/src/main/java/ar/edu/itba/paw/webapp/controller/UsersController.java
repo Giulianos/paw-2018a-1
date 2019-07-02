@@ -7,6 +7,7 @@ import ar.edu.itba.paw.webapp.dto.constraints.ConstraintViolationsDTO;
 import ar.edu.itba.paw.webapp.dto.UserDTO;
 import ar.edu.itba.paw.webapp.dto.UserRegisterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import javax.validation.*;
@@ -16,6 +17,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -55,6 +57,19 @@ public class UsersController {
         } catch(Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorDTO("User could no be created")).build();
         }
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieve() {
+      String loggedUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+        Optional<User> loggedUser = userService.findByEmail(loggedUserEmail);
+
+        if(!loggedUser.isPresent()) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        return Response.ok(new UserDTO(loggedUser.get())).build();
     }
 
 }
