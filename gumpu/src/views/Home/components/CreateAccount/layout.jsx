@@ -20,9 +20,9 @@ function CreateAccountLayout({
       { success && <Success /> }
       { (!loading && !error && !success) && (
         <form className="w100 column center-alt center" onSubmit={handleSubmit}>
-          <SmartInput label="Name" className="mb-24 w100" {...name} />
-          <SmartInput label="Email" className="mb-24 w100" {...email} />
-          <SmartInput label="New password" className="mb-32 w100" {...password} type="password" />
+          <SmartInput id="signup-name" label="Name" className="mb-24 w100" {...name} />
+          <SmartInput id="signup-email" label="Email" className="mb-24 w100" {...email} />
+          <SmartInput id="signup-pass" label="New password" className="mb-32 w100" {...password} type="password" />
           <Button type="submit" className="pl-32 pr-32">CREATE ACCOUNT</Button>
         </form>
       ) }

@@ -3,10 +3,14 @@ import React from 'react';
 import ProductCarrousel from 'components/ProductCarrousel';
 import styles from './styles.module.scss';
 import CreateAccount from './components/CreateAccount';
+import SearchBar from 'components/SearchBar';
 
 function Home() {
   return (
     <div className="view-container column center-alt">
+      <div className="w100 row mb-96">
+        <SearchBar />
+      </div>
       <div className="w100 row pl-64 pr-64 mb-96">
         <ProductCarrousel />
       </div>
