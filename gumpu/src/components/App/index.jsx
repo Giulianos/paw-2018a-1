@@ -18,6 +18,7 @@ import Login from 'views/Login';
 
 import styles from './styles.module.scss';
 import useAuth from 'hooks/useAuth';
+import Search from 'views/Search';
 
 const token = localStorageService.getToken();
 
@@ -41,6 +42,7 @@ function App() {
           <Switch>
             <AuthenticatedRoute path="/secondary" component={Secondary} />
             <Route path="/login" component={Login} />
+            <Route path="/search/:term" component={Search} />
             <Route path="/" component={Home} />
           </Switch>
         </div>
