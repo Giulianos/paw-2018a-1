@@ -9,6 +9,7 @@ import {
 } from 'redux/user/actionCreators';
 
 import Header from 'components/Header';
+import AuthenticatedRoute from 'components/AuthenticatedRoute';
 import FullScreenLoader from 'components/ui/FullScreenLoader';
 
 import Home from 'views/Home';
@@ -18,33 +19,34 @@ import Login from 'views/Login';
 import styles from './styles.module.scss';
 import useAuth from 'hooks/useAuth';
 
+const token = localStorageService.getToken();
+
 function App() {
   const dispatch = useDispatch();
   const auth = useAuth();
   useEffect(() => {
-    const token = localStorageService.getToken();
     /** If we have a stored token retrieve userInfo */
     if(token || false) {
       dispatch(retrieveUserAction())
     }
   }, [dispatch])
 
-  return (
-    <Router history={history}>
-      {auth.logging ?
-        <FullScreenLoader /> :
-        (<>
-          <Header />
-      <div className={styles.appContainer}>
-        <Switch>
-          <Route path="/secondary" component={Secondary} />
-          <Route path="/login" component={Login} />
-          <Route path="/" component={Home} />
-        </Switch>
-      </div>
-        </>)}
-    </Router>
-  );
+  if(token && !auth.logged) {
+    return <FullScreenLoader />;
+  } else {
+    return (
+      <Router history={history}>
+        <Header />
+        <div className={styles.appContainer}>
+          <Switch>
+            <AuthenticatedRoute path="/secondary" component={Secondary} />
+            <Route path="/login" component={Login} />
+            <Route path="/" component={Home} />
+          </Switch>
+        </div>
+      </Router>
+    );
+  }
 }
 
 export default App;
