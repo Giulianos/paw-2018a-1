@@ -77,7 +77,7 @@ public class NotificationHibernateDaoTest {
 
 		// Check if we retrieved last 2 notifications
 		assertEquals(notifications.size(), 2);
-		assertEquals(notifications.get(0).getType(), thirdNotification.getType());
-		assertEquals(notifications.get(1).getType(), secondNotification.getType());
+		assertEquals(notifications.get(0).getId(), thirdNotification.getId());
+		assertEquals(notifications.get(1).getId(), secondNotification.getId());
 	}
 }
