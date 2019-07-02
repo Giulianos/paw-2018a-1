@@ -19,3 +19,20 @@ export const createUser = newUser => async dispatch => {
 }
 
 export const resetCreateUser = () => ({ type: actions.CREATE_RESET })
+
+export const retrieveUser = () => async dispatch => {
+  dispatch({ type: actions.RETRIEVE });
+
+  try {
+    const response = await userService.retrieve();
+    if(response.ok) {
+      dispatch({ type: actions.RETRIEVE_OK, payload: response.data });
+    } else {
+      dispatch({ type: actions.RETRIEVE_FAIL });
+    }
+  } catch(error) {
+    dispatch({ type: actions.RETRIEVE_FAIL });
+  }
+}
+
+export const resetRetrieveUser = () => ({ type: actions.RETRIEVE_RESET })

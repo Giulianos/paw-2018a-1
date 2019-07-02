@@ -1,6 +1,7 @@
 .view-container {
   width: 100%;
   max-width: 1300px;
+  min-height: calc(100vh - 110px);
 }
 
 .w100 {
