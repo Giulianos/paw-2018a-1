@@ -1,16 +1,20 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
+import useAuth from 'hooks/useAuth';
+
+import FullScreenLoader from 'components/ui/FullScreenLoader';  
 
 function AuthenticatedRoute(props) {
-  const userInfo = useSelector(state => state.user.info) || false;
+  const auth = useAuth()
 
-  if(userInfo) {
+  if(auth.logged) {
     /** User is logged in */
     return <Route {...props} />;
+  } else if(auth.logging) {
+    return <FullScreenLoader />;
   } else {
     /** User is not logged in */
-    return <Redirect to="/login" />;
+    return <Redirect to={{ pathname: '/login', state: { ref: props.location.pathname } }} />;
   }
 }
 

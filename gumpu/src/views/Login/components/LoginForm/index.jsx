@@ -14,7 +14,7 @@ import {
 import LoginFormLayout from './layout';
 
 function LoginForm({
-  login, loading, error, success, resetLogin,
+  login, loading, error, success, resetLogin, location
 }) {
   const form = {
     email: useFormInput('', emailValidator),
@@ -26,7 +26,7 @@ function LoginForm({
     login({
       email: form.email.value,
       password: form.password.value,
-    });
+    }, location.state.ref);
   };
 
   return (
@@ -55,7 +55,7 @@ const mapStateToPros = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  login: credentials => dispatch(loginAction(credentials)),
+  login: (credentials, redirect) => dispatch(loginAction(credentials, redirect)),
   resetLogin: () => dispatch(resetLoginAction()),
 });
 

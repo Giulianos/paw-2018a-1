@@ -4,7 +4,7 @@ import localStorageService from "services/localStorage";
 import history from 'router/history';
 import { retrieveUser } from '../user/actionCreators';
 
-export const login = credentials => async dispatch => {
+export const login = (credentials, redirect) => async dispatch => {
   
   dispatch({ type: actions.LOGIN });
 
@@ -14,9 +14,9 @@ export const login = credentials => async dispatch => {
       /** Save token in localStorage (to persist session) */
       localStorageService.setToken(response.headers['authorization']);
       /** Go back to where we were */
-      history.goBack();
       dispatch({ type: actions.LOGIN_OK });
       dispatch(retrieveUser());
+      history.replace(redirect || '/');
     } else {
       dispatch({ type: actions.LOGIN_FAIL });
     }

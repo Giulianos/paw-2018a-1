@@ -1,10 +1,10 @@
 import React from 'react';
 import LoginForm from './components/LoginForm';
 
-function Login() {
+function Login({location}) {
   return (
     <div className="view-container column center-alt">
-      <LoginForm />
+      <LoginForm location={location} />
     </div>
   );
 }
