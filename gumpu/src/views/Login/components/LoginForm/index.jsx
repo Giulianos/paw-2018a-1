@@ -26,7 +26,7 @@ function LoginForm({
     login({
       email: form.email.value,
       password: form.password.value,
-    }, location.state.ref);
+    }, location.state && location.state.ref);
   };
 
   return (
