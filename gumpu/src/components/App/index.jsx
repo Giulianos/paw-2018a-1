@@ -32,7 +32,7 @@ function App() {
     }
   }, [dispatch])
 
-  if(token && !auth.logged) {
+  if(token && auth.logging) {
     return <FullScreenLoader />;
   } else {
     return (
