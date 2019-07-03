@@ -9,7 +9,6 @@ import {
 } from 'redux/user/actionCreators';
 
 import Header from 'components/Header';
-import AuthenticatedRoute from 'components/AuthenticatedRoute';
 import FullScreenLoader from 'components/ui/FullScreenLoader';
 
 import Home from 'views/Home';
