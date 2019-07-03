@@ -1,6 +1,7 @@
 package ar.edu.itba.paw.webapp.controller;
 
 import ar.edu.itba.paw.interfaces.exception.EntityNotFoundException;
+import ar.edu.itba.paw.interfaces.exception.PublicationFulfilledException;
 import ar.edu.itba.paw.interfaces.exception.UnauthorizedAccessException;
 import ar.edu.itba.paw.interfaces.service.PublicationService;
 import ar.edu.itba.paw.model.Publication;
@@ -99,6 +100,40 @@ public class PublicationsController {
             return Response.status(Response.Status.NOT_FOUND).build();
         } catch(IllegalStateException e) {
             return Response.status(Response.Status.CONFLICT).build();
+        } catch(Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public Response delete(@PathParam("id") final Long publicationId) {
+        try {
+            publicationService.leavePublication(publicationId);
+
+            return Response.accepted().build();
+        } catch(UnauthorizedAccessException e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        } catch(EntityNotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch(PublicationFulfilledException e) {
+            return Response.status(Response.Status.CONFLICT).build();
+        } catch(Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @POST
+    @Path("/{id}/supervisor")
+    public Response adopt(@PathParam("id") final Long publicationId) {
+        try {
+            publicationService.adoptPublication(publicationId);
+
+            return Response.accepted().build();
+        } catch(UnauthorizedAccessException e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        } catch(EntityNotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
         } catch(Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
