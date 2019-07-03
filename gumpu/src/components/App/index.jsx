@@ -9,7 +9,6 @@ import {
 } from 'redux/user/actionCreators';
 
 import Header from 'components/Header';
-import AuthenticatedRoute from 'components/AuthenticatedRoute';
 import FullScreenLoader from 'components/ui/FullScreenLoader';
 
 import Home from 'views/Home';
@@ -40,7 +39,7 @@ function App() {
         <Header />
         <div className={styles.appContainer}>
           <Switch>
-            <AuthenticatedRoute path="/secondary" component={Secondary} />
+            <Route path="/secondary" component={Secondary} />
             <Route path="/login" component={Login} />
             <Route path="/search/:term" component={Search} />
             <Route path="/" component={Home} />
