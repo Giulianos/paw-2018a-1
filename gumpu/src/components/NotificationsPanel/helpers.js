@@ -15,7 +15,7 @@ export const getNotificationLink = notification => {
       if(notification.relatedOrder) {
         return `/orders/${notification.relatedPublication.id}`;
       } else {
-        return `/qpublications/${notification.relatedPublication.id}`;
+        return `/publications/${notification.relatedPublication.id}`;
       }
     case 'PUBLICATION_ORPHAN':
       return `/orders/${notification.relatedOrder.publicationId}`
