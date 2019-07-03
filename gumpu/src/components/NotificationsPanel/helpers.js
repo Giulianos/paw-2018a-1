@@ -9,6 +9,16 @@ export const getNotificationLink = notification => {
       } else {
         return `/publications/${publicationId}/messages/${ordererId}`;
       }
+    case 'ORDER_PURCHASED':
+      return `/orders/${notification.relatedOrder.publicationId}`;
+    case 'PUBLICATION_FULFILLED':
+      if(notification.relatedOrder) {
+        return `/orders/${notification.relatedPublication.id}`;
+      } else {
+        return `/qpublications/${notification.relatedPublication.id}`;
+      }
+    case 'PUBLICATION_ORPHAN':
+      return `/orders/${notification.relatedOrder.publicationId}`
     default: return '';
   }
 }
