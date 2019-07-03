@@ -15,7 +15,7 @@ Button.defaultProps = {
   color: '',
   className: '',
   variant: '',
-  type: 'submit'
+  type: 'submit',
 };
 
 Button.propTypes = {

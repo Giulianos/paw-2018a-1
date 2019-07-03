@@ -15,7 +15,7 @@ function Header() {
     <div className={styles.headerContainer}>
       <div className={styles.header}>
         <img src={logo} alt="Gumpu" />
-        <div className="row center-alt relative" >
+        <div className="row center-alt relative">
           <Link to="/" className="mr-64 txt-normal">{t('header.publish')}</Link>
           { !auth.logged && <Link to="/login" className="txt-normal mr-64">{t('header.login')}</Link> }
           <NotificationsMenu>{t('header.notifications')}</NotificationsMenu>
@@ -26,7 +26,7 @@ function Header() {
 }
 
 function HeaderLoader() {
-  return <div></div>;
+  return <div />;
 }
 
 export default () => <Suspense fallback={HeaderLoader}><Header /></Suspense>;

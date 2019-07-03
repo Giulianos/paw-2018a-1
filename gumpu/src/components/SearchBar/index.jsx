@@ -7,17 +7,17 @@ import SearchBarLayout from './layout';
 
 function SearchBar() {
   const form = {
-    term: useFormInput('')
-  }
+    term: useFormInput(''),
+  };
 
-  const search = e => {
+  const search = (e) => {
     e.preventDefault();
-    if(form.term.value !== '') {
+    if (form.term.value !== '') {
       history.push(`/search/${form.term.value}`);
     }
-  }
+  };
 
-  return <SearchBarLayout handleSubmit={search} {...form} />
+  return <SearchBarLayout handleSubmit={search} {...form} />;
 }
 
 export default SearchBar;

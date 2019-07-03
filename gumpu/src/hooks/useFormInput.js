@@ -11,14 +11,14 @@ function useFormInput(initialValue, validator) {
 
   const validatable = !!validator;
   const valid = validatable && validator(value);
-  
+
   return {
     value,
     onChange: handleChange,
     validatable,
     valid,
-    dirty
-  }
+    dirty,
+  };
 }
 
 export default useFormInput;

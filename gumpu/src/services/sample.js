@@ -1,5 +1,5 @@
 import api from 'api';
 
 export default {
-  get: () => api.get('/sample')
-}
+  get: () => api.get('/sample'),
+};

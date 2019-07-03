@@ -8,7 +8,7 @@ function useAuth() {
   return {
     user: userInfo.data,
     logged: userInfo.success,
-    logging: userInfo.loading
+    logging: userInfo.loading,
   };
 }
 

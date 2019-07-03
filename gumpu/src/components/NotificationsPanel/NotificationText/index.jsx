@@ -6,7 +6,7 @@ import PublicationFulfilled from './PublicationFulfilled';
 import SupervisorLeft from './SupervisorLeft';
 
 function NotificationText({ notification }) {
-  switch(notification.type) {
+  switch (notification.type) {
     case 'NEW_MESSAGES':
       return <NewMessage notification={notification} />;
     case 'ORDER_PURCHASED':
@@ -16,7 +16,7 @@ function NotificationText({ notification }) {
     case 'PUBLICATION_ORPHAN':
       return <SupervisorLeft notification={notification} />;
     default:
-      return <div></div>;
+      return <div />;
   }
 }
 

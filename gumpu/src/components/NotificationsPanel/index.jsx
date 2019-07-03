@@ -7,7 +7,7 @@ import {
   orderFulfilledOrderer,
   orderFulfilledSupervisor,
   orderPurchased,
-  newMessage
+  newMessage,
 } from 'mocks/notifications';
 
 import NotificationText from './NotificationText';
@@ -20,11 +20,10 @@ const mockNotifications = [
   orderFulfilledOrderer,
   orderFulfilledSupervisor,
   orderPurchased,
-  newMessage
+  newMessage,
 ];
 
 function NotificationsPanel() {
-
   const notifications = mockNotifications.map(n => (
     <Link to={getNotificationLink(n)}>
       <li className={styles.notification}>
@@ -36,7 +35,7 @@ function NotificationsPanel() {
 
   return (
     <CardContainer className={styles.container}>
-      <div className={`pt-16 pb-16 pl-16 txt-bold txt-gray3`}>Notifications</div>
+      <div className="pt-16 pb-16 pl-16 txt-bold txt-gray3">Notifications</div>
       <ul>
         {notifications}
       </ul>
