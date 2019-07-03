@@ -13,5 +13,8 @@
     "publish": "Publish",
     "login": "Login",
     "my_account": "My Account"
+  },
+  "home": {
+    "register_now": "<0>New to Gumpu?</0><br/><2>Create an account</2><br/><4>now!</4>"
   }
 }

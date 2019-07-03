@@ -13,5 +13,13 @@
     "publish": "Publicar",
     "login": "Ingresar",
     "my_account": "Mi Cuenta"
+  },
+  "search_bar": {
+    "question": "Que estás buscando?",
+    "placeholder": "Ej. aceite",
+    "action": "BUSCAR"
+  },
+  "home": {
+    "register_now": "<0>Nuevo en Gumpu?</0><br/><2>Creá tu cuenta</2><br/><4>ahora!</4>"
   }
 }
