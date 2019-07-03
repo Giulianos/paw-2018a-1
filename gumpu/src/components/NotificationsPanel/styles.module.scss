@@ -1,0 +1,33 @@
+@import '~scss/colors';
+
+.container {
+  width: 300px;
+
+  &::after{
+    content: '';
+    display: block;
+    height: 8px;
+    width: 100%;
+    background-color: $red;
+    margin-top: 8px;
+    border-radius: 0 0 8px 8px;
+  }
+}
+
+.notification {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-top: 1px solid $gray1;
+
+  &:last-child {
+    border-bottom: 1px solid $gray1;
+  }
+
+  .image {
+    height: 40px;
+    width: 40px;
+    margin-right: 8px;
+  }
+}

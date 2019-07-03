@@ -40,7 +40,7 @@ function App() {
         <Header />
         <div className={styles.appContainer}>
           <Switch>
-            <AuthenticatedRoute path="/secondary" component={Secondary} />
+            <Route path="/secondary" component={Secondary} />
             <Route path="/login" component={Login} />
             <Route path="/search/:term" component={Search} />
             <Route path="/" component={Home} />

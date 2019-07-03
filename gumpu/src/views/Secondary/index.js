@@ -5,14 +5,13 @@ import { Link } from 'react-router-dom';
 
 import { createSample } from 'redux/sample/actionCreators';
 import Loader from 'components/ui/Loader';
+import NotificationsPanel from 'components/NotificationsPanel';
 
 function Secondary({ sample }) {
   return (
     <div style={{ height: '1000px' }}>
-      <h1>This is the secondary screen.</h1>
-      <Link to="/">Go to home...</Link>
-      <Loader />
-      <button onClick={sample}>Run sample</button>
+      <h1>This is the secondary screens.</h1>
+      <NotificationsPanel />
     </div>
   );
 }
