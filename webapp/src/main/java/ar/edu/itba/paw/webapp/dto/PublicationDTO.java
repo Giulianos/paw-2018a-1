@@ -23,8 +23,10 @@ public class PublicationDTO {
 
     public PublicationDTO(Publication publication) {
         this.id = publication.getId();
-        this.supervisorId = publication.getSupervisor().getId();
-        this.supervisorUrl = URLResolver.getFullURL("/users/" + this.supervisorId);
+        if(publication.getSupervisor() != null) {
+            this.supervisorId = publication.getSupervisor().getId();
+            this.supervisorUrl = URLResolver.getFullURL("/users/" + this.supervisorId);
+        }
         this.description = publication.getDescription();
         this.unitPrice = publication.getUnitPrice();
         this.quantity = publication.getQuantity();

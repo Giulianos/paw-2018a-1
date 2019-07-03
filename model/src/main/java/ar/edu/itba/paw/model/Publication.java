@@ -55,7 +55,7 @@ public class Publication extends TimestampedEntity {
         mappedBy = "publication",
         cascade = CascadeType.ALL,
         orphanRemoval = true,
-        fetch = FetchType.LAZY
+        fetch = FetchType.EAGER
     )
     @Access(AccessType.PROPERTY)
     private Set<Image> images = new HashSet<>();
