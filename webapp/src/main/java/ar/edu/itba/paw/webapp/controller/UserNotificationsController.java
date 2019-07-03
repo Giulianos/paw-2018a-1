@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("/user/{userId}/notifications")
+@Path("/users/{userId}/notifications")
 @Controller
 public class UserNotificationsController {
 
