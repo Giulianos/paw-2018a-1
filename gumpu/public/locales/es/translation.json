@@ -22,11 +22,18 @@
   "home": {
     "register_now": "<0>Nuevo en Gumpu?</0><br/><2>Creá tu cuenta</2><br/><4>ahora!</4>",
     "register_form": {
-      "name": "Nombre",
+      "name": "Nombre completo",
       "email": "Email",
-      "password": "Nueva contrasena"
+      "password": "Nueva contrasena",
+      "action": "CREAR CUENTA"
     },
     "latest_products": "Ultimas publicaciones"
+  },
+  "login": {
+    "title": "Ingresar",
+    "email": "Email",
+    "password": "Contrasena",
+    "action": "INGRESAR"
   },
   "product": {
     "organizer_calification": "Calificacion del organizador"
