@@ -20,6 +20,20 @@
     "action": "BUSCAR"
   },
   "home": {
-    "register_now": "<0>Nuevo en Gumpu?</0><br/><2>Creá tu cuenta</2><br/><4>ahora!</4>"
+    "register_now": "<0>Nuevo en Gumpu?</0><br/><2>Creá tu cuenta</2><br/><4>ahora!</4>",
+    "register_form": {
+      "name": "Nombre",
+      "email": "Email",
+      "password": "Nueva contrasena"
+    },
+    "latest_products": "Ultimas publicaciones"
+  },
+  "product": {
+    "organizer_calification": "Calificacion del organizador"
+  },
+  "validations": {
+    "email": "Email invalido",
+    "full_name": "El nombre debe tener entre {{min}} y {{max}} caracteres",
+    "password": "La contrasena debe tener al menos {{min}} caracteres"
   }
 }

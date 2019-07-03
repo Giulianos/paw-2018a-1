@@ -22,6 +22,7 @@ export const newMessage = {
     publicationUrl: 'http://pawserver.it.itba.edu.ar/paw-2018a-1/api/publications/1',
   },
   type: 'NEW_MESSAGES',
+  id: 0,
 };
 
 export const orderPurchased = {
@@ -45,6 +46,7 @@ export const orderPurchased = {
     unitPrice: 12,
   },
   type: 'ORDER_PURCHASED',
+  id: 1,
 };
 
 export const orderFulfilledSupervisor = {
@@ -62,6 +64,7 @@ export const orderFulfilledSupervisor = {
     unitPrice: 12,
   },
   type: 'PUBLICATION_FULFILLED',
+  id: 2,
 };
 
 export const orderFulfilledOrderer = {
@@ -85,6 +88,7 @@ export const orderFulfilledOrderer = {
     unitPrice: 12,
   },
   type: 'PUBLICATION_FULFILLED',
+  id: 3,
 };
 
 export const supervisorLeftPublication = {
@@ -106,4 +110,5 @@ export const supervisorLeftPublication = {
     unitPrice: 12,
   },
   type: 'PUBLICATION_ORPHAN',
+  id: 4,
 };
