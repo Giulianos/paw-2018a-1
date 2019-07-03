@@ -12,7 +12,7 @@ public interface NotificationDao {
    * @param relatedOrder
    * @return The created notification
    */
-  public Notification create(final User user, final NotificationType type, final Publication relatedPublication, final Order relatedOrder);
+  public Notification create(final User user, final NotificationType type, final Publication relatedPublication, final Order relatedOrder, final Message relatedMessage);
 
   /**
    * Retrieves unseen notifications of user

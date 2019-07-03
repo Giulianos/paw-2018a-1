@@ -23,7 +23,7 @@ public class PublicationPurchasedListener implements ApplicationListener<Publica
         .stream()
         .filter(o -> !o.getOrderer().equals(publication.getSupervisor()))
         .forEach(o -> {
-          notificationDao.create(o.getOrderer(), NotificationType.ORDER_PURCHASED, publication, o);
+          notificationDao.create(o.getOrderer(), NotificationType.ORDER_PURCHASED, publication, o, null);
         });
   }
 }

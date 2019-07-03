@@ -18,8 +18,8 @@ public class NotificationHibernateDao implements NotificationDao {
  private EntityManager em;
 
   @Override
-  public Notification create(User user, NotificationType type, Publication relatedPublication, Order relatedOrder) {
-    Notification newNotification = new Notification(type, user, relatedPublication, relatedOrder);
+  public Notification create(User user, NotificationType type, Publication relatedPublication, Order relatedOrder, Message relatedMessage) {
+    Notification newNotification = new Notification(type, user, relatedPublication, relatedOrder, relatedMessage);
 
     em.persist(newNotification);
 
@@ -28,7 +28,7 @@ public class NotificationHibernateDao implements NotificationDao {
 
   @Override
   public List<Notification> getUnseen(Long userId) {
-    final TypedQuery<Notification> query = em.createQuery("from Notification n where n.seen = false and user.id = :userid order by createdAt DESC", Notification.class);
+    final TypedQuery<Notification> query = em.createQuery("from Notification n where n.seen = false and user.id = :userid order by updatedAt DESC", Notification.class);
 
     query.setParameter("userid", userId);
 
@@ -37,7 +37,7 @@ public class NotificationHibernateDao implements NotificationDao {
 
   @Override
   public List<Notification> getLatest(Long userId, Integer limit) {
-    final TypedQuery<Notification> query = em.createQuery("from Notification n where user.id = :userid order by createdAt DESC", Notification.class);
+    final TypedQuery<Notification> query = em.createQuery("from Notification n where user.id = :userid order by updatedAt DESC", Notification.class);
 
     query.setParameter("userid", userId);
     query.setMaxResults(limit);
