@@ -5,9 +5,7 @@ function OrderPurchased({ notification }) {
   const title = notification.relatedPublication.description;
   return (
     <Trans i18nKey="notifications.order_purchased">
-      <strong>{{ title }}</strong>
-      {' '}
-was purchased!
+      <strong>{{ title }}</strong> was purchased!
     </Trans>
   );
 }
