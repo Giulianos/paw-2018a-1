@@ -4,5 +4,5 @@ const ENDPOINT = '/users';
 
 export default {
   create: newUser => api.post(ENDPOINT, newUser),
-  retrieve: () => api.get(ENDPOINT)
-}
+  retrieve: () => api.get(ENDPOINT),
+};

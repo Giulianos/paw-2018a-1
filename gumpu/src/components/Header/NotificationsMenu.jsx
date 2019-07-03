@@ -5,10 +5,10 @@ import NotificationsPanel from 'components/NotificationsPanel';
 
 import styles from './styles.module.scss';
 
-function NotificationsMenu({children}) {
+function NotificationsMenu({ children }) {
   const wrapperRef = useRef(null);
   const [hidden, setHidden] = useState(true);
-  useOutsideClick(wrapperRef, () => setHidden(true) );
+  useOutsideClick(wrapperRef, () => setHidden(true));
   const toggleMenu = () => setHidden(!hidden);
 
   return (

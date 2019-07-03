@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import history from 'router/history';
 import localStorageService from 'services/localStorage';
 import {
-  retrieveUser as retrieveUserAction
+  retrieveUser as retrieveUserAction,
 } from 'redux/user/actionCreators';
 
 import Header from 'components/Header';
@@ -15,9 +15,9 @@ import Home from 'views/Home';
 import Secondary from 'views/Secondary';
 import Login from 'views/Login';
 
-import styles from './styles.module.scss';
 import useAuth from 'hooks/useAuth';
 import Search from 'views/Search';
+import styles from './styles.module.scss';
 
 const token = localStorageService.getToken();
 
@@ -26,28 +26,27 @@ function App() {
   const auth = useAuth();
   useEffect(() => {
     /** If we have a stored token retrieve userInfo */
-    if(token || false) {
-      dispatch(retrieveUserAction())
+    if (token || false) {
+      dispatch(retrieveUserAction());
     }
-  }, [dispatch])
+  }, [dispatch]);
 
-  if(token && auth.logging) {
+  if (token && auth.logging) {
     return <FullScreenLoader />;
-  } else {
-    return (
-      <Router history={history}>
-        <Header />
-        <div className={styles.appContainer}>
-          <Switch>
-            <Route path="/secondary" component={Secondary} />
-            <Route path="/login" component={Login} />
-            <Route path="/search/:term" component={Search} />
-            <Route path="/" component={Home} />
-          </Switch>
-        </div>
-      </Router>
-    );
   }
+  return (
+    <Router history={history}>
+      <Header />
+      <div className={styles.appContainer}>
+        <Switch>
+          <Route path="/secondary" component={Secondary} />
+          <Route path="/login" component={Login} />
+          <Route path="/search/:term" component={Search} />
+          <Route path="/" component={Home} />
+        </Switch>
+      </div>
+    </Router>
+  );
 }
 
 export default App;

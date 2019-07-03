@@ -1,12 +1,12 @@
-import { getNotificationLink } from './helpers';
-
 import {
   supervisorLeftPublication,
   orderFulfilledOrderer,
   orderFulfilledSupervisor,
   orderPurchased,
-  newMessage
+  newMessage,
 } from 'mocks/notifications';
+import { getNotificationLink } from './helpers';
+
 
 describe('NotificationsPanel helpers', () => {
   it('should return the correct link for supervisorLeftPublication', () => {

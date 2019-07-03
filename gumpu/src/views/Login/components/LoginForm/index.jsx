@@ -14,14 +14,14 @@ import {
 import LoginFormLayout from './layout';
 
 function LoginForm({
-  login, loading, error, success, resetLogin, location
+  login, loading, error, success, resetLogin, location,
 }) {
   const form = {
     email: useFormInput('', emailValidator),
     password: useFormInput(''),
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     login({
       email: form.email.value,

@@ -1,9 +1,9 @@
 import React from 'react';
 
+import SearchBar from 'components/SearchBar';
 import ProductCarrousel from 'components/ProductCarrousel';
 import styles from './styles.module.scss';
 import CreateAccount from './components/CreateAccount';
-import SearchBar from 'components/SearchBar';
 
 function Home() {
   return (

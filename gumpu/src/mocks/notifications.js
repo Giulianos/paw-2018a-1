@@ -4,7 +4,7 @@ export const newMessage = {
     from: {
       email: 'gscaglioni@itba.edu.ar',
       id: 3,
-      name: 'Giuliano ITBA'
+      name: 'Giuliano ITBA',
     },
     id: 1,
     message: 'Hi supervisor!',
@@ -12,16 +12,16 @@ export const newMessage = {
     to: {
       email: 'scaglionigiuliano@gmail.com',
       id: 1,
-      name: 'Giuliano'
-    }
+      name: 'Giuliano',
+    },
   },
   relatedOrder: {
     ordererId: 3,
     ordererUrl: 'http://pawserver.it.itba.edu.ar/paw-2018a-1/api/users/3',
     publicationId: 1,
-    publicationUrl: 'http://pawserver.it.itba.edu.ar/paw-2018a-1/api/publications/1'
+    publicationUrl: 'http://pawserver.it.itba.edu.ar/paw-2018a-1/api/publications/1',
   },
-  type: 'NEW_MESSAGES'
+  type: 'NEW_MESSAGES',
 };
 
 export const orderPurchased = {
@@ -29,7 +29,7 @@ export const orderPurchased = {
     ordererId: 3,
     ordererUrl: 'http://pawserver.it.itba.edu.ar/paw-2018a-1/api/users/3',
     publicationId: 1,
-    publicationUrl: 'http://pawserver.it.itba.edu.ar/paw-2018a-1/api/publications/1'
+    publicationUrl: 'http://pawserver.it.itba.edu.ar/paw-2018a-1/api/publications/1',
   },
   relatedPublication: {
     availableQuantity: 0,
@@ -42,9 +42,9 @@ export const orderPurchased = {
     supervisorId: 1,
     supervisorUrl: 'http://pawserver.it.itba.edu.ar/paw-2018a-1/api/users/1',
     tags: [],
-    unitPrice: 12
+    unitPrice: 12,
   },
-  type: 'ORDER_PURCHASED'
+  type: 'ORDER_PURCHASED',
 };
 
 export const orderFulfilledSupervisor = {
@@ -59,9 +59,9 @@ export const orderFulfilledSupervisor = {
     supervisorId: 1,
     supervisorUrl: 'http://pawserver.it.itba.edu.ar/paw-2018a-1/api/users/1',
     tags: [],
-    unitPrice: 12
+    unitPrice: 12,
   },
-  type: 'PUBLICATION_FULFILLED'
+  type: 'PUBLICATION_FULFILLED',
 };
 
 export const orderFulfilledOrderer = {
@@ -69,7 +69,7 @@ export const orderFulfilledOrderer = {
     ordererId: 3,
     ordererUrl: 'http://pawserver.it.itba.edu.ar/paw-2018a-1/api/users/3',
     publicationId: 1,
-    publicationUrl: 'http://pawserver.it.itba.edu.ar/paw-2018a-1/api/publications/1'
+    publicationUrl: 'http://pawserver.it.itba.edu.ar/paw-2018a-1/api/publications/1',
   },
   relatedPublication: {
     availableQuantity: 0,
@@ -82,9 +82,9 @@ export const orderFulfilledOrderer = {
     supervisorId: 1,
     supervisorUrl: 'http://pawserver.it.itba.edu.ar/paw-2018a-1/api/users/1',
     tags: [],
-    unitPrice: 12
+    unitPrice: 12,
   },
-  type: 'PUBLICATION_FULFILLED'
+  type: 'PUBLICATION_FULFILLED',
 };
 
 export const supervisorLeftPublication = {
@@ -92,7 +92,7 @@ export const supervisorLeftPublication = {
     ordererId: 3,
     ordererUrl: 'http://pawserver.it.itba.edu.ar/paw-2018a-1/api/users/3',
     publicationId: 1,
-    publicationUrl: 'http://pawserver.it.itba.edu.ar/paw-2018a-1/api/publications/1'
+    publicationUrl: 'http://pawserver.it.itba.edu.ar/paw-2018a-1/api/publications/1',
   },
   relatedPublication: {
     availableQuantity: 2,
@@ -103,7 +103,7 @@ export const supervisorLeftPublication = {
     quantity: 10,
     status: 'ORPHAN',
     tags: [],
-    unitPrice: 12
+    unitPrice: 12,
   },
-  type: 'PUBLICATION_ORPHAN'
+  type: 'PUBLICATION_ORPHAN',
 };

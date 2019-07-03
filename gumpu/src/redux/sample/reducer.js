@@ -1,11 +1,11 @@
-import actions from "./actions";
+import actions from './actions';
 
 const intialState = {
-  msg: 'No message!'
-}
+  msg: 'No message!',
+};
 
 function reduce(state = intialState, action) {
-  switch(action.type) {
+  switch (action.type) {
     case actions.SAMPLE:
       return { ...state, ...action.payload };
     default:

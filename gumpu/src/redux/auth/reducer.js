@@ -1,15 +1,15 @@
-import actions from "./actions";
+import actions from './actions';
 
 const intialState = {
   login: {
     success: false,
     loading: false,
-    error: false
-  }
-}
+    error: false,
+  },
+};
 
 function reduce(state = intialState, action) {
-  switch(action.type) {
+  switch (action.type) {
     case actions.LOGIN:
       return { ...state, login: { loading: true, error: false } };
     case actions.LOGIN_OK:
