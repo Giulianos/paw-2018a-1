@@ -5,12 +5,10 @@ import ar.edu.itba.paw.model.User;
 public class UserDTO {
 
     private String name;
-    private String email;
     private Long id;
 
     public UserDTO(User u) {
         this.name = u.getName();
-        this.email = u.getEmail();
         this.id = u.getId();
     }
 
@@ -24,14 +22,6 @@ public class UserDTO {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public Long getId() {
