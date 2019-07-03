@@ -1,5 +1,8 @@
 {
   "secondary": {
     "example": "Esta es una traduccion de ejemplo!"
+  },
+  "notifications": {
+    "new_message": "Nuevo mensaje de <1>{{name}}</1>"
   }
 }
