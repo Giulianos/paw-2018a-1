@@ -27,7 +27,7 @@ public class NewMessageListener implements ApplicationListener<NewMessageEvent> 
     List<Notification> unseen = notificationDao.getUnseen(message.getReceiver().getId());
     if(!notificationForMessageExists(message, unseen)) {
       // Create a notification
-      notificationDao.create(message.getReceiver(), NotificationType.NEW_MESSAGES, null, message.getOrder());
+      notificationDao.create(message.getReceiver(), NotificationType.NEW_MESSAGES, null, message.getOrder(), message);
     }
   }
 

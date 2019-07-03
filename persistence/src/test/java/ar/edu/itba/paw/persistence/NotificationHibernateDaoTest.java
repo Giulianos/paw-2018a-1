@@ -48,9 +48,9 @@ public class NotificationHibernateDaoTest {
 	@Test
 	public void retrieveLatest() {
 		// Create some notifications
-		notificationDao.create(testUser, NotificationType.NEW_MESSAGES, testPublication, testOrder);
-		notificationDao.create(testUser, NotificationType.ORDER_PURCHASED, null, testOrder);
-		notificationDao.create(testUser, NotificationType.PUBLICATION_FULFILLED, testPublication, null);
+		notificationDao.create(testUser, NotificationType.NEW_MESSAGES, testPublication, testOrder, null);
+		notificationDao.create(testUser, NotificationType.ORDER_PURCHASED, null, testOrder, null);
+		notificationDao.create(testUser, NotificationType.PUBLICATION_FULFILLED, testPublication, null, null);
 
 		// Retrieve user notifications
 		List<Notification> notifications = notificationDao.getLatest(testUser.getId(), 2);
@@ -64,9 +64,9 @@ public class NotificationHibernateDaoTest {
 	@Test
 	public void retriveUnseen() {
 		// Create some notifications
-		Notification firstNotification = notificationDao.create(testUser, NotificationType.NEW_MESSAGES, testPublication, testOrder);
-		Notification secondNotification = notificationDao.create(testUser, NotificationType.ORDER_PURCHASED, null, testOrder);
-		Notification thirdNotification = notificationDao.create(testUser, NotificationType.PUBLICATION_FULFILLED, testPublication, null);
+		Notification firstNotification = notificationDao.create(testUser, NotificationType.NEW_MESSAGES, testPublication, testOrder, null);
+		Notification secondNotification = notificationDao.create(testUser, NotificationType.ORDER_PURCHASED, null, testOrder, null);
+		Notification thirdNotification = notificationDao.create(testUser, NotificationType.PUBLICATION_FULFILLED, testPublication, null, null);
 
 		// Mark first notification as seen
 		firstNotification.setSeen(true);
@@ -77,7 +77,7 @@ public class NotificationHibernateDaoTest {
 
 		// Check if we retrieved last 2 notifications
 		assertEquals(notifications.size(), 2);
-		assertEquals(notifications.get(0).getId(), thirdNotification.getId());
-		assertEquals(notifications.get(1).getId(), secondNotification.getId());
+		assertEquals(notifications.get(0), thirdNotification);
+		assertEquals(notifications.get(1), secondNotification);
 	}
 }

@@ -30,6 +30,12 @@ public class Notification extends TimestampedEntity {
   })
   private Order relatedOrder;
 
+  @ManyToOne
+  @JoinColumns({
+      @JoinColumn(name = "related_message_id")
+  })
+  private Message relatedMessage;
+
   @Column
   private Boolean seen = false;
 
@@ -41,7 +47,16 @@ public class Notification extends TimestampedEntity {
     this.type = type;
     this.relatedPublication = relatedPublication;
     this.relatedOrder = relatedOrder;
+    this.relatedMessage = null;
     this.user = user;
+  }
+
+  public Notification(NotificationType type, User user, Publication relatedPublication, Order relatedOrder, Message relatedMessage) {
+    this.type = type;
+    this.user = user;
+    this.relatedPublication = relatedPublication;
+    this.relatedOrder = relatedOrder;
+    this.relatedMessage = relatedMessage;
   }
 
   public User getUser() {
@@ -78,6 +93,14 @@ public class Notification extends TimestampedEntity {
 
   public Boolean getSeen() {
     return seen;
+  }
+
+  public Message getRelatedMessage() {
+    return relatedMessage;
+  }
+
+  public void setRelatedMessage(Message relatedMessage) {
+    this.relatedMessage = relatedMessage;
   }
 
   public void setSeen(Boolean seen) {

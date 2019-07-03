@@ -20,7 +20,7 @@ public class SupervisorLeftListener implements ApplicationListener<SupervisorLef
 
     // Notify orderers that the supervisor left
     publication.getOrders().parallelStream().forEach(o -> {
-     notificationDao.create(o.getOrderer(), NotificationType.PUBLICATION_ORPHAN, publication, o);
+     notificationDao.create(o.getOrderer(), NotificationType.PUBLICATION_ORPHAN, publication, o, null);
     });
   }
 }

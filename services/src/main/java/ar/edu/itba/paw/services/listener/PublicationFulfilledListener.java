@@ -50,11 +50,11 @@ public class PublicationFulfilledListener implements ApplicationListener<Publica
                 .filter(o -> !o.getOrderer().equals(updatedPublication.get().getSupervisor()))
                 .forEach(o -> {
                     emailService.notifyOrdererPublicationFulfillment(o.getOrderer(), updatedPublication.get());
-                    notificationDao.create(o.getOrderer(), NotificationType.PUBLICATION_FULFILLED, updatedPublication.get(), o);
+                    notificationDao.create(o.getOrderer(), NotificationType.PUBLICATION_FULFILLED, updatedPublication.get(), o, null);
                 });
 
         /* TODO: Notify supervisor (this should be done conditionally based on user notification preferences) */
         emailService.notifySupervisorPublicationFulfillment(updatedPublication.get());
-        notificationDao.create(updatedPublication.get().getSupervisor(), NotificationType.PUBLICATION_FULFILLED, updatedPublication.get(), null);
+        notificationDao.create(updatedPublication.get().getSupervisor(), NotificationType.PUBLICATION_FULFILLED, updatedPublication.get(), null, null);
     }
 }
