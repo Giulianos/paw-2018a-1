@@ -3,6 +3,9 @@
     "example": "Esta es una traduccion de ejemplo!"
   },
   "notifications": {
-    "new_message": "Nuevo mensaje de <1>{{name}}</1>"
+    "new_message": "Nuevo mensaje de <1>{{name}}</1>",
+    "order_purchased": "<0>{{title}}</0> ya fue comprada!",
+    "publication_fulfilled": "<0>{{title}}</0> llego al objetivo!",
+    "publication_orphan": "El organizador dejo <1>{{title}}</1>"
   }
 }
