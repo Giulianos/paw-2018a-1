@@ -25,7 +25,7 @@ const mockNotifications = [
 
 function NotificationsPanel() {
   const notifications = mockNotifications.map(n => (
-    <Link to={getNotificationLink(n)}>
+    <Link key={n.id} to={getNotificationLink(n)}>
       <li className={styles.notification}>
         <img alt="" src={sampleImage} className={styles.image} />
         <div className={styles.details}><NotificationText notification={n} /></div>

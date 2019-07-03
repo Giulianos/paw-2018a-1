@@ -29,4 +29,4 @@ function HeaderLoader() {
   return <div />;
 }
 
-export default () => <Suspense fallback={HeaderLoader}><Header /></Suspense>;
+export default () => <Suspense fallback={<HeaderLoader />}><Header /></Suspense>;
