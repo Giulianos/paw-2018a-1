@@ -58,7 +58,7 @@ public class OrderServiceImpl implements OrderService {
       throw new IllegalArgumentException("Order quantity should be le than available quantity");
     }
 
-    Optional<Order> existantOrder = publication.getOrders().stream().filter(o -> o.getOrderer().equals(loggedUser)).findFirst();
+    Optional<Order> existantOrder = publication.getOrders().stream().filter(o -> o.getOrderer().equals(loggedUser.get())).findFirst();
 
     if(existantOrder.isPresent()) {
       /** The user already ordered from this publication, so we just update the quantity */
