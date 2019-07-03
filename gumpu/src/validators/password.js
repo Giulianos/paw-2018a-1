@@ -1,2 +1,2 @@
-export default pass => (pass && pass.length >= 8)
-  || 'Password should have at least 8 characters';
+export default (minLength, msg) => pass => (pass && pass.length >= minLength)
+  || msg;

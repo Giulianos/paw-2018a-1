@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -12,12 +12,16 @@ import {
 } from 'redux/auth/actionCreators';
 
 import LoginFormLayout from './layout';
+import { useTranslation } from 'react-i18next';
+import Loader from 'components/ui/Loader';
 
 function LoginForm({
   login, loading, error, success, resetLogin, location,
 }) {
+  const { t } = useTranslation();
+
   const form = {
-    email: useFormInput('', emailValidator),
+    email: useFormInput('', emailValidator(t('validations.email'))),
     password: useFormInput(''),
   };
 
@@ -62,4 +66,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToPros,
   mapDispatchToProps,
-)(LoginForm);
+)(props => <Suspense fallback={<Loader />}><LoginForm {...props} /></Suspense>);

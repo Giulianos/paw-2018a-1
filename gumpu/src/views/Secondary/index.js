@@ -14,5 +14,5 @@ function Secondary() {
 }
 
 export default () => (
-  <Suspense fallback={Loader}><Secondary /></Suspense>
+  <Suspense fallback={<Loader />}><Secondary /></Suspense>
 );

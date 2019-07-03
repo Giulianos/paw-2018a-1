@@ -13,5 +13,34 @@
     "publish": "Publicar",
     "login": "Ingresar",
     "my_account": "Mi Cuenta"
+  },
+  "search_bar": {
+    "question": "Que estás buscando?",
+    "placeholder": "Ej. aceite",
+    "action": "BUSCAR"
+  },
+  "home": {
+    "register_now": "<0>Nuevo en Gumpu?</0><br/><2>Creá tu cuenta</2><br/><4>ahora!</4>",
+    "register_form": {
+      "name": "Nombre completo",
+      "email": "Email",
+      "password": "Nueva contrasena",
+      "action": "CREAR CUENTA"
+    },
+    "latest_products": "Ultimas publicaciones"
+  },
+  "login": {
+    "title": "Ingresar",
+    "email": "Email",
+    "password": "Contrasena",
+    "action": "INGRESAR"
+  },
+  "product": {
+    "organizer_calification": "Calificacion del organizador"
+  },
+  "validations": {
+    "email": "Email invalido",
+    "full_name": "El nombre debe tener entre {{min}} y {{max}} caracteres",
+    "password": "La contrasena debe tener al menos {{min}} caracteres"
   }
 }

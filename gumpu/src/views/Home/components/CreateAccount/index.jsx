@@ -14,14 +14,17 @@ import {
 } from 'redux/user/actionCreators';
 
 import CreateAccountLayout from './layout';
+import { useTranslation } from 'react-i18next';
 
 function CreateAccount({
   createUser, loading, error, success, resetCreateUser,
 }) {
+  const { t } = useTranslation();
+
   const form = {
-    name: useFormInput('', fullNameValidator),
-    email: useFormInput('', emailValidator),
-    password: useFormInput('', passwordValidator),
+    name: useFormInput('', fullNameValidator(3, 30, t('validations.full_name', { min: 3, max: 30 }))),
+    email: useFormInput('', emailValidator(t('validations.email'))),
+    password: useFormInput('', passwordValidator(8, t('validations.password', { min: 8 }))),
   };
 
   const handleSubmit = (event) => {

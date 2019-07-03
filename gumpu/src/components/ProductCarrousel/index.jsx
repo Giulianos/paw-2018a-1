@@ -5,10 +5,10 @@ import ProductCard from 'components/ui/ProductCard';
 
 import productSummaryMock from 'mocks/productSummary';
 
-function ProductCarrousel({ className }) {
+function ProductCarrousel({ title, className }) {
   return (
     <section className="column">
-      <h2 className="txt-large mb-24 txt-gray3">Popular products</h2>
+      <h2 className="txt-large mb-24 txt-gray3">{title}</h2>
       <div className={`${className} row space-between`}>
         <ProductCard product={productSummaryMock} className="mr-32" />
         <ProductCard product={productSummaryMock} className="mr-32" />
@@ -21,10 +21,12 @@ function ProductCarrousel({ className }) {
 
 ProductCarrousel.defaultProps = {
   className: '',
+  title: '',
 };
 
 ProductCarrousel.propTypes = {
   className: PropTypes.string,
+  title: PropTypes.string,
 };
 
 export default ProductCarrousel;
