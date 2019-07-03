@@ -7,5 +7,11 @@
     "order_purchased": "<0>{{title}}</0> was purchased!",
     "publication_fulfilled": "<0>{{title}}</0> is fulfilled!",
     "publication_orphan": "The organizer left <1>{{title}}</1>"
+  },
+  "header": {
+    "notifications": "Notifications",
+    "publish": "Publish",
+    "login": "Login",
+    "my_account": "My Account"
   }
 }
