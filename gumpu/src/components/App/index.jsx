@@ -43,7 +43,7 @@ function App() {
         <Switch>
           <Route path="/secondary" component={Secondary} />
           <Route path="/login" component={Login} />
-          <Route path="/publish" component={Publish} /> {/* TODO: change to authenticated route */}
+          <AuthenticatedRoute path="/publish" component={Publish} />
           <Route path="/search/:term" component={Search} />
           <Route path="/" component={Home} />
         </Switch>
