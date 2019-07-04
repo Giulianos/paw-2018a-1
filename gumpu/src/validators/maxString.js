@@ -1,0 +1,1 @@
+export default (msg, max) => v => String(v).length <= max || msg;

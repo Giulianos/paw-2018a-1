@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import uniqueId from 'lodash/uniq';
+import uniqueId from 'lodash/uniqueId';
 import Input from '../Input';
 
 function SmartInput({
   className, label, valid, validatable, dirty, ...props
 }) {
-  const [id] = useState(uniqueId('form-field-id'));
+  const [id] = useState(uniqueId('field_'));
   let variant = 'default';
 
   if (validatable && dirty) {

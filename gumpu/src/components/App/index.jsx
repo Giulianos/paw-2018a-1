@@ -9,11 +9,13 @@ import {
 } from 'redux/user/actionCreators';
 
 import Header from 'components/Header';
+import AuthenticatedRoute from 'components/AuthenticatedRoute';
 import FullScreenLoader from 'components/ui/FullScreenLoader';
 
 import Home from 'views/Home';
 import Secondary from 'views/Secondary';
 import Login from 'views/Login';
+import Publish from 'views/Publish';
 
 import useAuth from 'hooks/useAuth';
 import Search from 'views/Search';
@@ -31,7 +33,8 @@ function App() {
     }
   }, [dispatch]);
 
-  if (token && auth.logging) {
+  if (token && !auth.logged) {
+    console.log('Waiting for user to log')
     return <FullScreenLoader />;
   }
   return (
@@ -41,6 +44,7 @@ function App() {
         <Switch>
           <Route path="/secondary" component={Secondary} />
           <Route path="/login" component={Login} />
+          <AuthenticatedRoute path="/publish" component={Publish} />
           <Route path="/search/:term" component={Search} />
           <Route path="/" component={Home} />
         </Switch>
