@@ -58,7 +58,15 @@
         "tags_error": "Deben separarse con coma y tener al menos {{min}} caracteres"
       }
     },
-    "action": "PUBLICAR"
+    "action": "PUBLICAR",
+    "result_success": {
+      "message": "<0>Genial!</0><1>Tu producto fue publicado!<1>",
+      "action": "VER PUBLICACION"
+    },
+    "result_fail": {
+      "message": "<0>Ups!</0><1>No pudimos crear la publicacion!<1>",
+      "action": "REINTENTAR"
+    }
   },
   "product": {
     "organizer_calification": "Calificacion del organizador"

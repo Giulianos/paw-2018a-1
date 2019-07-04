@@ -9,10 +9,11 @@ import price from 'validators/price';
 import minMaxString from 'validators/minMaxString';
 import maxString from 'validators/maxString';
 import tagList from 'validators/tagList';
-import { createPublication } from 'redux/publication/actionCreators';
+import { createPublication, resetCreatePublication } from 'redux/publication/actionCreators';
 
 import PublishLayout from './layout';
 import serializePublication from './serializer';
+import history from 'router/history';
 
 function Publish() {
 
@@ -36,11 +37,21 @@ function Publish() {
       quantity: form.quantity.value,
       detailedDescription: form.detailedDescription.value,
       tags: form.tags.value
-    }
-    dispatch(createPublication(serializePublication(values)))
+    };
+    dispatch(createPublication(serializePublication(values)));
   }
 
-  return <PublishLayout handleSubmit={handleSubmit} {...form} />;
+  const handleRetry = () => {
+    dispatch(resetCreatePublication());
+  }
+
+  const handleAccept = () => {
+    if(publicationCreateState.data) {
+      history.push(`/publication/${publicationCreateState.data.id}`);
+    }
+  }
+
+  return <PublishLayout {...publicationCreateState} handleSubmit={handleSubmit} handleRetry={handleRetry} handleAccept={handleAccept} {...form} />;
 }
 
 export default () => <Suspense fallback={<Loader />}><Publish /></Suspense>;

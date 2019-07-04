@@ -1,20 +1,43 @@
 import React, { Suspense } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 
 import Loader from 'components/ui/Loader';
 import CardContainer from 'components/ui/CardContainer';
 import SmartInput from 'components/ui/SmartInput';
+import Button from 'components/ui/Button';
+import SmartTextArea from 'components/ui/SmartTextArea';
+
+import Step from './components/Step';
+import Success from './components/Success';
+import Failure from './components/Failure';
 
 import styles from './styles.module.scss';
-import Step from './components/Step';
-import SmartTextArea from 'components/ui/SmartTextArea';
-import Button from 'components/ui/Button';
 
-function PublishLayout({ quantity, unitPrice, description, detailedDescription, tags, handleSubmit }) {
+function PublishLayout({ quantity, unitPrice, description, detailedDescription, tags, handleSubmit, handleRetry, handleAccept, loading, error, success }) {
   const { t } = useTranslation();
 
   return (
     <div className="view-container column center-alt">
+      {loading && (
+        <Loader />
+      )}
+      {error && (
+        <Failure buttonMessage={t('publish.result_fail.action')} handleRetry={handleRetry}>
+          <Trans i18nKey="publish.result_fail.message">
+            <span className="txt-red txt-medium txt-bold mr-8">Oops!</span>
+            <span className="txt-medium txt-gray3">Invalid credentials</span>
+          </Trans>
+        </Failure>
+      )}
+      {success && (
+        <Success buttonMessage={t('publish.result_success.action')} handleAccept={handleAccept}>
+          <Trans i18nKey="publish.result_success.message">
+            <span className="txt-green txt-medium txt-bold mr-8">Genial!</span>
+            <span className="txt-medium txt-gray3">Tu producto ya fue publicado!</span>
+          </Trans>
+        </Success>
+      )}
+      {!error && !success && !loading &&
       <form onSubmit={handleSubmit} className="w100">
         <div className="w100 row space-between pl-64 pr-64 flex-start-alt mb-32">
           <Step text={t('publish.step1.title')} moreInfo="" number="1" />
@@ -35,6 +58,7 @@ function PublishLayout({ quantity, unitPrice, description, detailedDescription, 
           </div>
         </div>
       </form>
+      }
     </div>
   );
 }
