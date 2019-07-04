@@ -43,6 +43,7 @@
       "form": {
         "description": "Descripcion",
         "description_placeholder": "Ej. manzanas rojas",
+        "description_error": "Debe tener entre {{min}} y {{max}} caracteres",
         "unit_price": "Precio unitario",
         "total_quantity": "Cantidad total"
       }
@@ -52,7 +53,9 @@
       "info": "Esto ayudara a que los usuarios entiendan mejor que estan comprando",
       "form": {
         "detailed_description": "Descripcion detallada",
-        "tags": "Palabras clave"
+        "tags": "Palabras clave",
+        "tags_placeholder": "Ej. fruta, manzana, roja",
+        "tags_error": "Deben separarse con coma y tener al menos {{min}} caracteres"
       }
     },
     "action": "PUBLICAR"

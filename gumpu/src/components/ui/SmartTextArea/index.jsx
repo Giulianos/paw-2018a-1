@@ -6,16 +6,11 @@ import TextArea from '../TextArea';
 function SmartTextArea({
   className, maxLength, label, valid, validatable, dirty, ...props
 }) {
-  const [counter, setCounter] = useState(0);
   const [id] = useState(uniqueId('field_'));
   let variant = 'default';
 
   if (validatable && dirty) {
     variant = valid === true ? 'valid' : 'invalid';
-  }
-
-  const updateCounter = e => {
-    setCounter(e.target.value.length)
   }
 
   if(maxLength !== undefined) {
@@ -24,9 +19,9 @@ function SmartTextArea({
         { /* eslint-disable-next-line jsx-a11y/label-has-for */ }
         <label htmlFor={id} className={`column w100 txt-input-label ${variant}`}>
           { label }
-          <TextArea maxlength={`${maxLength}`} onChange={updateCounter} id={id} className="mt-8" variant={variant} {...props} />
+          <TextArea maxLength={`${maxLength}`} id={id} className="mt-8" variant={variant} {...props} />
         </label>
-        <span className="absolute txt-tiny txt-gray2 w100 txt-right pt-4">{ maxLength-counter }</span>
+        <span className="absolute txt-tiny txt-gray2 w100 txt-right pt-4">{ maxLength-props.value.length }</span>
         { (variant === 'invalid') && <span className="absolute txt-tiny txt-red w100 txt-right pt-4">{ valid }</span> }
       </div>
     );

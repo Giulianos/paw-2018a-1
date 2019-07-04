@@ -1,0 +1,1 @@
+export default msg => v => Number(v)>0 && Math.ceil(v) === Number(v) || msg;

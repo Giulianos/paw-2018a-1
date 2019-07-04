@@ -1,0 +1,1 @@
+export default (tagLength, msg) => v => v.split(",").map(ts=>ts.trim()).every(t=>t.length >= tagLength) || msg;
