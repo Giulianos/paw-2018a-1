@@ -10,9 +10,9 @@ import CardContainer from 'components/ui/CardContainer';
 import Button from 'components/ui/Button';
 import SmartInput from 'components/ui/SmartInput';
 
-function OrderModalLayout({ data, onClose }) {
+function OrderModalLayout({ data, quantity, onClose, onSubmit }) {
   const { t } = useTranslation();
-  const totalPrice = data.unitPrice * 10; // TODO: integrate with form
+  const totalPrice = quantity.valid ? data.unitPrice * Number(quantity.value) : '-';
   return (
     <Modal onClose={onClose}>
       <div className={styles.container}>
@@ -26,9 +26,9 @@ function OrderModalLayout({ data, onClose }) {
                 {data.detailedDescription}
               </span>
             </CardContainer>
-            <form className="column">
-              <div className="row center-alt flex-end mb-24">
-                <SmartInput className={styles.shortInput} />
+            <form onSubmit={onSubmit} className="column">
+              <div className="row flex-end-alt flex-end mb-24">
+                <SmartInput label={t('order_modal.quantity')} {...quantity} className={styles.shortInput} />
                 <span className="ml-16 txt-green txt-bold">{t('order_modal.availability', {count: data.availableQuantity})}</span>
               </div>
               <div className="row center-alt flex-end mb-32 txt-medium20">

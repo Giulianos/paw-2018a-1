@@ -82,6 +82,7 @@
     "description": "Descripcion",
     "availability": "{{count}} disponible!",
     "availability_plural": "{{count}} disponibles",
+    "quantity": "Cantidad",
     "you_will_pay": "Vas a pagar <1>{{price}}<1>",
     "actions": {
       "order": "ORDENAR",

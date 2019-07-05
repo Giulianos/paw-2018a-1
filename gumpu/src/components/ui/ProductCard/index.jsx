@@ -13,7 +13,9 @@ function ProductCard({ product, className, onClick }) {
   const { t } = useTranslation();
 
   const handleClickWithProduct = () => {
-    onClick(product);
+    if(onClick) {
+      onClick(product);
+    }
   }
 
   return (
