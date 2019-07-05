@@ -1,18 +1,13 @@
-import React, { Suspense } from 'react';
-import { useTranslation } from 'react-i18next';
-
-import Loader from 'components/ui/Loader';
-
+import React from 'react';
+import Modal from 'components/ui/Modal';
+import OrderModal from 'components/OrderModal';
 function Secondary() {
-  const { t } = useTranslation();
 
   return (
     <div style={{ height: '1000px' }}>
-      <h1>{t('secondary.example')}</h1>
+      <OrderModal />
     </div>
   );
 }
 
-export default () => (
-  <Suspense fallback={<Loader />}><Secondary /></Suspense>
-);
+export default Secondary;
