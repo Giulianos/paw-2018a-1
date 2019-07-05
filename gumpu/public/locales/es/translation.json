@@ -89,6 +89,14 @@
     "actions": {
       "order": "ORDENAR",
       "cancel": "CANCELAR"
+    },
+    "result_success": {
+      "message": "<0>Genial!</0><1>Tu orden se realizo con éxito!<1>",
+      "action": "OK"
+    },
+    "result_fail": {
+      "message": "<0>Ups!</0><1>No pudimos tomar la orden!<1>",
+      "action": "REINTENTAR"
     }
   }
 }
