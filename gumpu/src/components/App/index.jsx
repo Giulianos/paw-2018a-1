@@ -46,6 +46,7 @@ function App() {
           <Route path="/login" component={Login} />
           <AuthenticatedRoute path="/publish" component={Publish} />
           <Route path="/search/:term" component={Search} />
+          <Route path="/create-account" component={Home} />
           <Route path="/" component={Home} />
         </Switch>
       </div>
