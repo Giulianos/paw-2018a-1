@@ -12,15 +12,15 @@ import PublicationImage from 'components/PublicationImage';
 function ProductCard({ product, className, onClick }) {
   const { t } = useTranslation();
 
-  const onClickWithId = () => {
-    onClick(product.id);
+  const handleClickWithProduct = () => {
+    onClick(product);
   }
 
   return (
     product ? (
-        <CardContainer onClick={onClickWithId} className={`${styles.productCard} ${className} column center-alt pt-16 pb-16 pl-24 pr-24`}>
+        <CardContainer onClick={handleClickWithProduct} className={`${styles.productCard} ${className} column center-alt pt-16 pb-16 pl-24 pr-24`}>
           <PublicationImage className={`${styles.image} mb-24`} imageId={product.images[0]} alt={product.description} />
-          <h3 className="w100 txt-medium mb-24">{ product.description }</h3>
+          <h3 className={`${styles.title} w100 txt-medium mb-24`}>{ product.description }</h3>
           <span className="w100 txt-medium32 txt-gray3 mb-24">
 $
             { product.unitPrice }

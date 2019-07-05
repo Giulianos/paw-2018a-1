@@ -18,7 +18,7 @@ function OrderModalLayout({ data, onClose }) {
       <div className={styles.container}>
         <div className="row mb-32"><h1 className="txt-xlarge">{t('order_modal.title')}</h1></div>
         <div className="row">
-          <ProductCard className="mr-24" />
+          <ProductCard product={data} className="mr-24" />
           <div className="column space-between">
             <CardContainer className={styles.detContainer}>
               <h2 className="txt-medium mb-16">{t('order_modal.description')}</h2>
