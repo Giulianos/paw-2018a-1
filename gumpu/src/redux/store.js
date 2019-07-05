@@ -7,10 +7,12 @@ import sample from './sample/reducer';
 import auth from './auth/reducer';
 import user from './user/reducer';
 import publication from './publication/reducer';
+import notifications from './notifications/reducer';
 
 const reducer = combineReducers({
   auth,
   user,
+  notifications,
   publication,
   sample,
 });
