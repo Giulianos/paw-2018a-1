@@ -17,14 +17,16 @@ import { getNotificationLink } from './helpers';
 
 const sampleImage = 'https://www.officedepot.com.mx/medias/84266.jpg-515ftw?context=bWFzdGVyfHJvb3R8NzUxNDh8aW1hZ2UvanBlZ3xoOTIvaDA3Lzk1NzAyMzY5MjM5MzQuanBnfDAyMzQxNTRlMTdjMzczYmRhZThlN2I0MDNhOGIzZjgyY2RlMWRlZjY4ZjVkZTNjYzQ1MzM3YWZkMzhlY2YyZDc';
 
-function NotificationsPanelLayout({ data, loading, success, error }) {
+function NotificationsPanelLayout({ data, success }) {
   const { t } = useTranslation();
 
   return (
     <CardContainer className={styles.container}>
       <div className="pt-16 pb-16 pl-16 txt-bold txt-gray3">{t('header.notifications')}</div>
       <ul>
-        { !success ? <li>Loading</li> : data.notifications.map(n => (
+        { !success ?
+        <li className={styles.skeletonNotification}><div /><div /></li> :
+        data.notifications.map(n => (
         <Link key={n.id} to={getNotificationLink(n)}>
           <li className={styles.notification}>
             <img alt="" src={sampleImage} className={styles.image} />
@@ -32,6 +34,7 @@ function NotificationsPanelLayout({ data, loading, success, error }) {
           </li>
         </Link>)) }
       </ul>
+      { success && data.notifications.length === 0 && <div className={styles.emptyState}>{t('notifications.empty_state')}</div>  }
     </CardContainer>
   );
 }

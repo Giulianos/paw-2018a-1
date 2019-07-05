@@ -30,3 +30,35 @@
     background-color: $gray1;
   }
 }
+
+.skeletonNotification {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-top: 1px solid $gray1;
+
+  :nth-child(1) {
+    background-color: $gray1;
+    width: 40px;
+    height: 40px;
+    margin-right: 8px;
+    border-radius: 8px;
+  }
+  :nth-child(2) {
+    background-color: $gray1;
+    width: 200px;
+    border-radius: 8px;
+    height: 20px;
+  }
+}
+
+.emptyState {
+  height: 100px;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid #F4F4F4;
+  color: #8F8F8F;
+}
