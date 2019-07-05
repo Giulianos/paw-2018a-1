@@ -4,8 +4,8 @@ import OrderModalLayout from './layout';
 
 import mockPublication from 'mocks/publication';
 
-function OrderModal() {
-  return <OrderModalLayout data={mockPublication} />;
+function OrderModal({ shown, onClose }) {
+  return shown && <OrderModalLayout onClose={onClose} data={mockPublication} />;
 }
 
 export default OrderModal;

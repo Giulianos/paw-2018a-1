@@ -10,12 +10,11 @@ import CardContainer from 'components/ui/CardContainer';
 import Button from 'components/ui/Button';
 import SmartInput from 'components/ui/SmartInput';
 
-function OrderModalLayout({ data }) {
+function OrderModalLayout({ data, onClose }) {
   const { t } = useTranslation();
   const totalPrice = data.unitPrice * 10; // TODO: integrate with form
-
   return (
-    <Modal>
+    <Modal onClose={onClose}>
       <div className={styles.container}>
         <div className="row mb-32"><h1 className="txt-xlarge">{t('order_modal.title')}</h1></div>
         <div className="row">
@@ -38,7 +37,7 @@ function OrderModalLayout({ data }) {
                 </Trans>
               </div>
               <div className="row flex-end">
-                <Button variant="secondary" className="mr-8">{t('order_modal.actions.cancel')}</Button>
+                <Button handleClick={onClose} type="button" variant="secondary" className="mr-8">{t('order_modal.actions.cancel')}</Button>
                 <Button>{t('order_modal.actions.order')}</Button>
               </div>
             </form>
