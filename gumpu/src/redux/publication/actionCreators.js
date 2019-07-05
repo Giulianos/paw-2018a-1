@@ -17,3 +17,20 @@ export const createPublication = newPublication => async (dispatch) => {
 };
 
 export const resetCreatePublication = () => ({ type: actions.CREATE_RESET });
+
+export const orderPublication = (id, quantity) => async (dispatch) => {
+  dispatch({ type: actions.ORDER });
+
+  try {
+    const response = await publicationService.orders.create(id, quantity);
+    if (response.ok) {
+      dispatch({ type: actions.ORDER_OK, payload: response.data });
+    } else {
+      dispatch({ type: actions.ORDER_FAIL });
+    }
+  } catch (error) {
+    dispatch({ type: actions.ORDER_FAIL });
+  }
+};
+
+export const resetOrderPublication = () => ({ type: actions.ORDER_RESET });
