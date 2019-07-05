@@ -1,48 +1,20 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import CardContainer from 'components/ui/CardContainer';
-import {
-  supervisorLeftPublication,
-  orderFulfilledOrderer,
-  orderFulfilledSupervisor,
-  orderPurchased,
-  newMessage,
-} from 'mocks/notifications';
+import usePolling from 'hooks/usePolling';
+import useAuth from 'hooks/useAuth';
+import { retrieveNotifications } from 'redux/notifications/actionCreators';
 
-import NotificationText from './NotificationText';
-import styles from './styles.module.scss';
-import { getNotificationLink } from './helpers';
-import { useTranslation } from 'react-i18next';
-
-const sampleImage = 'https://www.officedepot.com.mx/medias/84266.jpg-515ftw?context=bWFzdGVyfHJvb3R8NzUxNDh8aW1hZ2UvanBlZ3xoOTIvaDA3Lzk1NzAyMzY5MjM5MzQuanBnfDAyMzQxNTRlMTdjMzczYmRhZThlN2I0MDNhOGIzZjgyY2RlMWRlZjY4ZjVkZTNjYzQ1MzM3YWZkMzhlY2YyZDc';
-const mockNotifications = [
-  supervisorLeftPublication,
-  orderFulfilledOrderer,
-  orderFulfilledSupervisor,
-  orderPurchased,
-  newMessage,
-];
+import NotificationsPanelLayout from './layout';
 
 function NotificationsPanel() {
-  const { t } = useTranslation();
-  const notifications = mockNotifications.map(n => (
-    <Link key={n.id} to={getNotificationLink(n)}>
-      <li className={styles.notification}>
-        <img alt="" src={sampleImage} className={styles.image} />
-        <div className={styles.details}><NotificationText notification={n} /></div>
-      </li>
-    </Link>
-  ));
+  const dispatch = useDispatch();
+  const auth = useAuth();
+  useEffect(() => { dispatch(retrieveNotifications(auth.user.id)); }, []);
+  usePolling(() => dispatch(retrieveNotifications(auth.user.id)), 5000);
+  const notifications = useSelector(state => state.notifications.retrieve);
 
-  return (
-    <CardContainer className={styles.container}>
-      <div className="pt-16 pb-16 pl-16 txt-bold txt-gray3">{t('header.notifications')}</div>
-      <ul>
-        {notifications}
-      </ul>
-    </CardContainer>
-  );
+  return <NotificationsPanelLayout {...notifications} />;
 }
 
 export default NotificationsPanel;

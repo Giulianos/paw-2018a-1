@@ -24,11 +24,19 @@
 }
 
 .flex-start {
-  justify-content: flex-start
+  justify-content: flex-start;
 }
 
 .flex-start-alt {
-  align-items: flex-start
+  align-items: flex-start;
+}
+
+.flex-end {
+  justify-content: flex-end;
+}
+
+.flex-end-alt {
+  align-items: flex-end;
 }
 
 .absolute {
