@@ -6,12 +6,11 @@ import styles from './styles.module.scss';
 function RatingIndicator({ className, value }) {
   return (
     <div className={`row ${className}`}>
+      <div className={`${value > 0 ? styles.filled : styles.empty} mr-4`} />
       <div className={`${value > 1 ? styles.filled : styles.empty} mr-4`} />
       <div className={`${value > 2 ? styles.filled : styles.empty} mr-4`} />
-      <div className={`${value > 0 ? styles.filled : styles.empty} mr-4`} />
       <div className={`${value > 3 ? styles.filled : styles.empty} mr-4`} />
-      <div className={`${value > 4 ? styles.filled : styles.empty} mr-4`} />
-      <div className={`${value > 5 ? styles.filled : styles.empty}`} />
+      <div className={`${value > 4 ? styles.filled : styles.empty}`} />
     </div>
   );
 }
