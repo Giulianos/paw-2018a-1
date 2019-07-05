@@ -35,6 +35,7 @@
     "title": "Ingresar",
     "email": "Email",
     "password": "Contrasena",
+    "register_hint": "No tenes cuenta? <1>Crea una ahora!</1>",
     "action": "INGRESAR"
   },
   "publish": {
