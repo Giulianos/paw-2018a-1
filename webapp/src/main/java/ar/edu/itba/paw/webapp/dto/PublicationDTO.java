@@ -1,5 +1,6 @@
 package ar.edu.itba.paw.webapp.dto;
 
+import ar.edu.itba.paw.model.Image;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.model.Tag;
 import ar.edu.itba.paw.webapp.config.WebConfig;
@@ -19,7 +20,7 @@ public class PublicationDTO {
     private String detailedDescription;
     private String status;
     private List<String> tags;
-    private List<String> imagesUrls;
+    private List<Long> images;
 
     public PublicationDTO(Publication publication) {
         this.id = publication.getId();
@@ -34,10 +35,10 @@ public class PublicationDTO {
         this.status = publication.getState().toString();
         this.availableQuantity = publication.getAvailableQuantity();
         this.tags = publication.getTags().stream().map(Tag::getTag).collect(Collectors.toList());
-        this.imagesUrls = publication
+        this.images = publication
             .getImages()
             .stream()
-            .map(i -> URLResolver.getFullURL("/images/" + i.getId()))
+            .map(Image::getId)
             .collect(Collectors.toList());
     }
 
@@ -117,12 +118,12 @@ public class PublicationDTO {
         this.tags = tags;
     }
 
-    public List<String> getImagesUrls() {
-        return imagesUrls;
+    public List<Long> getImages() {
+        return images;
     }
 
-    public void setImagesUrls(List<String> imagesUrls) {
-        this.imagesUrls = imagesUrls;
+    public void setImages(List<Long> images) {
+        this.images = images;
     }
 
     public String getStatus() {

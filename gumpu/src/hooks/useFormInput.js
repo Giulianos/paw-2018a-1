@@ -18,6 +18,7 @@ function useFormInput(initialValue, validator) {
     validatable,
     valid,
     dirty,
+    reset: () => { setValue(initialValue); setDirty(false); }
   };
 }
 

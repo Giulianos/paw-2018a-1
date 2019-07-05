@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import styles from './styles.module.scss';
 
-function CardContainer({ children, className }) {
+function CardContainer({ children, className, ...props }) {
   return (
-    <div className={`${styles.cardContainer} ${className}`}>{ children }</div>
+    <div {...props} className={`${styles.cardContainer} ${className}`}>{ children }</div>
   );
 }
 

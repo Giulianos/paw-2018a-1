@@ -55,6 +55,7 @@ public class PublicationImagesController {
     } catch (IllegalStateException e) {
       return Response.status(Response.Status.CONFLICT).build();
     } catch (Exception e) {
+      e.printStackTrace();
       return Response.serverError().build();
     }
   }

@@ -78,5 +78,17 @@
     "email": "Email invalido",
     "full_name": "El nombre debe tener entre {{min}} y {{max}} caracteres",
     "password": "La contrasena debe tener al menos {{min}} caracteres"
+  },
+  "order_modal": {
+    "title": "Ordenar",
+    "description": "Descripcion",
+    "availability": "{{count}} disponible!",
+    "availability_plural": "{{count}} disponibles",
+    "quantity": "Cantidad",
+    "you_will_pay": "Vas a pagar <1>{{price}}<1>",
+    "actions": {
+      "order": "ORDENAR",
+      "cancel": "CANCELAR"
+    }
   }
 }
