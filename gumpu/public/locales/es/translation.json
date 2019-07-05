@@ -13,7 +13,8 @@
     "notifications": "Notificaciones",
     "publish": "Publicar",
     "login": "Ingresar",
-    "my_account": "Mi Cuenta"
+    "my_account": "Mi Cuenta",
+    "create_account": "Crear cuenta"
   },
   "search_bar": {
     "question": "Que estás buscando?",
