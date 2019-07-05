@@ -13,7 +13,8 @@
     "notifications": "Notificaciones",
     "publish": "Publicar",
     "login": "Ingresar",
-    "my_account": "Mi Cuenta"
+    "my_account": "Mi Cuenta",
+    "create_account": "Crear cuenta"
   },
   "search_bar": {
     "question": "Que estás buscando?",
@@ -34,6 +35,7 @@
     "title": "Ingresar",
     "email": "Email",
     "password": "Contrasena",
+    "register_hint": "No tenes cuenta? <1>Crea una ahora!</1>",
     "action": "INGRESAR"
   },
   "publish": {

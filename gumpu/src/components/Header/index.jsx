@@ -17,6 +17,7 @@ function Header() {
         <img src={logo} alt="Gumpu" />
         <div className="row center-alt relative">
           <Link to="/publish" className="mr-64 txt-normal">{t('header.publish')}</Link>
+          { !auth.logged && <Link to="/create-account" className="txt-normal mr-64">{t('header.create_account')}</Link> }
           { !auth.logged && <Link to="/login" className="txt-normal mr-64">{t('header.login')}</Link> }
           { auth.logged && <NotificationsMenu>{t('header.notifications')}</NotificationsMenu> }
         </div>
