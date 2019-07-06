@@ -1,10 +1,25 @@
 import React, { Suspense } from 'react';
+import { Switch, Route } from 'react-router-dom';
+
+import Summary from './Subviews/Summary';
+import Publications from './Subviews/Publications';
+import Orders from './Subviews/Orders';
+
 import Loader from 'components/ui/Loader';
+
+import Sidebar from './components/Sidebar';
 
 function MyAccountSuspense() {
   return (
-    <div className="view-container column center-alt">
-      My account
+    <div className="view-container row">
+      <Sidebar />
+      <div className="flex-grow ml-32">
+        <Switch>
+          <Route path="/my-account/publications" component={Publications} />
+          <Route path="/my-account/orders" component={Orders} />
+          <Route path="/my-account" component={Summary} />
+        </Switch>
+      </div>
     </div>
   );
 }
