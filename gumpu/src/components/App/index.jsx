@@ -16,6 +16,7 @@ import Home from 'views/Home';
 import Secondary from 'views/Secondary';
 import Login from 'views/Login';
 import Publish from 'views/Publish';
+import MyAccount from 'views/MyAccount';
 
 import useAuth from 'hooks/useAuth';
 import Search from 'views/Search';
@@ -46,6 +47,7 @@ function App() {
           <Route path="/login" component={Login} />
           <AuthenticatedRoute path="/publish" component={Publish} />
           <Route path="/search/:term" component={Search} />
+          <Route path="/my-account" component={MyAccount} />
           <Route path="/create-account" component={Home} />
           <Route path="/" component={Home} />
         </Switch>
