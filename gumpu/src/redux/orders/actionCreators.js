@@ -5,7 +5,7 @@ export const listOrders = userId => async (dispatch) => {
   dispatch({ type: actions.LIST });
 
   try {
-    const response = await orderService.list(userId);
+    const response = await orderService.list(userId, 0, 10);
     if (response.ok) {
       dispatch({ type: actions.LIST_OK, payload: response.data });
     } else {

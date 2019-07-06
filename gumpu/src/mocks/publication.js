@@ -1,19 +1,16 @@
 export default {
-  availableQuantity: 100,
-  description: 'Manzanas rojas',
-  detailedDescription: 'Manzanas rojas moño azul',
-  id: 1,
-  images: [
-    1
-  ],
-  quantity: 100,
+  availableQuantity: 130,
+  description: 'Algo para probar',
+  detailedDescription: 'Esto es una publicacion de prueba',
+  id: 3,
+  images: [],
+  quantity: 130,
   status: 'IN_PROGRESS',
   supervisorId: 1,
   supervisorUrl: 'http://pawserver.it.itba.edu.ar/paw-2018a-1/api/users/1',
   tags: [
-    'rojas',
-    'fruta',
-    'manzanas'
+    'prueba',
+    'publicacion'
   ],
-  unitPrice: 2
-};
+  unitPrice: 10
+}
