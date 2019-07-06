@@ -105,7 +105,14 @@
       "title": "Resumen"
     },
     "orders": {
-      "title": "Órdenes"
+      "title": "Órdenes",
+      "card": {
+        "delete": "Eliminar",
+        "chat": "Mensajes",
+        "adopt": "Adoptar",
+        "confirm": "Confirmar",
+        "remaining_quantity": "Cantidad restante: {{ count }}"
+      }
     },
     "publications": {
       "title": "Publicaciones"
