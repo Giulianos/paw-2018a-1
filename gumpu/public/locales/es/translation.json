@@ -98,5 +98,17 @@
       "message": "<0>Ups!</0><1>No pudimos tomar la orden!<1>",
       "action": "REINTENTAR"
     }
+  },
+  "my_account": {
+    "title": "Mi Cuenta",
+    "summary": {
+      "title": "Resumen"
+    },
+    "orders": {
+      "title": "Órdenes"
+    },
+    "publications": {
+      "title": "Publicaciones"
+    }
   }
 }
