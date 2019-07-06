@@ -1,0 +1,27 @@
+@import '~scss/_colors';
+
+.sidebarContainer {
+  width: 284px;
+}
+
+.link {
+  --dot-color: transparent;
+  margin-bottom: 48px;
+  display: flex;
+  align-items: center;
+  transform: translateX(-12px);
+
+  &::before  {
+    content: '';
+    width: 8px;
+    height: 8px;
+    margin-right: 16px;
+    background-color: var(--dot-color);
+    border-radius: 50%;
+  }
+}
+
+.active {
+  --dot-color: #{$blue};
+  color: $gray3;
+}
