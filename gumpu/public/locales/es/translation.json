@@ -107,16 +107,17 @@
     "orders": {
       "title": "Órdenes",
       "status": {
-        "purchased": "Compradas",
-        "fulfilled": "Cumplidas",
-        "in_progress": "En progreso"
+        "purchased": "Por recibir",
+        "fulfilled": "Llegaron al objetivo",
+        "in_progress": "En progreso",
+        "empty_list": "Por ahora no tienes ordenes"
       },
       "card": {
         "delete": "Eliminar",
         "chat": "Mensajes",
         "adopt": "Adoptar",
         "confirm": "Confirmar",
-        "remaining_quantity": "Quedan {{ count }}",
+        "remaining_quantity": "Restan {{ count }}",
         "orderer_quantity": "Ordenaste {{ count }}"
       }
     },

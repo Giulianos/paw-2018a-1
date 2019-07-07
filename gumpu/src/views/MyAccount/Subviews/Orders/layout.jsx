@@ -8,14 +8,10 @@ import Loader from 'components/ui/Loader';
 
 import { getPurchased, getFulfilled, getOrphan, getInProgress } from './filters';
 
-const orderMapper = o => (<li key={o.publication.id}><OrderCard order={o} className="mb-16" /></li>);
+const orderMapper = o => (<li key={o && o.publication.id}><OrderCard order={o} className="mb-16" /></li>);
 
 function OrdersLayoutSuspense({ orders, loading }) {
   const { t } = useTranslation();
-
-  if(loading) {
-    return <Loader />
-  }
 
   const purchasedOrders = getPurchased(orders).map(orderMapper);
   const fulfilledOrders = getFulfilled(orders).map(orderMapper);
@@ -28,12 +24,15 @@ function OrdersLayoutSuspense({ orders, loading }) {
         <h1 className="txt-medium mb-32">{t('my_account.orders.status.purchased')}</h1>
         <ul className="flex-grow">
           {purchasedOrders}
+          {loading && orderMapper(null)}
+          {!purchasedOrders.length && <span>{t('my_account.orders.status.empty_list')}</span>}
         </ul>
       </CardContainer>
       <CardContainer className={`${styles.orderList} column mr-16`}>
         <h1 className="txt-medium mb-32">{t('my_account.orders.status.fulfilled')}</h1>
         <ul className="flex-grow">
           {fulfilledOrders}
+          {loading && orderMapper(null)}
         </ul>
       </CardContainer>
       <CardContainer className={`${styles.orderList} column`}>
@@ -41,6 +40,7 @@ function OrdersLayoutSuspense({ orders, loading }) {
         <ul className="flex-grow">
           {orphanOrders}
           {inProgressOrders}
+          {loading && orderMapper(null)}
         </ul>
       </CardContainer>
     </div>
