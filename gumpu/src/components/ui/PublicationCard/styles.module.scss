@@ -1,0 +1,54 @@
+@import '~scss/_colors';
+
+.cardContainer {
+  width: 280px;
+  padding: 16px;
+}
+
+.publicationImage {
+  height: 80px;
+  width: 80px;
+}
+
+.publicationTitle {
+  height: 48px;
+}
+
+.skeleton {
+  .data {
+    border-radius: 8px;
+    display: flex;
+    height: 48px;
+    justify-content: space-between;
+    flex-direction: column;
+  }
+  
+  .data > :nth-child(1) {
+    background-color: $gray1;
+    height: 20px;
+    width: 150px;
+    border-radius: 8px;
+  }
+
+  .data > :nth-child(2) {
+    border-radius: 8px;
+    background-color: $gray1;
+    height: 20px;
+    width: 100px;
+  }
+
+  .image {
+    width: 80px;
+    height: 80px;
+    background-color: $gray1;
+    border-radius: 8px;
+    margin-right: 8px;
+  }
+
+  .actions {
+    background-color: $gray1;
+    height: 20px;
+    width: 150px;
+    border-radius: 8px;
+  }
+}

@@ -14,6 +14,14 @@ const initialState = {
       error: false,
       data: undefined
     }
+  },
+  userList: {
+    success: false,
+    loading: false,
+    error: false,
+    publications: [],
+    nextPage: 0,
+    totalPages: 1
   }
 };
 
@@ -38,6 +46,21 @@ function reduce(state = initialState, action) {
       return { ...state, order: { ...initialState.order, create: { success: false, loading: false, error: true} } };
     case actions.ORDER_RESET:
       return { ...state, order: { ...initialState.order, create: { ...initialState.order.create } } };
+
+    /** USER_LIST actions */
+    case actions.LIST_USER:
+      return { ...state, userList: { ...state.userList, loading: true, error: false } };
+    case actions.LIST_USER_OK:
+      return { ...state, userList: {
+        success: true,
+        loading: false,
+        error: false,
+        publications: [ ...state.userList.publications, ...action.payload.publications ]
+      } };
+    case actions.LIST_USER_FAIL:
+      return { ...state, userList: { success: false, loading: false, error: true } };
+    case actions.LIST_USER_RESET:
+      return { ...state, userList: { ...initialState.userList } };
 
     default:
       return state;

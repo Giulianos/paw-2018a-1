@@ -25,7 +25,7 @@ function OrdersLayoutSuspense({ orders, loading }) {
         <ul className="flex-grow">
           {purchasedOrders}
           {loading && orderMapper(null)}
-          {!purchasedOrders.length && <span>{t('my_account.orders.status.empty_list')}</span>}
+          {!loading && !purchasedOrders.length && <span className="txt-gray2">{t('my_account.orders.status.empty_list')}</span>}
         </ul>
       </CardContainer>
       <CardContainer className={`${styles.orderList} column mr-16`}>
@@ -33,6 +33,7 @@ function OrdersLayoutSuspense({ orders, loading }) {
         <ul className="flex-grow">
           {fulfilledOrders}
           {loading && orderMapper(null)}
+          {!loading && !fulfilledOrders.length && <span className="txt-gray2">{t('my_account.orders.status.empty_list')}</span>}
         </ul>
       </CardContainer>
       <CardContainer className={`${styles.orderList} column`}>
@@ -41,6 +42,7 @@ function OrdersLayoutSuspense({ orders, loading }) {
           {orphanOrders}
           {inProgressOrders}
           {loading && orderMapper(null)}
+          {!loading && !inProgressOrders.length && !orphanOrders.length && <span className="txt-gray2">{t('my_account.orders.status.empty_list')}</span>}
         </ul>
       </CardContainer>
     </div>
