@@ -23,6 +23,10 @@ function OrderCardLayoutSuspense({ order, className }) {
               <span className="txt-gray3">{t('my_account.orders.card.remaining_quantity', { count: order.publication.availableQuantity })}</span>
             )
           }
+          { (publicationState === 'PURCHASED' || publicationState === 'FULFILLED') && (
+              <span className="txt-gray3">{t('my_account.orders.card.orderer_quantity', { count: order.quantity })}</span>
+            )
+          }
         </div>
       </div>
       <div className="row">

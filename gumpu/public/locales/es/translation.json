@@ -116,7 +116,8 @@
         "chat": "Mensajes",
         "adopt": "Adoptar",
         "confirm": "Confirmar",
-        "remaining_quantity": "Quedan {{ count }}"
+        "remaining_quantity": "Quedan {{ count }}",
+        "orderer_quantity": "Ordenaste {{ count }}"
       }
     },
     "publications": {
