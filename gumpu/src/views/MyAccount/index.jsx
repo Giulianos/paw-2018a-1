@@ -13,7 +13,7 @@ function MyAccountSuspense() {
   return (
     <div className="view-container row">
       <Sidebar />
-      <div className="flex-grow ml-32">
+      <div className="flex-grow ml-16">
         <Switch>
           <Route path="/my-account/publications" component={Publications} />
           <Route path="/my-account/orders" component={Orders} />

@@ -9,10 +9,12 @@ import images from './images/reducer';
 import user from './user/reducer';
 import publication from './publication/reducer';
 import notifications from './notifications/reducer';
+import orders from './orders/reducer';
 
 const reducer = combineReducers({
   auth,
   images,
+  orders,
   user,
   notifications,
   publication,
