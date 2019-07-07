@@ -15,7 +15,6 @@ function PublicationsLayoutSuspense({ publications, loading }) {
 
   const purchasedPublications = getPurchased(publications).map(publicationMapper);
   const fulfilledPublications = getFulfilled(publications).map(publicationMapper);
-  const orphanPublications = getOrphan(publications).map(publicationMapper);
   const inProgressPublications = getInProgress(publications).map(publicationMapper);
 
   return (
@@ -25,7 +24,7 @@ function PublicationsLayoutSuspense({ publications, loading }) {
         <ul className="flex-grow">
           {purchasedPublications}
           {loading && publicationMapper(null)}
-          {!purchasedPublications.length && <span>{t('my_account.publications.status.empty_list')}</span>}
+          {!loading && !purchasedPublications.length && <span className="txt-gray2">{t('my_account.publications.status.empty_list')}</span>}
         </ul>
       </CardContainer>
       <CardContainer className={`${styles.publicationList} column mr-16`}>
@@ -33,14 +32,15 @@ function PublicationsLayoutSuspense({ publications, loading }) {
         <ul className="flex-grow">
           {fulfilledPublications}
           {loading && publicationMapper(null)}
+          {!loading && !fulfilledPublications.length && <span className="txt-gray2">{t('my_account.publications.status.empty_list')}</span>}
         </ul>
       </CardContainer>
       <CardContainer className={`${styles.publicationList} column`}>
         <h1 className="txt-medium mb-32">{t('my_account.publications.status.in_progress')}</h1>
         <ul className="flex-grow">
-          {orphanPublications}
           {inProgressPublications}
           {loading && publicationMapper(null)}
+          {!loading && !inProgressPublications.length && <span className="txt-gray2">{t('my_account.publications.status.empty_list')}</span>}
         </ul>
       </CardContainer>
     </div>
