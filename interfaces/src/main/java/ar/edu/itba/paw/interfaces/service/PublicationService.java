@@ -21,6 +21,19 @@ public interface PublicationService {
   public Optional<Publication> findById(final Long id);
 
   /**
+   * Retrieve logged user publications
+   * @return
+   */
+  public List<Publication> userPublications() throws UnauthorizedAccessException;
+
+  /**
+   * Retrieve latest publications
+   * @param quantity
+   * @return
+   */
+  public List<Publication> latest(final Integer quantity);
+
+  /**
    * Creates a new publication
    *
    * @param description
