@@ -21,6 +21,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 import static junit.framework.TestCase.assertEquals;
@@ -301,6 +302,46 @@ public class PublicationServiceImplTest {
     // Check if publication has state finalized
     assertTrue(retrievedPublication.isPresent());
     assertEquals(retrievedPublication.get().getState(), PublicationState.FINALIZED);
+  }
+
+  @Test
+  public void retrievesUserPublications() throws Exception {
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+
+    // Create publication
+    Publication testPublication = publicationService.create("Test Publication", 1.0d, 10L, "", new LinkedList<>());
+
+    // Retrieves supervisor publications
+    List<Publication> supervisorPublications = publicationService.userPublications();
+
+    // Check if there is just one and is the one we added
+    assertEquals(supervisorPublications.size(), 1);
+    assertEquals(supervisorPublications.get(0), testPublication);
+  }
+
+  @Test
+  public void retrievesLatestPublications() throws Exception {
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+
+    // Create some publications
+    Publication testPublication1 = publicationService.create("Test Publication 1", 1.0d, 10L, "", new LinkedList<>());
+    Publication testPublication2 = publicationService.create("Test Publication 2", 1.0d, 10L, "", new LinkedList<>());
+    Publication testPublication3 = publicationService.create("Test Publication 3", 1.0d, 10L, "", new LinkedList<>());
+
+    // Logout
+    SecurityContextHolder.getContext().setAuthentication(null);
+
+    // Retrieves latest 2 publications
+    List<Publication> latestPublications = publicationService.latest(2);
+
+    // Check if there is just two
+    assertEquals(latestPublications.size(), 2);
+
+    // Check if they are in the correct order
+    assertEquals(latestPublications.get(0), testPublication3);
+    assertEquals(latestPublications.get(1), testPublication2);
   }
 
 }
