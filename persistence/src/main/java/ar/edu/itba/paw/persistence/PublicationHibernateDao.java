@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.util.List;
 import java.util.Optional;
 
 @Primary
@@ -55,8 +56,22 @@ public class PublicationHibernateDao implements PublicationDao {
   public void deleteById(Long id) {
     Optional<Publication> pub = findById(id);
 
-    if(pub.isPresent()) {
-      em.remove(pub.get());
-    }
+    pub.ifPresent(p ->em.remove(p));
+  }
+
+  @Override
+  public List<Publication> userPublications(String email) {
+    final TypedQuery<Publication> query = em.createQuery("from Publication p where p.supervisor.email = :email", Publication.class);
+    query.setParameter("email", email);
+
+    return query.getResultList();
+  }
+
+  @Override
+  public List<Publication> latestPublications(Integer quantity) {
+    final TypedQuery<Publication> query = em.createQuery("from Publication p order by p.createdAt desc", Publication.class);
+    query.setMaxResults(quantity);
+
+    return query.getResultList();
   }
 }
