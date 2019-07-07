@@ -1,0 +1,23 @@
+.messageList {
+  min-width: 580px;
+  display: flex;
+  flex-direction: column;
+
+  :not(:last-child) {
+    margin-bottom: 16px;
+  }
+}
+
+.messagesContainer {
+  padding: 16px;
+}
+
+.chat {
+  overflow-y: scroll;
+  height: 415px;
+}
+
+.sendButton {
+  height: 40px;
+  min-width: 40px;
+}

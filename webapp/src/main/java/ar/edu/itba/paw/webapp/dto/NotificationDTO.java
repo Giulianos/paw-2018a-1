@@ -3,11 +3,14 @@ package ar.edu.itba.paw.webapp.dto;
 import ar.edu.itba.paw.model.Notification;
 import org.springframework.security.access.method.P;
 
+import java.util.Date;
+
 public class NotificationDTO {
   private String type;
   private OrderDTO relatedOrder;
   private PublicationDTO relatedPublication;
   private MessageDTO relatedMessage;
+  private Date date;
 
   public NotificationDTO() {
     // Empty constructor needed by JAX-RS
@@ -15,6 +18,8 @@ public class NotificationDTO {
 
   public NotificationDTO(final Notification notification) {
     this.type = notification.getType().toString();
+    this.date = notification.getCreatedAt();
+
     if(notification.getRelatedOrder() != null) {
       this.relatedOrder = new OrderDTO(notification.getRelatedOrder());
     }
@@ -30,6 +35,14 @@ public class NotificationDTO {
 
   public String getType() {
     return type;
+  }
+
+  public Date getDate() {
+    return date;
+  }
+
+  public void setDate(Date date) {
+    this.date = date;
   }
 
   public void setType(String type) {

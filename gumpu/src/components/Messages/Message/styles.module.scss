@@ -1,0 +1,30 @@
+@import '~scss/_colors';
+
+.message {
+  background-color: $gray1;
+  color: $black;
+  padding: 16px;
+  max-width: 320px;
+  width: 70%;
+  min-height: 80px;
+  border-radius: 8px;
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+
+  &.sent {
+    background-color: $blue;
+    color: $white;
+    align-self: flex-end;
+  }
+
+  .date {
+    align-self: flex-end;
+    font-size: 14px;
+  }
+
+  .body {
+    align-self: flex-start;
+    font-size: 16px;
+  }
+}
