@@ -1,4 +1,5 @@
 import publicationService from 'services/publication';
+import userService from 'services/user';
 import actions from './actions';
 
 export const createPublication = newPublication => async (dispatch) => {
@@ -34,3 +35,20 @@ export const orderPublication = (id, quantity) => async (dispatch) => {
 };
 
 export const resetOrderPublication = () => ({ type: actions.ORDER_RESET });
+
+export const listUserPublications = (userId, page, pageSize) => async (dispatch) => {
+  dispatch({ type: actions.LIST_USER });
+
+  try {
+    const response = await userService.publications.list(userId, page, pageSize);
+    if (response.ok) {
+      dispatch({ type: actions.LIST_USER_OK, payload: response.data });
+    } else {
+      dispatch({ type: actions.LIST_USER_FAIL });
+    }
+  } catch (error) {
+    dispatch({ type: actions.LIST_USER_FAIL });
+  }
+};
+
+export const resetListUserPublications = () => ({ type: actions.LIST_USER_RESET });

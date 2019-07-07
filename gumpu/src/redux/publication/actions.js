@@ -10,4 +10,9 @@ export default {
   ORDER_OK: `${prefix}/order_ok`,
   ORDER_FAIL: `${prefix}/order_fail`,
   ORDER_RESET: `${prefix}/order_reset`,
+
+  LIST_USER: `${prefix}/list_user`,
+  LIST_USER_OK: `${prefix}/list_user_ok`,
+  LIST_USER_FAIL: `${prefix}/list_user_fail`,
+  LIST_USER_RESET: `${prefix}/list_user_reset`,
 };
