@@ -122,7 +122,20 @@
       }
     },
     "publications": {
-      "title": "Publicaciones"
+      "title": "Publicaciones",
+      "status": {
+        "purchased": "Esperando confirmación",
+        "fulfilled": "Llegaron al objetivo",
+        "in_progress": "En progreso",
+        "empty_list": "Por ahora no tienes publicaciones"
+      },
+      "card": {
+        "delete": "Eliminar",
+        "chat": "Mensajes",
+        "adopt": "Adoptar",
+        "confirm": "Confirmar",
+        "remaining_quantity": "Restan {{ count }}"
+      }
     }
   }
 }
