@@ -196,4 +196,22 @@ public class PublicationServiceImpl implements PublicationService {
 
     eventPublisher.publishEvent(new PublicationPurchasedEvent(publication.get()));
   }
+
+  @Override
+  @Transactional
+  public List<Publication> userPublications() throws UnauthorizedAccessException {
+    final String loggedUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+
+    if(loggedUserEmail == null) {
+      throw new UnauthorizedAccessException("only logged user can access publications");
+    }
+
+    return publicationDao.userPublications(loggedUserEmail);
+  }
+
+  @Override
+  @Transactional
+  public List<Publication> latest(Integer quantity) {
+    return publicationDao.latestPublications(quantity);
+  }
 }
