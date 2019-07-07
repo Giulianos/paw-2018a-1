@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import Message from './Message';
 
 import styles from './styles.module.scss';
@@ -8,22 +8,28 @@ import Input from 'components/ui/Input';
 
 import msgSendIcon from 'assets/action_icons/msg-send.svg';
 
-function MessagesLayout() {
+function MessagesLayout({ messages, title }) {
+  const bottomRef = useRef(null);
+  const scrollToBottom = () => {
+    bottomRef.current.scrollIntoView({ behavior: "smooth" })
+  }
+  useEffect(scrollToBottom, [messages]);
+
+  const unseen = messages.unseen.map((m,i) => <Message message={m} sent={i%2} />)
+  const seen = messages.seen.map((m,i) => <Message message={m} sent={i%2} />)
+
   return (
     <CardContainer className={styles.messagesContainer}>
+      <h1 className="txt-medium txt-black mb-32">{title}</h1>
       <div className={styles.chat}>
         <ul className={styles.messageList}>
-          <Message message={{message: 'Hola', date: '2019-07-05T20:50:03.403-03:00'}} sent />
-          <Message message={{message: 'Hola!', date: '2019-07-05T20:50:03.403-03:00'}} />
-          <Message message={{message: 'Como andas?', date: '2019-07-05T20:50:03.403-03:00'}} />
-          <Message message={{message: 'Todo bien! Vos?', date: '2019-07-05T20:50:03.403-03:00'}} sent />
-          <Message message={{message: 'Bien bien!', date: '2019-07-05T20:50:03.403-03:00'}} />
+          {seen}
         </ul>
         <span className="row w100 center mt-24 mb-24 txt-normal txt-blue">Mensajes nuevos</span>
         <ul className={styles.messageList}>
-          <Message message={{message: 'Hola', date: '2019-07-05T20:50:03.403-03:00'}} sent />
-          <Message message={{message: 'Hola!', date: '2019-07-05T20:50:03.403-03:00'}} />
+          {unseen}
         </ul>
+        <div ref={bottomRef} />
       </div>
       <div className="row mt-16">
         <Input className="flex-grow mr-8" />

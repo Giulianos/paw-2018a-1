@@ -4,7 +4,7 @@ import Messages from 'components/Messages';
 function Secondary() {
 
   return (
-    <div style={{ height: '1000px' }}>
+    <div className="view-container">
       <Messages />
     </div>
   );
