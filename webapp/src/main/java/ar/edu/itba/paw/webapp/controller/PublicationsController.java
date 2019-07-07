@@ -5,10 +5,7 @@ import ar.edu.itba.paw.interfaces.exception.PublicationFulfilledException;
 import ar.edu.itba.paw.interfaces.exception.UnauthorizedAccessException;
 import ar.edu.itba.paw.interfaces.service.PublicationService;
 import ar.edu.itba.paw.model.Publication;
-import ar.edu.itba.paw.webapp.dto.ErrorDTO;
-import ar.edu.itba.paw.webapp.dto.PublicationDTO;
-import ar.edu.itba.paw.webapp.dto.PublicationNewDTO;
-import ar.edu.itba.paw.webapp.dto.PublicationStateDTO;
+import ar.edu.itba.paw.webapp.dto.*;
 import ar.edu.itba.paw.webapp.dto.constraints.ConstraintViolationsDTO;
 import ar.edu.itba.paw.webapp.httpmethods.PATCH;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +19,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -53,6 +51,19 @@ public class PublicationsController {
         }
 
         return Response.ok(new PublicationDTO(publicationOptional.get())).build();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/latest")
+    public Response retreiveLatest(@QueryParam("pageSize") Integer pageSize) {
+        if(pageSize == null) {
+           pageSize = 10;
+        }
+
+        List<Publication> publicationList = publicationService.latest(pageSize);
+
+        return Response.ok(new PublicationsDTO(publicationList)).build();
     }
 
     @POST
