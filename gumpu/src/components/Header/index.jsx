@@ -19,6 +19,7 @@ function Header() {
           <Link to="/publish" className="mr-64 txt-normal">{t('header.publish')}</Link>
           { !auth.logged && <Link to="/create-account" className="txt-normal mr-64">{t('header.create_account')}</Link> }
           { !auth.logged && <Link to="/login" className="txt-normal mr-64">{t('header.login')}</Link> }
+          { auth.logged && <Link to="/my-account" className="txt-normal mr-64">{t('header.my_account')}</Link> }
           { auth.logged && <NotificationsMenu>{t('header.notifications')}</NotificationsMenu> }
         </div>
       </div>
