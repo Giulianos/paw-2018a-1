@@ -35,11 +35,10 @@ function App() {
   }, [dispatch]);
 
   if (token && !auth.logged) {
-    console.log('Waiting for user to log')
     return <FullScreenLoader />;
   }
   return (
-    <Router history={history}>
+    <Router history={history} basename={process.env.REACT_APP_BASE_URL}>
       <Header />
       <div className={styles.appContainer}>
         <Switch>

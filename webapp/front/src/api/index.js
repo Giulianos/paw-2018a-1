@@ -6,7 +6,7 @@ import { resetRetrieveUser } from 'redux/user/actionCreators';
 import { logout } from 'redux/auth/actionCreators';
 
 const api = create({
-  baseURL: '/api',
+  baseURL: `${process.env.REACT_APP_BASE_URL || ''}/api`,
 });
 
 // Add token from localStorage (if any)

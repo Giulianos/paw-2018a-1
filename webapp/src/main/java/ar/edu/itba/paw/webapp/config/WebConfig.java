@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
@@ -118,6 +119,21 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     final LocalValidatorFactoryBean factory = new LocalValidatorFactoryBean();
     factory.setValidationMessageSource(messageSource());
     return factory;
+  }
+
+  @Override
+  public void addResourceHandlers(ResourceHandlerRegistry registry) {
+
+    registry.addResourceHandler("/static/**")
+        .addResourceLocations("/WEB-INF/view/react/build/static/");
+    registry.addResourceHandler("/*.js")
+        .addResourceLocations("/WEB-INF/view/react/build/");
+    registry.addResourceHandler("/*.json")
+        .addResourceLocations("/WEB-INF/view/react/build/");
+    registry.addResourceHandler("/*.ico")
+        .addResourceLocations("/WEB-INF/view/react/build/");
+    registry.addResourceHandler("/index.html")
+        .addResourceLocations("/WEB-INF/view/react/build/index.html");
   }
 
 }
