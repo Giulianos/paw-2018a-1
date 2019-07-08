@@ -149,4 +149,21 @@ public class PublicationsController {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/searches/{terms}")
+    public Response search(@QueryParam("pageSize") Integer pageSize, @QueryParam("page") Integer page, @PathParam("terms") String terms) {
+        if(pageSize == null) {
+            pageSize = 10;
+        }
+
+        if(terms == null) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(new ErrorDTO("search terms should be provided")).build();
+        }
+
+        List<Publication> publicationList = publicationService.search(terms);
+
+        return Response.ok(new PublicationsDTO(publicationList)).build();
+    }
 }
