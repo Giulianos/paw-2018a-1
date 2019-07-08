@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 
 import ActionButton from './components/ActionButton';
 
-function PublicationCardLayoutSuspense({ publication, className }) {
+function PublicationCardLayoutSuspense({ publication, className, onMessage }) {
   const { t } = useTranslation();
   const publicationState = publication.status;
   return (
@@ -30,7 +30,7 @@ function PublicationCardLayoutSuspense({ publication, className }) {
           )
         }
         { (publicationState === 'PURCHASED' || publicationState === 'FULFILLED') && (
-            <ActionButton className="mr-16" action="chat" label={t('my_account.publications.card.chat')}/>
+            <ActionButton onClick={onMessage} className="mr-16" action="chat" label={t('my_account.publications.card.chat')}/>
           )
         }
       </div>
