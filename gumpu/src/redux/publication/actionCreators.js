@@ -69,3 +69,20 @@ export const getLatestPublications = pageSize => async (dispatch) => {
 };
 
 export const resetGetLatest = () => ({ type: actions.LATEST_RESET });
+
+export const listPublicationOrders = (publicationId, page, pageSize) => async (dispatch) => {
+  dispatch({ type: actions.LIST_ORDERS });
+
+  try {
+    const response = await publicationService.orders.list(publicationId, page, pageSize);
+    if (response.ok) {
+      dispatch({ type: actions.LIST_ORDERS_OK, payload: response.data });
+    } else {
+      dispatch({ type: actions.LIST_ORDERS_FAIL });
+    }
+  } catch (error) {
+    dispatch({ type: actions.LIST_ORDERS_FAIL });
+  }
+};
+
+export const resetListPublicationOrders = () => ({ type: actions.LIST_ORDERS_RESET });

@@ -195,7 +195,7 @@ public class OrderServiceImpl implements OrderService {
 
   @Override
   @Transactional
-  public void sendMessage(OrderId id, String message) throws EntityNotFoundException, UnauthorizedAccessException {
+  public Message sendMessage(OrderId id, String message) throws EntityNotFoundException, UnauthorizedAccessException {
     Optional<Order> order = orderDao.findById(id);
     Optional<User> loggedUser = userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
 
@@ -218,6 +218,8 @@ public class OrderServiceImpl implements OrderService {
 
     // Publish event (for notifications)
     eventPublisher.publishEvent(new NewMessageEvent(sentMessage));
+
+    return sentMessage;
   }
 
   @Override

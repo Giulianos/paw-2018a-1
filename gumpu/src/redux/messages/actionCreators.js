@@ -62,3 +62,35 @@ export const listUnseenPublicationMessages = (publicationId, ordererId) => async
 };
 
 export const resetList = () => ({ type: actions.LIST_RESET });
+
+export const sendMessageToOrder = (userId, orderId) => message => async (dispatch) => {
+  dispatch({ type: actions.SEND });
+
+  try {
+    const response = await messageService.order.send(userId, orderId, message);
+    if (response.ok) {
+      dispatch({ type: actions.SEND_OK, payload: response.data });
+    } else {
+      dispatch({ type: actions.SEND_FAIL });
+    }
+  } catch (error) {
+    dispatch({ type: actions.SEND_FAIL });
+  }
+};
+
+export const sendMessageToPublication = (publicationId, ordererId) => message => async (dispatch) => {
+  dispatch({ type: actions.SEND });
+
+  try {
+    const response = await messageService.publication.send(publicationId, ordererId, message);
+    if (response.ok) {
+      dispatch({ type: actions.SEND_OK, payload: response.data });
+    } else {
+      dispatch({ type: actions.SEND_FAIL });
+    }
+  } catch (error) {
+    dispatch({ type: actions.SEND_FAIL });
+  }
+};
+
+export const resetSend = () => ({ type: actions.SEND_RESET });

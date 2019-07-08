@@ -28,7 +28,15 @@ const initialState = {
     loading: false,
     error: false,
     publications: []
-  }
+  },
+  ordersList: {
+    success: false,
+    loading: false,
+    error: false,
+    orders: [],
+    nextPage: 0,
+    totalPages: 1
+  },
 };
 
 function reduce(state = initialState, action) {
@@ -84,6 +92,22 @@ function reduce(state = initialState, action) {
       return { ...state, latest: { success: false, loading: false, error: true } };
     case actions.LATEST_RESET:
       return { ...state, latest: { ...initialState.latest } };
+
+    /** LIST_ORDERS actions */
+    case actions.LIST_ORDERS:
+      return { ...state, ordersList: { ...state.ordersList, loading: true, error: false } };
+    case actions.LIST_ORDERS_OK:
+      return { ...state, ordersList: {
+        success: true,
+        loading: false,
+        error: false,
+        orders: [ ...state.ordersList.orders, ...action.payload.orders ]
+      }
+    };
+    case actions.LIST_ORDERS_FAIL:
+      return { ...state, ordersList: { success: false, loading: false, error: true } };
+    case actions.LIST_ORDERS_RESET:
+      return { ...state, ordersList: { ...initialState.ordersList } };
 
     default:
       return state;

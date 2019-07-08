@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { listOrders, resetListOrders } from 'redux/orders/actionCreators';
@@ -10,6 +10,7 @@ function Orders() {
   const orders = useSelector(state => state.orders.list);
   const dispatch = useDispatch();
   const auth = useAuth();
+  const [messageModal, setMessageModal] = useState(null);
 
   useEffect(() => {
     if(!orders.success) {
@@ -17,7 +18,7 @@ function Orders() {
     }
   }, [])
 
-  return <OrdersLayout orders={orders.orders} loading={orders.loading} />;
+  return <OrdersLayout orders={orders.orders} loading={orders.loading} messageModal={messageModal} setMessageModal={setMessageModal} />;
 }
 
 export default Orders;
