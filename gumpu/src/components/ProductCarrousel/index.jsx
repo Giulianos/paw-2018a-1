@@ -7,7 +7,7 @@ import OrderModal from 'components/OrderModal';
 import publicationMock from 'mocks/publication';
 import publicationMock2 from 'mocks/publication2';
 
-function ProductCarrousel({ title, className }) {
+function ProductCarrousel({ title, className, products }) {
   const [ selectedPublication, setSelectedPublication ] = useState();
   const [ modalVisibility, setModalVisibility ] = useState(false);
 
@@ -25,10 +25,10 @@ function ProductCarrousel({ title, className }) {
     <section className="column">
       <h2 className="txt-large mb-24 txt-gray3">{title}</h2>
       <div className={`${className} row space-between`}>
-        <ProductCard onClick={handleOpen} product={publicationMock} className="mr-32" />
-        <ProductCard onClick={handleOpen} product={publicationMock2} className="mr-32" />
-        <ProductCard onClick={handleOpen} product={publicationMock} className="mr-32" />
-        <ProductCard onClick={handleOpen} product={publicationMock} />
+        <ProductCard onClick={products && handleOpen} product={products && products[0]} className="mr-32" />
+        <ProductCard onClick={products && handleOpen} product={products && products[1]} className="mr-32" />
+        <ProductCard onClick={products && handleOpen} product={products && products[2]} className="mr-32" />
+        <ProductCard onClick={products && handleOpen} product={products && products[3]} />
       </div>
       <OrderModal shown={modalVisibility} onClose={handleClose} selectedPublication={selectedPublication} />
     </section>

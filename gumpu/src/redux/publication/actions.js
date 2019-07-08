@@ -15,4 +15,9 @@ export default {
   LIST_USER_OK: `${prefix}/list_user_ok`,
   LIST_USER_FAIL: `${prefix}/list_user_fail`,
   LIST_USER_RESET: `${prefix}/list_user_reset`,
+
+  LATEST: `${prefix}/latest`,
+  LATEST_OK: `${prefix}/latest_ok`,
+  LATEST_FAIL: `${prefix}/latest_fail`,
+  LATEST_RESET: `${prefix}/latest_reset`,
 };

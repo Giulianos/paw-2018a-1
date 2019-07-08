@@ -22,6 +22,12 @@ const initialState = {
     publications: [],
     nextPage: 0,
     totalPages: 1
+  },
+  latest: {
+    success: false,
+    loading: false,
+    error: false,
+    publications: []
   }
 };
 
@@ -56,11 +62,28 @@ function reduce(state = initialState, action) {
         loading: false,
         error: false,
         publications: [ ...state.userList.publications, ...action.payload.publications ]
-      } };
+      }
+    };
     case actions.LIST_USER_FAIL:
       return { ...state, userList: { success: false, loading: false, error: true } };
     case actions.LIST_USER_RESET:
       return { ...state, userList: { ...initialState.userList } };
+
+    /** LATEST actions */
+    case actions.LATEST:
+      return { ...state, latest: { ...state.latest, loading: true, error: false } };
+    case actions.LATEST_OK:
+      return { ...state, latest: {
+        success: true,
+        loading: false,
+        error: false,
+        publications: [ ...state.latest.publications, ...action.payload.publications ]
+      }
+    };
+    case actions.LATEST_FAIL:
+      return { ...state, latest: { success: false, loading: false, error: true } };
+    case actions.LATEST_RESET:
+      return { ...state, latest: { ...initialState.latest } };
 
     default:
       return state;
