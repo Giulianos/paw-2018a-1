@@ -53,4 +53,11 @@ public interface PublicationDao {
      * @param id
      */
     public void deleteById(final Long id);
+
+    /**
+     * Retrieve publications by tags (ordered by matches)
+     * @param tags
+     * @return
+     */
+    public List<Publication> searchByTags(final List<String> tags, Integer page, Integer pageSize);
 }
