@@ -7,15 +7,17 @@ import ProductCarrousel from 'components/ProductCarrousel';
 import styles from './styles.module.scss';
 import CreateAccount from './components/CreateAccount';
 import { getLatestPublications } from 'redux/publication/actionCreators';
+import useAuth from 'hooks/useAuth';
 
 function Home({ location }) {
   const registerRef = useRef(null)
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const auth = useAuth();
   
   const scrollToRegister = () => {
-    if(location.pathname === '/create-account')
-    registerRef.current.scrollIntoView({ behavior: "smooth" })
+    if(location.pathname === '/create-account' && registerRef.current)
+      registerRef.current.scrollIntoView({ behavior: "smooth" })
   }
   
   useEffect(scrollToRegister, [location]);
@@ -31,7 +33,7 @@ function Home({ location }) {
       <div className="w100 row pl-64 pr-64 mb-96">
         <ProductCarrousel products={latest.publications} title={t('home.latest_products')} />
       </div>
-      <div ref={registerRef} className="w100 row space-between pl-64 pr-64">
+      {!auth.logged && (<div ref={registerRef} className="w100 row space-between pl-64 pr-64">
         <h2 className={`${styles.registerMessage} txt-xlarge mt-32`}>
           <Trans i18nKey="home.register_now">
             <span className="txt-gray3">New to Gumpu?</span>
@@ -42,7 +44,7 @@ function Home({ location }) {
           </Trans>
         </h2>
         <CreateAccount />
-      </div>
+      </div>)}
     </div>
   );
 }
