@@ -52,3 +52,20 @@ export const listUserPublications = (userId, page, pageSize) => async (dispatch)
 };
 
 export const resetListUserPublications = () => ({ type: actions.LIST_USER_RESET });
+
+export const getLatestPublications = pageSize => async (dispatch) => {
+  dispatch({ type: actions.LATEST });
+
+  try {
+    const response = await publicationService.getLatest(pageSize);
+    if (response.ok) {
+      dispatch({ type: actions.LATEST_OK, payload: response.data });
+    } else {
+      dispatch({ type: actions.LATEST_FAIL });
+    }
+  } catch (error) {
+    dispatch({ type: actions.LATEST_FAIL });
+  }
+};
+
+export const resetGetLatest = () => ({ type: actions.LATEST_RESET });
