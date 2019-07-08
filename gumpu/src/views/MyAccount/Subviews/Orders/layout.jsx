@@ -47,7 +47,7 @@ function OrdersLayoutSuspense({ orders, loading, messageModal, setMessageModal }
           {!loading && !inProgressOrders.length && !orphanOrders.length && <span className="txt-gray2">{t('my_account.orders.status.empty_list')}</span>}
         </ul>
       </CardContainer>
-      {messageModal && <MessageModal setModal={setMessageModal} orderId={messageModal}/>}
+      {messageModal && <MessageModal setModal={setMessageModal} order={messageModal}/>}
     </div>
   );
 }

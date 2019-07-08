@@ -9,9 +9,8 @@ function OrderCard({ className, order, onMessage }) {
   }
   
   const messageHandler = () => {
-    console.log("Chatting")
     if(onMessage) {
-      onMessage(order.publication.id);
+      onMessage(order);
     }
   }
 

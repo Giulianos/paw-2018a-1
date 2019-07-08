@@ -14,7 +14,7 @@ import {
 import MessagesLayout from './layout';
 import useFormInput from 'hooks/useFormInput';
 
-function Messages({ publicationId, userId }) {
+function Messages({ publicationId, userId, title }) {
   const auth = useAuth();
   const dispatch = useDispatch();
   const messages = useSelector(state => state.messages.list);
@@ -37,7 +37,7 @@ function Messages({ publicationId, userId }) {
     dispatch(loadMore);
   }, 2000);
 
-  return <MessagesLayout title="Giuliano" messages={messages.messages} scroll={10} currentUserId={auth.user.id} {...form} onSubmit={sendHandler} />;
+  return <MessagesLayout title={title} messages={messages.messages} scroll={10} currentUserId={auth.user.id} {...form} onSubmit={sendHandler} />;
 }
 
 export default Messages;
