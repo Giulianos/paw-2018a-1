@@ -9,8 +9,6 @@ function MessageSuspense({ sent, message, className }) {
 
   const messageClass = `${styles.message} ${sent ? styles.sent : ''} ${className}`
 
-  console.log(i18n.language);
-
   return <div className={messageClass}>
     <div className={styles.body}>
       { message.message }
