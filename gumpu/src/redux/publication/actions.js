@@ -20,4 +20,9 @@ export default {
   LATEST_OK: `${prefix}/latest_ok`,
   LATEST_FAIL: `${prefix}/latest_fail`,
   LATEST_RESET: `${prefix}/latest_reset`,
+
+  LIST_ORDERS: `${prefix}/list_orders`,
+  LIST_ORDERS_OK: `${prefix}/list_orders_ok`,
+  LIST_ORDERS_FAIL: `${prefix}/list_orders_fail`,
+  LIST_ORDERS_RESET: `${prefix}/list_orders_reset`,
 };

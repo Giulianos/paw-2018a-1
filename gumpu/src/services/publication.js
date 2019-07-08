@@ -9,6 +9,7 @@ export default {
   leave: id => api.delete(`${ENDPOINT}/${id}`),
   getLatest: pageSize => api.get(`${ENDPOINT}/latest`, { pageSize }),
   orders: {
-    create: (id, quantity) => api.post(`${ENDPOINT}/${id}/orders`, { quantity })
+    create: (id, quantity) => api.post(`${ENDPOINT}/${id}/orders`, { quantity }),
+    list: (id, page, pageSize) => api.get(`${ENDPOINT}/${id}/orders`, { page, pageSize }),
   }
 };
