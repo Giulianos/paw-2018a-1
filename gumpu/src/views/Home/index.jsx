@@ -1,20 +1,27 @@
 import React, { Suspense, useRef, useEffect } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useSelector, useDispatch } from 'react-redux';
 
 import SearchBar from 'components/SearchBar';
 import ProductCarrousel from 'components/ProductCarrousel';
 import styles from './styles.module.scss';
 import CreateAccount from './components/CreateAccount';
+import { getLatestPublications } from 'redux/publication/actionCreators';
 
 function Home({ location }) {
   const registerRef = useRef(null)
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  
   const scrollToRegister = () => {
     if(location.pathname === '/create-account')
-      registerRef.current.scrollIntoView({ behavior: "smooth" })
+    registerRef.current.scrollIntoView({ behavior: "smooth" })
   }
-
+  
   useEffect(scrollToRegister, [location]);
+  useEffect(() => { dispatch(getLatestPublications(4)); }, []);
+
+  const latest = useSelector(state => state.publication.latest);
 
   return (
     <div className="view-container column center-alt">
@@ -22,7 +29,7 @@ function Home({ location }) {
         <SearchBar />
       </div>
       <div className="w100 row pl-64 pr-64 mb-96">
-        <ProductCarrousel title={t('home.latest_products')} />
+        <ProductCarrousel products={latest.publications} title={t('home.latest_products')} />
       </div>
       <div ref={registerRef} className="w100 row space-between pl-64 pr-64">
         <h2 className={`${styles.registerMessage} txt-xlarge mt-32`}>
