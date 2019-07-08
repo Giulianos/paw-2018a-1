@@ -5,7 +5,7 @@ function Secondary() {
 
   return (
     <div className="view-container">
-      <Messages />
+      <Messages publicationId={9} userId={1} />
     </div>
   );
 }
