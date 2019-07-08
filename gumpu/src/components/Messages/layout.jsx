@@ -8,15 +8,15 @@ import Input from 'components/ui/Input';
 
 import msgSendIcon from 'assets/action_icons/msg-send.svg';
 
-function MessagesLayout({ messages, title }) {
+function MessagesLayout({ messages, title, currentUserId }) {
   const bottomRef = useRef(null);
   const scrollToBottom = () => {
     bottomRef.current.scrollIntoView({ behavior: "smooth" })
   }
-  useEffect(scrollToBottom, [messages]);
+  useEffect(scrollToBottom, [messages.length]);
 
-  const unseen = messages.unseen.map((m,i) => <Message message={m} sent={i%2} />)
-  const seen = messages.seen.map((m,i) => <Message message={m} sent={i%2} />)
+  const unseen = messages.filter(m => !m.seen).map(m => <Message key={m.id} message={m} sent={m.from.id === currentUserId} />)
+  const seen = messages.filter(m => m.seen).map(m => <Message key={m.id} message={m} sent={m.from.id === currentUserId} />)
 
   return (
     <CardContainer className={styles.messagesContainer}>
