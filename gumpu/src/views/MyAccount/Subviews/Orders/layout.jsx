@@ -1,22 +1,24 @@
 import React, { Suspense } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import CardContainer from 'components/ui/CardContainer';
 import OrderCard from 'components/ui/OrderCard';
-
-import styles from './styles.module.scss';
-import { useTranslation } from 'react-i18next';
 import Loader from 'components/ui/Loader';
+
+import MessageModal from './components/MessageModal';
+import styles from './styles.module.scss';
 
 import { getPurchased, getFulfilled, getOrphan, getInProgress } from './filters';
 
-const orderMapper = o => (<li key={o && o.publication.id}><OrderCard order={o} className="mb-16" /></li>);
+const orderMapper = messageHandler => o => (<li key={o && o.publication.id}><OrderCard order={o} className="mb-16" onMessage={messageHandler} /></li>);
 
-function OrdersLayoutSuspense({ orders, loading }) {
+function OrdersLayoutSuspense({ orders, loading, messageModal, setMessageModal }) {
   const { t } = useTranslation();
 
-  const purchasedOrders = getPurchased(orders).map(orderMapper);
-  const fulfilledOrders = getFulfilled(orders).map(orderMapper);
-  const orphanOrders = getOrphan(orders).map(orderMapper);
-  const inProgressOrders = getInProgress(orders).map(orderMapper);
+  const purchasedOrders = getPurchased(orders).map(orderMapper(setMessageModal));
+  const fulfilledOrders = getFulfilled(orders).map(orderMapper(setMessageModal));
+  const orphanOrders = getOrphan(orders).map(orderMapper());
+  const inProgressOrders = getInProgress(orders).map(orderMapper());
 
   return (
     <div className="row h100">
@@ -45,6 +47,7 @@ function OrdersLayoutSuspense({ orders, loading }) {
           {!loading && !inProgressOrders.length && !orphanOrders.length && <span className="txt-gray2">{t('my_account.orders.status.empty_list')}</span>}
         </ul>
       </CardContainer>
+      {messageModal && <MessageModal setModal={setMessageModal} orderId={messageModal}/>}
     </div>
   );
 }
