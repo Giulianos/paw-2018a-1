@@ -76,9 +76,9 @@ public class UserOrderMessagesController {
         OrderId orderId = new OrderId(userId, publicationId);
 
         try {
-            orderService.sendMessage(orderId, messageNew.getMessage());
+            Message sentMessage = orderService.sendMessage(orderId, messageNew.getMessage());
 
-            return Response.status(Response.Status.CREATED).build();
+            return Response.status(Response.Status.CREATED).entity(new MessageDTO(sentMessage)).build();
         } catch(EntityNotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         } catch(UnauthorizedAccessException e) {
