@@ -69,7 +69,7 @@ public class PublicationHibernateDao implements PublicationDao {
 
   @Override
   public List<Publication> latestPublications(Integer quantity) {
-    final TypedQuery<Publication> query = em.createQuery("from Publication p order by p.createdAt desc", Publication.class);
+    final TypedQuery<Publication> query = em.createQuery("from Publication p where p.state = 0 order by p.createdAt desc", Publication.class);
     query.setMaxResults(quantity);
 
     return query.getResultList();
