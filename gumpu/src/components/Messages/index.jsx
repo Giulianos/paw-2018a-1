@@ -31,6 +31,7 @@ function Messages({ publicationId, userId, title }) {
   const sendHandler = e => {
     e.preventDefault();
     dispatch(sendMessage(form.message.value));
+    form.message.reset();
   }
   useEffect(() => { dispatch(loadInitial) }, []);
   usePolling(() => {
