@@ -21,6 +21,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -213,5 +215,13 @@ public class PublicationServiceImpl implements PublicationService {
   @Transactional
   public List<Publication> latest(Integer quantity) {
     return publicationDao.latestPublications(quantity);
+  }
+
+  @Override
+  @Transactional
+  public List<Publication> search(final String terms) {
+    List<String> tokens = Arrays.stream(terms.split(" ")).collect(Collectors.toList());
+
+    return publicationDao.searchByTags(tokens, 0, 10);
   }
 }
