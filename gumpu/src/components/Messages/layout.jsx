@@ -8,7 +8,7 @@ import Input from 'components/ui/Input';
 
 import msgSendIcon from 'assets/action_icons/msg-send.svg';
 
-function MessagesLayout({ messages, title, currentUserId }) {
+function MessagesLayout({ messages, title, currentUserId, onSubmit, message }) {
   const bottomRef = useRef(null);
   const scrollToBottom = () => {
     bottomRef.current.scrollIntoView({ behavior: "smooth" })
@@ -17,6 +17,8 @@ function MessagesLayout({ messages, title, currentUserId }) {
 
   const unseen = messages.filter(m => !m.seen).map(m => <Message key={m.id} message={m} sent={m.from.id === currentUserId} />)
   const seen = messages.filter(m => m.seen).map(m => <Message key={m.id} message={m} sent={m.from.id === currentUserId} />)
+
+  const { valid, validatable, ...messageProps } = message;
 
   return (
     <CardContainer className={styles.messagesContainer}>
@@ -31,10 +33,10 @@ function MessagesLayout({ messages, title, currentUserId }) {
         </ul>
         <div ref={bottomRef} />
       </div>
-      <div className="row mt-16">
-        <Input className="flex-grow mr-8" />
+      <form onSubmit={onSubmit} className="row mt-16">
+        <Input {...messageProps} className="flex-grow mr-8" />
         <Button className={styles.sendButton}><img src={msgSendIcon} alt="send" /></Button>
-      </div>
+      </form>
     </CardContainer>
   );
 }
