@@ -10,6 +10,7 @@ import user from './user/reducer';
 import publication from './publication/reducer';
 import notifications from './notifications/reducer';
 import orders from './orders/reducer';
+import messages from './messages/reducer';
 
 const reducer = combineReducers({
   auth,
@@ -18,6 +19,7 @@ const reducer = combineReducers({
   user,
   notifications,
   publication,
+  messages,
   sample,
 });
 
