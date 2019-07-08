@@ -1,20 +1,141 @@
 {
   "secondary": {
-    "example": "This is a translation example!"
+    "example": "Esta es una traduccion de ejemplo!"
   },
   "notifications": {
-    "new_message": "New message from <1>{{name}}</1>",
-    "order_purchased": "<0>{{title}}</0> was purchased!",
-    "publication_fulfilled": "<0>{{title}}</0> is fulfilled!",
-    "publication_orphan": "The organizer left <1>{{title}}</1>"
+    "new_message": "Nuevo mensaje de <1>{{name}}</1>",
+    "order_purchased": "<0>{{title}}</0> ya fue comprada!",
+    "publication_fulfilled": "<0>{{title}}</0> llego al objetivo!",
+    "publication_orphan": "El organizador dejo <1>{{title}}</1>",
+    "empty_state": "Estás al día!"
   },
   "header": {
-    "notifications": "Notifications",
-    "publish": "Publish",
-    "login": "Login",
-    "my_account": "My Account"
+    "notifications": "Notificaciones",
+    "publish": "Publicar",
+    "login": "Ingresar",
+    "my_account": "Mi Cuenta",
+    "create_account": "Crear cuenta"
+  },
+  "search_bar": {
+    "question": "Que estás buscando?",
+    "placeholder": "Ej. aceite",
+    "action": "BUSCAR"
   },
   "home": {
-    "register_now": "<0>New to Gumpu?</0><br/><2>Create an account</2><br/><4>now!</4>"
+    "register_now": "<0>Nuevo en Gumpu?</0><br/><2>Creá tu cuenta</2><br/><4>ahora!</4>",
+    "register_form": {
+      "name": "Nombre completo",
+      "email": "Email",
+      "password": "Nueva contrasena",
+      "action": "CREAR CUENTA"
+    },
+    "latest_products": "Ultimas publicaciones"
+  },
+  "login": {
+    "title": "Ingresar",
+    "email": "Email",
+    "password": "Contrasena",
+    "register_hint": "No tenes cuenta? <1>Crea una ahora!</1>",
+    "action": "INGRESAR"
+  },
+  "publish": {
+    "example": "This is the publish page",
+    "title": "Publicar",
+    "step1": {
+      "title": "Que estas por publicar?",
+      "form": {
+        "description": "Descripcion",
+        "description_placeholder": "Ej. manzanas rojas",
+        "description_error": "Debe tener entre {{min}} y {{max}} caracteres",
+        "unit_price": "Precio unitario",
+        "total_quantity": "Cantidad total"
+      }
+    },
+    "step2": {
+      "title": "Describi tu producto",
+      "info": "Esto ayudara a que los usuarios entiendan mejor que estan comprando",
+      "form": {
+        "detailed_description": "Descripcion detallada",
+        "tags": "Palabras clave",
+        "tags_placeholder": "Ej. fruta, manzana, roja",
+        "tags_error": "Deben separarse con coma y tener al menos {{min}} caracteres"
+      }
+    },
+    "action": "PUBLICAR",
+    "result_success": {
+      "message": "<0>Genial!</0><1>Tu producto fue publicado!<1>",
+      "action": "VER PUBLICACION"
+    },
+    "result_fail": {
+      "message": "<0>Ups!</0><1>No pudimos crear la publicacion!<1>",
+      "action": "REINTENTAR"
+    }
+  },
+  "product": {
+    "organizer_calification": "Calificacion del organizador"
+  },
+  "validations": {
+    "email": "Email invalido",
+    "full_name": "El nombre debe tener entre {{min}} y {{max}} caracteres",
+    "password": "La contrasena debe tener al menos {{min}} caracteres"
+  },
+  "order_modal": {
+    "title": "Ordenar",
+    "description": "Descripcion",
+    "availability": "{{count}} disponible!",
+    "availability_plural": "{{count}} disponibles",
+    "quantity": "Cantidad",
+    "you_will_pay": "Vas a pagar <1>{{price}}<1>",
+    "actions": {
+      "order": "ORDENAR",
+      "cancel": "CANCELAR"
+    },
+    "result_success": {
+      "message": "<0>Genial!</0><1>Tu orden se realizo con éxito!<1>",
+      "action": "OK"
+    },
+    "result_fail": {
+      "message": "<0>Ups!</0><1>No pudimos tomar la orden!<1>",
+      "action": "REINTENTAR"
+    }
+  },
+  "my_account": {
+    "title": "Mi Cuenta",
+    "summary": {
+      "title": "Resumen"
+    },
+    "orders": {
+      "title": "Órdenes",
+      "status": {
+        "purchased": "Por recibir",
+        "fulfilled": "Llegaron al objetivo",
+        "in_progress": "En progreso",
+        "empty_list": "Por ahora no tienes ordenes"
+      },
+      "card": {
+        "delete": "Eliminar",
+        "chat": "Mensajes",
+        "adopt": "Adoptar",
+        "confirm": "Confirmar",
+        "remaining_quantity": "Restan {{ count }}",
+        "orderer_quantity": "Ordenaste {{ count }}"
+      }
+    },
+    "publications": {
+      "title": "Publicaciones",
+      "status": {
+        "purchased": "Esperando confirmación",
+        "fulfilled": "Llegaron al objetivo",
+        "in_progress": "En progreso",
+        "empty_list": "Por ahora no tienes publicaciones"
+      },
+      "card": {
+        "delete": "Eliminar",
+        "chat": "Mensajes",
+        "adopt": "Adoptar",
+        "confirm": "Confirmar",
+        "remaining_quantity": "Restan {{ count }}"
+      }
+    }
   }
 }

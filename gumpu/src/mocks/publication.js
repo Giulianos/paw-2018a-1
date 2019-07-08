@@ -1,16 +1,13 @@
 export default {
-  availableQuantity: 130,
-  description: 'Algo para probar',
-  detailedDescription: 'Esto es una publicacion de prueba',
-  id: 3,
+  availableQuantity: 10,
+  description: 'Mensa',
+  detailedDescription: 'publication',
+  id: 9,
   images: [],
-  quantity: 130,
+  quantity: 10,
   status: 'IN_PROGRESS',
-  supervisorId: 1,
-  supervisorUrl: 'http://pawserver.it.itba.edu.ar/paw-2018a-1/api/users/1',
-  tags: [
-    'prueba',
-    'publicacion'
-  ],
-  unitPrice: 10
+  supervisorId: 2,
+  supervisorUrl: 'http://pawserver.it.itba.edu.ar/paw-2018a-1/api/users/2',
+  tags: [],
+  unitPrice: 1
 }

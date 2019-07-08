@@ -1,11 +1,11 @@
 import React from 'react';
-import Modal from 'components/ui/Modal';
-import OrderModal from 'components/OrderModal';
+
+import Messages from 'components/Messages';
 function Secondary() {
 
   return (
-    <div style={{ height: '1000px' }}>
-      <OrderModal />
+    <div className="view-container">
+      <Messages publicationId={9} userId={1} />
     </div>
   );
 }
