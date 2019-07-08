@@ -5,19 +5,18 @@ import { listPublicationOrders, resetListPublicationOrders } from 'redux/publica
 
 import MessageModalLayout from './layout';
 
-function MessageModal({ setModal, publication}) {
+function MessageModal({ onClose, match }) {
   const dispatch = useDispatch();
   const orders = useSelector(state => state.publication.ordersList);
   useEffect(() => {
-    dispatch(listPublicationOrders(publication.id, 0, 30));
+    dispatch(listPublicationOrders(match.params.pub_id, 0, 30));
     return () => dispatch(resetListPublicationOrders());
   }, [])
-
-  const closeModal = () => {
-    setModal(null);
+  const onCloseWithPublication = () => {
+    onClose(match.params.pub_id)
   }
 
-  return <MessageModalLayout onClose={closeModal} publication={publication} orders={orders} />;
+  return <MessageModalLayout onClose={onCloseWithPublication} orders={orders} />;
 }
 
 export default MessageModal;
