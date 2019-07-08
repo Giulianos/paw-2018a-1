@@ -7,6 +7,11 @@ const initialState = {
     loading: false,
     error: false,
     messages: []
+  },
+  send: {
+    sucess: false,
+    loading: false,
+    error: false
   }
 };
 
@@ -27,6 +32,15 @@ function reduce(state = initialState, action) {
     case actions.LIST_RESET:
       return { ...state, list: { ...initialState.list } };
 
+    /** SEND actions */
+    case actions.SEND:
+      return { ...state, send: { ...state.send, loading: true, error: false } };
+    case actions.SEND_OK:
+      return { ...state, send: { success: true, loading: false, error: false } };
+    case actions.SEND_FAIL:
+      return { ...state, send: { success: false, loading: false, error: true } };
+    case actions.SEND_RESET:
+      return { ...state, send: { ...initialState.send } };
     default:
       return state;
   }
