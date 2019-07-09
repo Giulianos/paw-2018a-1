@@ -3,7 +3,11 @@
     "example": "Esta es una traduccion de ejemplo!"
   },
   "search": {
-    "title": "Buscaste {{term}}"
+    "title": "Buscaste {{term}}",
+    "empty_state": {
+      "description": "No encontramos ningun resultado que coincida con tu busqueda",
+      "action": "Por que no <1>creas una publicacion</1>?"
+    }
   },
   "notifications": {
     "new_message": "Nuevo mensaje de <1>{{name}}</1>",

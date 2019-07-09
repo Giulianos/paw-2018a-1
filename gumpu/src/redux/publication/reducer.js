@@ -37,6 +37,13 @@ const initialState = {
     nextPage: 0,
     totalPages: 1
   },
+  search: {
+    sucess: false,
+    loading: true,
+    error: false,
+    results: [],
+    nextPage: 0
+  }
 };
 
 function reduce(state = initialState, action) {
