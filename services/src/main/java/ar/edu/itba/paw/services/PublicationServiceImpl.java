@@ -225,7 +225,7 @@ public class PublicationServiceImpl implements PublicationService {
   @Override
   @Transactional
   public Page<Publication> search(final String terms, Integer page, Integer pageSize) {
-    List<String> tokens = Arrays.stream(terms.split(" ")).collect(Collectors.toList());
+    List<String> tokens = Arrays.stream(terms.split(" ")).map(String::toLowerCase).collect(Collectors.toList());
 
     List<Publication> result = publicationDao.searchByTags(tokens, page, pageSize);
     Integer totalResultSize = publicationDao.searchByTagsResultSize(tokens);
