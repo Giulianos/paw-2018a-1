@@ -2,6 +2,9 @@
   "secondary": {
     "example": "Esta es una traduccion de ejemplo!"
   },
+  "search": {
+    "title": "Buscaste {{term}}"
+  },
   "notifications": {
     "new_message": "Nuevo mensaje de <1>{{name}}</1>",
     "order_purchased": "<0>{{title}}</0> ya fue comprada!",
