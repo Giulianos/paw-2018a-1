@@ -5,9 +5,9 @@ import history from 'router/history';
 
 import SearchBarLayout from './layout';
 
-function SearchBar() {
+function SearchBar({ hideText, initialValue }) {
   const form = {
-    term: useFormInput(''),
+    term: useFormInput(initialValue || ''),
   };
 
   const search = (e) => {
@@ -17,7 +17,7 @@ function SearchBar() {
     }
   };
 
-  return <SearchBarLayout handleSubmit={search} {...form} />;
+  return <SearchBarLayout hideText={hideText} handleSubmit={search} {...form} />;
 }
 
 export default SearchBar;
