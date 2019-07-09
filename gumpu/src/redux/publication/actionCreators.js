@@ -103,3 +103,20 @@ export const search = (term, page, pageSize) => async (dispatch) => {
 };
 
 export const resetSearch = () => ({ type: actions.SEARCH_RESET });
+
+export const retrieve = publicationId => async (dispatch) => {
+  dispatch({ type: actions.RETRIEVE });
+
+  try {
+    const response = await publicationService.retrieve(publicationId);
+    if (response.ok) {
+      dispatch({ type: actions.RETRIEVE_OK, payload: response.data });
+    } else {
+      dispatch({ type: actions.RETRIEVE_FAIL });
+    }
+  } catch (error) {
+    dispatch({ type: actions.RETRIEVE_FAIL });
+  }
+};
+
+export const resetRetrieve = () => ({ type: actions.RETRIEVE_RESET });
