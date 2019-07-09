@@ -22,7 +22,8 @@
     "publish": "Publicar",
     "login": "Ingresar",
     "my_account": "Mi Cuenta",
-    "create_account": "Crear cuenta"
+    "create_account": "Crear cuenta",
+    "logout": "Cerrar sesion"
   },
   "search_bar": {
     "question": "Que estás buscando?",

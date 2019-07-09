@@ -20,6 +20,7 @@ function Header() {
           { !auth.logged && <Link to="/create-account" className="txt-normal mr-64">{t('header.create_account')}</Link> }
           { !auth.logged && <Link to="/login" className="txt-normal mr-64">{t('header.login')}</Link> }
           { auth.logged && <Link to="/my-account" className="txt-normal mr-64">{t('header.my_account')}</Link> }
+          { auth.logged && <button onClick={auth.logout} className="txt-normal row center-alt flex-end mr-64">{t('header.logout')}</button> }
           { auth.logged && <NotificationsMenu>{t('header.notifications')}</NotificationsMenu> }
         </div>
       </div>
