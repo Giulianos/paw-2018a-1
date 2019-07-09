@@ -12,7 +12,7 @@ import styles from './styles.module.scss';
 import Loader from 'components/ui/Loader';
 import SearchBar from 'components/SearchBar';
 
-const LOADED_QUANTITY = 1;
+const LOADED_QUANTITY = 8;
 
 function SearchSuspense({ match }) {
   const [ selectedPublication, setSelectedPublication ] = useState();
