@@ -39,7 +39,7 @@ const initialState = {
   },
   search: {
     sucess: false,
-    loading: true,
+    loading: false,
     error: false,
     results: [],
     nextPage: 0
@@ -115,6 +115,23 @@ function reduce(state = initialState, action) {
       return { ...state, ordersList: { success: false, loading: false, error: true } };
     case actions.LIST_ORDERS_RESET:
       return { ...state, ordersList: { ...initialState.ordersList } };
+
+    /** SEARCH actions */
+    case actions.SEARCH:
+      return { ...state, search: { ...state.search, loading: true, error: false } };
+    case actions.SEARCH_OK:
+      return { ...state, search: {
+        success: true,
+        loading: false,
+        error: false,
+        results: [ ...state.search.results, ...action.payload.publications ],
+        nextPage: action.payload.nextPage
+      }
+    };
+    case actions.SEARCH_FAIL:
+      return { ...state, search: { ...state.search, success: false, loading: false, error: true } };
+    case actions.SEARCH_RESET:
+      return { ...state, search: { ...initialState.search } };
 
     default:
       return state;

@@ -25,4 +25,9 @@ export default {
   LIST_ORDERS_OK: `${prefix}/list_orders_ok`,
   LIST_ORDERS_FAIL: `${prefix}/list_orders_fail`,
   LIST_ORDERS_RESET: `${prefix}/list_orders_reset`,
+
+  SEARCH: `${prefix}/search`,
+  SEARCH_OK: `${prefix}/search_ok`,
+  SEARCH_FAIL: `${prefix}/search_fail`,
+  SEARCH_RESET: `${prefix}/search_reset`,
 };
