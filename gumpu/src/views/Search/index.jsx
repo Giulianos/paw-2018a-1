@@ -1,9 +1,10 @@
-import React, { Suspense, useEffect } from 'react';
+import React, { Suspense, useEffect , useState} from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Trans, useTranslation } from 'react-i18next';
 
 import ProductCard from 'components/ui/ProductCard';
+import OrderModal from 'components/OrderModal';
 import Button from 'components/ui/Button';
 import { search as newSearch, resetSearch as newResetSearch } from 'redux/publication/actionCreators';
 
@@ -14,6 +15,18 @@ import SearchBar from 'components/SearchBar';
 const LOADED_QUANTITY = 1;
 
 function SearchSuspense({ match }) {
+  const [ selectedPublication, setSelectedPublication ] = useState();
+  const [ modalVisibility, setModalVisibility ] = useState(false);
+
+  const handleOpen = pub => {
+    setSelectedPublication(pub);
+    setModalVisibility(true);
+  }
+
+  const handleClose = () => {
+    setModalVisibility(false);
+    setSelectedPublication(undefined);
+  }
   const searchTerm = match.params.term;
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -35,7 +48,7 @@ function SearchSuspense({ match }) {
           <SearchBar initialValue={searchTerm} hideText className="mb-32" />
         </div>
         <h1 className="txt-large mb-24 txt-gray3 w100">{t('search.title', { term: searchTerm })}</h1>
-        { search.results.map(p => <ProductCard key={p.id} product={p} className={styles.product} />) }
+        { search.results.map(p => <ProductCard key={p.id} onClick={handleOpen} product={p} className={styles.product} />) }
         { search.results.length !== 0 && search.nextPage && !search.loading && (
           <div className="w100 row center">
             <Button handleClick={loadMore}>{t('search.load_more')}</Button>
@@ -60,6 +73,7 @@ function SearchSuspense({ match }) {
           </>
         )}
       </div>
+      <OrderModal shown={modalVisibility} onClose={handleClose} selectedPublication={selectedPublication} />
     </div>
   );
 }
