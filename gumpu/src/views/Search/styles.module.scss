@@ -1,0 +1,12 @@
+.searchResults {
+  max-width: 1088px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+
+  .product {
+    margin-right: 16px;
+    margin-bottom: 32px;
+  }
+}

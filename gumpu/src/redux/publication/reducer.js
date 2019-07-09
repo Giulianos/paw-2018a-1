@@ -37,6 +37,19 @@ const initialState = {
     nextPage: 0,
     totalPages: 1
   },
+  search: {
+    sucess: false,
+    loading: false,
+    error: false,
+    results: [],
+    nextPage: 0
+  },
+  retrieve: {
+    sucess: false,
+    loading: false,
+    error: false,
+    publication: null
+  }
 };
 
 function reduce(state = initialState, action) {
@@ -108,6 +121,39 @@ function reduce(state = initialState, action) {
       return { ...state, ordersList: { success: false, loading: false, error: true } };
     case actions.LIST_ORDERS_RESET:
       return { ...state, ordersList: { ...initialState.ordersList } };
+
+    /** SEARCH actions */
+    case actions.SEARCH:
+      return { ...state, search: { ...state.search, loading: true, error: false } };
+    case actions.SEARCH_OK:
+      return { ...state, search: {
+        success: true,
+        loading: false,
+        error: false,
+        results: [ ...state.search.results, ...action.payload.publications ],
+        nextPage: action.payload.nextPage
+      }
+    };
+    case actions.SEARCH_FAIL:
+      return { ...state, search: { ...state.search, success: false, loading: false, error: true } };
+    case actions.SEARCH_RESET:
+      return { ...state, search: { ...initialState.search } };
+
+    /** RETRIEVE actions */
+    case actions.RETRIEVE:
+      return { ...state, retrieve: { ...state.retrieve, loading: true, error: false } };
+    case actions.RETRIEVE_OK:
+      return { ...state, retrieve: {
+        success: true,
+        loading: false,
+        error: false,
+        publication: action.payload
+      }
+    };
+    case actions.RETRIEVE_FAIL:
+      return { ...state, retrieve: { ...state.retrieve, success: false, loading: false, error: true } };
+    case actions.RETRIEVE_RESET:
+      return { ...state, retrieve: { ...initialState.retrieve } };
 
     default:
       return state;

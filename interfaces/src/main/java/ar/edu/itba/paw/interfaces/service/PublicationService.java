@@ -85,4 +85,6 @@ public interface PublicationService {
    * @throws UnauthorizedAccessException
    */
   public void markAsPurchased(final Long id) throws EntityNotFoundException, UnauthorizedAccessException;
+
+  public Page<Publication> search(final String terms, Integer page, Integer pageSize);
 }
