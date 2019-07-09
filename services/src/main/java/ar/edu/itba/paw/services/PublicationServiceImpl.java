@@ -5,6 +5,7 @@ import ar.edu.itba.paw.interfaces.dao.PublicationDao;
 import ar.edu.itba.paw.interfaces.exception.EntityNotFoundException;
 import ar.edu.itba.paw.interfaces.exception.PublicationFulfilledException;
 import ar.edu.itba.paw.interfaces.exception.UnauthorizedAccessException;
+import ar.edu.itba.paw.interfaces.service.Page;
 import ar.edu.itba.paw.interfaces.service.PublicationService;
 import ar.edu.itba.paw.interfaces.service.TagService;
 import ar.edu.itba.paw.interfaces.service.UserService;
@@ -21,8 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Primary
@@ -73,10 +73,16 @@ public class PublicationServiceImpl implements PublicationService {
           detailedDescription
       );
 
-      /** Add tags to publication */
-      tags.stream().map(tagService::createOrRetrieve).forEach(createdPublication::addTag);
+      // Remove repeated
+      Set<String> tagSet = new HashSet<>(tags);
 
-      /** Persist those relations */
+      // Add description tokens as tags
+      Arrays.stream(description.split(" ")).filter(t -> t.length() > 3).forEach(tagSet::add);
+
+      // Add tags to publication
+      tagSet.stream().map(tagService::createOrRetrieve).forEach(createdPublication::addTag);
+
+      // Persist those relations
       publicationDao.update(createdPublication);
 
       return createdPublication;
@@ -213,5 +219,16 @@ public class PublicationServiceImpl implements PublicationService {
   @Transactional
   public List<Publication> latest(Integer quantity) {
     return publicationDao.latestPublications(quantity);
+  }
+
+  @Override
+  @Transactional
+  public Page<Publication> search(final String terms, Integer page, Integer pageSize) {
+    List<String> tokens = Arrays.stream(terms.split(" ")).collect(Collectors.toList());
+
+    List<Publication> result = publicationDao.searchByTags(tokens, page, pageSize);
+    Integer totalResultSize = publicationDao.searchByTagsResultSize(tokens);
+
+    return new Page<>(result, totalResultSize, page, pageSize);
   }
 }
