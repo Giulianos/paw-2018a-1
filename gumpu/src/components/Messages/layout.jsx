@@ -27,7 +27,6 @@ function MessagesLayout({ messages, title, currentUserId, onSubmit, message }) {
         <ul className={styles.messageList}>
           {seen}
         </ul>
-        <span className="row w100 center mt-24 mb-24 txt-normal txt-blue">Mensajes nuevos</span>
         <ul className={styles.messageList}>
           {unseen}
         </ul>
