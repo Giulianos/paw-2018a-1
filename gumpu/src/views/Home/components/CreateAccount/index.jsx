@@ -30,11 +30,13 @@ function CreateAccount({
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    createUser({
-      name: form.name.value,
-      email: form.email.value,
-      password: form.password.value,
-    });
+    if(form.name.valid === true && form.email.valid === true && form.password.valid === true) {
+      createUser({
+        name: form.name.value,
+        email: form.email.value,
+        password: form.password.value,
+      });
+    }
   };
 
   const login = () => {
