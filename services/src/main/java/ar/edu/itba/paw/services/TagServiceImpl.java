@@ -26,12 +26,8 @@ public class TagServiceImpl implements TagService {
   @Override
   @Transactional
   public Tag createOrRetrieve(String tag) {
-    Optional<Tag> retrieved = tagDao.retrieve(tag);
+    Optional<Tag> retrieved = tagDao.retrieve(tag.toLowerCase());
 
-    if(retrieved.isPresent()) {
-      return retrieved.get();
-    }
-
-    return tagDao.createTag(tag);
+    return retrieved.orElseGet(() -> tagDao.createTag(tag.toLowerCase()));
   }
 }
