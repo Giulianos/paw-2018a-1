@@ -22,10 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Primary
@@ -76,10 +73,16 @@ public class PublicationServiceImpl implements PublicationService {
           detailedDescription
       );
 
-      /** Add tags to publication */
-      tags.stream().map(tagService::createOrRetrieve).forEach(createdPublication::addTag);
+      // Remove repeated
+      Set<String> tagSet = new HashSet<>(tags);
 
-      /** Persist those relations */
+      // Add description tokens as tags
+      Arrays.stream(description.split(" ")).filter(t -> t.length() > 3).forEach(tagSet::add);
+
+      // Add tags to publication
+      tagSet.stream().map(tagService::createOrRetrieve).forEach(createdPublication::addTag);
+
+      // Persist those relations
       publicationDao.update(createdPublication);
 
       return createdPublication;
