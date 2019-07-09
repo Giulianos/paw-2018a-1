@@ -50,6 +50,7 @@ public class PublicationServiceImpl implements PublicationService {
   }
 
   @Override
+  @Transactional
   public Publication create(
       final String description,
       final Double unitPrice,
@@ -77,7 +78,7 @@ public class PublicationServiceImpl implements PublicationService {
       Set<String> tagSet = new HashSet<>(tags);
 
       // Add description tokens as tags
-      Arrays.stream(description.split(" ")).filter(t -> t.length() > 3).forEach(tagSet::add);
+      Arrays.stream(description.split(" ")).filter(t -> t.length() >= 3).forEach(tagSet::add);
 
       // Add tags to publication
       tagSet.stream().map(tagService::createOrRetrieve).forEach(createdPublication::addTag);
