@@ -272,11 +272,14 @@ public class PublicationServiceImplTest {
     // Create publication
     Publication testPublication = publicationService.create("Test Publication", 1.0d, 10L, "", new LinkedList<>());
 
+    // Order some units
+    Order supervisorOrder = orderService.create(testPublication, 4L);
+
     // Login as orderer
     SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock((testOrderer.getEmail())));
 
     // Order everything
-    Order order = orderService.create(testPublication, 10L);
+    Order order = orderService.create(testPublication, 6L);
 
     // Retrieve fulfilled publication
     Optional<Publication> fulfilledPublication = publicationService.findById(testPublication.getId());
