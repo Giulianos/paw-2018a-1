@@ -18,7 +18,7 @@ api.addRequestTransform((req) => {
 
 /** Add unauthorized api call monitor */
 api.addMonitor((res) => {
-  if (res.status === 403 || res.status === 401) {
+  if (res.status === 403) {
     store.dispatch(logout());
     /** Remove logged user (if any) */
     store.dispatch(resetRetrieveUser());
