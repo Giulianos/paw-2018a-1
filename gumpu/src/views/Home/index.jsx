@@ -6,7 +6,7 @@ import SearchBar from 'components/SearchBar';
 import ProductCarrousel from 'components/ProductCarrousel';
 import styles from './styles.module.scss';
 import CreateAccount from './components/CreateAccount';
-import { getLatestPublications } from 'redux/publication/actionCreators';
+import { getLatestPublications, resetGetLatest } from 'redux/publication/actionCreators';
 import useAuth from 'hooks/useAuth';
 
 function Home({ location }) {
@@ -21,7 +21,12 @@ function Home({ location }) {
   }
   
   useEffect(scrollToRegister, [location]);
-  useEffect(() => { dispatch(getLatestPublications(4)); }, []);
+  useEffect(() => {
+    dispatch(getLatestPublications(4));
+    return () => {
+      dispatch(resetGetLatest());
+    };
+  }, []);
 
   const latest = useSelector(state => state.publication.latest);
 
