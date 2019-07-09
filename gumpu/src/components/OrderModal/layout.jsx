@@ -13,7 +13,7 @@ import Success from './components/Success';
 import styles from './styles.module.scss';
 import Skeleton from './skeleton';
 
-function OrderModalLayout({ publication, quantity, onClose, onSubmit, onReset, loading, success, error }) {
+function OrderModalLayout({ publication, quantity, onClose, onSubmit, onReset, loading, success, error, updatedQuantity }) {
   const { t } = useTranslation();
   const totalPrice = quantity.valid ? publication.unitPrice * Number(quantity.value) : '-';
 
@@ -59,7 +59,8 @@ function OrderModalLayout({ publication, quantity, onClose, onSubmit, onReset, l
               <form onSubmit={onSubmit} className="column">
                 <div className="row flex-end-alt flex-end mb-24">
                   <SmartInput label={t('order_modal.quantity')} {...quantity} className={styles.shortInput} />
-                  <span className="ml-16 txt-green txt-bold">{t('order_modal.availability', {count: publication.availableQuantity})}</span>
+                  { !updatedQuantity && <span className="ml-16 txt-gray2 txt-bold">{t('order_modal.availability', {count: publication.availableQuantity})}</span> }
+                  { updatedQuantity && <span className="ml-16 txt-green txt-bold">{t('order_modal.availability', {count: updatedQuantity})}</span> }
                 </div>
                 <div className="row center-alt flex-end mb-32 txt-medium20">
                   <Trans i18nKey="order_modal.you_will_pay">

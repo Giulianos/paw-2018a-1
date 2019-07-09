@@ -86,3 +86,37 @@ export const listPublicationOrders = (publicationId, page, pageSize) => async (d
 };
 
 export const resetListPublicationOrders = () => ({ type: actions.LIST_ORDERS_RESET });
+
+export const search = (term, page, pageSize) => async (dispatch) => {
+  dispatch({ type: actions.SEARCH });
+
+  try {
+    const response = await publicationService.search(term, page, pageSize);
+    if (response.ok) {
+      dispatch({ type: actions.SEARCH_OK, payload: response.data });
+    } else {
+      dispatch({ type: actions.SEARCH_FAIL });
+    }
+  } catch (error) {
+    dispatch({ type: actions.SEARCH_FAIL });
+  }
+};
+
+export const resetSearch = () => ({ type: actions.SEARCH_RESET });
+
+export const retrieve = publicationId => async (dispatch) => {
+  dispatch({ type: actions.RETRIEVE });
+
+  try {
+    const response = await publicationService.retrieve(publicationId);
+    if (response.ok) {
+      dispatch({ type: actions.RETRIEVE_OK, payload: response.data });
+    } else {
+      dispatch({ type: actions.RETRIEVE_FAIL });
+    }
+  } catch (error) {
+    dispatch({ type: actions.RETRIEVE_FAIL });
+  }
+};
+
+export const resetRetrieve = () => ({ type: actions.RETRIEVE_RESET });

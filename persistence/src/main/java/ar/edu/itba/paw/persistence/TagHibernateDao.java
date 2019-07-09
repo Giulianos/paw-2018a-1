@@ -52,6 +52,8 @@ public class TagHibernateDao implements TagDao {
     TypedQuery<Tag> query = em.createQuery("from Tag as t where t.tag = :tag", Tag.class);
     query.setParameter("tag", tag);
 
-    return Optional.of(query.getSingleResult());
+    List<Tag> tagEntity = query.getResultList();
+
+    return tagEntity.isEmpty() ? Optional.empty() : Optional.of(tagEntity.get(0));
   }
 }

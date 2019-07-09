@@ -14,7 +14,7 @@ function Header() {
   return (
     <div className={styles.headerContainer}>
       <div className={styles.header}>
-        <img src={logo} alt="Gumpu" />
+      <Link to="/" className="mr-64 txt-normal"><img src={logo} alt="Gumpu" /></Link>
         <div className="row center-alt relative">
           <Link to="/publish" className="mr-64 txt-normal">{t('header.publish')}</Link>
           { !auth.logged && <Link to="/create-account" className="txt-normal mr-64">{t('header.create_account')}</Link> }

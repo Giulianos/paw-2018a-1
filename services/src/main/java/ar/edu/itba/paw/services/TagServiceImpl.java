@@ -26,16 +26,12 @@ public class TagServiceImpl implements TagService {
   @Override
   @Transactional
   public Tag createOrRetrieve(String tag) {
-    try {
-      return tagDao.createTag(tag);
-    } catch(Exception e) {
-      Optional<Tag> retrieved = tagDao.retrieve(tag);
+    Optional<Tag> retrieved = tagDao.retrieve(tag);
 
-      if(retrieved.isPresent()) {
-        return retrieved.get();
-      }
-
-      throw new IllegalStateException();
+    if(retrieved.isPresent()) {
+      return retrieved.get();
     }
+
+    return tagDao.createTag(tag);
   }
 }
