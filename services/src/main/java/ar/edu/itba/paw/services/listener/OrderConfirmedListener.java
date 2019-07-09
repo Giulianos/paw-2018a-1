@@ -24,12 +24,10 @@ public class OrderConfirmedListener implements ApplicationListener<OrderConfirme
     Publication publication = confirmedOrder.getPublication();
 
     // Check if all orders are confirmed
-    if(publication.getOrders().parallelStream().allMatch(Order::getPurchaseAccepted)) {
+    if(publication.getOrders().stream().filter(o -> !o.getOrderer().equals(publication.getSupervisor())).allMatch(Order::getPurchaseAccepted)) {
       // Mark publication as finalized
       publication.setState(PublicationState.FINALIZED);
       publicationDao.update(publication);
-    } else {
-      System.out.println("Not all orders had been confirmed!");
     }
   }
 }
