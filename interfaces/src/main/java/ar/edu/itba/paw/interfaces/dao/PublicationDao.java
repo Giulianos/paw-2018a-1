@@ -3,6 +3,7 @@ package ar.edu.itba.paw.interfaces.dao;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.model.User;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,4 +61,11 @@ public interface PublicationDao {
      * @return
      */
     public List<Publication> searchByTags(final List<String> tags, Integer page, Integer pageSize);
+
+    /**
+     * Retrieve the size result of a tag search
+     * @param tags
+     * @return
+     */
+    public Integer searchByTagsResultSize(final List<String> tags);
 }

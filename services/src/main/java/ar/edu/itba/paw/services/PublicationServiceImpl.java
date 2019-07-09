@@ -5,6 +5,7 @@ import ar.edu.itba.paw.interfaces.dao.PublicationDao;
 import ar.edu.itba.paw.interfaces.exception.EntityNotFoundException;
 import ar.edu.itba.paw.interfaces.exception.PublicationFulfilledException;
 import ar.edu.itba.paw.interfaces.exception.UnauthorizedAccessException;
+import ar.edu.itba.paw.interfaces.service.Page;
 import ar.edu.itba.paw.interfaces.service.PublicationService;
 import ar.edu.itba.paw.interfaces.service.TagService;
 import ar.edu.itba.paw.interfaces.service.UserService;
@@ -219,9 +220,12 @@ public class PublicationServiceImpl implements PublicationService {
 
   @Override
   @Transactional
-  public List<Publication> search(final String terms) {
+  public Page<Publication> search(final String terms, Integer page, Integer pageSize) {
     List<String> tokens = Arrays.stream(terms.split(" ")).collect(Collectors.toList());
 
-    return publicationDao.searchByTags(tokens, 0, 10);
+    List<Publication> result = publicationDao.searchByTags(tokens, page, pageSize);
+    Integer totalResultSize = publicationDao.searchByTagsResultSize(tokens);
+
+    return new Page<>(result, totalResultSize, page, pageSize);
   }
 }

@@ -3,6 +3,7 @@ package ar.edu.itba.paw.webapp.controller;
 import ar.edu.itba.paw.interfaces.exception.EntityNotFoundException;
 import ar.edu.itba.paw.interfaces.exception.PublicationFulfilledException;
 import ar.edu.itba.paw.interfaces.exception.UnauthorizedAccessException;
+import ar.edu.itba.paw.interfaces.service.Page;
 import ar.edu.itba.paw.interfaces.service.PublicationService;
 import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.webapp.dto.*;
@@ -154,16 +155,16 @@ public class PublicationsController {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/searches/{terms}")
     public Response search(@QueryParam("pageSize") Integer pageSize, @QueryParam("page") Integer page, @PathParam("terms") String terms) {
-        if(pageSize == null) {
-            pageSize = 10;
+        if(pageSize == null || page == null) {
+            return Response.status(Response.Status.METHOD_NOT_ALLOWED).entity(new ErrorDTO("pagination should be used")).build();
         }
 
         if(terms == null) {
             return Response.status(Response.Status.BAD_REQUEST).entity(new ErrorDTO("search terms should be provided")).build();
         }
 
-        List<Publication> publicationList = publicationService.search(terms);
+        Page<Publication> result = publicationService.search(terms, page, pageSize);
 
-        return Response.ok(new PublicationsDTO(publicationList)).build();
+        return Response.ok(new PublicationPageDTO(result)).build();
     }
 }
