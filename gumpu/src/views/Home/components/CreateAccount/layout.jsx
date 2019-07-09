@@ -12,14 +12,14 @@ import Success from './components/Success';
 import { useTranslation } from 'react-i18next';
 
 function CreateAccountLayout({
-  name, email, password, handleSubmit, resetRequest, loading, error, success,
+  name, email, password, handleSubmit, resetRequest, loading, error, success, handleOk
 }) {
   const { t } = useTranslation();
   return (
     <CardContainer className={`${styles.cardContainer} column center-alt center`}>
       { loading && <Loader /> }
       { error && <Failure handleRetry={resetRequest} /> }
-      { success && <Success /> }
+      { success && <Success handleOk={handleOk} /> }
       { (!loading && !error && !success) && (
         <form className="w100 column center-alt center" onSubmit={handleSubmit}>
           <SmartInput id="signup-name" label={t('home.register_form.name')} className="mb-24 w100" {...name} />

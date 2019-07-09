@@ -4,9 +4,6 @@ import PropTypes from 'prop-types';
 import ProductCard from 'components/ui/ProductCard';
 import OrderModal from 'components/OrderModal';
 
-import publicationMock from 'mocks/publication';
-import publicationMock2 from 'mocks/publication2';
-
 function ProductCarrousel({ title, className, products }) {
   const [ selectedPublication, setSelectedPublication ] = useState();
   const [ modalVisibility, setModalVisibility ] = useState(false);

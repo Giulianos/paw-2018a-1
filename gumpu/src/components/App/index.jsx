@@ -34,8 +34,7 @@ function App() {
     }
   }, [dispatch]);
 
-  if (token && !auth.logged) {
-    console.log('Waiting for user to log')
+  if (token && !auth.logged && !auth.error) {
     return <FullScreenLoader />;
   }
   return (

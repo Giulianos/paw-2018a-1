@@ -22,7 +22,8 @@
     "publish": "Publicar",
     "login": "Ingresar",
     "my_account": "Mi Cuenta",
-    "create_account": "Crear cuenta"
+    "create_account": "Crear cuenta",
+    "logout": "Cerrar sesion"
   },
   "search_bar": {
     "question": "Que estás buscando?",
@@ -35,7 +36,15 @@
       "name": "Nombre completo",
       "email": "Email",
       "password": "Nueva contrasena",
-      "action": "CREAR CUENTA"
+      "action": "CREAR CUENTA",
+      "result_success": {
+        "message": "<0>Genial!</0><1>Tu cuenta fue creada!<1>",
+        "action": "INGRESAR"
+      },
+      "result_fail": {
+        "message": "<0>Ups!</0><1>No pudimos crear tu cuenta!<1>",
+        "action": "REINTENTAR"
+      }
     },
     "latest_products": "Ultimas publicaciones"
   },
@@ -44,7 +53,11 @@
     "email": "Email",
     "password": "Contrasena",
     "register_hint": "No tenes cuenta? <1>Crea una ahora!</1>",
-    "action": "INGRESAR"
+    "action": "INGRESAR",
+    "result_fail": {
+      "message": "<0>Ups!</0><1>Datos invalidos!<1>",
+      "action": "REINTENTAR"
+    }
   },
   "publish": {
     "example": "This is the publish page",

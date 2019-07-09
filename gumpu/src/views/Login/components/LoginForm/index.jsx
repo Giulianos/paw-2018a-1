@@ -27,10 +27,12 @@ function LoginForm({
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    login({
-      email: form.email.value,
-      password: form.password.value,
-    }, location.state && location.state.ref);
+    if(form.email.valid === true) {
+      login({
+        email: form.email.value,
+        password: form.password.value,
+      }, location.state && location.state.ref);
+    }
   };
 
   return (

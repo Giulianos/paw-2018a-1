@@ -15,6 +15,7 @@ import {
 
 import CreateAccountLayout from './layout';
 import { useTranslation } from 'react-i18next';
+import history from 'router/history';
 
 function CreateAccount({
   createUser, loading, error, success, resetCreateUser,
@@ -29,12 +30,18 @@ function CreateAccount({
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    createUser({
-      name: form.name.value,
-      email: form.email.value,
-      password: form.password.value,
-    });
+    if(form.name.valid === true && form.email.valid === true && form.password.valid === true) {
+      createUser({
+        name: form.name.value,
+        email: form.email.value,
+        password: form.password.value,
+      });
+    }
   };
+
+  const login = () => {
+    history.push('/login');
+  }
 
   return (
     <CreateAccountLayout
@@ -44,6 +51,7 @@ function CreateAccount({
       error={error}
       success={success}
       resetRequest={resetCreateUser}
+      handleOk={login}
     />
   );
 }

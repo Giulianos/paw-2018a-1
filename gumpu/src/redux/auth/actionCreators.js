@@ -29,6 +29,8 @@ export const resetLogin = () => ({ type: actions.LOGIN_RESET });
 export const logout = () => {
   /** Remove token from localStorage */
   localStorageService.removeToken();
+  /** Redirect to home */
+  history.push('/');
   /** Reset login (to allow subsequent logins) */
   return resetLogin();
 };
