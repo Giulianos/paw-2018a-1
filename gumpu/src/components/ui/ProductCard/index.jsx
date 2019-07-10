@@ -31,7 +31,7 @@ $
             <span className="indicatorDescriptor txt-small txt-gray2">
                 {t('product.organizer_calification')}
             </span>
-            <RatingIndicator className="pt-8" value={3} />
+            <RatingIndicator className="pt-8" userId={product.supervisorId} />
           </div>
         </CardContainer>
       ) : (

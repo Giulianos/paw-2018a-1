@@ -1,5 +1,12 @@
 import actions from './actions';
 
+const initialStateSingle = {
+  success: false,
+  loading: true,
+  error: false,
+  data: undefined,
+};
+
 const intialState = {
   create: {
     success: false,
@@ -12,9 +19,12 @@ const intialState = {
     error: false,
     data: undefined,
   },
+  rating: {
+  },
 };
 
 function reduce(state = intialState, action) {
+  let id;
   switch (action.type) {
     /** CREATE actions */
     case actions.CREATE:
@@ -41,6 +51,47 @@ function reduce(state = intialState, action) {
     case actions.RETRIEVE_RESET:
       return { ...state, retrieve: { ...intialState.retrieve } };
 
+    /** RATING actions */
+    case actions.RATING:
+      id = action.payload.id;
+      return {
+        ...state,
+        rating: {
+          ...state.rating,
+          [id]: initialStateSingle
+        }
+      };
+    case actions.RATING_OK:
+      id = action.payload.id;
+      return {
+        ...state,
+        rating: {
+          ...state.rating,
+          [id]: { 
+            success: true, loading: false, error: false, data: action.payload.rating
+          },
+        },
+      };
+    case actions.RATING_FAIL:
+      id = action.payload.id;
+      return {
+        ...state,
+        rating: {
+          ...state.rating,
+          [id]: { 
+            success: false, loading: false, error: true
+          },
+        },
+      };
+    case actions.RATING_RESET:
+      id = action.payload.id;
+      return {
+        ...state,
+        rating: {
+          ...state.rating,
+          [id]: undefined
+        },
+      };
     default:
       return state;
   }
