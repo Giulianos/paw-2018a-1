@@ -34,3 +34,20 @@ export const retrieveUser = () => async (dispatch) => {
 };
 
 export const resetRetrieveUser = () => ({ type: actions.RETRIEVE_RESET });
+
+export const rating = userId => async (dispatch) => {
+  dispatch({ type: actions.RATING, payload:  { id: userId } });
+
+  try {
+    const response = await userService.rating(userId);
+    if (response.ok) {
+      dispatch({ type: actions.RATING_OK, payload: { id: userId, rating: response.data.rating} });
+    } else {
+      dispatch({ type: actions.RATING_FAIL });
+    }
+  } catch (error) {
+    dispatch({ type: actions.RATING_FAIL });
+  }
+};
+
+export const resetRating = () => ({ type: actions.RATING_RESET });
