@@ -12,18 +12,25 @@ function Orders() {
   const dispatch = useDispatch();
   const auth = useAuth();
   const [messageModal, setMessageModal] = useState(null);
-  const deleteHandler = (orderId) => () => {
-    dispatch(deleteOrder(auth.user.id, orderId));
-  }
-  const adoptHandler = publicationId => () => {
-    dispatch(adoptPublication(publicationId));
-  }
 
   useEffect(() => {
     if(!orders.success) {
       dispatch(listOrders(auth.user.id, 0, 30));
     }
   }, [])
+  
+  const reloadData = () => {
+    dispatch(resetListOrders());
+    dispatch(listOrders(auth.user.id, 0, 30));
+  }
+
+  const deleteHandler = (orderId) => () => {
+    dispatch(deleteOrder(auth.user.id, orderId, reloadData));
+  }
+  const adoptHandler = publicationId => () => {
+    dispatch(adoptPublication(publicationId, reloadData));
+  }
+
 
   return (
     <OrdersLayout

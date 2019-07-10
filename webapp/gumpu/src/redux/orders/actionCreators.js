@@ -52,13 +52,14 @@ export const confirm = (userId, orderId) => async (dispatch) => {
 
 export const resetConfirm = () => ({ type: actions.CONFIRM_RESET });
 
-export const deleteOrder = (userId, orderId) => async (dispatch) => {
+export const deleteOrder = (userId, orderId, callback) => async (dispatch) => {
   dispatch({ type: actions.DELETE });
 
   try {
     const response = await orderService.delete(userId, orderId);
     if (response.ok) {
       dispatch({ type: actions.DELETE_OK, payload: response.data });
+      if(callback) { callback(); }
     } else {
       dispatch({ type: actions.DELETE_FAIL });
     }
