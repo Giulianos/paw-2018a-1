@@ -10,6 +10,9 @@
     },
     "load_more": "VER MAS"
   },
+  "add_image": {
+    "title": "Agregar una imagen"
+  },
   "notifications": {
     "new_message": "Nuevo mensaje de <1>{{name}}</1>",
     "order_purchased": "<0>{{title}}</0> ya fue comprada!",
