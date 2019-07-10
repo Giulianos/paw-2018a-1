@@ -189,6 +189,10 @@
         "adopt": "Adoptar",
         "confirm": "Confirmar",
         "remaining_quantity": "Restan {{ count }}"
+      },
+      "messages": {
+        "select_from_list": "Seleccione una conversacion de la lista",
+        "ordered": "Ordeno {{quantity}}"
       }
     }
   }
