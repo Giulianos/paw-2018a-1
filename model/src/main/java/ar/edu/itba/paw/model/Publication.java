@@ -43,7 +43,7 @@ public class Publication extends TimestampedEntity {
     @Column(length = 1000)
     private String detailedDescription;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "publication_tags",
         joinColumns = { @JoinColumn(name = "publication_id", referencedColumnName = "id")},

@@ -51,7 +51,13 @@ function Publish() {
     }
   }
 
-  return <PublishLayout {...publicationCreateState} handleSubmit={handleSubmit} handleRetry={handleRetry} handleAccept={handleAccept} {...form} />;
+  const handleAddImage = () => {
+    if(publicationCreateState.data) {
+      history.push(`/add-image/${publicationCreateState.data.id}`);
+    }
+  }
+
+  return <PublishLayout {...publicationCreateState} handleSubmit={handleSubmit} handleRetry={handleRetry} handleAccept={handleAccept} handleAddImage={handleAddImage} {...form} />;
 }
 
 export default () => <Suspense fallback={<Loader />}><Publish /></Suspense>;

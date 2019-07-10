@@ -97,7 +97,8 @@
     "action": "PUBLICAR",
     "result_success": {
       "message": "<0>Genial!</0><1>Tu producto fue publicado!<1>",
-      "action": "VER PUBLICACION"
+      "action": "VER PUBLICACION",
+      "action_add": "AGREGAR IMAGEN"
     },
     "result_fail": {
       "message": "<0>Ups!</0><1>No pudimos crear la publicacion!<1>",

@@ -13,7 +13,7 @@ import Failure from './components/Failure';
 
 import styles from './styles.module.scss';
 
-function PublishLayout({ quantity, unitPrice, description, detailedDescription, tags, handleSubmit, handleRetry, handleAccept, loading, error, success }) {
+function PublishLayout({ quantity, unitPrice, description, detailedDescription, tags, handleSubmit, handleRetry, handleAccept, handleAddImage, loading, error, success }) {
   const { t } = useTranslation();
 
   return (
@@ -30,7 +30,7 @@ function PublishLayout({ quantity, unitPrice, description, detailedDescription, 
         </Failure>
       )}
       {success && (
-        <Success buttonMessage={t('publish.result_success.action')} handleAccept={handleAccept}>
+        <Success acceptMessage={t('publish.result_success.action')} addImageMessage={t('publish.result_success.action_add')} handleAccept={handleAccept} handleAddImage={handleAddImage}>
           <Trans i18nKey="publish.result_success.message">
             <span className="txt-green txt-medium txt-bold mr-8">Genial!</span>
             <span className="txt-medium txt-gray3">Tu producto ya fue publicado!</span>
