@@ -64,7 +64,7 @@ public class PublicationHibernateDao implements PublicationDao {
 
   @Override
   public List<Publication> userPublications(String email) {
-    final TypedQuery<Publication> query = em.createQuery("from Publication p where p.supervisor.email = :email", Publication.class);
+    final TypedQuery<Publication> query = em.createQuery("from Publication p where p.supervisor.email = :email and p.state != 4", Publication.class);
     query.setParameter("email", email);
 
     return query.getResultList();
