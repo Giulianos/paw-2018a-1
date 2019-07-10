@@ -1,7 +1,6 @@
 import React, { Suspense } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import Summary from './Subviews/Summary';
 import Publications from './Subviews/Publications';
 import Orders from './Subviews/Orders';
 
