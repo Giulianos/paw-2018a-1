@@ -3,13 +3,6 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import CardContainer from 'components/ui/CardContainer';
-import {
-  supervisorLeftPublication,
-  orderFulfilledOrderer,
-  orderFulfilledSupervisor,
-  orderPurchased,
-  newMessage,
-} from 'mocks/notifications';
 
 import NotificationText from './NotificationText';
 import styles from './styles.module.scss';
