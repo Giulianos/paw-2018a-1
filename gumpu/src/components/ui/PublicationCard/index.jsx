@@ -3,7 +3,7 @@ import React from 'react';
 import PublicationCardLayout from './layout';
 import Skeleton from './skeleton';
 
-function PublicationCard({ className, publication, onMessage, onDelete }) {
+function PublicationCard({ className, publication, onMessage, onDelete, onMarkPurchased }) {
   if(!publication) {
     return <Skeleton />;
   }
@@ -14,7 +14,15 @@ function PublicationCard({ className, publication, onMessage, onDelete }) {
     }
   }
 
-  return <PublicationCardLayout className={className} publication={publication} onMessage={messageHandler} onDelete={onDelete} />;
+  return (
+    <PublicationCardLayout
+      className={className}
+      publication={publication}
+      onMessage={messageHandler}
+      onDelete={onDelete}
+      onMarkPurchased={onMarkPurchased}
+    />
+  );
 }
 
 export default PublicationCard;
