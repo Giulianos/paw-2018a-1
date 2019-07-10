@@ -64,6 +64,11 @@ const initialState = {
     success: false,
     loading: false,
     error: false
+  },
+  addImage: {
+    success: false,
+    loading: false,
+    error: false
   }
 };
 
@@ -199,6 +204,16 @@ function reduce(state = initialState, action) {
       return { ...state, markPurchased: { success: false, loading: false, error: true } };
     case actions.MARK_PURCHASED_RESET:
       return { ...state, markPurchased: { ...initialState.markPurchased } };
+
+    /** ADD_IMAGE actions */
+    case actions.ADD_IMAGE:
+      return { ...state, addImage: { ...state.addImage, loading: true, error: false } };
+    case actions.ADD_IMAGE_OK:
+      return { ...state, addImage: { success: true, loading: false, error: false } };
+    case actions.ADD_IMAGE_FAIL:
+      return { ...state, addImage: { success: false, loading: false, error: true } };
+    case actions.ADD_IMAGE_RESET:
+      return { ...state, addImage: { ...initialState.addImage } };
 
     default:
       return state;

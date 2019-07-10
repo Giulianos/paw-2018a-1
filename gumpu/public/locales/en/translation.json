@@ -10,6 +10,18 @@
     },
     "load_more": "VER MAS"
   },
+  "add_image": {
+    "title": "Agregar una imagen",
+    "action": "AGREGAR",
+    "result_success": {
+      "message": "<0>Genial!</0><1>La imagen fue agregada!<1>",
+      "action": "OK"
+    },
+    "result_fail": {
+      "message": "<0>Ups!</0><1>No pudimos agregar la imagen!<1>",
+      "action": "REINTENTAR"
+    }
+  },
   "notifications": {
     "new_message": "Nuevo mensaje de <1>{{name}}</1>",
     "order_purchased": "<0>{{title}}</0> ya fue comprada!",
@@ -85,7 +97,8 @@
     "action": "PUBLICAR",
     "result_success": {
       "message": "<0>Genial!</0><1>Tu producto fue publicado!<1>",
-      "action": "VER PUBLICACION"
+      "action": "VER MIS PUBLICACIONES",
+      "action_add": "AGREGAR IMAGEN"
     },
     "result_fail": {
       "message": "<0>Ups!</0><1>No pudimos crear la publicacion!<1>",

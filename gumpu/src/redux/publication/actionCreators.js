@@ -171,3 +171,20 @@ export const markPurchased = publicationId => async (dispatch) => {
 };
 
 export const resetMarkPurchased = () => ({ type: actions.MARK_PURCHASED_RESET });
+
+export const addImage = (publicationId, base64Image) => async (dispatch) => {
+  dispatch({ type: actions.ADD_IMAGE });
+
+  try {
+    const response = await publicationService.addImage(publicationId, base64Image);
+    if (response.ok) {
+      dispatch({ type: actions.ADD_IMAGE_OK, payload: response.data });
+    } else {
+      dispatch({ type: actions.ADD_IMAGE_FAIL });
+    }
+  } catch (error) {
+    dispatch({ type: actions.ADD_IMAGE_FAIL });
+  }
+};
+
+export const resetAddImage = () => ({ type: actions.ADD_IMAGE_RESET });

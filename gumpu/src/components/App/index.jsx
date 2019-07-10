@@ -17,6 +17,7 @@ import Secondary from 'views/Secondary';
 import Login from 'views/Login';
 import Publish from 'views/Publish';
 import MyAccount from 'views/MyAccount';
+import AddImage from 'views/AddImage';
 
 import useAuth from 'hooks/useAuth';
 import Search from 'views/Search';
@@ -48,6 +49,7 @@ function App() {
           <Route path="/search/:term" component={Search} />
           <Route path="/my-account" component={MyAccount} />
           <Route path="/create-account" component={Home} />
+          <Route path="/add-image/:pub_id" component={AddImage} />
           <Route path="/" component={Home} />
         </Switch>
       </div>

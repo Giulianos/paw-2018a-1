@@ -1,0 +1,14 @@
+@import '~scss/_colors';
+
+.container {
+  height: 208px;
+  width: 208px;
+  border-radius: 8px;
+  background: $gray1 url('~assets/image_icon.svg') center no-repeat;
+  cursor: pointer;
+}
+
+.hiddenInput {
+  width: 0.1px;
+  height: 0.1px;
+}

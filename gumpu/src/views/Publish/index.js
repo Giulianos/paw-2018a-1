@@ -22,7 +22,7 @@ function Publish() {
   const publicationCreateState = useSelector(state => state.publication.create);
 
   const form = {
-    description: useFormInput('', minMaxString(3, 30, t('publish.step1.form.description_error', { min: 3, max: 30 }))),
+    description: useFormInput('', minMaxString(4, 30, t('publish.step1.form.description_error', { min: 4, max: 30 }))),
     unitPrice: useFormInput('', price('')),
     quantity: useFormInput('', quantity('')),
     detailedDescription: useFormInput('', maxString('', 1000)),
@@ -47,11 +47,17 @@ function Publish() {
 
   const handleAccept = () => {
     if(publicationCreateState.data) {
-      history.push(`/publication/${publicationCreateState.data.id}`);
+      history.push(`/my-account/publications`);
     }
   }
 
-  return <PublishLayout {...publicationCreateState} handleSubmit={handleSubmit} handleRetry={handleRetry} handleAccept={handleAccept} {...form} />;
+  const handleAddImage = () => {
+    if(publicationCreateState.data) {
+      history.push(`/add-image/${publicationCreateState.data.id}`);
+    }
+  }
+
+  return <PublishLayout {...publicationCreateState} handleSubmit={handleSubmit} handleRetry={handleRetry} handleAccept={handleAccept} handleAddImage={handleAddImage} {...form} />;
 }
 
 export default () => <Suspense fallback={<Loader />}><Publish /></Suspense>;
