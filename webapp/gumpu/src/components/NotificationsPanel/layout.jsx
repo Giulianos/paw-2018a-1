@@ -22,7 +22,6 @@ function NotificationsPanelLayout({ data, success }) {
         data.notifications.map(n => (
         <Link key={n.id} to={getNotificationLink(n)}>
           <li className={styles.notification}>
-            <img alt="" src={sampleImage} className={styles.image} />
             <div className={styles.details}><NotificationText notification={n} /></div>
           </li>
         </Link>)) }
