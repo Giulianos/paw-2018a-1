@@ -48,17 +48,17 @@ public class NotificationHibernateDaoTest {
 	@Test
 	public void retrieveLatest() {
 		// Create some notifications
-		notificationDao.create(testUser, NotificationType.NEW_MESSAGES, testPublication, testOrder, null);
-		notificationDao.create(testUser, NotificationType.ORDER_PURCHASED, null, testOrder, null);
-		notificationDao.create(testUser, NotificationType.PUBLICATION_FULFILLED, testPublication, null, null);
+		Notification first = notificationDao.create(testUser, NotificationType.NEW_MESSAGES, testPublication, testOrder, null);
+		Notification second = notificationDao.create(testUser, NotificationType.ORDER_PURCHASED, null, testOrder, null);
+		Notification third = notificationDao.create(testUser, NotificationType.PUBLICATION_FULFILLED, testPublication, null, null);
 
 		// Retrieve user notifications
 		List<Notification> notifications = notificationDao.getLatest(testUser.getId(), 2);
 
 		// Check if we retrieved last 2 notifications
 		assertEquals(notifications.size(), 2);
-		assertEquals(notifications.get(0).getType(), NotificationType.PUBLICATION_FULFILLED);
-		assertEquals(notifications.get(1).getType(), NotificationType.ORDER_PURCHASED);
+		assertEquals(notifications.get(0), third);
+		assertEquals(notifications.get(1), second);
 	}
 
 	@Test
@@ -77,7 +77,5 @@ public class NotificationHibernateDaoTest {
 
 		// Check if we retrieved last 2 notifications
 		assertEquals(notifications.size(), 2);
-		assertEquals(notifications.get(0), thirdNotification);
-		assertEquals(notifications.get(1), secondNotification);
 	}
 }
