@@ -47,12 +47,14 @@ function Publish() {
 
   const handleAccept = () => {
     if(publicationCreateState.data) {
+      dispatch(resetCreatePublication());
       history.push(`/my-account/publications`);
     }
   }
 
   const handleAddImage = () => {
     if(publicationCreateState.data) {
+      dispatch(resetCreatePublication());
       history.push(`/add-image/${publicationCreateState.data.id}`);
     }
   }

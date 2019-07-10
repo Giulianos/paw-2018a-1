@@ -17,3 +17,21 @@ export const retrieveNotifications = id => async (dispatch) => {
 };
 
 export const resetRetrieveNotifications = () => ({ type: actions.RETRIEVE_RESET });
+
+export const clearNotifications = userId => async (dispatch) => {
+  dispatch({ type: actions.CLEAR });
+
+  try {
+    const response = await notificationsService.clear(userId);
+    if (response.ok) {
+      dispatch({ type: actions.CLEAR_OK, payload: response.data });
+      dispatch(resetRetrieveNotifications());
+    } else {
+      dispatch({ type: actions.CLEAR_FAIL });
+    }
+  } catch (error) {
+    dispatch({ type: actions.CLEAR_FAIL });
+  }
+};
+
+export const resetClearNotifications = () => ({ type: actions.RETRIEVE_RESET });

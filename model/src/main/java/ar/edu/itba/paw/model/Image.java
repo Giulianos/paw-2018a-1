@@ -13,7 +13,7 @@ public class Image extends TimestampedEntity {
   @Access(AccessType.PROPERTY)
   private Long id;
 
-  @Column(name = "base64", nullable = false, length = 50000)
+  @Column(name = "base64", nullable = false, length = 1048576)
   private String image;
 
   @ManyToOne(fetch = FetchType.LAZY, optional = false)

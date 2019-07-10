@@ -21,6 +21,7 @@ function AddImage({ match }) {
   };
 
   const handleOk = () => {
+    dispatch(resetAddImage());
     history.replace('/my-account/publications');
   };
 

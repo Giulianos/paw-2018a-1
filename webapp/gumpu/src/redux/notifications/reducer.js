@@ -7,6 +7,11 @@ const intialState = {
     error: false,
     data: undefined,
   },
+  clear: {
+    success: false,
+    loading: false,
+    error: false,
+  },
 };
 
 function reduce(state = intialState, action) {
@@ -25,6 +30,21 @@ function reduce(state = intialState, action) {
       return { ...state, retrieve: { success: false, loading: false, error: true } };
     case actions.RETRIEVE_RESET:
       return { ...state, retrieve: { ...intialState.retrieve } };
+
+    /** CLEAR actions */
+    case actions.CLEAR:
+      return { ...state, clear: { ...state.clear, loading: true, error: false } };
+    case actions.CLEAR_OK:
+      return {
+        ...state,
+        clear: {
+          success: true, loading: false, error: false, data: action.payload,
+        },
+      };
+    case actions.CLEAR_FAIL:
+      return { ...state, clear: { success: false, loading: false, error: true } };
+    case actions.CLEAR_RESET:
+      return { ...state, clear: { ...intialState.clear } };
 
     default:
       return state;

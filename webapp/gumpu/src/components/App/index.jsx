@@ -13,7 +13,6 @@ import AuthenticatedRoute from 'components/AuthenticatedRoute';
 import FullScreenLoader from 'components/ui/FullScreenLoader';
 
 import Home from 'views/Home';
-import Secondary from 'views/Secondary';
 import Login from 'views/Login';
 import Publish from 'views/Publish';
 import MyAccount from 'views/MyAccount';
@@ -39,7 +38,7 @@ function App() {
     return <FullScreenLoader />;
   }
   return (
-    <Router history={history} basename={process.env.REACT_APP_BASE_URL}>
+    <Router history={history}>
       <Header />
       <div className={styles.appContainer}>
         <Switch>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import history from 'router/history';
 
-import { listUserPublications, deletePublication, markPurchased } from 'redux/publication/actionCreators';
+import { listUserPublications, deletePublication, markPurchased, resetListUserPublications } from 'redux/publication/actionCreators';
 
 import PublicationsLayout from './layout';
 import useAuth from 'hooks/useAuth';
@@ -13,10 +13,13 @@ function Publications() {
   const auth = useAuth();
   const [messageModal, setMessageModal] = useState(null);
 
+  const reloadData = () => {
+    dispatch(resetListUserPublications());
+    dispatch(listUserPublications(auth.user.id, 0, 30));
+  }
+
   useEffect(() => {
-    if(!publications.success) {
-      dispatch(listUserPublications(auth.user.id, 0, 30));
-    }
+    reloadData();
   }, [])
 
   const openMessages = publication => {
@@ -30,11 +33,11 @@ function Publications() {
   }
 
   const deleteHandler = publicationId => () => {
-    dispatch(deletePublication(publicationId));
+    dispatch(deletePublication(publicationId, reloadData));
   }
 
   const markPurchasedHandler = publicationId => () => {
-    dispatch(markPurchased(publicationId));
+    dispatch(markPurchased(publicationId, reloadData));
   }
 
   return (

@@ -42,7 +42,7 @@ public class NotificationServiceImpl implements NotificationService {
   @Transactional
   public void markAllSeen() {
     List<Notification> unseenNotifications = getLatest();
-    unseenNotifications.parallelStream().forEach(
+    unseenNotifications.forEach(
         notification -> {
           notification.setSeen(true);
           notificationDao.update(notification);

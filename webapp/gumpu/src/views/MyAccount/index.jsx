@@ -1,7 +1,6 @@
 import React, { Suspense } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import Summary from './Subviews/Summary';
 import Publications from './Subviews/Publications';
 import Orders from './Subviews/Orders';
 
@@ -17,7 +16,6 @@ function MyAccountSuspense() {
         <Switch>
           <Route path="/my-account/publications" component={Publications} />
           <Route path="/my-account/orders" component={Orders} />
-          <Route path="/my-account" component={Summary} />
         </Switch>
       </div>
     </div>

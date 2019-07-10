@@ -11,7 +11,9 @@ import ar.edu.itba.paw.model.Publication;
 import ar.edu.itba.paw.model.Review;
 import ar.edu.itba.paw.model.User;
 import ar.edu.itba.paw.model.compositepks.OrderId;
+import ar.edu.itba.paw.model.events.OrderConfirmedEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -35,6 +37,8 @@ public class ReviewServiceImpl implements ReviewService {
   OrderDao orderDao;
   @Autowired
   UserService userService;
+  @Autowired
+  private ApplicationEventPublisher eventPublisher;
 
   @Override
   @Transactional
@@ -74,6 +78,7 @@ public class ReviewServiceImpl implements ReviewService {
     try {
       order.get().setReview(new Review(comment, rating));
       order.get().setPurchaseAccepted(true);
+      eventPublisher.publishEvent(new OrderConfirmedEvent(order.get()));
     } catch (Exception e) {
       throw new IllegalStateException("Cannot review an order more than once");
     }
