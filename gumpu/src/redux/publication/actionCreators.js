@@ -137,3 +137,20 @@ export const deletePublication = (publicationId) => async (dispatch) => {
 };
 
 export const resetDeletePublication = () => ({ type: actions.DELETE_RESET });
+
+export const adoptPublication = (publicationId) => async (dispatch) => {
+  dispatch({ type: actions.ADOPT });
+
+  try {
+    const response = await publicationService.adopt(publicationId);
+    if (response.ok) {
+      dispatch({ type: actions.ADOPT_OK, payload: response.data });
+    } else {
+      dispatch({ type: actions.ADOPT_FAIL });
+    }
+  } catch (error) {
+    dispatch({ type: actions.ADOPT_FAIL });
+  }
+};
+
+export const resetAdoptPublication = () => ({ type: actions.ADOPT_RESET });

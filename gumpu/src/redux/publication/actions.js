@@ -40,4 +40,9 @@ export default {
   DELETE_OK: `${prefix}/delete_ok`,
   DELETE_FAIL: `${prefix}/delete_fail`,
   DELETE_RESET: `${prefix}/delete_reset`,
+
+  ADOPT: `${prefix}/adopt`,
+  ADOPT_OK: `${prefix}/adopt_ok`,
+  ADOPT_FAIL: `${prefix}/adopt_fail`,
+  ADOPT_RESET: `${prefix}/adopt_reset`,
 };
