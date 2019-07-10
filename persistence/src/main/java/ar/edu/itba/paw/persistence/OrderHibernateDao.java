@@ -54,7 +54,7 @@ public class OrderHibernateDao implements OrderDao {
 
   @Override
   public List<Order> userOrders(User user, Integer page, Integer pageSize) {
-    final TypedQuery<Order> query = em.createQuery("from Order as o where (o.orderer = :orderer)", Order.class);
+    final TypedQuery<Order> query = em.createQuery("from Order as o where (o.orderer = :orderer and o.purchaseAccepted = false)", Order.class);
     query.setParameter("orderer", user);
     query.setFirstResult(pageSize*page);
     query.setMaxResults(pageSize);
@@ -64,7 +64,7 @@ public class OrderHibernateDao implements OrderDao {
 
   @Override
   public Long userOrdersQuantity(User user) {
-    final TypedQuery<Long> query = em.createQuery("select count(*) from Order as o where (o.orderer = :orderer)", Long.class);
+    final TypedQuery<Long> query = em.createQuery("select count(*) from Order as o where (o.orderer = :orderer and o.purchaseAccepted = false)", Long.class);
     query.setParameter("orderer", user);
 
     return query.getSingleResult();
