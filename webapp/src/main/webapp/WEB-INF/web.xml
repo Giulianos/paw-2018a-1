@@ -38,6 +38,10 @@
     <error-code>404</error-code>
     <location>/static/error404.html</location>
   </error-page>
+  <error-page>
+    <error-code>500</error-code>
+    <location>/static/error404.html</location>
+  </error-page>
   <servlet-mapping>
     <servlet-name>jersey-servlet</servlet-name>
     <url-pattern>/api/*</url-pattern>
