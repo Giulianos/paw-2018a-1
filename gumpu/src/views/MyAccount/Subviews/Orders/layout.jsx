@@ -13,24 +13,25 @@ import { getPurchased, getFulfilled, getOrphan, getInProgress } from './filters'
 import ReviewModal from './components/ReviewModal';
 import history from 'router/history';
 
-const orderMapper = messageHandler => o => (
+const orderMapper = (messageHandler, deleteHandler) => o => (
   <li key={o && o.publication.id}>
     <OrderCard
       order={o}
       className="mb-16"
       onMessage={messageHandler}
       onConfirm={() => history.replace(`/my-account/orders/${o && o.publication.id}/confirmation`)}
+      onDelete={deleteHandler && deleteHandler(o && o.publication.id)}
     />
   </li>
 );
 
-function OrdersLayoutSuspense({ orders, loading, messageModal, setMessageModal }) {
+function OrdersLayoutSuspense({ orders, loading, messageModal, setMessageModal, onDelete }) {
   const { t } = useTranslation();
 
   const purchasedOrders = getPurchased(orders).map(orderMapper(setMessageModal));
   const fulfilledOrders = getFulfilled(orders).map(orderMapper(setMessageModal));
-  const orphanOrders = getOrphan(orders).map(orderMapper());
-  const inProgressOrders = getInProgress(orders).map(orderMapper());
+  const orphanOrders = getOrphan(orders).map(orderMapper(null, onDelete));
+  const inProgressOrders = getInProgress(orders).map(orderMapper(null, onDelete));
 
   return (
     <div className="row h100">
