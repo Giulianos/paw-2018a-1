@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Route } from 'react-router-dom';
 
 import CardContainer from 'components/ui/CardContainer';
 import OrderCard from 'components/ui/OrderCard';
@@ -49,7 +50,9 @@ function OrdersLayoutSuspense({ orders, loading, messageModal, setMessageModal }
         </ul>
       </CardContainer>
       {messageModal && <MessageModal setModal={setMessageModal} order={messageModal}/>}
-      <ReviewModal />
+      <Route path="/my-account/orders/:ord_id/confirmation" render={props => (
+        <ReviewModal {...props}/>
+      )} />
     </div>
   );
 }

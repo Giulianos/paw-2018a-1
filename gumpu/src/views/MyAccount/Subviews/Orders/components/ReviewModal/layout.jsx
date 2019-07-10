@@ -9,13 +9,14 @@ import SmartInput from 'components/ui/SmartInput';
 import CardContainer from 'components/ui/CardContainer';
 import Button from 'components/ui/Button';
 
-function ReviewModalLayoutSuspense({onReview, reviewForm}) {
+function ReviewModalLayoutSuspense({onReview, onConfirm, onClose, reviewForm, loading, error, success}) {
   const { t } = useTranslation();
 
   return (
-    <Modal>
+    <Modal onClose={onClose}>
       <div class={styles.container}>
         <h1 className="txt-xlarge mb-32">{t('my_account.orders.confirm_modal.title')}</h1>
+        {!loading && !error && !success && (<>
         <CardContainer className={styles.reviewContainer}>
           <form onSubmit={onReview}>
             <span className="txt-medium20 txt-gray2">{t('my_account.orders.confirm_modal.leave_review.hint')}</span>
@@ -31,8 +32,9 @@ function ReviewModalLayoutSuspense({onReview, reviewForm}) {
         </CardContainer>
         <div class="row w100 space-between center-alt">
           <span className={`${styles.ratingDescription} txt-normal txt-gray3`}>{t('my_account.orders.confirm_modal.leave_review.no_thanks')}</span>
-          <Button>{t('my_account.orders.confirm_modal.action')}</Button>
+          <Button type="button" handleClick={onConfirm}>{t('my_account.orders.confirm_modal.action')}</Button>
         </div>
+        </>)}
       </div>
     </Modal>
   );
