@@ -13,16 +13,14 @@ function Publications() {
   const auth = useAuth();
   const [messageModal, setMessageModal] = useState(null);
 
-  useEffect(() => {
-    if(!publications.success) {
-      dispatch(listUserPublications(auth.user.id, 0, 30));
-    }
-  }, [])
-
   const reloadData = () => {
     dispatch(resetListUserPublications());
     dispatch(listUserPublications(auth.user.id, 0, 30));
   }
+
+  useEffect(() => {
+    reloadData();
+  }, [])
 
   const openMessages = publication => {
     setMessageModal(publication);

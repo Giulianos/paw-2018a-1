@@ -13,16 +13,15 @@ function Orders() {
   const auth = useAuth();
   const [messageModal, setMessageModal] = useState(null);
 
-  useEffect(() => {
-    if(!orders.success) {
-      dispatch(listOrders(auth.user.id, 0, 30));
-    }
-  }, [])
   
   const reloadData = () => {
     dispatch(resetListOrders());
     dispatch(listOrders(auth.user.id, 0, 30));
   }
+  
+  useEffect(() => {
+    reloadData();
+  }, [])
 
   const deleteHandler = (orderId) => () => {
     dispatch(deleteOrder(auth.user.id, orderId, reloadData));
