@@ -14,15 +14,15 @@ import ImageSelector from './components/ImageSelector';
 import { Trans, useTranslation } from 'react-i18next';
 
 function AddImageLayoutSuspense({
-  handleUpload, loading, error, success, base64State
+  handleUpload, loading, error, success, base64State, handleRetry, handleOk
 }) {
   const { t } = useTranslation();
 
   return (
     <CardContainer className={`${styles.cardContainer} column center-alt center`}>
       { loading && <Loader /> }
-      { error && <Failure /> }
-      { success && <Success /> }
+      { error && <Failure handleRetry={handleRetry} /> }
+      { success && <Success handleOk={handleOk} /> }
       { (!loading && !error && !success) && (
         <>
           <h1 className="txt-large mb-64 txt-gray3">{t('add_image.title')}</h1>

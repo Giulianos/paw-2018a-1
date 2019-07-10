@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import AddImageLayout from './layout';
-import { addImage } from 'redux/publication/actionCreators';
+import { addImage, resetAddImage } from 'redux/publication/actionCreators';
+import history from 'router/history';
 
 function AddImage({ match }) {
   const publicationId = match.params.pub_id;
@@ -15,10 +16,20 @@ function AddImage({ match }) {
     dispatch(addImage(publicationId, base64Image));
   };
 
+  const handleRetry = () => {
+    dispatch(resetAddImage());
+  };
+
+  const handleOk = () => {
+    history.replace('/my-account/publications');
+  };
+
   return (
     <AddImageLayout
       handleUpload={handleUpload}
       base64State={[base64Image, setBase64Image]}
+      handleRetry={handleRetry}
+      handleOk={handleOk}
       {...upload}
     />
   );
