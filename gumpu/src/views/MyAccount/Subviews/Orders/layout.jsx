@@ -9,6 +9,8 @@ import MessageModal from './components/MessageModal';
 import styles from './styles.module.scss';
 
 import { getPurchased, getFulfilled, getOrphan, getInProgress } from './filters';
+import ReviewModalLayout from './components/ReviewModal/layout';
+import ReviewModal from './components/ReviewModal';
 
 const orderMapper = messageHandler => o => (<li key={o && o.publication.id}><OrderCard order={o} className="mb-16" onMessage={messageHandler} /></li>);
 
@@ -48,6 +50,7 @@ function OrdersLayoutSuspense({ orders, loading, messageModal, setMessageModal }
         </ul>
       </CardContainer>
       {messageModal && <MessageModal setModal={setMessageModal} order={messageModal}/>}
+      <ReviewModal />
     </div>
   );
 }
