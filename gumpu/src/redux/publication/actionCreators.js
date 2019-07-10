@@ -120,3 +120,20 @@ export const retrieve = publicationId => async (dispatch) => {
 };
 
 export const resetRetrieve = () => ({ type: actions.RETRIEVE_RESET });
+
+export const deletePublication = (publicationId) => async (dispatch) => {
+  dispatch({ type: actions.DELETE });
+
+  try {
+    const response = await publicationService.delete(publicationId);
+    if (response.ok) {
+      dispatch({ type: actions.DELETE_OK, payload: response.data });
+    } else {
+      dispatch({ type: actions.DELETE_FAIL });
+    }
+  } catch (error) {
+    dispatch({ type: actions.DELETE_FAIL });
+  }
+};
+
+export const resetDeletePublication = () => ({ type: actions.DELETE_RESET });
