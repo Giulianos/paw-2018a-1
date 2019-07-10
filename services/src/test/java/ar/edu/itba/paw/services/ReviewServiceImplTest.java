@@ -24,6 +24,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
@@ -51,7 +52,7 @@ public class ReviewServiceImplTest {
   }
 
   @Test(expected = IllegalStateException.class)
-  public void cannotReviewUnconfirmedOrder() throws Exception {
+  public void cannotReviewConfirmedOrder() throws Exception {
     // Login as supervisor
     SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
 
@@ -73,7 +74,10 @@ public class ReviewServiceImplTest {
     // Login as orderer
     SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testOrderer.getEmail()));
 
-    // Try to review supervisor without confirming order purchase
+    // Confirm order
+    orderService.confirmOrderPurchase(testOrder.getId());
+
+    // Try to review supervisor after confirming order purchase
     reviewService.reviewOrder(testOrder.getId(), "Test review", 4);
   }
 
@@ -112,9 +116,6 @@ public class ReviewServiceImplTest {
     // Order all products as supervisor
     Order testSupervisorOrder = orderService.create(testPublication, 10L);
 
-    // Mark publication as purchased
-    publicationService.markAsPurchased(testPublication.getId());
-
     // Supervisor tries to review himself
     reviewService.reviewOrder(testSupervisorOrder.getId(), "Excelent!", 5);
   }
@@ -141,9 +142,6 @@ public class ReviewServiceImplTest {
 
     // Login as orderer
     SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testOrderer.getEmail()));
-
-    // Confirm order
-    orderService.confirmOrderPurchase(testOrder.getId());
 
     // Try to review with more than 5
     reviewService.reviewOrder(testOrder.getId(), "Awesome!", 6);
@@ -172,9 +170,6 @@ public class ReviewServiceImplTest {
     // Login as orderer
     SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testOrderer.getEmail()));
 
-    // Confirm order
-    orderService.confirmOrderPurchase(testOrder.getId());
-
     // Try to review with less than 1
     reviewService.reviewOrder(testOrder.getId(), "Very bad!", 0);
   }
@@ -201,9 +196,6 @@ public class ReviewServiceImplTest {
 
     // Login as orderer
     SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testOrderer.getEmail()));
-
-    // Confirm order
-    orderService.confirmOrderPurchase(testOrder.getId());
 
     // Review
     reviewService.reviewOrder(testOrder.getId(), "Good!", 3);
@@ -242,9 +234,6 @@ public class ReviewServiceImplTest {
     // Login as orderer
     SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testOrderer.getEmail()));
 
-    // Confirm order
-    orderService.confirmOrderPurchase(testOrder.getId());
-
     // Review
     reviewService.reviewOrder(testOrder.getId(), "Good!", 3);
 
@@ -275,9 +264,6 @@ public class ReviewServiceImplTest {
     // Login as orderer
     SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testOrderer.getEmail()));
 
-    // Confirm order
-    orderService.confirmOrderPurchase(testOrder.getId());
-
     // Review
     reviewService.reviewOrder(testOrder.getId(), "Good!", 5);
 
@@ -285,5 +271,33 @@ public class ReviewServiceImplTest {
     final Integer rating  = reviewService.getUserRating(testSupervisor.getId());
 
     assertEquals(rating, new Integer(5));
+  }
+
+  @Test
+  public void didReviewReturnsTrueIfReviewForOrderExists() throws Exception {
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+
+    // Create publication
+    Publication testPublication = publicationService.create("Test Publication", 1.0d, 10L, "", new LinkedList<>());
+
+    // Login as orderer
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testOrderer.getEmail()));
+
+    // Order all products
+    Order testOrder = orderService.create(testPublication, 10L);
+
+    // Login as supervisor
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testSupervisor.getEmail()));
+
+    // Login as orderer
+    SecurityContextHolder.getContext().setAuthentication(new AuthenticationMock(testOrderer.getEmail()));
+
+    // Review
+    reviewService.reviewOrder(testOrder.getId(), "Good!", 3);
+
+    Boolean didReviewOrder = orderService.didReviewOrder(testOrder.getId());
+
+    assertTrue(didReviewOrder);
   }
 }

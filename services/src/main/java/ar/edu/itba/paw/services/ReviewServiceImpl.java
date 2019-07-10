@@ -66,13 +66,14 @@ public class ReviewServiceImpl implements ReviewService {
     if(order.get().getUpdatedAt().before(limitDate)) {
       throw new IllegalStateException("The period to review the supervisor has expired");
     }
-    if(!order.get().getPurchaseAccepted()) {
-      throw new IllegalStateException("Cannot review an unconfirmed order");
+    if(order.get().getPurchaseAccepted()) {
+      throw new IllegalStateException("Cannot review an confirmed order");
     }
 
     // Everything ok, create review
     try {
       order.get().setReview(new Review(comment, rating));
+      order.get().setPurchaseAccepted(true);
     } catch (Exception e) {
       throw new IllegalStateException("Cannot review an order more than once");
     }

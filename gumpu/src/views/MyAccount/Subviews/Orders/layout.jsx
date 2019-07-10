@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Route } from 'react-router-dom';
 
 import CardContainer from 'components/ui/CardContainer';
 import OrderCard from 'components/ui/OrderCard';
@@ -9,8 +10,19 @@ import MessageModal from './components/MessageModal';
 import styles from './styles.module.scss';
 
 import { getPurchased, getFulfilled, getOrphan, getInProgress } from './filters';
+import ReviewModal from './components/ReviewModal';
+import history from 'router/history';
 
-const orderMapper = messageHandler => o => (<li key={o && o.publication.id}><OrderCard order={o} className="mb-16" onMessage={messageHandler} /></li>);
+const orderMapper = messageHandler => o => (
+  <li key={o && o.publication.id}>
+    <OrderCard
+      order={o}
+      className="mb-16"
+      onMessage={messageHandler}
+      onConfirm={() => history.replace(`/my-account/orders/${o && o.publication.id}/confirmation`)}
+    />
+  </li>
+);
 
 function OrdersLayoutSuspense({ orders, loading, messageModal, setMessageModal }) {
   const { t } = useTranslation();
@@ -48,6 +60,9 @@ function OrdersLayoutSuspense({ orders, loading, messageModal, setMessageModal }
         </ul>
       </CardContainer>
       {messageModal && <MessageModal setModal={setMessageModal} order={messageModal}/>}
+      <Route path="/my-account/orders/:ord_id/confirmation" render={props => (
+        <ReviewModal {...props}/>
+      )} />
     </div>
   );
 }

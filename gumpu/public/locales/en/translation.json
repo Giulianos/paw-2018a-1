@@ -140,6 +140,26 @@
         "confirm": "Confirmar",
         "remaining_quantity": "Restan {{ count }}",
         "orderer_quantity": "Ordenaste {{ count }}"
+      },
+      "confirm_modal": {
+        "title": "Confirmar",
+        "leave_review": {
+          "hint": "Puedes dejar una resena si quieres...",
+          "comment_label": "Comentario",
+          "rating_label": "Calificacion",
+          "rating_description": "Califica al supervisor con un numero del 1 al 5",
+          "no_thanks": "No, gracias, solo confirmar",
+          "action": "CALIFICAR Y CONFIRMAR"
+        },
+        "action": "CONFIRMAR",
+        "result_success": {
+          "message": "<0>Genial!</0><1>Confirmamos que recibiste la compra!<1>",
+          "action": "OK"
+        },
+        "result_fail": {
+          "message": "<0>Ups!</0><1>No pudimos guardar tu confirmacion!<1>",
+          "action": "ENTIENDO"
+        }
       }
     },
     "publications": {
