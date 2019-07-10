@@ -148,6 +148,7 @@
           "comment_label": "Comentario",
           "rating_label": "Calificacion",
           "rating_description": "Califica al supervisor con un numero del 1 al 5",
+          "no_thanks": "No, gracias, solo confirmar",
           "action": "CALIFICAR"
         },
         "action": "CONFIRMAR"
