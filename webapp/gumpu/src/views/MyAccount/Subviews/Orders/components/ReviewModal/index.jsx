@@ -7,7 +7,9 @@ import {
   confirm as confirmAction,
   rate as rateAction,
   resetConfirm as resetConfirmAction,
-  resetRate as resetRateAction
+  resetRate as resetRateAction,
+  resetListOrders,
+  listOrders
 } from 'redux/orders/actionCreators';
 
 import ReviewModalLayout from './layout';
@@ -30,10 +32,15 @@ function ReviewModal({ match }) {
     rating: useFormInput('', quantityMax(5, ''))
   }
 
+  const reloadData = () => {
+    dispatch(resetListOrders());
+    dispatch(listOrders(auth.user.id, 0, 30));
+  }
+
   const handleReview = e => {
     e.preventDefault();
     if(reviewForm.rating.valid === true) {
-      dispatch(rateAction(auth.user.id, orderId, reviewForm.comment.value, reviewForm.rating.value));
+      dispatch(rateAction(auth.user.id, orderId, reviewForm.comment.value, reviewForm.rating.value, reloadData));
     }
   }
 

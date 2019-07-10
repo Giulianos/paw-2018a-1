@@ -18,13 +18,14 @@ export const listOrders = userId => async (dispatch) => {
 
 export const resetListOrders = () => ({ type: actions.LIST_RESET });
 
-export const rate = (userId, orderId, comment, rating) => async (dispatch) => {
+export const rate = (userId, orderId, comment, rating, callback) => async (dispatch) => {
   dispatch({ type: actions.RATE });
 
   try {
     const response = await orderService.rate(userId, orderId, rating, comment);
     if (response.ok) {
       dispatch({ type: actions.RATE_OK, payload: response.data });
+      if(callback) { callback(); }
     } else {
       dispatch({ type: actions.RATE_FAIL });
     }
@@ -35,13 +36,14 @@ export const rate = (userId, orderId, comment, rating) => async (dispatch) => {
 
 export const resetRate = () => ({ type: actions.RATE_RESET });
 
-export const confirm = (userId, orderId) => async (dispatch) => {
+export const confirm = (userId, orderId, callback) => async (dispatch) => {
   dispatch({ type: actions.CONFIRM });
 
   try {
     const response = await orderService.confirm(userId, orderId);
     if (response.ok) {
       dispatch({ type: actions.CONFIRM_OK, payload: response.data });
+      if(callback) { callback(); }
     } else {
       dispatch({ type: actions.CONFIRM_FAIL });
     }
