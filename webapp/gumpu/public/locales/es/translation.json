@@ -8,7 +8,19 @@
       "description": "No encontramos ningun resultado que coincida con tu busqueda",
       "action": "Por que no <1>creas una publicacion</1>?"
     },
-    "load_more": "Ver mas"
+    "load_more": "VER MAS"
+  },
+  "add_image": {
+    "title": "Agregar una imagen",
+    "action": "AGREGAR",
+    "result_success": {
+      "message": "<0>Genial!</0><1>La imagen fue agregada!<1>",
+      "action": "OK"
+    },
+    "result_fail": {
+      "message": "<0>Ups!</0><1>No pudimos agregar la imagen!<1>",
+      "action": "REINTENTAR"
+    }
   },
   "notifications": {
     "new_message": "Nuevo mensaje de <1>{{name}}</1>",
@@ -22,7 +34,8 @@
     "publish": "Publicar",
     "login": "Ingresar",
     "my_account": "Mi Cuenta",
-    "create_account": "Crear cuenta"
+    "create_account": "Crear cuenta",
+    "logout": "Cerrar sesion"
   },
   "search_bar": {
     "question": "Que estás buscando?",
@@ -41,7 +54,7 @@
         "action": "INGRESAR"
       },
       "result_fail": {
-        "message": "<0>Ups!</0><1>No pudimos crear tu cuenta! Recuerda que es una por email<1>",
+        "message": "<0>Ups!</0><1>No pudimos crear tu cuenta!<1>",
         "action": "REINTENTAR"
       }
     },
@@ -84,7 +97,8 @@
     "action": "PUBLICAR",
     "result_success": {
       "message": "<0>Genial!</0><1>Tu producto fue publicado!<1>",
-      "action": "VER PUBLICACION"
+      "action": "VER MIS PUBLICACIONES",
+      "action_add": "AGREGAR IMAGEN"
     },
     "result_fail": {
       "message": "<0>Ups!</0><1>No pudimos crear la publicacion!<1>",
@@ -106,6 +120,7 @@
     "availability_plural": "{{count}} disponibles",
     "quantity": "Cantidad",
     "you_will_pay": "Vas a pagar <1>{{price}}<1>",
+    "login_hint": "Debes estar logueado para ordenar",
     "actions": {
       "order": "ORDENAR",
       "cancel": "CANCELAR"
@@ -139,6 +154,26 @@
         "confirm": "Confirmar",
         "remaining_quantity": "Restan {{ count }}",
         "orderer_quantity": "Ordenaste {{ count }}"
+      },
+      "confirm_modal": {
+        "title": "Confirmar",
+        "leave_review": {
+          "hint": "Puedes dejar una resena si quieres...",
+          "comment_label": "Comentario",
+          "rating_label": "Calificacion",
+          "rating_description": "Califica al supervisor con un numero del 1 al 5",
+          "no_thanks": "No, gracias, solo confirmar",
+          "action": "CALIFICAR Y CONFIRMAR"
+        },
+        "action": "CONFIRMAR",
+        "result_success": {
+          "message": "<0>Genial!</0><1>Confirmamos que recibiste la compra!<1>",
+          "action": "OK"
+        },
+        "result_fail": {
+          "message": "<0>Ups!</0><1>No pudimos guardar tu confirmacion!<1>",
+          "action": "ENTIENDO"
+        }
       }
     },
     "publications": {
@@ -155,6 +190,10 @@
         "adopt": "Adoptar",
         "confirm": "Confirmar",
         "remaining_quantity": "Restan {{ count }}"
+      },
+      "messages": {
+        "select_from_list": "Seleccione una conversacion de la lista",
+        "ordered": "Ordeno {{quantity}}"
       }
     }
   }
