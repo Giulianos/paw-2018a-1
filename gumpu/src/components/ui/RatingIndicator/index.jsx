@@ -1,28 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import RatingIndicatorLayout from './layout';
+import { rating as ratingAction } from 'redux/user/actionCreators';
 
-import styles from './styles.module.scss';
+function RatingIndicator({ userId }) {
+  const dispatch = useDispatch();
+  const rating = useSelector(state => userId && state.user.rating[userId]);
+  useEffect(() => {
+    console.log(`rating indicator for: ${userId}`)
+    if(userId && !rating) {
+      dispatch(ratingAction(userId));
+    }
+  }, [userId]);
+  console.log(rating)
 
-function RatingIndicator({ className, value }) {
-  return (
-    <div className={`row ${className}`}>
-      <div className={`${value > 0 ? styles.filled : styles.empty} mr-4`} />
-      <div className={`${value > 1 ? styles.filled : styles.empty} mr-4`} />
-      <div className={`${value > 2 ? styles.filled : styles.empty} mr-4`} />
-      <div className={`${value > 3 ? styles.filled : styles.empty} mr-4`} />
-      <div className={`${value > 4 ? styles.filled : styles.empty}`} />
-    </div>
-  );
+  return <RatingIndicatorLayout value={rating && rating.data}  />
 }
-
-RatingIndicator.defaultProps = {
-  className: '',
-  value: 0,
-};
-
-RatingIndicator.propTypes = {
-  className: PropTypes.string,
-  value: PropTypes.number,
-};
 
 export default RatingIndicator;
