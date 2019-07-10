@@ -27,7 +27,7 @@ function AddImageLayoutSuspense({
         <>
           <h1 className="txt-large mb-64 txt-gray3">{t('add_image.title')}</h1>
           <ImageSelector b64Field={base64State} />
-          <Button handleClick={handleUpload}>Upload</Button>
+          <Button className="mt-24" handleClick={handleUpload}>{t('add_image.action')}</Button>
         </>
       ) }
     </CardContainer>

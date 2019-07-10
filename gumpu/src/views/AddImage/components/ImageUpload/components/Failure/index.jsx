@@ -13,12 +13,12 @@ function FailureSuspense({ handleRetry }) {
     <div className="h100 w100 column center center-alt animated fadeIn">
       <img alt="" className="mb-48" src={failureIcon} />
       <span className="mb-48">
-        <Trans i18nKey="login.result_fail.message">
+        <Trans i18nKey="add_image.result_fail.message">
           <span className="txt-red txt-medium txt-bold mr-8">Oops!</span>
           <span className="txt-medium txt-gray3">Invalid credentials</span>
         </Trans>
       </span>
-      <Button type="button" color="red" variant="secondary" handleClick={handleRetry}>{ t('login.result_fail.action') }</Button>
+      <Button type="button" color="red" variant="secondary" handleClick={handleRetry}>{ t('add_image.result_fail.action') }</Button>
     </div>
   );
 }
