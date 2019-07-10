@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import history from 'router/history';
 
-import { listUserPublications, deletePublication } from 'redux/publication/actionCreators';
+import { listUserPublications, deletePublication, markPurchased } from 'redux/publication/actionCreators';
 
 import PublicationsLayout from './layout';
 import useAuth from 'hooks/useAuth';
@@ -29,8 +29,12 @@ function Publications() {
     history.push(`/my-account/publications/${publicationId}`);
   }
 
-  const deleteHandler = (publicationId) => () => {
+  const deleteHandler = publicationId => () => {
     dispatch(deletePublication(publicationId));
+  }
+
+  const markPurchasedHandler = publicationId => () => {
+    dispatch(markPurchased(publicationId));
   }
 
   return (
@@ -41,6 +45,7 @@ function Publications() {
     closeMessages={closeMessages}
     openMessages={openMessages}
     onDelete={deleteHandler}
+    onMarkPurchased={markPurchasedHandler}
   />);
 }
 

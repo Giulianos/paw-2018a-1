@@ -6,7 +6,7 @@ export default {
   create: newPublication => api.post(ENDPOINT, newPublication),
   delete: publicationId => api.delete(`${ENDPOINT}/${publicationId}`),
   retrieve: id => api.get(`${ENDPOINT}/${id}`),
-  markPurchased: id => api.patch(`${ENDPOINT}/${id}`),
+  markPurchased: id => api.patch(`${ENDPOINT}/${id}`, { status: 'PURCHASED' }),
   leave: id => api.delete(`${ENDPOINT}/${id}`),
   getLatest: pageSize => api.get(`${ENDPOINT}/latest`, { pageSize }),
   search: (term, page, pageSize) => api.get(`${ENDPOINT}/searches/${term}`, { page, pageSize }),

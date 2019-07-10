@@ -11,22 +11,23 @@ import styles from './styles.module.scss';
 
 import { getPurchased, getFulfilled, getOrphan, getInProgress } from './filters';
 
-const publicationMapper =  (messageHandler, deleteHandler) => p => (
+const publicationMapper =  (messageHandler, deleteHandler, markPurchasedHandler) => p => (
   <li key={p && p.id}>
     <PublicationCard
       publication={p}
       className="mb-16"
       onMessage={messageHandler}
       onDelete={deleteHandler && deleteHandler(p && p.id)}
+      onMarkPurchased={markPurchasedHandler && markPurchasedHandler(p && p.id)}
     />
   </li>
 );
 
-function PublicationsLayoutSuspense({ publications, loading, openMessages, closeMessages, messageModal, onDelete }) {
+function PublicationsLayoutSuspense({ publications, loading, openMessages, closeMessages, messageModal, onDelete, onMarkPurchased }) {
   const { t } = useTranslation();
 
   const purchasedPublications = getPurchased(publications).map(publicationMapper(openMessages));
-  const fulfilledPublications = getFulfilled(publications).map(publicationMapper(openMessages));
+  const fulfilledPublications = getFulfilled(publications).map(publicationMapper(openMessages, null, onMarkPurchased));
   const inProgressPublications = getInProgress(publications).map(publicationMapper(null, onDelete));
 
   return (

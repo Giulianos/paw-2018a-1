@@ -59,6 +59,11 @@ const initialState = {
     success: false,
     loading: false,
     error: false
+  },
+  markPurchased: {
+    success: false,
+    loading: false,
+    error: false
   }
 };
 
@@ -184,6 +189,16 @@ function reduce(state = initialState, action) {
       return { ...state, adopt: { success: false, loading: false, error: true } };
     case actions.ADOPT_RESET:
       return { ...state, adopt: { ...initialState.adopt } };
+
+    /** MARK_PURCHASED actions */
+    case actions.MARK_PURCHASED:
+      return { ...state, markPurchased: { ...state.markPurchased, loading: true, error: false } };
+    case actions.MARK_PURCHASED_OK:
+      return { ...state, markPurchased: { success: true, loading: false, error: false } };
+    case actions.MARK_PURCHASED_FAIL:
+      return { ...state, markPurchased: { success: false, loading: false, error: true } };
+    case actions.MARK_PURCHASED_RESET:
+      return { ...state, markPurchased: { ...initialState.markPurchased } };
 
     default:
       return state;
