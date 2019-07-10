@@ -1,10 +1,10 @@
 import React from 'react';
 import ImageUpload from './components/ImageUpload';
 
-function AddImage({ location }) {
+function AddImage({ match }) {
   return (
     <div className="view-container column center-alt">
-      <ImageUpload location={location} />
+      <ImageUpload match={match} />
     </div>
   );
 }

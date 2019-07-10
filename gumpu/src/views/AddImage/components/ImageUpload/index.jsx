@@ -1,71 +1,27 @@
-import React, { Suspense } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import useFormInput from 'hooks/useFormInput';
+import AddImageLayout from './layout';
+import { addImage } from 'redux/publication/actionCreators';
 
-import emailValidator from 'validators/email';
+function AddImage({ match }) {
+  const publicationId = match.params.pub_id;
+  const [base64Image, setBase64Image] = useState(null);
+  const dispatch = useDispatch();
+  const upload = useSelector(state => state.publication.addImage);
 
-import {
-  login as loginAction,
-  resetLogin as resetLoginAction,
-} from 'redux/auth/actionCreators';
-
-import LoginFormLayout from './layout';
-import { useTranslation } from 'react-i18next';
-import Loader from 'components/ui/Loader';
-
-function LoginForm({
-  login, loading, error, success, resetLogin, location,
-}) {
-  const { t } = useTranslation();
-
-  const form = {
-    email: useFormInput('', emailValidator(t('validations.email'))),
-    password: useFormInput(''),
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if(form.email.valid === true) {
-      login({
-        email: form.email.value,
-        password: form.password.value,
-      }, location.state && location.state.ref);
-    }
+  const handleUpload = e => {
+    e.preventDefault();
+    dispatch(addImage(publicationId, base64Image));
   };
 
   return (
-    <LoginFormLayout
-      {...form}
-      handleSubmit={handleSubmit}
-      loading={loading}
-      error={error}
-      success={success}
-      resetRequest={resetLogin}
+    <AddImageLayout
+      handleUpload={handleUpload}
+      base64State={[base64Image, setBase64Image]}
+      {...upload}
     />
   );
 }
 
-LoginForm.propTypes = {
-  resetLogin: PropTypes.func.isRequired,
-  login: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
-  error: PropTypes.bool.isRequired,
-};
-
-const mapStateToPros = state => ({
-  success: state.auth.login.success,
-  loading: state.auth.login.loading,
-  error: state.auth.login.error,
-});
-
-const mapDispatchToProps = dispatch => ({
-  login: (credentials, redirect) => dispatch(loginAction(credentials, redirect)),
-  resetLogin: () => dispatch(resetLoginAction()),
-});
-
-export default connect(
-  mapStateToPros,
-  mapDispatchToProps,
-)(props => <Suspense fallback={<Loader />}><LoginForm {...props} /></Suspense>);
+export default AddImage;

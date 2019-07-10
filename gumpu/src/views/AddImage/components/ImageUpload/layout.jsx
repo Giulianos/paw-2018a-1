@@ -13,34 +13,33 @@ import Success from './components/Success';
 import ImageSelector from './components/ImageSelector';
 import { Trans, useTranslation } from 'react-i18next';
 
-function LoginFormLayout({
-  email, password, handleSubmit, resetRequest, loading, error, success
+function AddImageLayoutSuspense({
+  handleUpload, loading, error, success, base64State
 }) {
   const { t } = useTranslation();
 
   return (
     <CardContainer className={`${styles.cardContainer} column center-alt center`}>
       { loading && <Loader /> }
-      { error && <Failure handleRetry={resetRequest} /> }
+      { error && <Failure /> }
       { success && <Success /> }
       { (!loading && !error && !success) && (
         <>
           <h1 className="txt-large mb-64 txt-gray3">{t('add_image.title')}</h1>
-          <ImageSelector />
+          <ImageSelector b64Field={base64State} />
+          <Button handleClick={handleUpload}>Upload</Button>
         </>
       ) }
     </CardContainer>
   );
 }
 
-LoginFormLayout.propTypes = {
-  email: PropTypes.object.isRequired,
-  password: PropTypes.object.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  resetRequest: PropTypes.func.isRequired,
-  loading: PropTypes.bool,
-  error: PropTypes.bool,
-  success: PropTypes.bool,
-};
+function AddImageLayout(props) {
+  return (
+    <Suspense fallback={<Loader />}>
+      <AddImageLayoutSuspense {...props} />
+    </Suspense>
+  );
+}
 
-export default props => <Suspense fallback={<div />}><LoginFormLayout {...props} /></Suspense>;
+export default AddImageLayout;

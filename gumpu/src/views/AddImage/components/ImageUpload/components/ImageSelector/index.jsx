@@ -1,10 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 
 import {fitImage} from './utils';
 import ImageSelectorLayout from './layout';
 
-function ImageSelector() {
-  const [b64Image, setB64Image ] = useState(null);
+function ImageSelector({ b64Field }) {
+  const [b64Image, setB64Image ] = b64Field;
   const canvasRef = useRef(null);
   const imageChangedHandler = e => {
     e.preventDefault();

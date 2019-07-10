@@ -50,4 +50,9 @@ export default {
   MARK_PURCHASED_OK: `${prefix}/mark_purchased_ok`,
   MARK_PURCHASED_FAIL: `${prefix}/mark_purchased_fail`,
   MARK_PURCHASED_RESET: `${prefix}/mark_purchased_reset`,
+
+  ADD_IMAGE: `${prefix}/add_image`,
+  ADD_IMAGE_OK: `${prefix}/add_image_ok`,
+  ADD_IMAGE_FAIL: `${prefix}/add_image_fail`,
+  ADD_IMAGE_RESET: `${prefix}/add_image_reset`,
 };
