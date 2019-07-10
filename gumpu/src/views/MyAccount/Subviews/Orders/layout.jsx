@@ -11,8 +11,18 @@ import styles from './styles.module.scss';
 
 import { getPurchased, getFulfilled, getOrphan, getInProgress } from './filters';
 import ReviewModal from './components/ReviewModal';
+import history from 'router/history';
 
-const orderMapper = messageHandler => o => (<li key={o && o.publication.id}><OrderCard order={o} className="mb-16" onMessage={messageHandler} /></li>);
+const orderMapper = messageHandler => o => (
+  <li key={o && o.publication.id}>
+    <OrderCard
+      order={o}
+      className="mb-16"
+      onMessage={messageHandler}
+      onConfirm={() => history.replace(`/my-account/orders/${o && o.publication.id}/confirmation`)}
+    />
+  </li>
+);
 
 function OrdersLayoutSuspense({ orders, loading, messageModal, setMessageModal }) {
   const { t } = useTranslation();
