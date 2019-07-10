@@ -17,7 +17,6 @@ function MyAccountSuspense() {
         <Switch>
           <Route path="/my-account/publications" component={Publications} />
           <Route path="/my-account/orders" component={Orders} />
-          <Route path="/my-account" component={Summary} />
         </Switch>
       </div>
     </div>
