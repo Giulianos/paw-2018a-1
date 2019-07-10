@@ -18,8 +18,10 @@ i18n
   .init({
     fallbackLng: 'en',
     whitelist: ['en', 'es'],
-    debug: true,
-
+    debug: false,
+    backend: {
+      loadPath: `${process.env.REACT_APP_BASE_URL || ''}/locales/{{lng}}/{{ns}}.json`
+    },
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
     },

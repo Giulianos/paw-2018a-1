@@ -37,11 +37,17 @@
   </modules>
   <build>
     <plugins>
-      <plugin><groupId>org.apache.maven.plugins</groupId>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
         <version>${maven-war-plugin.version}</version>
         <configuration>
           <packagingExcludes>**/logback-test.xml</packagingExcludes>
+          <webResources>
+            <resource>
+              <directory>gumpu/build</directory>
+            </resource>
+          </webResources>
         </configuration>
       </plugin>
       <plugin>
