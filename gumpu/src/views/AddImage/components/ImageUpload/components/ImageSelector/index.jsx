@@ -1,9 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useState, useRef } from 'react';
 
 import {fitImage} from './utils';
 import ImageSelectorLayout from './layout';
 
 function ImageSelector() {
+  const [b64Image, setB64Image ] = useState(null);
   const canvasRef = useRef(null);
   const imageChangedHandler = e => {
     e.preventDefault();
@@ -13,6 +14,7 @@ function ImageSelector() {
     reader.onload = () => {
       image.onload = () => {
         fitImage(context, image, 208, 208);
+        setB64Image(canvasRef.current.toDataURL("image/png"));
       };
       image.src = reader.result;
     }
