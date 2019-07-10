@@ -39,7 +39,7 @@ function App() {
     return <FullScreenLoader />;
   }
   return (
-    <Router history={history} basename={process.env.REACT_APP_BASE_URL}>
+    <Router history={history}>
       <Header />
       <div className={styles.appContainer}>
         <Switch>
