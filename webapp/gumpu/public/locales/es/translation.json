@@ -27,6 +27,7 @@
     "order_purchased": "<0>{{title}}</0> ya fue comprada!",
     "publication_fulfilled": "<0>{{title}}</0> llego al objetivo!",
     "publication_orphan": "El organizador dejo <1>{{title}}</1>",
+    "clear": "Limpiar",
     "empty_state": "Estás al día!"
   },
   "header": {

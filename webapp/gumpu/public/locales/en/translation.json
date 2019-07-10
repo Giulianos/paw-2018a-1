@@ -27,6 +27,7 @@
     "order_purchased": "<0>{{title}}</0> was bought!",
     "publication_fulfilled": "<0>{{title}}</0> was fulfilled!",
     "publication_orphan": "The organizer left <1>{{title}}</1>",
+    "clear": "Clear",
     "empty_state": "You're up to date!"
   },
   "header": {
