@@ -154,3 +154,20 @@ export const adoptPublication = (publicationId) => async (dispatch) => {
 };
 
 export const resetAdoptPublication = () => ({ type: actions.ADOPT_RESET });
+
+export const markPurchased = publicationId => async (dispatch) => {
+  dispatch({ type: actions.MARK_PURCHASED });
+
+  try {
+    const response = await publicationService.markPurchased(publicationId);
+    if (response.ok) {
+      dispatch({ type: actions.MARK_PURCHASED_OK, payload: response.data });
+    } else {
+      dispatch({ type: actions.MARK_PURCHASED_FAIL });
+    }
+  } catch (error) {
+    dispatch({ type: actions.MARK_PURCHASED_FAIL });
+  }
+};
+
+export const resetMarkPurchased = () => ({ type: actions.MARK_PURCHASED_RESET });

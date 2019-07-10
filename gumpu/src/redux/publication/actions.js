@@ -45,4 +45,9 @@ export default {
   ADOPT_OK: `${prefix}/adopt_ok`,
   ADOPT_FAIL: `${prefix}/adopt_fail`,
   ADOPT_RESET: `${prefix}/adopt_reset`,
+
+  MARK_PURCHASED: `${prefix}/mark_purchased`,
+  MARK_PURCHASED_OK: `${prefix}/mark_purchased_ok`,
+  MARK_PURCHASED_FAIL: `${prefix}/mark_purchased_fail`,
+  MARK_PURCHASED_RESET: `${prefix}/mark_purchased_reset`,
 };
