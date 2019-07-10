@@ -13,7 +13,7 @@ import Success from './components/Success';
 import styles from './styles.module.scss';
 import Skeleton from './skeleton';
 
-function OrderModalLayout({ publication, quantity, onClose, onSubmit, onReset, loading, success, error, updatedQuantity }) {
+function OrderModalLayout({ publication, quantity, onClose, onSubmit, onReset, loading, success, error, updatedQuantity, disableOrder }) {
   const { t } = useTranslation();
   const totalPrice = quantity.valid ? publication.unitPrice * Number(quantity.value) : '-';
 
@@ -56,22 +56,27 @@ function OrderModalLayout({ publication, quantity, onClose, onSubmit, onReset, l
                   {publication.detailedDescription}
                 </span>
               </CardContainer>
-              <form onSubmit={onSubmit} className="column">
-                <div className="row flex-end-alt flex-end mb-24">
-                  <SmartInput label={t('order_modal.quantity')} {...quantity} className={styles.shortInput} />
-                  { !updatedQuantity && <span className="ml-16 txt-gray2 txt-bold">{t('order_modal.availability', {count: publication.availableQuantity})}</span> }
-                  { updatedQuantity && <span className="ml-16 txt-green txt-bold">{t('order_modal.availability', {count: updatedQuantity})}</span> }
-                </div>
-                <div className="row center-alt flex-end mb-32 txt-medium20">
-                  <Trans i18nKey="order_modal.you_will_pay">
-                    You will pay <span className="txt-blue txt-bold ml-8">{{ price: `$${totalPrice}` }}</span>
-                  </Trans>
-                </div>
-                <div className="row flex-end">
-                  <Button handleClick={onClose} type="button" variant="secondary" className="mr-8">{t('order_modal.actions.cancel')}</Button>
-                  <Button>{t('order_modal.actions.order')}</Button>
-                </div>
-              </form>
+              {!disableOrder && (
+                <form onSubmit={onSubmit} className="column">
+                  <div className="row flex-end-alt flex-end mb-24">
+                    <SmartInput label={t('order_modal.quantity')} {...quantity} className={styles.shortInput} />
+                    { !updatedQuantity && <span className="ml-16 txt-gray2 txt-bold">{t('order_modal.availability', {count: publication.availableQuantity})}</span> }
+                    { updatedQuantity && <span className="ml-16 txt-green txt-bold">{t('order_modal.availability', {count: updatedQuantity})}</span> }
+                  </div>
+                  <div className="row center-alt flex-end mb-32 txt-medium20">
+                    <Trans i18nKey="order_modal.you_will_pay">
+                      You will pay <span className="txt-blue txt-bold ml-8">{{ price: `$${totalPrice}` }}</span>
+                    </Trans>
+                  </div>
+                  <div className="row flex-end">
+                    <Button handleClick={onClose} type="button" variant="secondary" className="mr-8">{t('order_modal.actions.cancel')}</Button>
+                    <Button>{t('order_modal.actions.order')}</Button>
+                  </div>
+                </form>
+              )}
+              {disableOrder && (
+                <div className="txt-gray2 flex-grow column center center-alt">{t('order_modal.login_hint')}</div>
+              )}
             </div>
           </div>
         </div> 

@@ -120,6 +120,7 @@
     "availability_plural": "{{count}} disponibles",
     "quantity": "Cantidad",
     "you_will_pay": "Vas a pagar <1>{{price}}<1>",
+    "login_hint": "Debes estar logueado para ordenar",
     "actions": {
       "order": "ORDENAR",
       "cancel": "CANCELAR"
