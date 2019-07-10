@@ -61,10 +61,10 @@ public class EmailServiceImpl implements EmailService {
                             "<p>You might start...</p>" +
                             "<ul>" +
                             "<li>" +
-                            "<a href='" + getAbsoluteURL("profile/publications?newModal=true") + "'>Creating publications</a>" +
+                            "<a href='" + getAbsoluteURL("publish") + "'>Creating publications</a>" +
                             "</li>" +
                             "<li>" +
-                            "<a href='" + getAbsoluteURL("search") + "'>Subscribing to existing publications</a>" +
+                            "<a href='" + getAbsoluteURL("") + "'>Subscribing to existing publications</a>" +
                             "</li>" +
                             "</ul>"
             );
@@ -80,7 +80,7 @@ public class EmailServiceImpl implements EmailService {
                             "<p>Get in touch with the publisher to arrange the pickup</p>" +
                             "<ul>" +
                             "<li>" +
-                            "<a href='" + getAbsoluteURL("profile/publications?newModal=true") + "'>Message publisher</a>" +
+                            "<a href='" + getAbsoluteURL("my-account/orders") + "'>View orders</a>" +
                             "</li>" +
                             "</ul>"
             );
@@ -96,7 +96,7 @@ public class EmailServiceImpl implements EmailService {
                             "<p>Get in touch with the orderers to arrange the pickup</p>" +
                             "<ul>" +
                             "<li>" +
-                            "<a href='" + getAbsoluteURL("profile/publications?newModal=true") + "'>View publication orderers</a>" +
+                            "<a href='" + getAbsoluteURL("my-account/publications/"+publication.getId()+"/messages") + "'>View publication orderers</a>" +
                             "</li>" +
                             "</ul>"
             );
