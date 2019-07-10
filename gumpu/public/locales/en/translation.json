@@ -151,7 +151,15 @@
           "no_thanks": "No, gracias, solo confirmar",
           "action": "CALIFICAR Y CONFIRMAR"
         },
-        "action": "CONFIRMAR"
+        "action": "CONFIRMAR",
+        "result_success": {
+          "message": "<0>Genial!</0><1>Confirmamos que recibiste la compra!<1>",
+          "action": "OK"
+        },
+        "result_fail": {
+          "message": "<0>Ups!</0><1>No pudimos guardar tu confirmacion!<1>",
+          "action": "ENTIENDO"
+        }
       }
     },
     "publications": {

@@ -1,13 +1,16 @@
 import React, { Suspense, useState } from 'react';
 import Loader from 'components/ui/Loader';
 import { useTranslation } from 'react-i18next';
-import Modal from 'components/ui/Modal';
 
-import styles from './styles.module.scss';
+import Modal from 'components/ui/Modal';
 import SmartTextArea from 'components/ui/SmartTextArea';
 import SmartInput from 'components/ui/SmartInput';
 import CardContainer from 'components/ui/CardContainer';
 import Button from 'components/ui/Button';
+
+import Failure from './components/Failure';
+import Success from './components/Success';
+import styles from './styles.module.scss';
 
 function ReviewModalLayoutSuspense({onReview, onConfirm, onClose, reviewForm, loading, error, success}) {
   const { t } = useTranslation();
@@ -16,6 +19,9 @@ function ReviewModalLayoutSuspense({onReview, onConfirm, onClose, reviewForm, lo
     <Modal onClose={onClose}>
       <div class={styles.container}>
         <h1 className="txt-xlarge mb-32">{t('my_account.orders.confirm_modal.title')}</h1>
+        { loading && <Loader /> }
+        { error && <Failure handleRetry={onClose} /> }
+        { success && <Success handleOk={onClose} /> }
         {!loading && !error && !success && (<>
         <CardContainer className={styles.reviewContainer}>
           <form onSubmit={onReview}>
