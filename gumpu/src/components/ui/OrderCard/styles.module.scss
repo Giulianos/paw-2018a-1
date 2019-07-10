@@ -3,6 +3,7 @@
 .cardContainer {
   width: 280px;
   padding: 16px;
+  min-height: 147px;
 }
 
 .publicationImage {
@@ -50,5 +51,20 @@
     height: 20px;
     width: 150px;
     border-radius: 8px;
+  }
+}
+
+.ownOrder{
+  &::before {
+    background-size: 100%;
+    content: '';
+    display: flex;
+    display: block;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background-color: $yellow;
+    position: absolute;
+    transform: translate(-20px, -20px);
   }
 }

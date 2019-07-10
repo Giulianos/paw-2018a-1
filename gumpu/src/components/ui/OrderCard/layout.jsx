@@ -12,9 +12,10 @@ import ActionButton from './components/ActionButton';
 function OrderCardLayoutSuspense({ order, className, onMessage }) {
   const { t } = useTranslation();
   const publicationState = order.publication.status;
+  const ownOrder = order.orderer.id === order.publication.supervisorId;
 
   return (
-    <CardContainer className={`${styles.cardContainer} ${className}`}>
+    <CardContainer className={`${styles.cardContainer} ${className} ${ownOrder ? styles.ownOrder : ''}`}>
       <div className="row mb-16">
         <PublicationImage className={styles.publicationImage} imageId={order.publication.images[0]} />
         <div className="column ml-8">
@@ -34,11 +35,11 @@ function OrderCardLayoutSuspense({ order, className, onMessage }) {
             <ActionButton className="mr-16" action="delete" label={t('my_account.orders.card.delete')}/>
           )
         }
-        { (publicationState === 'PURCHASED' || publicationState === 'FULFILLED') && (
+        { (publicationState === 'PURCHASED' || publicationState === 'FULFILLED' && !ownOrder) && (
             <ActionButton onClick={onMessage} className="mr-16" action="chat" label={t('my_account.orders.card.chat')}/>
           )
         }
-        { publicationState === 'PURCHASED' && (
+        { publicationState === 'PURCHASED' && !ownOrder && (
             <ActionButton className="mr-16" action="check" label={t('my_account.orders.card.confirm')}/>
           )
         }
