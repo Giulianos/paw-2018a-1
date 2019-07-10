@@ -43,13 +43,12 @@ function App() {
       <Header />
       <div className={styles.appContainer}>
         <Switch>
-          <Route path="/secondary" component={Secondary} />
           <Route path="/login" component={Login} />
           <AuthenticatedRoute path="/publish" component={Publish} />
           <Route path="/search/:term" component={Search} />
-          <Route path="/my-account" component={MyAccount} />
+          <AuthenticatedRoute path="/my-account" component={MyAccount} />
           <Route path="/create-account" component={Home} />
-          <Route path="/add-image/:pub_id" component={AddImage} />
+          <AuthenticatedRoute path="/add-image/:pub_id" component={AddImage} />
           <Route path="/" component={Home} />
         </Switch>
       </div>
