@@ -3,7 +3,7 @@ import React from 'react';
 import OrderCardLayout from './layout';
 import Skeleton from './skeleton';
 
-function OrderCard({ className, order, onMessage, onConfirm }) {
+function OrderCard({ className, order, onMessage, onConfirm, onDelete }) {
   if(!order) {
     return <Skeleton />;
   }
@@ -14,7 +14,7 @@ function OrderCard({ className, order, onMessage, onConfirm }) {
     }
   }
 
-  return <OrderCardLayout className={className} order={order} onMessage={messageHandler} onConfirm={onConfirm} />;
+  return <OrderCardLayout className={className} order={order} onMessage={messageHandler} onConfirm={onConfirm} onDelete={onDelete} />;
 }
 
 export default OrderCard;

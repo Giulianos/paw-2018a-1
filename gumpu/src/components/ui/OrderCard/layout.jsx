@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 
 import ActionButton from './components/ActionButton';
 
-function OrderCardLayoutSuspense({ order, className, onMessage, onConfirm }) {
+function OrderCardLayoutSuspense({ order, className, onMessage, onConfirm, onDelete }) {
   const { t } = useTranslation();
   const publicationState = order.publication.status;
   const ownOrder = order.orderer.id === order.publication.supervisorId;
@@ -32,7 +32,7 @@ function OrderCardLayoutSuspense({ order, className, onMessage, onConfirm }) {
       </div>
       <div className="row">
         { (publicationState === 'IN_PROGRESS' || publicationState === 'ORPHAN') && (
-            <ActionButton className="mr-16" action="delete" label={t('my_account.orders.card.delete')}/>
+            <ActionButton onClick={onDelete} className="mr-16" action="delete" label={t('my_account.orders.card.delete')}/>
           )
         }
         { (publicationState === 'PURCHASED' || publicationState === 'FULFILLED' && !ownOrder) && (
