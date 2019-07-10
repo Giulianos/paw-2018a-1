@@ -6,9 +6,11 @@ import quantityMax from 'validators/quantityMax';
 import { orderPublication, resetOrderPublication, retrieve, resetRetrieve } from 'redux/publication/actionCreators';
 
 import OrderModalLayout from './layout';
+import useAuth from 'hooks/useAuth';
 
 function OrderModal({ shown, onClose, selectedPublication }) {
   const dispatch = useDispatch();
+  const auth = useAuth();
   const orderState = useSelector(state => state.publication.order.create);
   const retrieved = useSelector(state => state.publication.retrieve);
 
@@ -24,7 +26,7 @@ function OrderModal({ shown, onClose, selectedPublication }) {
   const submitHandler = e => {
     e.preventDefault();
 
-    if(form.quantity.valid) {
+    if(form.quantity.valid === true && auth.logged) {
       dispatch(orderPublication(selectedPublication.id, Number(form.quantity.value)));
     }
   }
@@ -42,7 +44,17 @@ function OrderModal({ shown, onClose, selectedPublication }) {
     dispatch(resetOrderPublication());
   }
 
-  return shown && <OrderModalLayout {...orderState} {...form} updatedQuantity={retrieved.publication && retrieved.publication.availableQuantity} onReset={resetHandler} onClose={closeHandler} onSubmit={submitHandler} publication={selectedPublication} />;
+  return shown && (
+    <OrderModalLayout
+      {...orderState}
+      {...form}
+      updatedQuantity={retrieved.publication && retrieved.publication.availableQuantity}
+      onReset={resetHandler}
+      onClose={closeHandler}
+      onSubmit={submitHandler}
+      publication={selectedPublication}
+      disableOrder={!auth.logged}
+    />);
 }
 
 export default OrderModal;
