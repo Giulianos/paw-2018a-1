@@ -245,4 +245,21 @@ public class OrderServiceImpl implements OrderService {
 
     eventPublisher.publishEvent(new OrderConfirmedEvent(order.get()));
   }
+
+  @Override
+  @Transactional
+  public Boolean didReviewOrder(OrderId id) throws EntityNotFoundException, UnauthorizedAccessException {
+    final String loggedUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+    Optional<Order> order = orderDao.findById(id);
+
+    if(!order.isPresent()) {
+      throw new EntityNotFoundException();
+    }
+
+    if(!order.get().getOrderer().getEmail().equals(loggedUserEmail)) {
+      throw new UnauthorizedAccessException("Only the orderer can access this information");
+    }
+
+    return order.get().getReview() != null;
+  }
 }

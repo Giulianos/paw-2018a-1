@@ -98,4 +98,11 @@ public interface OrderService {
    */
   public void confirmOrderPurchase(final OrderId id) throws EntityNotFoundException, UnauthorizedAccessException;
 
+  /**
+   * Returns true if the logged user reviewed the order
+   * @param id
+   * @return
+   */
+  public Boolean didReviewOrder(final OrderId id) throws EntityNotFoundException, UnauthorizedAccessException;
+
 }
