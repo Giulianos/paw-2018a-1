@@ -5,6 +5,7 @@ import { listOrders, resetListOrders, deleteOrder } from 'redux/orders/actionCre
 
 import OrdersLayout from './layout';
 import useAuth from 'hooks/useAuth';
+import { adoptPublication } from 'redux/publication/actionCreators';
 
 function Orders() {
   const orders = useSelector(state => state.orders.list);
@@ -14,6 +15,9 @@ function Orders() {
   const deleteHandler = (orderId) => () => {
     dispatch(deleteOrder(auth.user.id, orderId));
   }
+  const adoptHandler = publicationId => () => {
+    dispatch(adoptPublication(publicationId));
+  }
 
   useEffect(() => {
     if(!orders.success) {
@@ -21,7 +25,16 @@ function Orders() {
     }
   }, [])
 
-  return <OrdersLayout orders={orders.orders} loading={orders.loading} messageModal={messageModal} setMessageModal={setMessageModal} onDelete={deleteHandler}/>;
+  return (
+    <OrdersLayout
+      orders={orders.orders}
+      loading={orders.loading}
+      messageModal={messageModal}
+      setMessageModal={setMessageModal}
+      onDelete={deleteHandler}
+      onAdopt={adoptHandler}
+    />
+  );
 }
 
 export default Orders;

@@ -13,7 +13,7 @@ import { getPurchased, getFulfilled, getOrphan, getInProgress } from './filters'
 import ReviewModal from './components/ReviewModal';
 import history from 'router/history';
 
-const orderMapper = (messageHandler, deleteHandler) => o => (
+const orderMapper = (messageHandler, deleteHandler, adoptHandler) => o => (
   <li key={o && o.publication.id}>
     <OrderCard
       order={o}
@@ -21,16 +21,17 @@ const orderMapper = (messageHandler, deleteHandler) => o => (
       onMessage={messageHandler}
       onConfirm={() => history.replace(`/my-account/orders/${o && o.publication.id}/confirmation`)}
       onDelete={deleteHandler && deleteHandler(o && o.publication.id)}
+      onAdopt={adoptHandler && adoptHandler(o && o.publication.id)}
     />
   </li>
 );
 
-function OrdersLayoutSuspense({ orders, loading, messageModal, setMessageModal, onDelete }) {
+function OrdersLayoutSuspense({ orders, loading, messageModal, setMessageModal, onDelete, onAdopt }) {
   const { t } = useTranslation();
 
   const purchasedOrders = getPurchased(orders).map(orderMapper(setMessageModal));
   const fulfilledOrders = getFulfilled(orders).map(orderMapper(setMessageModal));
-  const orphanOrders = getOrphan(orders).map(orderMapper(null, onDelete));
+  const orphanOrders = getOrphan(orders).map(orderMapper(null, onDelete, onAdopt));
   const inProgressOrders = getInProgress(orders).map(orderMapper(null, onDelete));
 
   return (
