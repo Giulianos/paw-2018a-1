@@ -14,5 +14,10 @@ export default {
   CONFIRM: `${prefix}/confirm`,
   CONFIRM_OK: `${prefix}/confirm_ok`,
   CONFIRM_FAIL: `${prefix}/confirm_fail`,
-  CONFIRM_RESET: `${prefix}/confirm_reset`
+  CONFIRM_RESET: `${prefix}/confirm_reset`,
+  
+  DELETE: `${prefix}/delete`,
+  DELETE_OK: `${prefix}/delete_ok`,
+  DELETE_FAIL: `${prefix}/delete_fail`,
+  DELETE_RESET: `${prefix}/delete_reset`,
 };

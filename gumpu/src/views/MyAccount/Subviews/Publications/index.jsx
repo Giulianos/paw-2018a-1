@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import history from 'router/history';
 
-import { listUserPublications } from 'redux/publication/actionCreators';
+import { listUserPublications, deletePublication } from 'redux/publication/actionCreators';
 
 import PublicationsLayout from './layout';
 import useAuth from 'hooks/useAuth';
@@ -29,7 +29,19 @@ function Publications() {
     history.push(`/my-account/publications/${publicationId}`);
   }
 
-  return <PublicationsLayout publications={publications.publications} loading={publications.loading} messageModal={messageModal} closeMessages={closeMessages} openMessages={openMessages} />;
+  const deleteHandler = (publicationId) => () => {
+    dispatch(deletePublication(publicationId));
+  }
+
+  return (
+  <PublicationsLayout
+    publications={publications.publications}
+    loading={publications.loading}
+    messageModal={messageModal}
+    closeMessages={closeMessages}
+    openMessages={openMessages}
+    onDelete={deleteHandler}
+  />);
 }
 
 export default Publications;

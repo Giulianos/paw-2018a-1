@@ -49,6 +49,11 @@ const initialState = {
     loading: false,
     error: false,
     publication: null
+  },
+  delete: {
+    success: false,
+    loading: false,
+    error: false
   }
 };
 
@@ -154,6 +159,16 @@ function reduce(state = initialState, action) {
       return { ...state, retrieve: { ...state.retrieve, success: false, loading: false, error: true } };
     case actions.RETRIEVE_RESET:
       return { ...state, retrieve: { ...initialState.retrieve } };
+    
+    /** DELETE actions */
+    case actions.DELETE:
+      return { ...state, delete: { ...state.delete, loading: true, error: false } };
+    case actions.DELETE_OK:
+      return { ...state, delete: { success: true, loading: false, error: false } };
+    case actions.DELETE_FAIL:
+      return { ...state, delete: { success: false, loading: false, error: true } };
+    case actions.DELETE_RESET:
+      return { ...state, delete: { ...initialState.delete } };
 
     default:
       return state;

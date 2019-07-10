@@ -35,4 +35,9 @@ export default {
   RETRIEVE_OK: `${prefix}/retrieve_ok`,
   RETRIEVE_FAIL: `${prefix}/retrieve_fail`,
   RETRIEVE_RESET: `${prefix}/retrieve_reset`,
+
+  DELETE: `${prefix}/delete`,
+  DELETE_OK: `${prefix}/delete_ok`,
+  DELETE_FAIL: `${prefix}/delete_fail`,
+  DELETE_RESET: `${prefix}/delete_reset`,
 };

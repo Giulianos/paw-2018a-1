@@ -51,3 +51,20 @@ export const confirm = (userId, orderId) => async (dispatch) => {
 };
 
 export const resetConfirm = () => ({ type: actions.CONFIRM_RESET });
+
+export const deleteOrder = (userId, orderId) => async (dispatch) => {
+  dispatch({ type: actions.DELETE });
+
+  try {
+    const response = await orderService.delete(userId, orderId);
+    if (response.ok) {
+      dispatch({ type: actions.DELETE_OK, payload: response.data });
+    } else {
+      dispatch({ type: actions.DELETE_FAIL });
+    }
+  } catch (error) {
+    dispatch({ type: actions.DELETE_FAIL });
+  }
+};
+
+export const resetDeleteOrder = () => ({ type: actions.DELETE_RESET });
