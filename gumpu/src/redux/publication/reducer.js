@@ -54,6 +54,11 @@ const initialState = {
     success: false,
     loading: false,
     error: false
+  },
+  adopt: {
+    success: false,
+    loading: false,
+    error: false
   }
 };
 
@@ -169,6 +174,16 @@ function reduce(state = initialState, action) {
       return { ...state, delete: { success: false, loading: false, error: true } };
     case actions.DELETE_RESET:
       return { ...state, delete: { ...initialState.delete } };
+
+    /** ADOPT actions */
+    case actions.ADOPT:
+      return { ...state, adopt: { ...state.adopt, loading: true, error: false } };
+    case actions.ADOPT_OK:
+      return { ...state, adopt: { success: true, loading: false, error: false } };
+    case actions.ADOPT_FAIL:
+      return { ...state, adopt: { success: false, loading: false, error: true } };
+    case actions.ADOPT_RESET:
+      return { ...state, adopt: { ...initialState.adopt } };
 
     default:
       return state;
